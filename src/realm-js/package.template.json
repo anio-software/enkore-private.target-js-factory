@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fourtune/realm-js-and-web.git"
+    "url": "git+https://github.com/fourtune-org/realm-js-and-web.git"
   },
   "exports": {
     ".": "./auto/node-main.mjs",
