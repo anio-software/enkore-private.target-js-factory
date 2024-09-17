@@ -43,6 +43,7 @@ async function cleanRealmAutoFiles(realm) {
 
 	for (const entry of entries) {
 		if (entry === ".gitkeep") continue
+		if (entry === "NOTICE.txt") continue
 
 		await fs.rm(
 			path.join("src", `realm-${realm}`, "auto", entry), {
