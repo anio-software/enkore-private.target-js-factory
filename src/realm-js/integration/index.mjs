@@ -2,6 +2,10 @@ import {
 	loadRealmDependencies
 } from "../auto/base-realm.mjs"
 
+export async function getIntegrationAPIVersion() {
+	return 0
+}
+
 export async function initializeTarget() {
 	const {getDependency} = await loadRealmDependencies(
 		project_root, "realm-js"
