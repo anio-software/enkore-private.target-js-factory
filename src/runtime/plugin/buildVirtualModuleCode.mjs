@@ -9,7 +9,7 @@ export default async function(ctx, use_static_runtime) {
 	let virtual_module = ``
 
 	virtual_module  = `const runtime_init_data = ` + JSON.stringify(runtime_init_data, null, 4) + ";\n"
-	virtual_module += `import {initializeRuntime} from "@4tune/js-runtime"\n`
+	virtual_module += `import {initializeRuntime} from "@fourtune/js-runtime"\n`
 	virtual_module += `const runtime = initializeRuntime(runtime_init_data);\n`
 
 	const load_resources_fn_name = "loadResource"
