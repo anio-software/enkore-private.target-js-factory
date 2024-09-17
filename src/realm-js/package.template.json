@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "@fourtune/realm-js",
+  "version": "x.x.x",
+  "description": "",
+  "author": "Anio Software <info@anio.software>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fourtune/realm-js-and-web.git"
+  },
+  "exports": {
+    ".": "./auto/node-main.mjs",
+    "./integration": "./integration/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "typings": "./auto/node-main.d.ts"
+}
