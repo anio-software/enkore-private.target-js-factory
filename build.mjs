@@ -123,3 +123,7 @@ if (process.argv.length >= 3) {
 }
 
 await writeRealmAutoFiles("js", ver)
+
+if (!("ANIO_CICD" in process.env)) {
+	await fs.rm(`./src/realm-js/package.json`, {force: true})
+}
