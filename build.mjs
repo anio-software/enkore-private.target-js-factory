@@ -69,6 +69,16 @@ async function writeRealmAutoFiles(realm, version) {
 		`./src/realm-${realm}/auto/node-main.mjs`, node_main_template
 	)
 
+	let install_template = await processFile("./src/runtime/node/install.template.mjs")
+
+	install_template = install_template
+		.split(`<<@BASE_REALM>>`).join("./base-realm.mjs")
+		.split(`<<REALM>>`).join(realm)
+
+	await fs.writeFile(
+		`./src/realm-${realm}/auto/install.mjs`, install_template
+	)
+
 	const base_realm_code = await processFile(
 		"./node_modules/@fourtune/base-realm/src/index.mjs"
 	)
