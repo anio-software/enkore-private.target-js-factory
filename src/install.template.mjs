@@ -7,18 +7,30 @@ import {
 	installRealmDependencies
 } from "<<@BASE_REALM>>"
 
-const start_dir = path.dirname(process.argv[1])
+async function runInstall(do_nothing = true, additional_dependencies = {}) {
+	if (do_nothing) return
 
-const project_root = await findProjectRootFromDirectory(
-	start_dir
-)
+	const start_dir = path.dirname(process.argv[1])
 
-if (project_root === false) {
-	throw new Error(
-		`Unable to determine project root. Start directory is '${start_dir}'.`
+	const project_root = await findProjectRootFromDirectory(
+		start_dir
 	)
+
+	if (project_root === false) {
+		throw new Error(
+			`Unable to determine project root. Start directory is '${start_dir}'.`
+		)
+	}
+
+	if ("ANIO_CICD" in process.env) {
+		return
+	}
+
+	await installRealmDependencies(project_root, "realm-<<REALM>>", {
+		...base_dependencies,
+		...additional_dependencies
+	})
 }
 
-if (!("ANIO_CICD" in process.env)) {
-	await installRealmDependencies(project_root, "realm-<<REALM>>", base_dependencies)
-}
+/* just here so rollup keeps the function :) */
+await runInstall(true, {})

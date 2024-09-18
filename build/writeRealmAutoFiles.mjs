@@ -44,6 +44,10 @@ async function writeInstall(realm, version) {
 		.split(`<<@BASE_REALM>>`).join("./base-realm.mjs")
 		.split(`<<REALM>>`).join(realm)
 
+	install_template += `\n`
+	install_template += `import additional_dependencies from "../dependencies.mjs"\n`
+	install_template += `await runInstall(false, additional_dependencies)\n`
+
 	await fs.writeFile(
 		path.join("src", `realm-${realm}`, "auto", "install.mjs"),
 		autogenerateBanner(realm, version) + install_template
