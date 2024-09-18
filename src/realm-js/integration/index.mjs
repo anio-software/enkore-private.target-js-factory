@@ -1,7 +1,4 @@
-import {
-	loadRealmDependencies
-} from "../auto/base-realm.mjs"
-
+import {loadRealmDependencies} from "../auto/base-realm.mjs"
 import rollupPlugin from "./rollupPlugin.mjs"
 
 export async function getIntegrationAPIVersion() {
