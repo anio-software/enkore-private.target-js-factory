@@ -11,9 +11,8 @@ export async function initializeTarget(project_root) {
 	)
 
 	const rollup = getDependency("rollup")
+	const plugin = await rollupPlugin(project_root)
 
 	console.log("rollup is", rollup)
-	console.log(
-		"rollup plugin is", rollupPlugin()
-	)
+	console.log("rollup plugin is", plugin)
 }
