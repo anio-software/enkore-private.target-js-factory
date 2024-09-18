@@ -6,7 +6,7 @@ export async function getIntegrationAPIVersion() {
 	return 0
 }
 
-export async function initializeTarget() {
+export async function initializeTarget(project_root) {
 	const {getDependency} = await loadRealmDependencies(
 		project_root, "realm-js"
 	)
