@@ -4,7 +4,7 @@ export default function(runtime_var_name) {
 	let runtime_methods = [
 		"getRuntimeVersion",
 		"loadProjectPackageJSON",
-		"loadFortuneConfiguration",
+		"loadFourtuneConfiguration",
 		"createDefaultContext"
 	]
 

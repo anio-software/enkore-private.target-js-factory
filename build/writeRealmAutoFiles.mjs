@@ -88,9 +88,11 @@ export default async function(project_root) {
 }
 
 async function writeRuntime(realm, version) {
-	const runtime_code = await bundleFile(
+	let runtime_code = await bundleFile(
 		`./src/runtime/implementation/index.mjs`
 	)
+
+	runtime_code = runtime_code.split(`<<REALM>>`).join(realm)
 
 	await fs.writeFile(
 		path.join("src", `realm-${realm}`, "auto", "runtime.mjs"),

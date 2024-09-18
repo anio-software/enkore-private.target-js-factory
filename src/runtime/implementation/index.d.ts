@@ -40,16 +40,16 @@ export function loadResourceDynamic(url : string) : ResourceReturnType
 export function loadProjectPackageJSON() : object
 
 /**
- * @brief Synchronously load the project's fortune configuration
+ * @brief Synchronously load the project's fourtune configuration
  */
-export function loadFortuneConfiguration() : object
+export function loadFourtuneConfiguration() : object
 
 export function createDefaultContext() : object
 
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,
 	loadProjectPackageJSON: typeof loadProjectPackageJSON,
-	loadFortuneConfiguration: typeof loadFortuneConfiguration,
+	loadFourtuneConfiguration: typeof loadFourtuneConfiguration,
 	createDefaultContext: typeof createDefaultContext
 }
 

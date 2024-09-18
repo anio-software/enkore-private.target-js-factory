@@ -32,8 +32,8 @@ export default function(
 			return JSON.parse(JSON.stringify(runtime_init_data.package_json))
 		},
 
-		loadFortuneConfiguration() {
-			return JSON.parse(JSON.stringify(runtime_init_data.fortune_config))
+		loadFourtuneConfiguration() {
+			return JSON.parse(JSON.stringify(runtime_init_data.fourtune_config))
 		},
 
 		loadResourceDynamic(url, as_url = false) {
@@ -42,7 +42,7 @@ export default function(
 			if (runtime.resources === null) {
 				throw new Error(
 					`Runtime resources have not been loaded yet.\n` +
-					`In order to load them import {loadResource} from "@4tune/realm-js" and call loadResource(null)` +
+					`In order to load them import {loadResource} from "@fourtune/realm-<<REALM>>" and call loadResource(null)` +
 					` to load resources.`
 				)
 			}
