@@ -13,7 +13,7 @@
     ".": "./auto/node-main.mjs",
     "./integration": "./integration/index.mjs",
     "./package.json": "./package.json",
-    "./_debug/plugin": "./auto/plugin.mjs"
+    "./_debug/plugin": "./integration/plugin.mjs"
   },
   "typings": "./auto/node-main.d.ts",
   "scripts": {
