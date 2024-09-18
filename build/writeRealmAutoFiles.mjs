@@ -38,7 +38,7 @@ async function writeNodeMainTypes(realm, version) {
 }
 
 async function writeInstall(realm, version) {
-	let install_template = await bundleFile("./src/runtime/node/install.template.mjs")
+	let install_template = await bundleFile("./src/install.template.mjs")
 
 	install_template = install_template
 		.split(`<<@BASE_REALM>>`).join("./base-realm.mjs")

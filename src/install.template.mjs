@@ -1,6 +1,6 @@
 import path from "node:path"
 import process from "node:process"
-import base_dependencies from "../../base_dependencies.mjs"
+import base_dependencies from "./base_dependencies.mjs"
 
 import {
 	findProjectRootFromDirectory,
