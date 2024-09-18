@@ -67,7 +67,15 @@ async function writeBaseRealm(realm, version) {
 
 async function writePlugin(realm, version) {
 	const plugin_factory_code = await bundleFile(
-		"./src/runtime/plugin/main.mjs"
+		"./src/runtime/plugin/main.mjs", [{
+			resolveId(id) {
+				if (id === "@fourtune/base-realm") {
+					return {id: "./base-realm.mjs", external: true}
+				}
+
+				return null
+			}
+		}]
 	)
 
 	await fs.writeFile(
