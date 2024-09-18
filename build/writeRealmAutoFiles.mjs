@@ -61,10 +61,25 @@ async function writeBaseRealm(realm, version) {
 	)
 }
 
-async function writePluginMain(realm, version) {
-	const plugin_code = await bundleFile(
+async function writePlugin(realm, version) {
+	const plugin_factory_code = await bundleFile(
 		"./src/runtime/plugin/main.mjs"
 	)
+
+	await fs.writeFile(
+		path.join("src", `realm-${realm}`, "auto", "pluginFactory.mjs"),
+		autogenerateBanner(realm, version) + plugin_factory_code
+	)
+
+	const plugin_code = 
+`import factory from "./pluginFactory.mjs"
+
+export default async function(project_root) {
+	const {plugin} = await factory(project_root)
+
+	return plugin()
+}
+`
 
 	await fs.writeFile(
 		path.join("src", `realm-${realm}`, "auto", "plugin.mjs"),
@@ -90,7 +105,7 @@ export default async function(realm, version) {
 	await writeNodeMainTypes(realm, version)
 	await writeInstall(realm, version)
 	await writeBaseRealm(realm, version)
-	await writePluginMain(realm, version)
+	await writePlugin(realm, version)
 	await writeRuntime(realm, version)
 
 	let package_json_template = await readJSONFile(
