@@ -25,4 +25,5 @@ await writeRealmAutoFiles("js", version)
 
 if (!("ANIO_CICD" in process.env)) {
 	await fs.rm(`./src/realm-js/package.json`, {force: true})
+	await fs.rm(`./src/realm-web/package.json`, {force: true})
 }
