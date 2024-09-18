@@ -1,6 +1,6 @@
 import path from "node:path"
 import process from "node:process"
-import dependencies from "../../dependencies.mjs"
+import base_dependencies from "../../base_dependencies.mjs"
 
 import {
 	findProjectRootFromDirectory,
@@ -20,5 +20,5 @@ if (project_root === false) {
 }
 
 if (!("ANIO_CICD" in process.env)) {
-	await installRealmDependencies(project_root, "realm-<<REALM>>", dependencies)
+	await installRealmDependencies(project_root, "realm-<<REALM>>", base_dependencies)
 }
