@@ -26,7 +26,7 @@ async function writeNodeMain(realm, version) {
 
 	node_main_template = node_main_template
 		.split(`<<@BASE_REALM>>`).join("./base-realm.mjs")
-		.split(`<<@ROLLUP_PLUGIN_FACTORY>>`).join("./rollupPluginFactory.mjs")
+		.split(`<<@ROLLUP_PLUGIN_FACTORY>>`).join("./pluginFactory.mjs")
 		.split(`<<@INITIALIZE_RUNTIME>>`).join("./runtime.mjs")
 
 	await fs.writeFile(
