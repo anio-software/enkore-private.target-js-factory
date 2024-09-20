@@ -49,7 +49,7 @@ export default async function(fourtune_session, file_path, library_functions) {
 		pad_to_longest_key: true
 	})
 
-	source += `import {createDefaultContext} from "@fourtune/realm-js/runtime"\n`
+	source += `import {createDefaultContext} from "@fourtune/realm-js"\n`
 
 	source += groupedImport("./library.mjs", grouped_import, {
 		pad_to_longest_key: true,
