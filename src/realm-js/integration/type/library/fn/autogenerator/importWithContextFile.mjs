@@ -17,7 +17,7 @@ export default async function(fourtune_session, file_path, library_functions) {
 
 		library_literal.push({
 			key: `${fn.canonical_name}`,
-			value: "await " + fn.canonical_name + "Factory" + "(null, library_context)"
+			value: /*"await " + */fn.canonical_name + "Factory" + "(null, library_context)"
 		})
 
 		library_literal.push({
