@@ -7,15 +7,13 @@ export default {
 	// needed to resolve npm dependencies
 	//
 	"@rollup/plugin-node-resolve": {
-		version: "15.2.3",
-		import_code: `import nodeResolve from "@rollup/plugin-node-resolve"\nexport default nodeResolve`
+		version: "15.2.3"
 	},
 	//
 	// needed to minify code
 	//
 	"@rollup/plugin-terser": {
-		version: "0.4.4",
-		import_code: `import terser from "@rollup/plugin-terser"\nexport default terser`
+		version: "0.4.4"
 	},
 	//
 	// needed to process .d.ts files
