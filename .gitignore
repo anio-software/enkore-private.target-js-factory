@@ -3,3 +3,4 @@
 /src/realm-js/auto/*.mjs
 /src/realm-js/auto/*.d.ts
 /src/realm-js/package.json
+/src/realm-js/node_modules/
