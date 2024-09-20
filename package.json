@@ -4,7 +4,7 @@
   "name": "@fourtune/realm-js-and-web",
   "devDependencies": {
     "@anio-js-foundation/create-temporary-resource": "2.0.0",
-    "@fourtune/base-realm": "0.1.1",
+    "@fourtune/base-realm": "0.2.0",
     "@rollup/plugin-node-resolve": "15.2.3",
     "rollup": "4.21.3"
   }
