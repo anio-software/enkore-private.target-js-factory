@@ -1,5 +1,6 @@
 import parseResourceURL from "./parseResourceURL.mjs"
 import createTemporaryResource from "@anio-js-foundation/create-temporary-resource"
+import makeDefaultContext from "./makeDefaultContext.mjs"
 
 function loadResourceAsURL(map, type, path, data) {
 	const full_path = `${type}://${path}`
@@ -67,7 +68,9 @@ export default function(
 		},
 
 		createDefaultContext() {
-			return {}
+			return makeDefaultContext(
+				JSON.parse(JSON.stringify(runtime_init_data.package_json))
+			)
 		}
 	}
 
