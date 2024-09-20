@@ -2,7 +2,7 @@ import path from "node:path"
 import process from "node:process"
 
 import {findProjectRootFromDirectory} from "<<@BASE_REALM>>"
-import rollupPlugin from "<<@ROLLUP_PLUGIN>>"
+import rollupPluginFactory from "<<@ROLLUP_PLUGIN_FACTORY>>"
 import {initializeRuntime} from "<<@INITIALIZE_RUNTIME>>"
 
 const start_dir = path.dirname(process.argv[1])
@@ -17,7 +17,7 @@ if (project_root === false) {
 	)
 }
 
-const {ctx} = await rollupPlugin(project_root)
+const {ctx} = await rollupPluginFactory(project_root)
 const {runtime_init_data, project_resources} = ctx
 
 const runtime = await initializeRuntime(runtime_init_data, project_resources)
