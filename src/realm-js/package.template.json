@@ -29,7 +29,7 @@
     "@anio-node-foundation/fs-scandir": "^4.0.0",
     "@anio-node-foundation/fs-utils": "^3.2.2"
   },
-  "bundledDependencies": [
+  "bundleDependencies": [
     "@anio-js-foundation/create-modifier-function",
     "@anio-js-foundation/create-named-anonymous-function"
   ]
