@@ -4,6 +4,13 @@ import path from "node:path"
 import createRuntimeGlueCode from "../src/runtime/implementation/createRuntimeGlueCode.mjs"
 import bundleFile from "./bundleFile.mjs"
 import readJSONFile from "../src/runtime/node/util/readJSONFile.mjs"
+import {createRequire} from "node:module"
+
+const require = createRequire(import.meta.url)
+
+const base_realm_package_json = await readJSONFile(
+	require.resolve("@fourtune/base-realm/package.json")
+)
 
 function autogenerateBanner(realm, version) {
 	return `/**
@@ -62,6 +69,11 @@ async function writeBaseRealm(realm, version) {
 	await fs.writeFile(
 		path.join("src", `realm-${realm}`, "auto", "base-realm.mjs"),
 		autogenerateBanner(realm, version) + base_realm_code
+	)
+
+	await fs.writeFile(
+		path.join("src", `realm-${realm}`, "auto", "base-realm.version.mjs"),
+		autogenerateBanner(realm, version) + `export default ${JSON.stringify(base_realm_package_json.version)};\n`
 	)
 }
 
