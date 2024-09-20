@@ -22,7 +22,12 @@
   },
   "dependencies": {
     "@anio-js-foundation/create-modifier-function": "^2.0.0",
-    "@anio-js-foundation/create-named-anonymous-function": "^2.0.0"
+    "@anio-js-foundation/create-named-anonymous-function": "^2.0.0",
+    "@anio-js-foundation/alphabet-identifier-generator": "^1.0.0",
+    "@anio-js-foundation/generate-object-literal": "^1.1.0",
+    "@anio-js-foundation/strip-suffix": "^3.0.1",
+    "@anio-node-foundation/fs-scandir": "^4.0.0",
+    "@anio-node-foundation/fs-utils": "^3.2.2"
   },
   "bundledDependencies": [
     "@anio-js-foundation/create-modifier-function",
