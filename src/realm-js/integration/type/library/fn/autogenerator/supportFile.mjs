@@ -1,5 +1,8 @@
 import path from "node:path"
 import fs from "node:fs/promises"
+
+import {loadRealmDependencies} from "../../../../../auto/base-realm.mjs"
+
 import {fileURLToPath} from "node:url"
 
 const __dirname = path.dirname(
@@ -11,16 +14,18 @@ async function useDependency(fourtune_session, dependency_name) {
 	// this only works for @anio-js-foundation modules
 	// because they all have ./dist/package.mjs as entry point
 	//
-	const dependency_entry_path = fileURLToPath(import.meta.resolve(dependency_name))
+	const {
+		getPathOfDependency,
+		loadDependencyPackageJSON
+	} = await loadRealmDependencies(
+		fourtune_session.getProjectRoot(), "realm-js"
+	)
 
-	if (!dependency_entry_path.endsWith("/dist/package.mjs")) {
-		throw new Error(`Not a @anio-js-foundation module.`)
-	}
-
-	const dependency_root = path.resolve(path.dirname(dependency_entry_path), "..")
-	const package_json = JSON.parse(await fs.readFile(
-		path.join(dependency_root, "package.json")
-	))
+	const dependency_root = getPathOfDependency(dependency_name)
+	const dependency_entry_path = path.join(
+		dependency_root, "dist", "package.mjs"
+	)
+	const package_json = loadDependencyPackageJSON(dependency_name)
 
 	let source = ""
 
@@ -33,7 +38,6 @@ async function useDependency(fourtune_session, dependency_name) {
 
 	return fourtune_session.autogenerate.warningComment() + source
 }
-
 
 export default async function(fourtune_session, file_path, support_file) {
 	if (support_file === "createModifierFunction.mjs") {
