@@ -1,3 +1,4 @@
+import path from "node:path"
 import {isRegularFileSync} from "@anio-software/fs"
 
 import getExportedLibraryFunctions from "./fn/getExportedLibraryFunctions.mjs"
