@@ -4,7 +4,7 @@ import path from "node:path"
 import relativePathToCanonicalPath from "./relativePathToCanonicalPath.mjs"
 import canonicalPathToName from "./canonicalPathToName.mjs"
 
-import {isRegularFile} from "@anio-node-foundation/fs-utils"
+import {isRegularFile} from "@anio-software/fs"
 
 //
 // returns an array of all defined library functions:

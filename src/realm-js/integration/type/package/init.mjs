@@ -1,7 +1,7 @@
 import buildPackageFile from "./fn/builder/packageFile.mjs"
 import buildTypesFile from "./fn/builder/typesFile.mjs"
 import path from "node:path"
-import {isRegularFile} from "@anio-node-foundation/fs-utils"
+import {isRegularFileSync} from "@anio-software/fs"
 
 async function handleAdditionalEntryPoints(fourtune_session, entry_points) {
 	for (const output in entry_points) {
@@ -40,7 +40,7 @@ export default async function(fourtune_session) {
 
 	const types_path = path.join(fourtune_session.getProjectRoot(), "build", "src", "index.d.ts")
 
-	if (!isRegularFile.sync(types_path)) {
+	if (!isRegularFileSync(types_path)) {
 		return
 	}
 
