@@ -1,3 +1,5 @@
+import {isRegularFileSync} from "@anio-software/fs"
+
 import getExportedLibraryFunctions from "./fn/getExportedLibraryFunctions.mjs"
 import determineSubModules from "./fn/determineSubModules.mjs"
 
@@ -11,6 +13,7 @@ import generateSupportFile from "./fn/autogenerator/supportFile.mjs"
 // builders
 import buildLibraryFile from "./fn/builder/libraryFile.mjs"
 import buildSubModuleFile from "./fn/builder/subModuleFile.mjs"
+import buildTypesFile from "./fn/builder/typesFile.mjs"
 
 export default async function(fourtune_session) {
 	const library_functions = await getExportedLibraryFunctions(fourtune_session)
@@ -62,6 +65,15 @@ export default async function(fourtune_session) {
 		fourtune_session.distributables.addFile(`submodule/${sub_module}.mjs`, {
 			generator: buildSubModuleFile,
 			generator_args: [library_functions, sub_module]
+		})
+	}
+
+	const types_path = path.join(fourtune_session.getProjectRoot(), "build", "src", "index.d.ts")
+
+	if (isRegularFileSync(types_path)) {
+		fourtune_session.distributables.addFile(`index.d.ts`, {
+			generator: buildTypesFile,
+			generator_args: []
 		})
 	}
 
