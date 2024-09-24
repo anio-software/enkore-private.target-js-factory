@@ -32,9 +32,14 @@ export default async function(fourtune_session, options) {
 		project_root, "src"
 	))
 
-	const rollup_plugins = options.entry.endsWith("d.ts") ? [dts({
-		respectExternal: true
-	})] : [await fourtuneRollupPlugin(project_root), resolve()]
+	const rollup_plugins = []
+
+	if (options.entry.endsWith("d.ts")) {
+		rollup_plugins.push(dts({respectExternal: true}))
+	} else {
+		rollup_plugins.push(await fourtuneRollupPlugin(project_root))
+		rollup_plugins.push(resolve())
+	}
 
 	if (options.minified) {
 		rollup_plugins.push(terser())
