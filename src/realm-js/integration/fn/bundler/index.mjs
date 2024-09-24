@@ -30,7 +30,7 @@ export default async function(fourtune_session, options) {
 
 	if (options.entry_file_type === "d.ts") {
 		rollup_plugins.push(dts({respectExternal: true}))
-	} else if (options.entry_file_type === ".mjs") {
+	} else if (options.entry_file_type === "mjs") {
 		rollup_plugins.push(await fourtuneRollupPlugin(project_root))
 		rollup_plugins.push(resolve())
 	} else {
