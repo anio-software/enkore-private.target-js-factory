@@ -1,4 +1,5 @@
 import process from "node:process"
+import path from "node:path"
 import {loadRealmDependencies} from "../../../auto/base-realm.mjs"
 import fourtuneRollupPlugin from "../../../auto/plugin.mjs"
 
@@ -13,6 +14,7 @@ export default async function(fourtune_session, options) {
 	const resolve = getDependency("@rollup/plugin-node-resolve")
 	const terser = getDependency("@rollup/plugin-terser")
 	const dts = getDependency("rollup-plugin-dts")
+	const virtual = getDependency("@rollup/plugin-virtual")
 	// -- dependencies --
 
 	const cwd = process.cwd()
@@ -20,7 +22,15 @@ export default async function(fourtune_session, options) {
 	//
 	// needed for rollup-node-resolve plugin
 	//
-	process.chdir(project_root)
+
+	//
+	// change directory into src/ is needed for
+	// virtual rollup entry to work correctly
+	// (because of relative references to other source files)
+	//
+	process.chdir(path.join(
+		project_root, "src"
+	))
 
 	const rollup_plugins = options.entry.endsWith("d.ts") ? [dts({
 		respectExternal: true
