@@ -10,6 +10,12 @@ export default {
 		version: "15.2.3"
 	},
 	//
+	// needed for virtual rollup entries
+	//
+	"@rollup/plugin-virtual": {
+		version: "3.0.2"
+	},
+	//
 	// needed to minify code
 	//
 	"@rollup/plugin-terser": {
