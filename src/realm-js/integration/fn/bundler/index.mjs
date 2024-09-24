@@ -24,22 +24,17 @@ export default async function(fourtune_session, options) {
 	//
 	process.chdir(project_root)
 
-	const rollup_plugins = []
-	let rollup_entry = options.entry
+	const rollup_plugins = [virtual({
+		"virtual_entry_point": options.entry
+	})]
 
-	if ("entry_code" in options) {
-		rollup_plugins.push(virtual({
-			"virtual_entry_point": options.entry_code
-		}))
-
-		rollup_entry = "virtual_entry_point"
-	}
-
-	if (options.entry.endsWith("d.ts")) {
+	if (options.entry_file_type === "d.ts") {
 		rollup_plugins.push(dts({respectExternal: true}))
-	} else {
+	} else if (options.entry_file_type === ".mjs") {
 		rollup_plugins.push(await fourtuneRollupPlugin(project_root))
 		rollup_plugins.push(resolve())
+	} else {
+		throw new Error(`Invalid file type '${options.entry_file_type}'.`)
 	}
 
 	if (options.minified) {
@@ -47,7 +42,7 @@ export default async function(fourtune_session, options) {
 	}
 
 	const rollup_options = {
-		input: rollup_entry,
+		input: "virtual_entry_point",
 
 		output: {},
 
