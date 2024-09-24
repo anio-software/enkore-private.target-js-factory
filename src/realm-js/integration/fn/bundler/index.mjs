@@ -33,6 +33,15 @@ export default async function(fourtune_session, options) {
 	))
 
 	const rollup_plugins = []
+	let rollup_entry = options.entry
+
+	if ("entry_code" in options) {
+		rollup_plugins.push(virtual({
+			"virtual_entry_point": options.entry_code
+		}))
+
+		rollup_entry = "virtual_entry_point"
+	}
 
 	if (options.entry.endsWith("d.ts")) {
 		rollup_plugins.push(dts({respectExternal: true}))
@@ -46,7 +55,7 @@ export default async function(fourtune_session, options) {
 	}
 
 	const rollup_options = {
-		input: options.entry,
+		input: rollup_entry,
 
 		output: {
 			//file: output_file_path,
