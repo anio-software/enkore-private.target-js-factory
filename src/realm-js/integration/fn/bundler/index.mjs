@@ -49,11 +49,7 @@ export default async function(fourtune_session, options) {
 	const rollup_options = {
 		input: rollup_entry,
 
-		output: {
-			//file: output_file_path,
-			format: "es"//,
-			//inlineDynamicImports: true
-		},
+		output: {},
 
 		//
 		// custom plugin has the responsibility
@@ -70,7 +66,10 @@ export default async function(fourtune_session, options) {
 	try {
 		const bundle = await rollup(rollup_options)
 
-		const {output} = await bundle.generate({})
+		const {output} = await bundle.generate({
+			format: "es"
+			//inlineDynamicImports: true
+		})
 
 		return output[0].code
 	} finally {
