@@ -13,13 +13,13 @@
 # Add manual "experimental" releases.
 #
 
-name: CI/CD
+name: CI/CD Experimental release
 
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
-  # Run tests for on push
+  # Run tests
   test:
     name: Run Unit tests
     runs-on: ubuntu-latest
@@ -41,12 +41,11 @@ jobs:
       - name: "Run .cicd/test.sh script (if present)"
         run: bash -c 'if [ -f ./.cicd/test.sh ]; then ./.cicd/test.sh ; fi'
 
-  # Publish for tags starting with "v"
+  # Publish
   publish:
     name: Deployment
     runs-on: ubuntu-latest
     needs: test
-    if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       id-token: write
     env:
@@ -62,17 +61,15 @@ jobs:
       - name: "Install node modules (if present)"
         run: bash -c 'if [ -f package.json ]; then npm ci ; fi'
 
-      #
-      # Make sure package.json's version field and
-      # tag name are consistent.
-      #
-      - name: "Validate package.json version (if present)"
-        run: bash -c 'if [ -f package.json ]; then clean_ver="$(printf "%s" "${{ github.ref_name }}" | cut -c2-)" ; grep -q "\"$clean_ver\"" package.json ; fi'
+      - name: Setup environment variables
+        run: |
+          echo "GIT_COMMIT_HASH_START=$(printf "${{ github.sha }}" | cut -c -8)" >> $GITHUB_ENV
+          echo "GIT_COMMIT_HASH_END=$(printf "${{ github.sha }}" | rev | cut -c -8 | rev)" >> $GITHUB_ENV
 
       - name: "Run .cicd/deploy.sh script"
         run: ./.cicd/deploy.sh
         env:
-          RELEASE_VERSION: ${{ github.ref_name }}
+          RELEASE_VERSION: "v0.0.0-experimental-${{ env.GIT_COMMIT_HASH_START }}-${{ env.GIT_COMMIT_HASH_END }}"
 
           NODE_AUTH_TOKEN: ${{ secrets.ANIO_NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.ANIO_NPM_TOKEN }}
