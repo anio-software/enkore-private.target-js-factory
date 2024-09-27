@@ -1,5 +1,4 @@
 import initPackageProject from "./type/package/init.mjs"
-import buildSourceFile from "./fn/builder/sourceFile.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -11,10 +10,6 @@ export async function initializeTarget(fourtune_session) {
 	switch (project_config.type) {
 		case "package": {
 			await initPackageProject(fourtune_session)
-
-			// provide source as javascript module
-			fourtune_session.distributables.addFile(`source.mjs`, {generator: buildSourceFile, generator_args: ["package.mjs"]})
-			fourtune_session.distributables.addFile(`source.min.mjs`, {generator: buildSourceFile, generator_args: ["package.min.mjs"]})
 		} break
 
 		/*
