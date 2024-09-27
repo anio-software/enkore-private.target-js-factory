@@ -7,15 +7,29 @@ export default async function(fourtune_session, module_name, module_exports) {
 
 	for (const [key, module_export] of module_exports) {
 		const src_file = JSON.stringify("./" + module_export.path)
+		let import_statement = ``
+
+		//
+		// Normally, the file name is used to
+		// create a named export in the output module.
+		// This means, myFunction.mjs would be exported as
+		// "myFunction"
+		//
+		import_statement = `export {default as ${module_export.export_name}} from ${src_file}`
+
+		//
+		// treat __index differently so such
+		// that this export may manually export
+		// other things.
+		//
+		if (module_export.export_name === "__index") {
+			import_statement = `export * from ${src_file}`
+		}
 
 		if (module_export.type === "d.ts") {
-			index_dts_file += `export * from ${src_file}\n`
+			index_dts_file += import_statement + "\n"
 		} else if (module_export.type === "mjs") {
-			if (module_export.export_name === "index") {
-				index_mjs_file += `export * from ${src_file}\n`
-			} else {
-				index_mjs_file += `export {default as ${module_export.export_name}} from ${src_file}\n`
-			}
+			index_mjs_file += import_statement + "\n"
 		}
 	}
 
