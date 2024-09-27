@@ -90,7 +90,25 @@ export interface DefaultContextObject {
 	package_json : object
 }
 
-export function createDefaultContext() : DefaultContextObject
+interface DefaultContextObjectPlugs {
+	getCurrentLogLevel?(
+		ctx : DefaultContextObject
+	) : string
+
+	logLine?(
+		ctx : DefaultContextObject, line : string
+	): void
+
+	logWithLevel?(
+		ctx : DefaultContextObject, level : string, lines : Array<string>
+	) : void
+
+	shouldLog?(
+		ctx : DefaultContextObject, level : string
+	) : boolean
+}
+
+export function createDefaultContext(plugs : DefaultContextObjectPlugs = {}) : DefaultContextObject
 
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,

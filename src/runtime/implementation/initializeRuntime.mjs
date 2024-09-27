@@ -67,10 +67,16 @@ export default function(
 			throw new Error(`Unable to locate resource ${type}://${path}.`)
 		},
 
-		createDefaultContext() {
-			return makeDefaultContext(
+		createDefaultContext(plugs = {}) {
+			const context = makeDefaultContext(
 				JSON.parse(JSON.stringify(runtime_init_data.package_json))
 			)
+
+			for (const key in plugs) {
+				context.plugs[key] = plugs[key]
+			}
+
+			return context
 		}
 	}
 
