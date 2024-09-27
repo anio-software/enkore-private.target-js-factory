@@ -50,6 +50,7 @@ export default async function(fourtune_session, module_name, module_exports) {
 		generator_args: []
 	})
 
+	// provide source as javascript module
 	fourtune_session.distributables.addFile(`${module_name}/source.mjs`, {generator: buildSourceFile, generator_args: [`${module_name}/index.mjs`]})
 	fourtune_session.distributables.addFile(`${module_name}/source.min.mjs`, {generator: buildSourceFile, generator_args: [`${module_name}/index.min.mjs`]})
 }
