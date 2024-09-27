@@ -77,6 +77,11 @@ export interface DefaultContextObjectLog {
 }
 
 export interface DefaultContextObject {
+	/**
+	 * @brief Version of the context object.
+	 */
+	version : number
+
 	log : DefaultContextObjectLog
 
 	/**

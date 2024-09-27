@@ -82,6 +82,8 @@ function default_logWithLevel(ctx, level, args) {
 
 export default function(package_json) {
 	let the_context = {
+		version: 0,
+
 		// Export default implementation for pluggables.
 		defaults: {
 			getCurrentLogLevel: default_getCurrentLogLevel,
