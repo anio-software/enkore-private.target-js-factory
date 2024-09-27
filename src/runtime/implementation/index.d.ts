@@ -44,7 +44,48 @@ export function loadProjectPackageJSON() : object
  */
 export function loadFourtuneConfiguration() : object
 
-export function createDefaultContext() : object
+export interface DefaultContextObjectLog {
+	/**
+	 * @brief Log a message with severity "debug".
+	 */
+	(...messages: Array<string>) : void
+
+	/**
+	 * @brief Log a message with severity "error".
+	 */
+	error(...messages: Array<string>) : void
+
+	/**
+	 * @brief Log a message with severity "warning".
+	 */
+	warn(...messages: Array<string>) : void
+
+	/**
+	 * @brief Log a message with severity "information".
+	 */
+	info(...messages: Array<string>) : void
+
+	/**
+	 * @brief Log a message with severity "debug".
+	 */
+	debug(...messages: Array<string>) : void
+
+	/**
+	 * @brief Log a message with severity "trace".
+	 */
+	trace(...messages: Array<string>) : void
+}
+
+export interface DefaultContextObject {
+	log : DefaultContextObjectLog
+
+	/**
+	 * @brief The project's package.json object.
+	 */
+	package_json : object
+}
+
+export function createDefaultContext() : DefaultContextObject
 
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,
