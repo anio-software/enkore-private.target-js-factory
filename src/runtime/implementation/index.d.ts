@@ -90,7 +90,7 @@ export interface DefaultContextObject {
 	package_json : object
 }
 
-interface DefaultContextObjectPlugs {
+export interface DefaultContextObjectPlugs {
 	getCurrentLogLevel?(
 		ctx : DefaultContextObject
 	) : string
