@@ -108,7 +108,7 @@ export interface DefaultContextObjectPlugs {
 	) : boolean
 }
 
-export function createDefaultContext(plugs : DefaultContextObjectPlugs = {}) : DefaultContextObject
+export function createDefaultContext(plugs : DefaultContextObjectPlugs) : DefaultContextObject
 
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,
