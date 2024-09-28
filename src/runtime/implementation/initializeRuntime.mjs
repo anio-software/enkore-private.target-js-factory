@@ -29,7 +29,7 @@ export default function(
 			return runtime_init_data.runtime_version
 		},
 
-		loadProjectPackageJSON() {
+		getProjectPackageJSON() {
 			return JSON.parse(JSON.stringify(runtime_init_data.package_json))
 		},
 

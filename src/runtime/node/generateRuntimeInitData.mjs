@@ -8,7 +8,7 @@ import getRuntimeVersionString from "./getRuntimeVersionString.mjs"
 // This includes:
 //
 //.   - Contents of fourtune.config.mjs.
-//    - The project's package.json contents (retrievable via loadProjectPackageJSON)
+//    - The project's package.json contents (retrievable via getProjectPackageJSON)
 //
 export default async function(project_root) {
 	const project_package_json = await readJSONFile(

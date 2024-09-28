@@ -35,9 +35,9 @@ export const loadResource : LoadResourceFunction
 export function loadResourceDynamic(url : string) : ResourceReturnType
 
 /**
- * @brief Synchronously load the project's package.json
+ * @brief Synchronously get the project's package.json
  */
-export function loadProjectPackageJSON() : object
+export function getProjectPackageJSON() : object
 
 /**
  * @brief Synchronously load the project's fourtune configuration
@@ -112,7 +112,7 @@ export function createDefaultContext(plugs : DefaultContextObjectPlugs) : Defaul
 
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,
-	loadProjectPackageJSON: typeof loadProjectPackageJSON,
+	getProjectPackageJSON: typeof getProjectPackageJSON,
 	loadFourtuneConfiguration: typeof loadFourtuneConfiguration,
 	createDefaultContext: typeof createDefaultContext
 }
