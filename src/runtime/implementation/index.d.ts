@@ -44,77 +44,13 @@ export function getProjectPackageJSON() : object
  */
 export function loadFourtuneConfiguration() : object
 
-export interface DefaultContextObjectLog {
-	/**
-	 * @brief Log a message with severity "debug".
-	 */
-	(...messages: Array<string>) : void
-
-	/**
-	 * @brief Log a message with severity "error".
-	 */
-	error(...messages: Array<string>) : void
-
-	/**
-	 * @brief Log a message with severity "warning".
-	 */
-	warn(...messages: Array<string>) : void
-
-	/**
-	 * @brief Log a message with severity "information".
-	 */
-	info(...messages: Array<string>) : void
-
-	/**
-	 * @brief Log a message with severity "debug".
-	 */
-	debug(...messages: Array<string>) : void
-
-	/**
-	 * @brief Log a message with severity "trace".
-	 */
-	trace(...messages: Array<string>) : void
-}
-
-export interface DefaultContextObject {
-	/**
-	 * @brief Version of the context object.
-	 */
-	version : number
-
-	log : DefaultContextObjectLog
-
-	/**
-	 * @brief The project's package.json object.
-	 */
-	package_json : object
-}
-
-export interface DefaultContextObjectPlugs {
-	getCurrentLogLevel?(
-		ctx : DefaultContextObject
-	) : string
-
-	logLine?(
-		ctx : DefaultContextObject, line : string
-	): void
-
-	logWithLevel?(
-		ctx : DefaultContextObject, level : string, lines : Array<string>
-	) : void
-
-	shouldLog?(
-		ctx : DefaultContextObject, level : string
-	) : boolean
-}
-
-export function createDefaultContext(plugs : DefaultContextObjectPlugs) : DefaultContextObject
+//export function createDefaultContext(plugs : DefaultContextObjectPlugs) : DefaultContextObject
 
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,
 	getProjectPackageJSON: typeof getProjectPackageJSON,
 	loadFourtuneConfiguration: typeof loadFourtuneConfiguration,
-	createDefaultContext: typeof createDefaultContext
+//	createDefaultContext: typeof createDefaultContext
 }
 
 export default _default
