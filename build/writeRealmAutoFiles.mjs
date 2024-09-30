@@ -5,6 +5,7 @@ import createRuntimeGlueCode from "../src/runtime/implementation/createRuntimeGl
 import bundleFile from "./bundleFile.mjs"
 import readJSONFile from "../src/runtime/node/util/readJSONFile.mjs"
 import {createRequire} from "node:module"
+import {dts} from "rollup-plugin-dts"
 
 const require = createRequire(import.meta.url)
 
@@ -36,7 +37,11 @@ async function writeNodeMain(realm, version) {
 }
 
 async function writeNodeMainTypes(realm, version) {
-	const node_main_types = (await fs.readFile("./src/runtime/implementation/index.d.ts")).toString()
+	const node_main_types = await bundleFile(
+		"./src/runtime/implementation/index.d.ts", [
+			dts()
+		]
+	)
 
 	await fs.writeFile(
 		path.join("src", `realm-${realm}`, "auto", "node-main.d.ts"),
