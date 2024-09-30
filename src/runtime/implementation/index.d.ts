@@ -1,3 +1,7 @@
+import type {
+	createDefaultContext, useContext
+} from "./context/index.d.ts"
+
 /**
  * @brief Get runtime version number
  */
@@ -47,7 +51,9 @@ export function loadFourtuneConfiguration() : object
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,
 	getProjectPackageJSON: typeof getProjectPackageJSON,
-	loadFourtuneConfiguration: typeof loadFourtuneConfiguration
+	loadFourtuneConfiguration: typeof loadFourtuneConfiguration,
+	createDefaultContext: typeof createDefaultContext,
+	useContext: typeof useContext
 }
 
 export default _default
