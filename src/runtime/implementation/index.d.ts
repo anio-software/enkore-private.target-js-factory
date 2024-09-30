@@ -1,5 +1,6 @@
 import type {
-	createDefaultContext, useContext
+	createDefaultContext, useContext,
+	AcceptableContext
 } from "./context/types/index.d.ts"
 
 /**
@@ -47,6 +48,8 @@ export function getProjectPackageJSON() : object
  * @brief Synchronously load the project's fourtune configuration
  */
 export function loadFourtuneConfiguration() : object
+
+export type AcceptableContext = typeof AcceptableContext
 
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,

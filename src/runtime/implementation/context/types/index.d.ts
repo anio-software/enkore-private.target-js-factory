@@ -13,10 +13,12 @@ interface WrappedContext {
 	instance : ContextInstance
 }
 
+export type AcceptableContext = (WrappedContext | ContextUserOptions)
+
 export function createDefaultContext(
-	context_or_options: (WrappedContext | ContextUserOptions)
+	context_or_options: AcceptableContext
 ) : WrappedContext
 
 export function useContext (
-	context_or_options: (WrappedContext | ContextUserOptions)
+	context_or_options: AcceptableContext
 ) : ContextInstance
