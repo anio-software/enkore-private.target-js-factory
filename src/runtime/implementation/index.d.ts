@@ -1,3 +1,5 @@
+import type {ContextObject, ContextOptions} from "./context.d.ts"
+
 /**
  * @brief Get runtime version number
  */
@@ -44,13 +46,15 @@ export function getProjectPackageJSON() : object
  */
 export function loadFourtuneConfiguration() : object
 
-//export function createDefaultContext(plugs : DefaultContextObjectPlugs) : DefaultContextObject
+export function createDefaultContext(
+	options_or_context : (ContextObject | ContextOptions)
+) : ContextObject
 
 declare const _default: {
 	loadResourceDynamic: typeof loadResourceDynamic,
 	getProjectPackageJSON: typeof getProjectPackageJSON,
 	loadFourtuneConfiguration: typeof loadFourtuneConfiguration,
-//	createDefaultContext: typeof createDefaultContext
+	createDefaultContext: typeof createDefaultContext
 }
 
 export default _default
