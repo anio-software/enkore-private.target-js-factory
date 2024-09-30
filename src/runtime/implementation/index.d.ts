@@ -1,6 +1,6 @@
 import type {
 	createDefaultContext, useContext
-} from "./context/index.d.ts"
+} from "./context/types/index.d.ts"
 
 /**
  * @brief Get runtime version number
