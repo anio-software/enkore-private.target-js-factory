@@ -2,10 +2,12 @@ export default function(runtime_var_name) {
 	let glue_code = ""
 
 	let runtime_methods = [
-		"getRuntimeVersion",
+		"createDefaultContext",
 		"getProjectPackageJSON",
+		"getRuntimeVersion",
 		"loadFourtuneConfiguration",
-		"createDefaultContext"
+		//"loadResourceDynamic",
+		"useContext"
 	]
 
 	for (const method of runtime_methods) {
