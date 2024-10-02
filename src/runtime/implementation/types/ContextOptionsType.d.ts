@@ -1,12 +1,6 @@
-export enum LogLevel {
-	error = 3,
-	warn  = 4,
-	info  = 5,
-	debug = 6,
-	trace = 7
-}
+import type {LogLevelType} from "./LogLevelType.d.ts"
 
-export interface ContextOptions {
+export interface ContextOptionsType {
 	/**
 	 * @brief Tag of context, can be empty.
 	 */
@@ -15,7 +9,7 @@ export interface ContextOptions {
 	/**
 	 * @brief Retrieve the current log level.
 	 */
-	getCurrentLogLevel() : LogLevel
+	getCurrentLogLevel() : LogLevelType
 
 	/**
 	 * @brief Print a line.
@@ -25,12 +19,10 @@ export interface ContextOptions {
 	/**
 	 * @brief Log lines with a specific log level.
 	 */
-	logWithLevel(level : LogLevel, lines : Array<string>) : void
+	logWithLevel(level : LogLevelType, lines : Array<string>) : void
 
 	/**
 	 * @brief Determine whether a message should be logged.
 	 */
-	shouldLog(level : LogLevel) : boolean
+	shouldLog(level : LogLevelType) : boolean
 }
-
-export type ContextUserOptions = Partial<ContextOptions>

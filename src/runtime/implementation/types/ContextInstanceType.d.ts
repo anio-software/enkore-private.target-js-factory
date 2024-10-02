@@ -1,4 +1,4 @@
-import type {ContextOptions} from "./options.d.ts"
+import type {ContextOptionsType} from "./ContextOptionsType.d.ts"
 
 interface ContextInstanceLogMethod {
 	/**
@@ -35,8 +35,8 @@ interface ContextInstanceLogMethod {
 //
 // this interface is used by consumers of the context
 //
-export interface ContextInstance {
-	options : ContextOptions
+export interface ContextInstanceType {
+	options : ContextOptionsType
 
 	log : ContextInstanceLogMethod
 }
