@@ -1,3 +1,3 @@
 #!/bin/bash -eufx
 
-node ./build.mjs "$@"
+node ./build/writeRealmAutoFiles.mjs "$@"
