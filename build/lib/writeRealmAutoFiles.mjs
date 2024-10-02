@@ -1,4 +1,4 @@
-import createRuntimeGlueCode from "../../src/runtime/implementation/createRuntimeGlueCode.mjs"
+import getRuntimeGlueCode from "../../src/runtime/implementation/getRuntimeGlueCode.auto.mjs"
 import readJSONFile from "../../src/runtime/node/util/readJSONFile.mjs"
 
 import cleanRealmAutoFiles from "./cleanRealmAutoFiles.mjs"
@@ -24,7 +24,7 @@ function autogenerateBanner(realm, version) {
 async function writeNodeMain(realm, version) {
 	let node_main_template = (await fs.readFile("./src/runtime/node/main.template.mjs")).toString()
 
-	node_main_template += createRuntimeGlueCode("runtime")
+	node_main_template += getRuntimeGlueCode("runtime")
 
 	node_main_template = node_main_template
 		.split(`<<@BASE_REALM>>`).join("./base-realm.mjs")
