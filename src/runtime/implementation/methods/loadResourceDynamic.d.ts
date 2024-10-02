@@ -1,4 +1,4 @@
-import type {ResourceReturnType} from "../ResourceReturnType.d.ts"
+import type {ResourceReturnType} from "../types/ResourceReturnType.d.ts"
 
 /**
  * @brief Dynamically load a resource
