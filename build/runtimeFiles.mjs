@@ -26,6 +26,13 @@ async function writeGetRuntimeGlueCode() {
 `
 
 	for (const runtime_method of runtime_methods) {
+		//
+		// ignore loadResource as its added dynamically
+		//
+		if (runtime_method === "loadResource") {
+			continue
+		}
+
 		runtime_glue_code_fn += `\tglue_code += \``
 		runtime_glue_code_fn += `export function ${runtime_method}(...args) { return \${runtime_var_name}.${runtime_method}(...args); }\\n\`\n`
 	}
@@ -43,6 +50,13 @@ async function writeInitializeRuntime() {
 	let initializeRuntime_code = ``
 
 	for (const runtime_method of runtime_methods) {
+		//
+		// ignore loadResource as its added dynamically
+		//
+		if (runtime_method === "loadResource") {
+			continue
+		}
+
 		initializeRuntime_code += `import ${runtime_method} from "./methods/${runtime_method}.mjs"\n`
 	}
 
@@ -51,6 +65,13 @@ async function writeInitializeRuntime() {
 	let runtime_public_methods = ``
 
 	for (const runtime_method of runtime_methods) {
+		//
+		// ignore loadResource as its added dynamically
+		//
+		if (runtime_method === "loadResource") {
+			continue
+		}
+
 		runtime_public_methods += `\t\t\t${runtime_method}(...args) {\n`
 		runtime_public_methods += `\t\t\t\treturn ${runtime_method}(runtime, ...args)\n`
 		runtime_public_methods += `\t\t\t},\n`
