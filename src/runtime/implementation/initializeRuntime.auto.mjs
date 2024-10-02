@@ -18,23 +18,18 @@ export default function(
 			createDefaultContext(...args) {
 				return createDefaultContext(runtime, ...args)
 			},
-
 			getProjectPackageJSON(...args) {
 				return getProjectPackageJSON(runtime, ...args)
 			},
-
 			getRuntimeVersion(...args) {
 				return getRuntimeVersion(runtime, ...args)
 			},
-
 			loadFourtuneConfiguration(...args) {
 				return loadFourtuneConfiguration(runtime, ...args)
 			},
-
 			loadResourceDynamic(...args) {
 				return loadResourceDynamic(runtime, ...args)
 			},
-
 			useContext(...args) {
 				return useContext(runtime, ...args)
 			}

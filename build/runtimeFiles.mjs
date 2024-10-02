@@ -39,4 +39,46 @@ async function writeGetRuntimeGlueCode() {
 	)
 }
 
+async function writeInitializeRuntime() {
+	let initializeRuntime_code = ``
+
+	for (const runtime_method of runtime_methods) {
+		initializeRuntime_code += `import ${runtime_method} from "./methods/${runtime_method}.mjs"\n`
+	}
+
+	initializeRuntime_code += `\n`
+
+	let runtime_public_methods = ``
+
+	for (const runtime_method of runtime_methods) {
+		runtime_public_methods += `\t\t\t${runtime_method}(...args) {\n`
+		runtime_public_methods += `\t\t\t\treturn ${runtime_method}(runtime, ...args)\n`
+		runtime_public_methods += `\t\t\t},\n`
+	}
+
+	runtime_public_methods = runtime_public_methods.slice(0, -2)
+
+	initializeRuntime_code += `export default function(
+	runtime_init_data, project_resources = null
+) {
+	const runtime = {
+		resources: project_resources,
+		resources_url: new Map(),
+
+		init_data: runtime_init_data,
+
+		public_interface: {
+${runtime_public_methods}
+		}
+	}
+
+	return runtime.public_interface
+}\n`
+
+	await fs.writeFile(
+		`./src/runtime/implementation/initializeRuntime.auto.mjs`, initializeRuntime_code
+	)
+}
+
 await writeGetRuntimeGlueCode()
+await writeInitializeRuntime()

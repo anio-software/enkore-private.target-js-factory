@@ -1,3 +1,3 @@
-import initializeRuntime_impl from "./initializeRuntime.mjs"
+import initializeRuntime_impl from "./initializeRuntime.auto.mjs"
 
 export const initializeRuntime = initializeRuntime_impl
