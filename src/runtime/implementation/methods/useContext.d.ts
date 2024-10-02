@@ -1,0 +1,1 @@
+export type UseContextType = () => any

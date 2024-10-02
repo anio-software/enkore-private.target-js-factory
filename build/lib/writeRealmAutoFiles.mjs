@@ -39,7 +39,7 @@ async function writeNodeMain(realm, version) {
 
 async function writeNodeMainTypes(realm, version) {
 	const node_main_types = await bundleFile(
-		"./src/runtime/implementation/index.d.ts", [
+		"./src/runtime/implementation/index.auto.d.ts", [
 			dts()
 		]
 	)

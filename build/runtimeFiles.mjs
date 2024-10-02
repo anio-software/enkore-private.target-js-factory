@@ -101,5 +101,42 @@ ${runtime_public_methods}
 	)
 }
 
+function ucfirst(s) {
+	return s[0].toUpperCase() + s.slice(1)
+}
+
+async function writeRuntimeTypes() {
+	let code = ``
+
+	for (const runtime_method of runtime_methods) {
+		code += `import type {${ucfirst(runtime_method)}Type} from "./methods/${runtime_method}.d.ts"\n`
+	}
+
+	code += `\n`
+
+	for (const runtime_method of runtime_methods) {
+		code += `export const ${runtime_method} : ${ucfirst(runtime_method)}Type\n`
+	}
+
+	code += `\n`
+
+	code += `declare const _default : {\n`
+
+	for (const runtime_method of runtime_methods) {
+		code += `    ${runtime_method}: ${ucfirst(runtime_method)}Type,\n`
+	}
+
+	code += `}\n`
+
+	code += `\n`
+
+	code += `export default _default\n`
+
+	await fs.writeFile(
+		`./src/runtime/implementation/index.auto.d.ts`, code
+	)
+}
+
 await writeGetRuntimeGlueCode()
 await writeInitializeRuntime()
+await writeRuntimeTypes()
