@@ -1,3 +1,3 @@
 #!/bin/bash -eufx
 
-node ./build.mjs
+npm run build
