@@ -27,5 +27,12 @@ export default {
 	"rollup-plugin-dts": {
 		version: "6.1.1",
 		import_code: `import {dts} from "rollup-plugin-dts"\nexport default dts`
+	},
+	//
+	// needed to check javascript files
+	//
+	"typescript": {
+		version: "5.6.2",
+		import_code: `import * as ts from "typescript"\nexport default ts`
 	}
 }
