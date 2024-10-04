@@ -16,7 +16,7 @@
     "./_debug/plugin": "./auto/plugin.mjs",
     "./base-realm/version": "./auto/base-realm.version.mjs"
   },
-  "typings": "./auto/node-main.d.ts",
+  "typings": "./auto/node-main.d.mts",
   "scripts": {
     "postinstall": "node ./auto/install.mjs"
   },

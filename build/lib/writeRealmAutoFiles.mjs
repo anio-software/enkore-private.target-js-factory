@@ -45,7 +45,7 @@ async function writeNodeMainTypes(realm, version) {
 	)
 
 	await fs.writeFile(
-		path.join("src", `realm-${realm}`, "auto", "node-main.d.ts"),
+		path.join("src", `realm-${realm}`, "auto", "node-main.d.mts"),
 		autogenerateBanner(realm, version) + node_main_types
 	)
 }
