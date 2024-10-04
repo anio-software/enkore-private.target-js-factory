@@ -33,9 +33,13 @@ export default async function(fourtune_session) {
 	const files = await scandir(
 		path.join(fourtune_session.getProjectRoot(), "src"),
 		{
-			filter(entry) {
-				return entry.type === "file" &&
-				       entry.name.endsWith(".mjs")
+			filter({type, name}) {
+				if (type !== "file") return false
+
+				if (name.endsWith(".mjs")) return true
+				if (name.endsWith(".d.mts")) return true
+
+				return false
 			},
 
 			map(entry) {
