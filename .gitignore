@@ -1,6 +1,6 @@
 .DS_Store
 /node_modules/
 /src/realm-js/auto/*.mjs
-/src/realm-js/auto/*.d.ts
+/src/realm-js/auto/*.d.mts
 /src/realm-js/package.json
 /src/realm-js/node_modules/
