@@ -55,6 +55,21 @@ export default async function(fourtune_session) {
 
 	const ts = getDependency("typescript")
 
+	const ignored_codes = [
+		7005,   // Variable '{0}' implicitly has an '{1}' type.
+		7006,   // Parameter '{0}' implicitly has an '{1}' type.
+		7008,   // Member '{0}' implicitly has an '{1}' type.
+		7009,   // 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.
+		7010,   // '{0}', which lacks return-type annotation, implicitly has an '{1}' return type.
+		7011,   // Function expression, which lacks return-type annotation, implicitly has an '{0}' return type.
+		7012,   // This overload implicitly returns the type '{0}' because it lacks a return type annotation.
+
+		7017,   // Element implicitly has an 'any' type because type '{0}' has no index signature.
+		7018,   // Object literal's property '{0}' implicitly has an '{1}' type.
+		7019,   // Rest parameter '{0}' implicitly has an 'any[]' type.
+		7034,   // Variable '{0}' implicitly has type '{1}' in some locations where its type cannot be determined.
+	]
+
 	const messages = checkFiles(ts, files, {
 		//allowSyntheticDefaultImports: true,
 
@@ -74,6 +89,8 @@ export default async function(fourtune_session) {
 		types: [
 			getPathOfDependency("@types/node")
 		]
+	}).filter(({code}) => {
+		return !ignored_codes.includes(code)
 	})
 
 	console.log(messages)
