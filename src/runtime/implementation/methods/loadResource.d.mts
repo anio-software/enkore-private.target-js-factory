@@ -1,4 +1,4 @@
-import type {ResourceReturnType} from "../types/ResourceReturnType"
+import type {ResourceReturnType} from "../types/ResourceReturnType.d.mts"
 
 export interface LoadResourceType {
 	/**
