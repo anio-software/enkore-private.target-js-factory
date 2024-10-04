@@ -45,7 +45,11 @@ export default async function(fourtune_session) {
 	)
 
 	const project_root = fourtune_session.getProjectRoot()
-	const {getDependency} = await loadRealmDependencies(
+
+	const {
+		getDependency,
+		getPathOfDependency
+	} = await loadRealmDependencies(
 		project_root, "realm-js"
 	)
 
@@ -65,7 +69,11 @@ export default async function(fourtune_session) {
 		target: ts.ScriptTarget.ESNext,
 
 		module: ts.ModuleKind.NodeNext,
-		moduleResolution: ts.ModuleResolutionKind.NodeNext
+		moduleResolution: ts.ModuleResolutionKind.NodeNext,
+
+		types: [
+			getPathOfDependency("@types/node")
+		]
 	})
 
 	console.log(messages)
