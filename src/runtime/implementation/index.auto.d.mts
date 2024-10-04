@@ -1,3 +1,4 @@
+export type {UsableContextType} from "./types/UsableContextType.d.mts"
 import type {CreateDefaultContextType} from "./methods/createDefaultContext.d.mts"
 import type {GetProjectPackageJSONType} from "./methods/getProjectPackageJSON.d.mts"
 import type {GetRuntimeVersionType} from "./methods/getRuntimeVersion.d.mts"

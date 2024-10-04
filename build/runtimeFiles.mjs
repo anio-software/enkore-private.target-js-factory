@@ -108,6 +108,8 @@ function ucfirst(s) {
 async function writeRuntimeTypes() {
 	let code = ``
 
+	code += `export type {UsableContextType} from "./types/UsableContextType.d.mts"\n`
+
 	for (const runtime_method of runtime_methods) {
 		code += `import type {${ucfirst(runtime_method)}Type} from "./methods/${runtime_method}.d.mts"\n`
 	}
