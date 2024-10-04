@@ -26,18 +26,18 @@ export default async function(fourtune_session, module_name, module_exports) {
 			import_statement = `export * from ${src_file}`
 		}
 
-		if (module_export.type === "d.ts") {
+		if (module_export.type === "d.mts") {
 			index_dts_file += import_statement + "\n"
 		} else if (module_export.type === "mjs") {
 			index_mjs_file += import_statement + "\n"
 		}
 	}
 
-	fourtune_session.distributables.addFile(`${module_name}/index.d.ts`, {
+	fourtune_session.distributables.addFile(`${module_name}/index.d.mts`, {
 		async generator() {
 			return await runBundler(fourtune_session, {
 				entry: index_dts_file,
-				entry_file_type: "d.ts"
+				entry_file_type: "d.mts"
 			})
 		},
 		generator_args: []

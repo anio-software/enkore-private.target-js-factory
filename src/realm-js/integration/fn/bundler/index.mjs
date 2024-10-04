@@ -28,7 +28,7 @@ export default async function(fourtune_session, options) {
 		"virtual_entry_point": options.entry
 	})]
 
-	if (options.entry_file_type === "d.ts") {
+	if (options.entry_file_type === "d.mts") {
 		rollup_plugins.push(dts({respectExternal: true}))
 	} else if (options.entry_file_type === "mjs") {
 		rollup_plugins.push(await fourtuneRollupPlugin(project_root))

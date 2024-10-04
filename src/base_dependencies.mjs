@@ -22,7 +22,7 @@ export default {
 		version: "0.4.4"
 	},
 	//
-	// needed to process .d.ts files
+	// needed to process .d.mts files
 	//
 	"rollup-plugin-dts": {
 		version: "6.1.1",

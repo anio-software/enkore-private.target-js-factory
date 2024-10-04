@@ -6,10 +6,10 @@ function getExportTypeAndName(filename) {
 			type: "mjs",
 			name: filename.slice(0, -4)
 		}
-	} else if (filename.endsWith(".d.ts")) {
+	} else if (filename.endsWith(".d.mts")) {
 		return {
-			type: "d.ts",
-			name: filename.slice(0, -5)
+			type: "d.mts",
+			name: filename.slice(0, -6)
 		}
 	}
 }
@@ -33,7 +33,7 @@ export default async function(fourtune_session) {
 
 		if (
 			!entry.name.endsWith(".mjs") &&
-			!entry.name.endsWith(".d.ts")
+			!entry.name.endsWith(".d.mts")
 		) {
 			fourtune_session.addWarning(
 				`pkg.unsupported_file`, {relative_path}
