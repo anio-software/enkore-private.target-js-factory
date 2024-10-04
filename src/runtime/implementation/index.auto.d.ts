@@ -1,10 +1,10 @@
-import type {CreateDefaultContextType} from "./methods/createDefaultContext.d.ts"
-import type {GetProjectPackageJSONType} from "./methods/getProjectPackageJSON.d.ts"
-import type {GetRuntimeVersionType} from "./methods/getRuntimeVersion.d.ts"
-import type {LoadFourtuneConfigurationType} from "./methods/loadFourtuneConfiguration.d.ts"
-import type {LoadResourceType} from "./methods/loadResource.d.ts"
-import type {LoadResourceDynamicType} from "./methods/loadResourceDynamic.d.ts"
-import type {UseContextType} from "./methods/useContext.d.ts"
+import type {CreateDefaultContextType} from "./methods/createDefaultContext.d.mts"
+import type {GetProjectPackageJSONType} from "./methods/getProjectPackageJSON.d.mts"
+import type {GetRuntimeVersionType} from "./methods/getRuntimeVersion.d.mts"
+import type {LoadFourtuneConfigurationType} from "./methods/loadFourtuneConfiguration.d.mts"
+import type {LoadResourceType} from "./methods/loadResource.d.mts"
+import type {LoadResourceDynamicType} from "./methods/loadResourceDynamic.d.mts"
+import type {UseContextType} from "./methods/useContext.d.mts"
 
 export const createDefaultContext : CreateDefaultContextType
 export const getProjectPackageJSON : GetProjectPackageJSONType

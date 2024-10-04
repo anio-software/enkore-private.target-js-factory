@@ -109,7 +109,7 @@ async function writeRuntimeTypes() {
 	let code = ``
 
 	for (const runtime_method of runtime_methods) {
-		code += `import type {${ucfirst(runtime_method)}Type} from "./methods/${runtime_method}.d.ts"\n`
+		code += `import type {${ucfirst(runtime_method)}Type} from "./methods/${runtime_method}.d.mts"\n`
 	}
 
 	code += `\n`
