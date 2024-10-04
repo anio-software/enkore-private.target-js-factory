@@ -133,7 +133,7 @@ async function writeRuntimeTypes() {
 	code += `export default _default\n`
 
 	await fs.writeFile(
-		`./src/runtime/implementation/index.auto.d.ts`, code
+		`./src/runtime/implementation/index.auto.d.mts`, code
 	)
 }
 
