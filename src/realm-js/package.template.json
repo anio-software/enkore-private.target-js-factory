@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "@fourtune/realm-js",
+  "type": "module",
   "version": "x.x.x",
   "description": "",
   "author": "Anio Software <info@anio.software>",
