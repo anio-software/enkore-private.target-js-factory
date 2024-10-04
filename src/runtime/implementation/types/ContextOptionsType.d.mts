@@ -1,4 +1,4 @@
-import type {LogLevelType} from "./LogLevelType.d.ts"
+import type {LogLevelType} from "./LogLevelType.d.mts"
 
 export interface ContextOptionsType {
 	/**

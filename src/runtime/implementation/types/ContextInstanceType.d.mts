@@ -1,4 +1,4 @@
-import type {ContextOptionsType} from "./ContextOptionsType.d.ts"
+import type {ContextOptionsType} from "./ContextOptionsType.d.mts"
 
 interface ContextInstanceLogMethod {
 	/**
