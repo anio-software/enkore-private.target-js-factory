@@ -93,5 +93,7 @@ export default async function(fourtune_session) {
 		return !ignored_codes.includes(code)
 	})
 
-	console.log(messages)
+	for (const {code, message} of messages) {
+		fourtune_session.addWarning(`ts-${code}`, message)
+	}
 }
