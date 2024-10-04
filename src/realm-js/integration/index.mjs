@@ -1,4 +1,5 @@
 import initPackageProject from "./type/package/init.mjs"
+import checkSourceFiles from "./checkSourceFiles.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -6,6 +7,10 @@ export async function getIntegrationAPIVersion() {
 
 export async function initializeTarget(fourtune_session) {
 	const project_config = fourtune_session.getProjectConfig()
+
+	fourtune_session.hooks.register(
+		"distributables.pre", checkSourceFiles
+	)
 
 	switch (project_config.type) {
 		case "package": {
