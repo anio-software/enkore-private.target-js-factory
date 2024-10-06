@@ -11,7 +11,9 @@ export default function(runtime, {
 	logWithLevel       = default_logWithLevel,
 	shouldLog          = default_shouldLog
 } = {}) {
-	let instance = {runtime}
+	let instance = {
+		package_json: runtime.init_data.package_json
+	}
 
 	instance.options = {
 		tag,

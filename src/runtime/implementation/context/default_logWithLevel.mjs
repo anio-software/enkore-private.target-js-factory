@@ -4,10 +4,8 @@ export default function(level, lines) {
 		return
 	}
 
-	const {package_json} = this.runtime.init_data
-
 	// todo: add bundle identifier?
-	let first_line = `[${level.padStart(5, " ")}] <${package_json.name}> `
+	let first_line = `[${level.padStart(5, " ")}] <${this.package_json.name}> `
 	let padding = " ".repeat(first_line.length)
 
 	const log_message = lines.map(arg => {
