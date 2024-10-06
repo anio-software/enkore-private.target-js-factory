@@ -10,18 +10,18 @@ export default function(runtime, {
 	logWithLevel       = default_logWithLevel,
 	shouldLog          = default_shouldLog
 } = {}) {
-	let instance = {
-		options: {
-			tag,
-			getCurrentLogLevel : getCurrentLogLevel.bind(instance),
-			printLine          : printLine.bind(instance),
-			logWithLevel       : logWithLevel.bind(instance),
-			shouldLog          : shouldLog.bind(instance)
-		},
+	let instance = {}
 
-		log() {
-			
-		}
+	instance.options = {
+		tag,
+		getCurrentLogLevel : getCurrentLogLevel.bind(instance),
+		printLine          : printLine.bind(instance),
+		logWithLevel       : logWithLevel.bind(instance),
+		shouldLog          : shouldLog.bind(instance)
+	}
+
+	instance.log = function log() {
+
 	}
 
 	return {
