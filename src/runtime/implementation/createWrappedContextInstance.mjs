@@ -11,7 +11,7 @@ export default function(runtime, {
 	logWithLevel       = default_logWithLevel,
 	shouldLog          = default_shouldLog
 } = {}) {
-	let instance = {}
+	let instance = {runtime}
 
 	instance.options = {
 		tag,
