@@ -1,0 +1,4 @@
+//() : LogLevelType
+export default function() {
+
+}
