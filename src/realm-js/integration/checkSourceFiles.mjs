@@ -8,6 +8,8 @@ function checkFiles(ts, files, compiler_options) {
 
 	const program = ts.createProgram(files, {
 		...compiler_options,
+		allowJs: true,
+		checkJs: true,
 		noEmit: true
 	})
 	const result = program.emit()
