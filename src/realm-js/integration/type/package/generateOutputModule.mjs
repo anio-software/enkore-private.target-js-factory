@@ -1,35 +1,43 @@
 import runBundler from "../../fn/bundler/index.mjs"
 import buildSourceFile from "../../fn/builder/sourceFile.mjs"
+import path from "node:path"
 
 export default async function(fourtune_session, module_name, module_exports) {
 	let index_dts_file = ``
 	let index_mjs_file = ``
 
 	for (const [key, module_export] of module_exports) {
-		const src_file = JSON.stringify("./" + module_export.path)
-		let import_statement = ``
+		// src_file is the source file that is written in typescript
+		const src_file = "./" + module_export.path
+		// build_file is the source file with all typescript info stripped
+		const build_file = "./" + path.join("build", module_export.path)
 
-		//
-		// Normally, the file name is used to
-		// create a named export in the output module.
-		// This means, myFunction.mjs would be exported as
-		// "myFunction"
-		//
-		import_statement = `export {default as ${module_export.export_name}} from ${src_file}`
+		const importStatement = (source) => {
+			const source_str = JSON.stringify(source)
 
-		//
-		// treat __index differently so such
-		// that this export may manually export
-		// other things.
-		//
-		if (module_export.export_name === "__index") {
-			import_statement = `export * from ${src_file}`
+			//
+			// treat __index differently so such
+			// that this export may manually export
+			// other things.
+			//
+			if (module_export.export_name === "__index") {
+				return `export * from ${source_str}`
+			} else {
+				//
+				// Normally, the file name is used to
+				// create a named export in the output module.
+				// This means, myFunction.mjs would be exported as
+				// "myFunction"
+				//
+				return `export {default as ${module_export.export_name}} from ${source_str}`
+			}
 		}
 
-		if (module_export.type === "d.mts") {
-			index_dts_file += import_statement + "\n"
-		} else if (module_export.type === "mjs") {
-			index_mjs_file += import_statement + "\n"
+		if (module_export.type === "mts") {
+			index_mjs_file += importStatement(build_file) + "\n"
+			index_dts_file += importStatement(src_file) + "\n"
+		} else if (module_export.type === "d.mts") {
+			index_dts_file += importStatement(src_file) + "\n"
 		}
 	}
 

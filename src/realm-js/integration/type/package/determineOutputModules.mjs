@@ -1,9 +1,9 @@
 import {scandir} from "@anio-software/fs"
 
 function getExportTypeAndName(filename) {
-	if (filename.endsWith(".mjs")) {
+	if (filename.endsWith(".mts")) {
 		return {
-			type: "mjs",
+			type: "mts",
 			name: filename.slice(0, -4)
 		}
 	} else if (filename.endsWith(".d.mts")) {
@@ -32,7 +32,7 @@ export default async function(fourtune_session) {
 		if (entry.type !== "file") continue
 
 		if (
-			!entry.name.endsWith(".mjs") &&
+			!entry.name.endsWith(".mts") &&
 			!entry.name.endsWith(".d.mts")
 		) {
 			fourtune_session.addWarning(
