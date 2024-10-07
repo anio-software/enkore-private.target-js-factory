@@ -1,11 +1,15 @@
 import path from "node:path"
 import {scandir} from "@anio-software/fs"
 import {loadRealmDependencies} from "../auto/base-realm.mjs"
+import getTypeScriptCompilerOptions from "./fn/getTypeScriptCompilerOptions.mjs"
 
 function checkFiles(ts, files, compiler_options) {
 	const ret = []
 
-	const program = ts.createProgram(files, compiler_options)
+	const program = ts.createProgram(files, {
+		...compiler_options,
+		noEmit: true
+	})
 	const result = program.emit()
 
 	const all_diagnostics = ts.getPreEmitDiagnostics(program).concat(result.diagnostics)
@@ -75,26 +79,11 @@ export default async function(fourtune_session) {
 		7034,   // Variable '{0}' implicitly has type '{1}' in some locations where its type cannot be determined.
 	]
 
-	const messages = checkFiles(ts, files, {
-		//allowSyntheticDefaultImports: true,
+	const compiler_options = await getTypeScriptCompilerOptions(
+		fourtune_session
+	)
 
-		skipLibCheck: false,
-
-		allowJs: true,
-		checkJs: true,
-		noEmit: true,
-
-		strict: true,
-
-		target: ts.ScriptTarget.ESNext,
-
-		module: ts.ModuleKind.NodeNext,
-		moduleResolution: ts.ModuleResolutionKind.NodeNext,
-
-		types: [
-			getPathOfDependency("@types/node")
-		]
-	}).filter(({code}) => {
+	const messages = checkFiles(ts, files, compiler_options).filter(({code}) => {
 		return !ignored_codes.includes(code)
 	})
 
