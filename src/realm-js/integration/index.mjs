@@ -1,4 +1,5 @@
 import initPackageProject from "./type/package/init.mjs"
+import preprocessTypescriptFiles from "./preprocessTypescriptFiles.mjs"
 import checkSourceFiles from "./checkSourceFiles.mjs"
 
 export async function getIntegrationAPIVersion() {
@@ -7,6 +8,13 @@ export async function getIntegrationAPIVersion() {
 
 export async function initializeTarget(fourtune_session) {
 	const project_config = fourtune_session.getProjectConfig()
+
+	//
+	// convert all .mts files to .mjs files
+	//
+	fourtune_session.hooks.register(
+		"preprocess_file", preprocessTypescriptFiles
+	)
 
 	fourtune_session.hooks.register(
 		"distributables.pre", checkSourceFiles
