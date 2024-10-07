@@ -1,15 +1,15 @@
 import {scandir} from "@anio-software/fs"
 
 function getExportTypeAndName(filename) {
-	if (filename.endsWith(".mts")) {
-		return {
-			type: "mts",
-			name: filename.slice(0, -4)
-		}
-	} else if (filename.endsWith(".d.mts")) {
+	if (filename.endsWith(".d.mts")) {
 		return {
 			type: "d.mts",
 			name: filename.slice(0, -6)
+		}
+	} else if (filename.endsWith(".mts")) {
+		return {
+			type: "mts",
+			name: filename.slice(0, -4)
 		}
 	}
 }
