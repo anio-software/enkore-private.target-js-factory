@@ -36,6 +36,7 @@ export default async function(fourtune_session) {
 			filter({type, name}) {
 				if (type !== "file") return false
 
+				if (name.endsWith(".mts")) return true
 				if (name.endsWith(".mjs")) return true
 				if (name.endsWith(".d.mts")) return true
 
