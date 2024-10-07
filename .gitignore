@@ -3,4 +3,5 @@
 /src/realm-js/auto/*.mjs
 /src/realm-js/auto/*.d.mts
 /src/realm-js/package.json
+/src/realm-js/package-lock.json
 /src/realm-js/node_modules/
