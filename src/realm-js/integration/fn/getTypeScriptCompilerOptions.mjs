@@ -11,9 +11,9 @@ export default async function(fourtune_session) {
 	const ts = getDependency("typescript")
 
 	return {
+		allowImportingTsExtensions: true,
 		skipLibCheck: false,
 
-		noEmit: true,
 		strict: true,
 
 		target: ts.ScriptTarget.ESNext,
