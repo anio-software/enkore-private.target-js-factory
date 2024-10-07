@@ -1,6 +1,7 @@
 import process from "node:process"
 import {loadRealmDependencies} from "../../../auto/base-realm.mjs"
 import fourtuneRollupPlugin from "../../../auto/plugin.mjs"
+import getTypeScriptCompilerOptions from "../getTypeScriptCompilerOptions.mjs"
 
 export default async function(fourtune_session, options) {
 	const project_root = fourtune_session.getProjectRoot()
@@ -29,7 +30,12 @@ export default async function(fourtune_session, options) {
 	})]
 
 	if (options.entry_file_type === "d.mts") {
-		rollup_plugins.push(dts({respectExternal: true}))
+		const compiler_options = await getTypeScriptCompilerOptions(fourtune_session)
+
+		rollup_plugins.push(dts({
+			respectExternal: true,
+			compilerOptions: compiler_options
+		}))
 	} else if (options.entry_file_type === "mjs") {
 		rollup_plugins.push(await fourtuneRollupPlugin(project_root))
 		rollup_plugins.push(resolve())
