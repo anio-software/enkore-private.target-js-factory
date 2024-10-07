@@ -16,6 +16,8 @@ export default async function(fourtune_session) {
 
 		strict: true,
 
+		noImplicitAny: true,
+
 		target: ts.ScriptTarget.ESNext,
 
 		module: ts.ModuleKind.NodeNext,
