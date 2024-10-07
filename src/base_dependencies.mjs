@@ -34,5 +34,17 @@ export default {
 	"typescript": {
 		version: "5.6.2",
 		import_code: `import * as ts from "typescript"\nexport default ts`
+	},
+	//
+	// used to transpile js code
+	//
+	"@babel/core": {
+		version: "7.25.7"
+	},
+	//
+	// used to strip typescript types
+	//
+	"@babel/preset-typescript": {
+		version: "7.25.7"
 	}
 }
