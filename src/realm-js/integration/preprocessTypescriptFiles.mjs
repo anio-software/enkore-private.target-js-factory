@@ -1,6 +1,8 @@
 import {loadRealmDependencies} from "../auto/base-realm.mjs"
+import path from "node:path"
 
 export default async function(fourtune_session, relative_path, code) {
+	// only pre-process typescript files
 	if (!relative_path.endsWith(".mts")) return code
 
 	const project_root = fourtune_session.getProjectRoot()
@@ -8,7 +10,7 @@ export default async function(fourtune_session, relative_path, code) {
 	const {
 		getDependency,
 		getPathOfDependency
-	} = await loadRealmDependencies(project_root)
+	} = await loadRealmDependencies(project_root, "realm-js")
 
 	const babel = getDependency("@babel/core")
 
