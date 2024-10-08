@@ -25,4 +25,5 @@ export interface ContextOptionsType {
 	 * @brief Determine whether a message should be logged.
 	 */
 	shouldLog(level : LogLevelType) : boolean
+	// todo: add parameters like "package_name" and "tag" to shouldLog()
 }
