@@ -24,7 +24,7 @@ export default async function(fourtune_session) {
 
 	const tsconfig_path = path.join(project_root, "tsconfig.json")
 	const tsconfig_data = await fs.readFile(tsconfig_path)
-	const tsconfig = JSON.pare(tsconfig_data.toString())
+	const tsconfig = JSON.parse(tsconfig_data.toString())
 
 	const {
 		getDependency
