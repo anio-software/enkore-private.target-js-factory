@@ -36,6 +36,19 @@ export default async function(fourtune_session, options) {
 			respectExternal: true,
 			compilerOptions: compiler_options
 		}))
+
+		//
+		// make warning "[warn] rollup says "node:fs" is imported by "src/methods/lstat.mts", but could not be resolved – treating it as an external dependency." go away
+		//
+		rollup_plugins.push({
+			resolveId(id) {
+				if (id.startsWith("node:")) {
+					return {id, external: true}
+				}
+
+				return null
+			}
+		})
 	} else if (options.entry_file_type === "mjs") {
 		rollup_plugins.push(await fourtuneRollupPlugin(project_root))
 		rollup_plugins.push(resolve())
