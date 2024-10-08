@@ -1,9 +1,14 @@
 import initPackageProject from "./type/package/init.mjs"
 import preprocessTypescriptFiles from "./preprocessTypescriptFiles.mjs"
 import checkSourceFiles from "./checkSourceFiles.mjs"
+import initProject from "./initProject.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
+}
+
+export async function initProject(fourtune_session) {
+	await initProject(fourtune_session)
 }
 
 export async function initializeTarget(fourtune_session) {
