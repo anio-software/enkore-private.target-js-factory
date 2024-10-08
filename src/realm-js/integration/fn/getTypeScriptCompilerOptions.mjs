@@ -1,5 +1,6 @@
 import {loadRealmDependencies} from "../../auto/base-realm.mjs"
 import path from "node:path"
+import fs from "node:fs/promises"
 
 // source: https://github.com/microsoft/TypeScript/issues/5276#issuecomment-148926002
 function convertConfigToCompilerOptions(ts, opts) {
