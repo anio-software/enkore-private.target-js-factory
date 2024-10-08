@@ -2,6 +2,7 @@ import initPackageProject from "./type/package/init.mjs"
 import preprocessTypescriptFiles from "./preprocessTypescriptFiles.mjs"
 import checkSourceFiles from "./checkSourceFiles.mjs"
 import initProjectFn from "./initProject.mjs"
+import checkProjectFiles from "./checkProjectFiles.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -16,6 +17,8 @@ export async function initProject(fourtune_session, writeFile) {
 
 export async function initializeTarget(fourtune_session) {
 	const project_config = fourtune_session.getProjectConfig()
+
+	await checkProjectFiles(fourtune_session)
 
 	//
 	// convert all .mts files to .mjs files
