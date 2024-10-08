@@ -1,4 +1,5 @@
 import type {LogLevelType} from "./LogLevelType.d.mts"
+import type {ContextInstanceType} from "./ContextInstanceType.d.mts"
 
 export interface ContextOptionsType {
 	/**
@@ -9,21 +10,21 @@ export interface ContextOptionsType {
 	/**
 	 * @brief Retrieve the current log level.
 	 */
-	getCurrentLogLevel() : LogLevelType
+	getCurrentLogLevel(this : ContextInstanceType) : LogLevelType
 
 	/**
 	 * @brief Print a line.
 	 */
-	printLine(line : string): void
+	printLine(this : ContextInstanceType, line : string): void
 
 	/**
 	 * @brief Log lines with a specific log level.
 	 */
-	logWithLevel(level : LogLevelType, lines : Array<string>) : void
+	logWithLevel(this : ContextInstanceType, level : LogLevelType, lines : Array<string>) : void
 
 	/**
 	 * @brief Determine whether a message should be logged.
 	 */
-	shouldLog(level : LogLevelType) : boolean
+	shouldLog(this : ContextInstanceType, level : LogLevelType) : boolean
 	// todo: add parameters like "package_name" and "tag" to shouldLog()
 }
