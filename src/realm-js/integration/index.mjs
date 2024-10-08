@@ -7,6 +7,9 @@ export async function getIntegrationAPIVersion() {
 	return 0
 }
 
+//
+// this function is called when -init-project was specified on the CLI
+//
 export async function initProject(fourtune_session, writeFile) {
 	await initProjectFn(fourtune_session, writeFile)
 }
