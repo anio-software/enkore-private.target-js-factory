@@ -1,9 +1,6 @@
-import {writeAtomicFile} from "@anio-software/fs"
-import path from "node:path"
-
-export default async function(fourtune_session) {
-	await writeAtomicFile(
-		path.join(fourtune_session.getProjectRoot(), "tsconfig.json"), 
+export default async function(fourtune_session, writeFile) {
+	await writeFile(
+		"tsconfig.json",
 `{
 	"compilerOptions": {
 		"allowImportingTsExtensions": true,
@@ -15,6 +12,6 @@ export default async function(fourtune_session) {
 		"module": "nodenext",
 		"moduleResolution": "nodenext"
 	}
-}\n`
+}\n`, {overwrite:false}
 	)
 }
