@@ -18,9 +18,11 @@ export default async function(fourtune_session) {
 	const output_modules = new Map()
 
 	const entries = [
-		...await scandir("src/auto/export", {
-			allow_missing_dir:true
-		}),
+		// DON'T scan FS for auto files use fourtune_session.autogenerate.getFiles() instead!
+		//...await scandir("src/auto/export", {
+		//	allow_missing_dir:true
+		//}),
+		...fourtune_session.autogenerate.getFilesAsScandirResult("src/auto/export"),
 		...await scandir("src/export", {
 			allow_missing_dir:true
 		})
