@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.16.0",
+  "version": "0.17.0",
   "name": "@fourtune/realm-js-and-web",
   "devDependencies": {
     "@anio-js-foundation/create-temporary-resource": "^2.0.0",
