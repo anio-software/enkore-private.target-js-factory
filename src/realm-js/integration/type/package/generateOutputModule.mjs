@@ -16,11 +16,11 @@ export default async function(fourtune_session, module_name, module_exports) {
 			const source_str = JSON.stringify(source)
 
 			//
-			// treat __index differently so such
+			// treat __star_export differently so such
 			// that this export may manually export
 			// other things.
 			//
-			if (module_export.export_name === "__index") {
+			if (module_export.export_name === "__star_export") {
 				return `export * from ${source_str}`
 			} else {
 				//
