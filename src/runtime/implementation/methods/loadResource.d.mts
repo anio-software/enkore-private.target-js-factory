@@ -1,6 +1,6 @@
 import type {ResourceReturnType} from "../types/ResourceReturnType.d.mts"
 
-export interface LoadResourceType {
+export type LoadResourceType = {
 	/**
 	 * @brief Synchronously load a resource
 	 * @description
