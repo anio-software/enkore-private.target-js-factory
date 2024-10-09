@@ -1,6 +1,6 @@
 import type {ContextOptionsType} from "./ContextOptionsType.d.mts"
 
-interface ContextInstanceLogMethod {
+type ContextInstanceLogMethod = {
 	/**
 	 * @brief Log a message with severity "debug".
 	 */
@@ -35,7 +35,7 @@ interface ContextInstanceLogMethod {
 //
 // this interface is used by consumers of the context
 //
-export interface ContextInstanceType {
+export type ContextInstanceType = {
 	options : ContextOptionsType
 
 	log : ContextInstanceLogMethod

@@ -1,7 +1,7 @@
 import type {LogLevelType} from "./LogLevelType.d.mts"
 import type {ContextInstanceType} from "./ContextInstanceType.d.mts"
 
-export interface ContextOptionsType {
+export type ContextOptionsType = {
 	/**
 	 * @brief Tag of context, can be empty.
 	 */

@@ -2,7 +2,7 @@
 // instance has type "object" because it's not known
 // what version the instance object is
 //
-export interface WrappedContextType {
+export type WrappedContextType = {
 	/**
 	 * @brief Version of the context.
 	 */
