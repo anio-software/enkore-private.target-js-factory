@@ -108,7 +108,7 @@ function ucfirst(s) {
 async function writeRuntimeTypes() {
 	let code = ``
 
-	code += `export type {UsableContextType} from "./types/UsableContextType.d.mts"\n`
+	code += `export type {UserContextType} from "./types/UserContextType.d.mts"\n`
 	code += `export type {ContextInstanceType} from "./types/ContextInstanceType.d.mts"\n`
 	code += `export type {LogLevelType} from "./types/LogLevelType.d.mts"\n`
 	code += `export type {FunctionTypeFromFactoryType} from "./types/FunctionTypeFromFactoryType.d.mts"\n`
