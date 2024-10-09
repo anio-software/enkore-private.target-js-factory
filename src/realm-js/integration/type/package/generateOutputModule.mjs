@@ -29,7 +29,7 @@ export default async function(fourtune_session, module_name, module_exports) {
 				// This means, myFunction.mjs would be exported as
 				// "myFunction"
 				//
-				return `export {default as ${module_export.export_name}} from ${source_str}`
+				return `export {${module_export.export_name}} from ${source_str}`
 			}
 		}
 
