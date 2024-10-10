@@ -101,13 +101,6 @@ export default async function(fourtune_session, writeFile) {
 		`import type {ImplementationDocType} from "./_implementation.mts"\n` +
 		`//import type {ImplementationDocType} from "./_implementationSync.mts"\n` +
 		`\n` +
-		`type RemoveFirstFromTuple<T extends any[]> = T["length"] extends 0 ? undefined : (((...b: T) => void) extends (a : any, ...b: infer I) => void ? I : [])\n` +
-		`\n` +
-		`/* remove context and dependencies parameters from type tuple */\n` +
-		`type ImplementationUserParameters = RemoveFirstFromTuple<\n` +
-		`	RemoveFirstFromTuple<Parameters<typeof implementation>>\n` +
-		`>\n` +
-		`\n` +
 		generateImportStatements(factory_imports) +
 		`\n` +
 		`/* ImplementationDocType is needed to make doctypes work in LSP */\n` +
@@ -117,8 +110,8 @@ export default async function(fourtune_session, writeFile) {
 		`\n` +
 		`	const dependencies : DependenciesType = {${dependencies_members}}\n` +
 		`\n` +
-		`	return async function ${function_name}(...args: ImplementationUserParameters) : ReturnType<typeof implementation> {\n` +
-		`//	return function ${function_name}Sync(...args: ImplementationUserParameters) : ReturnType<typeof implementation> {\n` +
+		`	return async function ${function_name}(...args: Parameters<ImplementationDocType>) : ReturnType<typeof implementation> {\n` +
+		`//	return function ${function_name}Sync(...args: Parameters<ImplementationDocType>) : ReturnType<typeof implementation> {\n` +
 		`		return await implementation(context, dependencies, ...args)\n` +
 		`//		return implementation(context, dependencies, ...args)\n` +
 		`	}\n` +
