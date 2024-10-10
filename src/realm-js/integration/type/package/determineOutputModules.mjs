@@ -32,6 +32,7 @@ export default async function(fourtune_session) {
 		const {relative_path} = entry
 
 		if (entry.type !== "file") continue
+		if (entry.name.slice(0,1) === "_") continue
 
 		if (
 			!entry.name.endsWith(".mts") &&
