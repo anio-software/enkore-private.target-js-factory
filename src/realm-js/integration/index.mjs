@@ -1,4 +1,4 @@
-import initPackageProject from "./type/package/init.mjs"
+import initPackageLikeProject from "./type/package-like/init.mjs"
 import preprocessTypescriptFiles from "./preprocessTypescriptFiles.mjs"
 import checkSourceFiles from "./checkSourceFiles.mjs"
 import initProjectFn from "./initProject.mjs"
@@ -33,7 +33,7 @@ export async function initializeTarget(fourtune_session) {
 
 	switch (project_config.type) {
 		case "package": {
-			await initPackageProject(fourtune_session)
+			await initPackageLikeProject(fourtune_session)
 		} break
 
 		/*
