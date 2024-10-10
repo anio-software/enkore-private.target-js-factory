@@ -110,8 +110,8 @@ export default async function(fourtune_session, writeFile) {
 		`\n` +
 		`	const dependencies : DependenciesType = {${dependencies_members}}\n` +
 		`\n` +
-		`	return async function ${function_name}(...args: Parameters<ImplementationDocType>) : ReturnType<typeof implementation> {\n` +
-		`//	return function ${function_name}Sync(...args: Parameters<ImplementationDocType>) : ReturnType<typeof implementation> {\n` +
+		`	return async function ${function_name}(...args: Parameters<ImplementationDocType>) : ReturnType<ImplementationDocType> {\n` +
+		`//	return function ${function_name}Sync(...args: Parameters<ImplementationDocType>) : ReturnType<ImplementationDocType> {\n` +
 		`		return await implementation(context, dependencies, ...args)\n` +
 		`//		return implementation(context, dependencies, ...args)\n` +
 		`	}\n` +
