@@ -1,3 +1,4 @@
+import initAsyncSyncProject from "./type/async-sync/init.mjs"
 import initPackageLikeProject from "./type/package-like/init.mjs"
 import preprocessTypescriptFiles from "./preprocessTypescriptFiles.mjs"
 import checkSourceFiles from "./checkSourceFiles.mjs"
@@ -33,6 +34,15 @@ export async function initializeTarget(fourtune_session) {
 
 	switch (project_config.type) {
 		case "package": {
+			await initPackageLikeProject(fourtune_session)
+		} break
+
+		//
+		// special kind of package:
+		// project/package with only one function that is async+sync
+		//
+		case "async-sync": {
+			await initAsyncSyncProject(fourtune_session)
 			await initPackageLikeProject(fourtune_session)
 		} break
 
