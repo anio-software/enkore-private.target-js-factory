@@ -12,7 +12,11 @@ export default async function(fourtune_session, writeFile) {
 		"strict": true,
 		"target": "esnext",
 		"module": "nodenext",
-		"moduleResolution": "nodenext"
+		"moduleResolution": "nodenext",
+		"baseUrl": "./",
+		"paths": {
+			"#/*": ["./*"]
+		}
 	}
 }\n`, {overwrite:false}
 	)
