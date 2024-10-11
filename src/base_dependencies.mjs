@@ -46,11 +46,5 @@ export default {
 	//
 	"@babel/preset-typescript": {
 		version: "7.25.7"
-	},
-	//
-	// used to resolve path aliases
-	//
-	"babel-plugin-module-resolver": {
-		version: "^5.0.2"
 	}
 }
