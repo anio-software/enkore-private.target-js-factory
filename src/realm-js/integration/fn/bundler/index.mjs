@@ -56,6 +56,21 @@ export default async function(fourtune_session, options) {
 		throw new Error(`Invalid file type '${options.entry_file_type}'.`)
 	}
 
+	//
+	// resolve "#" to ./build/src/
+	//
+	rollup_plugins.push({
+		resolveId(id) {
+			if (id.startsWith("#/")) {
+				return {
+					id: project_root + "/build/src/" + id.slice(2)
+				}
+			}
+
+			return null
+		}
+	})
+
 	if (options.minified) {
 		rollup_plugins.push(terser())
 	}
