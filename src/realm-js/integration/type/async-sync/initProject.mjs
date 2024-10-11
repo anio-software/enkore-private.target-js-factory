@@ -69,12 +69,12 @@ export default async function(fourtune_session, writeFile) {
 		`template/auto/${function_name}.mts`,
 
 		fourtune_session.autogenerate.warningComment() +
-		`import {${function_name}Factory as factory} from "./${function_name}Factory.mts"\n` +
-		`//import {${function_name}SyncFactory as factory} from "./${function_name}SyncFactory.mts"\n` +
+		`import {${function_name}Factory as factory} from "#/auto/export/${function_name}Factory.mts"\n` +
+		`//import {${function_name}SyncFactory as factory} from "#/auto/export/${function_name}SyncFactory.mts"\n` +
 		`\n` +
 		`/* ImplementationDocType is needed to make doctypes work in LSP */\n` +
-		`import type {ImplementationDocType} from "./_implementation.mts"\n` +
-		`//import type {ImplementationDocType} from "./_implementationSync.mts"\n` +
+		`import type {ImplementationDocType} from "#/auto/export/_implementation.mts"\n` +
+		`//import type {ImplementationDocType} from "#/auto/export/_implementationSync.mts"\n` +
 		`\n` +
 		`const impl = factory()\n` +
 		`\n` +
@@ -91,15 +91,15 @@ export default async function(fourtune_session, writeFile) {
 		`import type {UserContextType} from "@fourtune/realm-js"\n` +
 		`import {useContext} from "@fourtune/realm-js"\n` +
 		`\n` +
-		`import type {DependenciesType} from "./_DependenciesType.d.mts"\n` +
-		`//import type {DependenciesType} from "./_DependenciesSyncType.d.mts"\n` +
+		`import type {DependenciesType} from "#/auto/export/_DependenciesType.d.mts"\n` +
+		`//import type {DependenciesType} from "#/auto/export/_DependenciesSyncType.d.mts"\n` +
 		`\n` +
-		`import implementation from "./_implementation.mts"\n` +
-		`//import implementation from "./_implementationSync.mts"\n` +
+		`import implementation from "#/auto/export/_implementation.mts"\n` +
+		`//import implementation from "#/auto/export/_implementationSync.mts"\n` +
 		`\n` +
 		`/* needed to make doctypes work in LSP */\n` +
-		`import type {ImplementationDocType} from "./_implementation.mts"\n` +
-		`//import type {ImplementationDocType} from "./_implementationSync.mts"\n` +
+		`import type {ImplementationDocType} from "#/auto/export/_implementation.mts"\n` +
+		`//import type {ImplementationDocType} from "#/auto/export/_implementationSync.mts"\n` +
 		`\n` +
 		generateImportStatements(factory_imports) +
 		`\n` +
@@ -124,9 +124,16 @@ export default async function(fourtune_session, writeFile) {
 		`template/implementation.mts`,
 
 		`import {ContextInstanceType} from "@fourtune/realm-js"\n` +
-		`import type {DependenciesType} from "./_DependenciesType.d.mts"\n` +
-		`//import type {DependenciesType} from "./_DependenciesSyncType.d.mts"\n` +
+		`import type {DependenciesType} from "#/auto/export/_DependenciesType.d.mts"\n` +
+		`//import type {DependenciesType} from "#/auto/export/_DependenciesSyncType.d.mts"\n` +
 		`\n` +
+		`/* ############################################## */\n` +
+		`/* >>> import your standard dependencies here     */\n` +
+		`\n` +
+		`/* ############################################## */\n` +
+		`\n` +
+		`/* ############################################## */\n` +
+		`/* >>> define and describe your function api here */\n` +
 		`export type ImplementationDocType = {\n` +
 		`	/**\n` +
 		`	 * @brief My function's description\n` +
@@ -134,11 +141,25 @@ export default async function(fourtune_session, writeFile) {
 		`	() : Promise<void>\n` +
 		`//	() : void\n` +
 		`}\n` +
+		`/* ############################################## */\n` +
 		`\n` +
-		`export default async function(context : ContextInstanceType, dependencies : DependenciesType) {\n` +
-		`//export default function(context : ContextInstanceType, dependencies : DependenciesType) {\n` +
+		`export default async function(\n` +
+		`//export default function(\n` +
+		`	context : ContextInstanceType,\n` +
+		`	dependencies : DependenciesType,\n` +
+
+		`	/* ############################################## */\n` +
+		`	/* >>> add additional parameters here             */\n` +
 		`\n` +
+		`	/* ############################################## */\n` +
+
+		`) : ReturnType<ImplementationDocType> {\n` +
+		`// ) : ReturnType<ImplementationDocType> {\n` +
+		`\n` +
+		`	/* ############################################## */\n` +
+		`	/* >>> implement your function here               */\n` +
 		`	context.log("hello world")\n` +
+		`	/* ############################################## */\n` +
 		`\n` +
 		`}\n`
 	)
