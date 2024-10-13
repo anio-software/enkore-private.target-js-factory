@@ -18,7 +18,7 @@ export default async function(fourtune_session, writeFile) {
 			"#/*": ["./src/*"]
 		}
 	}
-}\n`, {overwrite:false}
+}\n`, {overwrite:true}
 	)
 
 	const project_config = fourtune_session.getProjectConfig()
