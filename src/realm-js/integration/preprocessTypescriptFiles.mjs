@@ -5,6 +5,15 @@ export default async function(fourtune_session, relative_path, code) {
 	// only pre-process typescript files
 	if (!relative_path.endsWith(".mts")) return code
 
+	// remove .d.mts or .mts from file name
+	let bare_filename = path.basename(relative_path)
+
+	if (relative_path.endsWith(".d.mts")) {
+		bare_filename = bare_filename.slice(0, -(".d.mts".length))
+	} else {
+		bare_filename = bare_filename.slice(0, -(".mts".length))
+	}
+
 	const project_root = fourtune_session.getProjectRoot()
 
 	const {
@@ -19,7 +28,9 @@ export default async function(fourtune_session, relative_path, code) {
 	const result = await babel.transformAsync(
 		code, {
 			presets: [
-				getPathOfDependency("@babel/preset-typescript")
+				[getPathOfDependency("@babel/preset-typescript"), {
+					rewriteImportExtensions: true
+				}]
 			],
 			filename: path.basename(relative_path),
 			plugins: [
@@ -32,5 +43,11 @@ export default async function(fourtune_session, relative_path, code) {
 		}
 	)
 
-	return result.code
+	return [{
+		new_filename: `${bare_filename}.mjs`,
+		code: result.code
+	}, {
+		new_filename: path.basename(relative_path),
+		code
+	}]
 }
