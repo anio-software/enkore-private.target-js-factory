@@ -124,7 +124,7 @@ export default async function(fourtune_session, writeFile) {
 		`template/implementation.mts`,
 
 		`/* -------- required imports by template -------- */\n` +
-		`import {ContextInstanceType} from "@fourtune/realm-js"\n` +
+		`import type {ContextInstanceType} from "@fourtune/realm-js"\n` +
 		`import type {DependenciesType} from "#/auto/export/_DependenciesType.d.mts"\n` +
 		`//import type {DependenciesType} from "#/auto/export/_DependenciesSyncType.d.mts"\n` +
 		`\n` +
