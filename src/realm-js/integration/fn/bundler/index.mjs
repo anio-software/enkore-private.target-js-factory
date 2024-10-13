@@ -25,9 +25,17 @@ export default async function(fourtune_session, options) {
 	//
 	process.chdir(project_root)
 
-	const rollup_plugins = [virtual({
-		"virtual_entry_point": options.entry
-	})]
+	const virtual_entries = {}
+
+	//
+	// use file extension for virtual entry point
+	// since tsc has some problems without it?
+	//
+	const virtual_entry_point = `virtual_entry_point.${options.entry_file_type}`
+
+	virtual_entries[virtual_entry_point] = options.entry
+
+	const rollup_plugins = [virtual(virtual_entries)]
 
 	if (options.entry_file_type === "d.mts") {
 		const compiler_options = await getTypeScriptCompilerOptions(fourtune_session)
@@ -76,7 +84,7 @@ export default async function(fourtune_session, options) {
 	}
 
 	const rollup_options = {
-		input: "virtual_entry_point",
+		input: virtual_entry_point,
 
 		output: {},
 
