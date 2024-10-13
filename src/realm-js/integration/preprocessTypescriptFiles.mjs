@@ -14,12 +14,21 @@ export default async function(fourtune_session, relative_path, code) {
 
 	const babel = getDependency("@babel/core")
 
+	const levels = path.dirname(relative_path).split(path.sep).length
+
 	const result = await babel.transformAsync(
 		code, {
 			presets: [
 				getPathOfDependency("@babel/preset-typescript")
 			],
-			filename: path.basename(relative_path)
+			filename: path.basename(relative_path),
+			plugins: [
+				[getPathOfDependency("babel-plugin-module-resolver"), {
+					alias: {
+						"#": "./" + ("./../".repeat(levels))
+					}
+				}]
+			]
 		}
 	)
 
