@@ -12,8 +12,9 @@ export default async function(fourtune_session, module_name, module_exports) {
 		// build_file is the source file with all typescript info stripped
 		const build_file = "./" + path.join("build", module_export.path)
 
-		const importStatement = (source) => {
+		const importStatement = (source, is_type = false) => {
 			const source_str = JSON.stringify(source)
+			const t_export = is_type ? " type" : ""
 
 			//
 			// treat __star_export differently so such
@@ -21,7 +22,7 @@ export default async function(fourtune_session, module_name, module_exports) {
 			// other things.
 			//
 			if (module_export.export_name === "__star_export") {
-				return `export * from ${source_str}`
+				return `export${t_export} * from ${source_str}`
 			} else {
 				//
 				// Normally, the file name is used to
@@ -29,15 +30,15 @@ export default async function(fourtune_session, module_name, module_exports) {
 				// This means, myFunction.mjs would be exported as
 				// "myFunction"
 				//
-				return `export {${module_export.export_name}} from ${source_str}`
+				return `export${t_export} {${module_export.export_name}} from ${source_str}`
 			}
 		}
 
 		if (module_export.type === "mts") {
 			index_mjs_file += importStatement(build_file) + "\n"
-			index_dts_file += importStatement(src_file) + "\n"
+			index_dts_file += importStatement(src_file, true) + "\n"
 		} else if (module_export.type === "d.mts") {
-			index_dts_file += importStatement(src_file) + "\n"
+			index_dts_file += importStatement(src_file, true) + "\n"
 		}
 	}
 
