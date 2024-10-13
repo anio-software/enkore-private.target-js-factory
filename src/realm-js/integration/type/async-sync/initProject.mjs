@@ -123,35 +123,27 @@ export default async function(fourtune_session, writeFile) {
 	await writeFile(
 		`template/implementation.mts`,
 
+		`/* -------- required imports by template -------- */\n` +
 		`import {ContextInstanceType} from "@fourtune/realm-js"\n` +
 		`import type {DependenciesType} from "#/auto/export/_DependenciesType.d.mts"\n` +
 		`//import type {DependenciesType} from "#/auto/export/_DependenciesSyncType.d.mts"\n` +
 		`\n` +
 		`import type {ImplementationDocType} from "#/auto/export/_ImplementationDocType.d.mts"\n` +
 		`//import type {ImplementationDocType} from "#/auto/export/_ImplementationSyncDocType.d.mts"\n` +
+		`/* -------- required imports by template -------- */\n` +
 		`\n` +
-		`/* ############################################## */\n` +
-		`/* >>> import your standard dependencies here     */\n` +
 		`\n` +
-		`/* ############################################## */\n` +
 		`\n` +
 		`export default async function(\n` +
 		`//export default function(\n` +
 		`	context : ContextInstanceType,\n` +
 		`	dependencies : DependenciesType,\n` +
-
-		`	/* ############################################## */\n` +
-		`	/* >>> add additional parameters here             */\n` +
-		`\n` +
-		`	/* ############################################## */\n` +
-
+		`	/* add additional parameters here */\n` +
 		`) : ReturnType<ImplementationDocType> {\n` +
 		`// ) : ReturnType<ImplementationDocType> {\n` +
 		`\n` +
-		`	/* ############################################## */\n` +
-		`	/* >>> implement your function here               */\n` +
-		`	context.log("hello world")\n` +
-		`	/* ############################################## */\n` +
+		`	void context;\n` +
+		`	void dependencies;\n` +
 		`\n` +
 		`}\n`
 	)
@@ -159,16 +151,16 @@ export default async function(fourtune_session, writeFile) {
 	await writeFile(
 		`template/ImplementationDocType.d.mts`,
 
-		`/* ############################################## */\n` +
 		`/* >>> define and describe your function api here */\n` +
+		`\n` +
+		`\n` +
 		`export type ImplementationDocType = {\n` +
 		`       /**\n` +
 		`        * @brief My function's description\n` +
 		`        */\n` +
 		`       () : Promise<void>\n` +
 		`//     () : void\n` +
-		`}\n` +
-		`/* ############################################## */\n`,
+		`}\n`,
 
 		{overwrite: false}
 	)
