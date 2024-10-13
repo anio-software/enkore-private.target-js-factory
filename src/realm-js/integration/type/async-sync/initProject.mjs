@@ -150,9 +150,7 @@ export default async function(fourtune_session, writeFile) {
 	await writeFile(
 		`template/ImplementationDocType.d.mts`,
 
-		`/* >>> define and describe your function api here */\n` +
-		`\n` +
-		`\n` +
+		`/* define and describe your function api here */\n` +
 		`export type ImplementationDocType = {\n` +
 		`       /**\n` +
 		`        * @brief My function's description\n` +
