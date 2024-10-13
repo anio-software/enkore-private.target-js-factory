@@ -140,7 +140,6 @@ export default async function(fourtune_session, writeFile) {
 		`	dependencies : DependenciesType,\n` +
 		`	/* add additional parameters here */\n` +
 		`) : ReturnType<ImplementationDocType> {\n` +
-		`// ) : ReturnType<ImplementationDocType> {\n` +
 		`\n` +
 		`	void context;\n` +
 		`	void dependencies;\n` +
