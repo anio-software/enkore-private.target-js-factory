@@ -73,8 +73,8 @@ export default async function(fourtune_session, writeFile) {
 		`//import {${function_name}SyncFactory as factory} from "#/auto/export/${function_name}SyncFactory.mts"\n` +
 		`\n` +
 		`/* ImplementationDocType is needed to make doctypes work in LSP */\n` +
-		`import type {ImplementationDocType} from "#/auto/export/_implementation.mts"\n` +
-		`//import type {ImplementationDocType} from "#/auto/export/_implementationSync.mts"\n` +
+		`import type {ImplementationDocType} from "#/auto/export/_ImplementationDocType.d.mts"\n` +
+		`//import type {ImplementationDocType} from "#/auto/export/_ImplementationSyncDocType.d.mts"\n` +
 		`\n` +
 		`const impl = factory()\n` +
 		`\n` +
@@ -98,8 +98,8 @@ export default async function(fourtune_session, writeFile) {
 		`//import implementation from "#/auto/export/_implementationSync.mts"\n` +
 		`\n` +
 		`/* needed to make doctypes work in LSP */\n` +
-		`import type {ImplementationDocType} from "#/auto/export/_implementation.mts"\n` +
-		`//import type {ImplementationDocType} from "#/auto/export/_implementationSync.mts"\n` +
+		`import type {ImplementationDocType} from "#/auto/export/_ImplementationDocType.d.mts"\n` +
+		`//import type {ImplementationDocType} from "#/auto/export/_ImplementationSyncDocType.d.mts"\n` +
 		`\n` +
 		generateImportStatements(factory_imports) +
 		`\n` +
@@ -127,20 +127,12 @@ export default async function(fourtune_session, writeFile) {
 		`import type {DependenciesType} from "#/auto/export/_DependenciesType.d.mts"\n` +
 		`//import type {DependenciesType} from "#/auto/export/_DependenciesSyncType.d.mts"\n` +
 		`\n` +
+		`import type {ImplementationDocType} from "#/auto/export/_ImplementationDocType.d.mts"\n` +
+		`//import type {ImplementationDocType} from "#/auto/export/_ImplementationSyncDocType.d.mts"\n` +
+		`\n` +
 		`/* ############################################## */\n` +
 		`/* >>> import your standard dependencies here     */\n` +
 		`\n` +
-		`/* ############################################## */\n` +
-		`\n` +
-		`/* ############################################## */\n` +
-		`/* >>> define and describe your function api here */\n` +
-		`export type ImplementationDocType = {\n` +
-		`	/**\n` +
-		`	 * @brief My function's description\n` +
-		`	 */\n` +
-		`	() : Promise<void>\n` +
-		`//	() : void\n` +
-		`}\n` +
 		`/* ############################################## */\n` +
 		`\n` +
 		`export default async function(\n` +
@@ -162,5 +154,22 @@ export default async function(fourtune_session, writeFile) {
 		`	/* ############################################## */\n` +
 		`\n` +
 		`}\n`
+	)
+
+	await writeFile(
+		`template/ImplementationDocType.d.mts`,
+
+		`/* ############################################## */\n` +
+		`/* >>> define and describe your function api here */\n` +
+		`export type ImplementationDocType = {\n` +
+		`       /**\n` +
+		`        * @brief My function's description\n` +
+		`        */\n` +
+		`       () : Promise<void>\n` +
+		`//     () : void\n` +
+		`}\n` +
+		`/* ############################################## */\n`,
+
+		{overwrite: false}
 	)
 }

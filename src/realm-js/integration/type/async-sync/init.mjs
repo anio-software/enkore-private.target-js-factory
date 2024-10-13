@@ -14,6 +14,9 @@ export default async function(fourtune_session) {
 	mapping[`export/_DependenciesType.d.mts`] = [`template/auto/DependenciesType.d.mts`, "async"]
 	mapping[`export/_DependenciesSyncType.d.mts`] = [`template/auto/DependenciesType.d.mts`, "sync"]
 
+	mapping[`export/_ImplementationDocType.d.mts`] = [`template/ImplementationDocType.d.mts`, "async"]
+	mapping[`export/_ImplementationSyncDocType.d.mts`] = [`template/ImplementationDocType.d.mts`, "sync"]
+
 	mapping[`export/_implementation.mts`] = [`template/implementation.mts`, "async"]
 	mapping[`export/_implementationSync.mts`] = [`template/implementation.mts`, "sync"]
 
