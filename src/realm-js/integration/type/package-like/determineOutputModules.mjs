@@ -1,4 +1,4 @@
-import {scandir} from "@anio-software/fs"
+import path from "node:path"
 
 function getExportTypeAndName(filename) {
 	if (filename.endsWith(".d.mts")) {
@@ -17,16 +17,17 @@ function getExportTypeAndName(filename) {
 export default async function(fourtune_session) {
 	const output_modules = new Map()
 
-	const entries = [
-		// DON'T scan FS for auto files use fourtune_session.autogenerate.getFiles() instead!
-		//...await scandir("src/auto/export", {
-		//	allow_missing_dir:true
-		//}),
-		...fourtune_session.autogenerate.getFilesAsScandirResult("src/auto/export"),
-		...await scandir("src/export", {
-			allow_missing_dir:true
-		})
-	]
+	// DON'T scan FS for auto files use fourtune_session.getProjectSourceFiles() instead!
+	const entries = fourtune_session.getProjectSourceFiles().map(entry => {
+		if (entry.parents.length > 1 && entry.parents[0] === "auto") {
+			return {
+				...entry,
+				parents: entry.parents.slice(1)
+			}
+		}
+
+		return entry
+	})
 
 	for (const entry of entries) {
 		const {relative_path} = entry
@@ -78,7 +79,7 @@ export default async function(fourtune_session) {
 			module_exports.set(
 				module_exports_path,
 				{
-					path: entry.path,
+					path: path.join("src", entry.relative_path),
 					type,
 					export_name: name
 				}
