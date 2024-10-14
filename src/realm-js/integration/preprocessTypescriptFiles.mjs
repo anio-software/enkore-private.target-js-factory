@@ -43,11 +43,17 @@ export default async function(fourtune_session, relative_path, code) {
 		}
 	)
 
+	let typing_file = []
+
+	if (relative_path.endsWith(".d.mts")) {
+		typing_file = [{
+			new_filename: path.basename(relative_path),
+			code
+		}]
+	}
+
 	return [{
 		new_filename: `${bare_filename}.mjs`,
 		code: result.code
-	}, {
-		new_filename: path.basename(relative_path),
-		code
-	}]
+	}, ...typing_file]
 }
