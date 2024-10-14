@@ -7,7 +7,7 @@ export default async function(fourtune_session, module_name, module_exports) {
 	let index_mjs_file = ``
 
 	for (const [key, module_export] of module_exports) {
-		let export_base_path = "./" + path.join("build", module_export.path)
+		let export_base_path = "./" + path.join("objects", module_export.path)
 
 		if (module_export.type === "d.mts") {
 			export_base_path = export_base_path.slice(0, -6)
