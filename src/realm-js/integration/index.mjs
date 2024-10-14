@@ -22,24 +22,6 @@ export async function initializeTarget(fourtune_session) {
 
 	await checkProjectFiles(fourtune_session)
 
-	//
-	// convert all .mts files to .mjs files
-	//
-	fourtune_session.hooks.register(
-		"preprocess_file", preprocessTypescriptFiles
-	)
-
-	//
-	// create .d.mts files from .mts files
-	//
-	fourtune_session.hooks.register(
-		"preprocess.post", createTypescriptDefinitionFiles
-	)
-
-	fourtune_session.hooks.register(
-		"distributables.pre", checkSourceFiles
-	)
-
 	switch (project_config.type) {
 		case "package": {
 			await initPackageLikeProject(fourtune_session)
