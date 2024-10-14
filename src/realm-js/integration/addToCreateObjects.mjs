@@ -1,5 +1,4 @@
 import stripTypeScriptTypes from "./fn/stripTypeScriptTypes.mjs"
-import getTypeScriptDefinitions from "./fn/getTypeScriptDefinitions.mjs"
 
 import path from "node:path"
 import fs from "node:fs/promises"
@@ -18,8 +17,6 @@ async function stripTypes(fourtune_session, relative_path, file_path) {
 }
 
 export default async function(fourtune_session) {
-	const dts_definitions = await getTypeScriptDefinitions(fourtune_session)
-
 	//
 	// for every .mts create two files: .mjs and .d.mts
 	//
@@ -44,6 +41,8 @@ export default async function(fourtune_session) {
 			fourtune_session.objects.add(
 				`${bare_name}.d.mts`, {
 					generator: async () => {
+						const {dts_definitions} = fourtune_session.user_data
+
 						const key = `build/src/${bare_name}.d.mts`
 
 						if (dts_definitions.has(key)) {

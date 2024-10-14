@@ -3,6 +3,7 @@ import initPackageLikeProject from "./type/package-like/init.mjs"
 import initProjectFn from "./initProject.mjs"
 import checkProjectFiles from "./checkProjectFiles.mjs"
 import addToCreateObjects from "./addToCreateObjects.mjs"
+import getTypeScriptDefinitions from "./fn/getTypeScriptDefinitions.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -19,6 +20,14 @@ export async function initializeTarget(fourtune_session) {
 	const project_config = fourtune_session.getProjectConfig()
 
 	await checkProjectFiles(fourtune_session)
+
+	fourtune_session.hooks.register(
+		"objects.pre", async (fourtune_session) => {
+			const dts_definitions = await getTypeScriptDefinitions(fourtune_session)
+
+			fourtune_session.user_data = {dts_definitions}
+		}
+	)
 
 	switch (project_config.type) {
 		case "package": {
