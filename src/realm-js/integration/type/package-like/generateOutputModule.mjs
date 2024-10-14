@@ -7,10 +7,13 @@ export default async function(fourtune_session, module_name, module_exports) {
 	let index_mjs_file = ``
 
 	for (const [key, module_export] of module_exports) {
-		// src_file is the source file that is written in typescript
-		const src_file = "./" + module_export.path
-		// build_file is the source file with all typescript info stripped
-		const build_file = "./" + path.join("build", module_export.path)
+		let export_base_path = "./" + path.join("build", module_export.path)
+
+		if (module_export.type === "d.mts") {
+			export_base_path = export_base_path.slice(0, -6)
+		} else {
+			export_base_path = export_base_path.slice(0, -4)
+		}
 
 		const importStatement = (source, is_type = false) => {
 			const source_str = JSON.stringify(source)
@@ -35,10 +38,10 @@ export default async function(fourtune_session, module_name, module_exports) {
 		}
 
 		if (module_export.type === "mts") {
-			index_mjs_file += importStatement(build_file) + "\n"
-			index_dts_file += importStatement(src_file, true) + "\n"
+			index_mjs_file += importStatement(`${export_base_path}.mjs`) + "\n"
+			index_dts_file += importStatement(`${export_base_path}.d.mts`, true) + "\n"
 		} else if (module_export.type === "d.mts") {
-			index_dts_file += importStatement(src_file, true) + "\n"
+			index_dts_file += importStatement(`${export_base_path}.d.mts`, true) + "\n"
 		}
 	}
 
