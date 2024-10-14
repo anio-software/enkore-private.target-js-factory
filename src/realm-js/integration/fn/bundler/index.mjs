@@ -50,7 +50,7 @@ export default async function(fourtune_session, options) {
 					id = id.slice(2)
 
 					id = path.join(
-						project_root, "build", "src", id
+						project_root, "objects", "src", id
 					)
 
 					const is_mts_file = id.endsWith(".mts") && !id.endsWith(".d.mts")
