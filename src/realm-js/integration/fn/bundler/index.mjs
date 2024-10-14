@@ -42,7 +42,14 @@ export default async function(fourtune_session, options) {
 
 		rollup_plugins.push(dts({
 			respectExternal: true,
-			compilerOptions: compiler_options
+			compilerOptions: {
+				...compiler_options,
+				//
+				// overwrite paths alias since
+				// those will be resolved by rollup plugin
+				//
+				paths: {}
+			}
 		}))
 
 		//
