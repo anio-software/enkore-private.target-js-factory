@@ -19,6 +19,7 @@ export default async function(fourtune_session) {
 
 	// DON'T scan FS for auto files use fourtune_session.getProjectSourceFiles() instead!
 	const entries = fourtune_session.getProjectSourceFiles().map(entry => {
+		// normalize src/auto/ to simply be src/
 		if (entry.parents.length > 1 && entry.parents[0] === "auto") {
 			return {
 				...entry,
@@ -27,6 +28,18 @@ export default async function(fourtune_session) {
 		}
 
 		return entry
+	}).filter(entry => {
+		// only consider files inside src/export
+		if (!entry.parents.length) return false
+
+		if (entry.parents[0] !== "export") return false
+
+		return true
+	}).map(entry => {
+		return {
+			...entry,
+			parents: entry.parents.slice(1)
+		}
 	})
 
 	for (const entry of entries) {
