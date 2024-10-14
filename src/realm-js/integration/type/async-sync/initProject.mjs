@@ -73,8 +73,8 @@ export default async function(fourtune_session, writeFile) {
 		`//import {${function_name}SyncFactory as factory} from "#/auto/export/${function_name}SyncFactory.mts"\n` +
 		`\n` +
 		`/* ImplementationDocType is needed to make doctypes work in LSP */\n` +
-		`import type {ImplementationDocType} from "#/auto/export/_ImplementationDocType.d.mts"\n` +
-		`//import type {ImplementationDocType} from "#/auto/export/_ImplementationSyncDocType.d.mts"\n` +
+		`import type {ImplementationDocType} from "#/auto/ImplementationDocType.d.mts"\n` +
+		`//import type {ImplementationDocType} from "#/auto/ImplementationSyncDocType.d.mts"\n` +
 		`\n` +
 		`const impl = factory()\n` +
 		`\n` +
@@ -91,15 +91,15 @@ export default async function(fourtune_session, writeFile) {
 		`import type {UserContextType} from "@fourtune/realm-js"\n` +
 		`import {useContext} from "@fourtune/realm-js"\n` +
 		`\n` +
-		`import type {DependenciesType} from "#/auto/export/_DependenciesType.d.mts"\n` +
-		`//import type {DependenciesType} from "#/auto/export/_DependenciesSyncType.d.mts"\n` +
+		`import type {DependenciesType} from "#/auto/DependenciesType.d.mts"\n` +
+		`//import type {DependenciesType} from "#/auto/DependenciesSyncType.d.mts"\n` +
 		`\n` +
-		`import implementation from "#/auto/export/_implementation.mts"\n` +
-		`//import implementation from "#/auto/export/_implementationSync.mts"\n` +
+		`import implementation from "#/auto/implementation.mts"\n` +
+		`//import implementation from "#/auto/implementationSync.mts"\n` +
 		`\n` +
 		`/* needed to make doctypes work in LSP */\n` +
-		`import type {ImplementationDocType} from "#/auto/export/_ImplementationDocType.d.mts"\n` +
-		`//import type {ImplementationDocType} from "#/auto/export/_ImplementationSyncDocType.d.mts"\n` +
+		`import type {ImplementationDocType} from "#/auto/ImplementationDocType.d.mts"\n` +
+		`//import type {ImplementationDocType} from "#/auto/ImplementationSyncDocType.d.mts"\n` +
 		`\n` +
 		generateImportStatements(factory_imports) +
 		`\n` +
@@ -125,11 +125,11 @@ export default async function(fourtune_session, writeFile) {
 
 		`/* -------- required imports by template -------- */\n` +
 		`import type {ContextInstanceType} from "@fourtune/realm-js"\n` +
-		`import type {DependenciesType} from "#/auto/export/_DependenciesType.d.mts"\n` +
-		`//import type {DependenciesType} from "#/auto/export/_DependenciesSyncType.d.mts"\n` +
+		`import type {DependenciesType} from "#/auto/DependenciesType.d.mts"\n` +
+		`//import type {DependenciesType} from "#/auto/DependenciesSyncType.d.mts"\n` +
 		`\n` +
-		`import type {ImplementationDocType} from "#/auto/export/_ImplementationDocType.d.mts"\n` +
-		`//import type {ImplementationDocType} from "#/auto/export/_ImplementationSyncDocType.d.mts"\n` +
+		`import type {ImplementationDocType} from "#/auto/ImplementationDocType.d.mts"\n` +
+		`//import type {ImplementationDocType} from "#/auto/ImplementationSyncDocType.d.mts"\n` +
 		`/* -------- required imports by template -------- */\n` +
 		`\n` +
 		`\n` +
