@@ -1,6 +1,7 @@
 import initAsyncSyncProject from "./type/async-sync/init.mjs"
 import initPackageLikeProject from "./type/package-like/init.mjs"
 import preprocessTypescriptFiles from "./preprocessTypescriptFiles.mjs"
+import createTypescriptDefinitionFiles from "./createTypescriptDefinitionFiles.mjs"
 import checkSourceFiles from "./checkSourceFiles.mjs"
 import initProjectFn from "./initProject.mjs"
 import checkProjectFiles from "./checkProjectFiles.mjs"
@@ -26,6 +27,13 @@ export async function initializeTarget(fourtune_session) {
 	//
 	fourtune_session.hooks.register(
 		"preprocess_file", preprocessTypescriptFiles
+	)
+
+	//
+	// create .d.mts files from .mts files
+	//
+	fourtune_session.hooks.register(
+		"preprocess.post", createTypescriptDefinitionFiles
 	)
 
 	fourtune_session.hooks.register(
