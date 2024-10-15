@@ -43,6 +43,8 @@ export default async function(fourtune_session) {
 					generator: async () => {
 						const {dts_definitions} = fourtune_session.user_data
 
+						if (!dts_definitions) return "/* could not create d.mts file */\n"
+
 						const key = `build/src/${bare_name}.d.mts`
 
 						if (dts_definitions.has(key)) {
