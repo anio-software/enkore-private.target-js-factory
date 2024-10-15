@@ -23,7 +23,7 @@ export default async function(fourtune_session, writeFile) {
 
 	const project_config = fourtune_session.getProjectConfig()
 
-	if (project_config.type === "async-sync") {
+	if (project_config.type === "package:async/sync") {
 		await asyncSyncProjectInit(fourtune_session, writeFile)
 	}
 }

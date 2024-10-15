@@ -43,7 +43,7 @@ export async function initializeTarget(fourtune_session) {
 		// special kind of package:
 		// project/package with only one function that is async+sync
 		//
-		case "async-sync": {
+		case "package:async/sync": {
 			await initAsyncSyncProject(fourtune_session)
 			await initPackageLikeProject(fourtune_session)
 		} break
