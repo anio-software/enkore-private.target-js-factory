@@ -24,6 +24,11 @@ export default async function(fourtune_session) {
 	const project_root = fourtune_session.getProjectRoot()
 
 	const input_files = fourtune_session.getProjectSourceFiles().filter(({relative_path}) => {
+		if (
+			!relative_path.startsWith("auto/export/") &&
+			!relative_path.startsWith("export/")
+		) return false
+
 		if (relative_path.endsWith(".d.mts")) return false
 
 		return relative_path.endsWith(".mts")
