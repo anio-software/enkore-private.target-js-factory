@@ -6,51 +6,39 @@ export default async function(fourtune_session) {
 	const files = await getFilesToAutogenerate(fourtune_session)
 
 	for (const file in files) {
-		mapping[file.split("<X>").join("")] = [
+		mapping[file] = [
 			"generateSyncAsyncVariantFromString",
-			files[file],
-			"async"
-		]
-
-		mapping[file.split("<X>").join("Sync")] = [
-			"generateSyncAsyncVariantFromString",
-			files[file],
-			"sync"
+			files[file]
 		]
 	}
 
-	mapping[`ImplementationDocType.d.mts`] = [
+	mapping[`Implementation<X>DocType.d.mts`] = [
 		"generateSyncAsyncVariant",
-		`template/ImplementationDocType.d.mts`,
-		"async"
+		`template/ImplementationDocType.d.mts`
 	]
 
-	mapping[`ImplementationSyncDocType.d.mts`] = [
+	mapping[`implementation<X>.mts`] = [
 		"generateSyncAsyncVariant",
-		`template/ImplementationDocType.d.mts`,
-		"sync"
-	]
-
-	mapping[`implementation.mts`] = [
-		"generateSyncAsyncVariant",
-		`template/implementation.mts`,
-		"async"
-	]
-
-	mapping[`implementationSync.mts`] = [
-		"generateSyncAsyncVariant",
-		`template/implementation.mts`,
-		"sync"
+		`template/implementation.mts`
 	]
 
 	for (const file_name in mapping) {
-		const [generator_fn, source, variant] = mapping[file_name]
+		const async_file_name = file_name.split("<X>").join("")
+		const sync_file_name = file_name.split("<X>").join("Sync")
+
+		const [generator_fn, source] = mapping[file_name]
+		const generator = fourtune_session.autogenerate[generator_fn]
 
 		fourtune_session.autogenerate.addFile(
-			file_name, {
-				generator:fourtune_session.autogenerate[generator_fn](
-					source, variant
-				),
+			async_file_name, {
+				generator: generator(source, "async"),
+				generator_args: []
+			}
+		)
+
+		fourtune_session.autogenerate.addFile(
+			sync_file_name, {
+				generator: generator(source, "sync"),
 				generator_args: []
 			}
 		)
