@@ -4,6 +4,7 @@ import initProjectFn from "./initProject.mjs"
 import checkProjectFiles from "./checkProjectFiles.mjs"
 import addToCreateObjects from "./addToCreateObjects.mjs"
 import getTypeScriptDefinitions from "./fn/getTypeScriptDefinitions.mjs"
+import checkSourceFiles from "./checkSourceFiles.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -27,6 +28,10 @@ export async function initializeTarget(fourtune_session) {
 
 			fourtune_session.user_data = {dts_definitions}
 		}
+	)
+
+	fourtune_session.hooks.register(
+		"distributables.pre", checkSourceFiles
 	)
 
 	switch (project_config.type) {
