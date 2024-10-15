@@ -26,6 +26,8 @@ export default async function(fourtune_session, module_name, module_exports) {
 			//
 			if (module_export.export_name === "__star_export") {
 				return `export${t_export} * from ${source_str}`
+			} else if (module_export.export_name === "__default") {
+				return `export${t_export} {default} from ${source_str}`
 			} else {
 				//
 				// Normally, the file name is used to
