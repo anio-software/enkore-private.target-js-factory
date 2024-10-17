@@ -1,7 +1,7 @@
 function useFromJSBundler(import_name) {
 	return {
 		import_from: "@fourtune/js-bundler",
-		import_code: `import {${import_name}} from "@fourtune/js-bundler"\nexport default ${import_name}`
+		import_code: `import {${import_name}} from "@fourtune/js-bundler/exports"\nexport default ${import_name}`
 	}
 }
 
