@@ -21,7 +21,10 @@ export default async function(fourtune_session, options) {
 		project_root, options.entry, {
 			file_type: options.entry_file_type === "d.mts" ? "dts" : "mjs",
 			minify: options.minified === true,
-			additional_rollup_plugins
+			additional_rollup_plugins,
+			on_rollup_log_fn(level, {message}) {
+				fourtune_session.addWarning("rollup", {message: `[${level}] rollup says ${message}`})
+			}
 		}
 	)
 }
