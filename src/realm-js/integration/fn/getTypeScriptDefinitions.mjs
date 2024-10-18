@@ -21,10 +21,13 @@ export default async function(fourtune_session) {
 		allowJs: false,
 		declaration: true,
 		emitDeclarationOnly: true,
-		noEmitOnError: true,
-		paths: {
-			"#/*": ["./build/src/*"]
-		}
+		noEmitOnError: true
+	}
+
+	compiler_options.paths = {
+		...compiler_options.paths,
+		// overwrite # alias to point to "build/src" instead of "src/"
+		"#/*": ["./build/src/*"]
 	}
 
 	const input_files = fourtune_session.getProjectSourceFiles().filter(({relative_path}) => {

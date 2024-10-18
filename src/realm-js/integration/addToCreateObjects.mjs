@@ -40,7 +40,8 @@ async function stripTypes(fourtune_session, relative_path, file_path) {
 	return (await jsResolveImportAliases(
 		js, {
 			aliases: {
-				"#": "./" + ("./../".repeat(levels))
+				"#": "./" + ("./../".repeat(levels)),
+				"&": "./" + ("./../".repeat(levels + 1)) + "./ephemerals/"
 			}
 		}
 	)).code

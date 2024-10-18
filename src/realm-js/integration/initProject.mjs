@@ -15,7 +15,8 @@ export default async function(fourtune_session, writeFile) {
 		"moduleResolution": "nodenext",
 		"baseUrl": "./",
 		"paths": {
-			"#/*": ["./src/*"]
+			"#/*": ["./src/*"],
+			"&/*": ["./objects/ephemerals/*"]
 		}
 	}
 }\n`, {overwrite:true}
