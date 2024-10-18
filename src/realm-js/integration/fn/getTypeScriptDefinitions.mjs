@@ -55,11 +55,11 @@ export default async function(fourtune_session) {
 		memfs.set(file_path, contents)
 	}
 
-	const {emitSkipped, diagnostic_messages}  = await tsInvokeTypeScript(
+	const {errors, diagnostic_messages}  = await tsInvokeTypeScript(
 		host, input_files, compiler_options
 	)
 
-	if (emitSkipped) {
+	if (errors) {
 		for (const {message} of diagnostic_messages) {
 			fourtune_session.emitError(`tsc`, message)
 		}
