@@ -1,7 +1,6 @@
-import stripTypeScriptTypes from "./fn/stripTypeScriptTypes.mjs"
-
 import path from "node:path"
 import fs from "node:fs/promises"
+import {loadRealmDependencies} from "../auto/base-realm.mjs"
 
 async function copyAsIs(fourtune_session, relative_path, file_path) {
 	const project_root = fourtune_session.getProjectRoot()
@@ -13,7 +12,38 @@ async function copyAsIs(fourtune_session, relative_path, file_path) {
 }
 
 async function stripTypes(fourtune_session, relative_path, file_path) {
-	return await stripTypeScriptTypes(fourtune_session, file_path)
+	const project_root = fourtune_session.getProjectRoot()
+	const absolute_path = path.join(project_root, "build", "src", file_path)
+
+	const {getDependency} = await loadRealmDependencies(
+		project_root, "realm-js"
+	)
+
+	const {
+		tsStripTypesFromCode,
+		jsResolveImportAliases
+	} = getDependency(
+		"@fourtune/realm-js-and-web-utilities"
+	)
+
+	const code = (await fs.readFile(absolute_path)).toString()
+
+	const js = (await tsStripTypesFromCode(
+		code, {
+			filename: absolute_path,
+			replace_import_extensions: true
+		}
+	)).code
+
+	const levels = path.dirname(file_path).split(path.sep).length
+
+	return (await jsResolveImportAliases(
+		js, {
+			aliases: {
+				"#": "./" + ("./../".repeat(levels))
+			}
+		}
+	)).code
 }
 
 export default async function(fourtune_session) {

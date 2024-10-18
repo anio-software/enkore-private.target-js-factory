@@ -1,17 +1,23 @@
 import {loadRealmDependencies} from "../../auto/base-realm.mjs"
-import getTypeScriptCompilerOptions from "./getTypeScriptCompilerOptions.mjs"
 import path from "node:path"
-import invokeTypeScript from "./invokeTypeScript.mjs"
 
 export default async function(fourtune_session) {
+	const project_root = fourtune_session.getProjectRoot()
+
 	const {getDependency} = await loadRealmDependencies(
-		fourtune_session.getProjectRoot(), "realm-js"
+		project_root, "realm-js"
 	)
 
-	const ts = getDependency("typescript")
+	const {
+		ts,
+		tsReadTSConfigFile,
+		tsInvokeTypeScript
+	} = getDependency("@fourtune/realm-js-and-web-utilities")
 
 	const compiler_options = {
-		...await getTypeScriptCompilerOptions(fourtune_session),
+		...await tsReadTSConfigFile(
+			path.join(project_root, "tsconfig.json")
+		),
 		allowJs: false,
 		declaration: true,
 		emitDeclarationOnly: true,
@@ -20,8 +26,6 @@ export default async function(fourtune_session) {
 			"#/*": ["./build/src/*"]
 		}
 	}
-
-	const project_root = fourtune_session.getProjectRoot()
 
 	const input_files = fourtune_session.getProjectSourceFiles().filter(({relative_path}) => {
 		if (
@@ -51,8 +55,8 @@ export default async function(fourtune_session) {
 		memfs.set(file_path, contents)
 	}
 
-	const {emitSkipped, diagnostic_messages}  = await invokeTypeScript(
-		ts, input_files, compiler_options, host
+	const {emitSkipped, diagnostic_messages}  = await tsInvokeTypeScript(
+		host, input_files, compiler_options
 	)
 
 	if (emitSkipped) {

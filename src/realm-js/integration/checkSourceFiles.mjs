@@ -1,9 +1,10 @@
-import path from "node:path"
+/*import path from "node:path"
 import {loadRealmDependencies} from "../auto/base-realm.mjs"
 import getTypeScriptCompilerOptions from "./fn/getTypeScriptCompilerOptions.mjs"
 import invokeTypeScript from "./fn/invokeTypeScript.mjs"
-
+*/
 export default async function(fourtune_session) {
+	/*
 	const input_files = fourtune_session.getProjectSourceFiles().filter(({relative_path}) => {
 		return relative_path.endsWith(".mts")
 	}).map(({relative_path}) => {
@@ -29,5 +30,5 @@ export default async function(fourtune_session) {
 
 	for (const {code, message} of diagnostic_messages) {
 		fourtune_session.addWarning(`ts-${code}`, message)
-	}
+	}*/
 }
