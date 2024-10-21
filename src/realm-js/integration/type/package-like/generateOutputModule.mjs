@@ -6,14 +6,18 @@ export default async function(fourtune_session, module_name, module_exports) {
 	let index_dts_file = ``
 	let index_mjs_file = ``
 
-	for (const [key, module_export] of module_exports) {
-		let export_base_path = "./" + path.join("objects", module_export.path)
+	for (const [export_name, source] of module_exports) {
+		let export_base_path = "", export_type = ""
 
-		if (module_export.type === "d.mts") {
-			export_base_path = export_base_path.slice(0, -6)
+		if (source.endsWith(".d.mts")) {
+			export_type = "d.mts"
+			export_base_path = source.slice(0, -(".d.mts".length))
 		} else {
-			export_base_path = export_base_path.slice(0, -4)
+			export_type = "mts"
+			export_base_path = source.slice(0, -(".mts".length))
 		}
+
+		export_base_path = "./" + path.join("objects", "src", export_base_path)
 
 		const importStatement = (source, is_type = false) => {
 			const source_str = JSON.stringify(source)
@@ -24,9 +28,9 @@ export default async function(fourtune_session, module_name, module_exports) {
 			// that this export may manually export
 			// other things.
 			//
-			if (module_export.export_name === "__star_export") {
+			if (export_name === "__star_export") {
 				return `export${t_export} * from ${source_str}`
-			} else if (module_export.export_name === "__default") {
+			} else if (export_name === "__default") {
 				return `export${t_export} {default} from ${source_str}`
 			} else {
 				//
@@ -35,14 +39,14 @@ export default async function(fourtune_session, module_name, module_exports) {
 				// This means, myFunction.mjs would be exported as
 				// "myFunction"
 				//
-				return `export${t_export} {${module_export.export_name}} from ${source_str}`
+				return `export${t_export} {${export_name}} from ${source_str}`
 			}
 		}
 
-		if (module_export.type === "mts") {
+		if (export_type === "mts") {
 			index_mjs_file += importStatement(`${export_base_path}.mjs`) + "\n"
 			index_dts_file += importStatement(`${export_base_path}.d.mts`, true) + "\n"
-		} else if (module_export.type === "d.mts") {
+		} else if (export_type === "d.mts") {
 			index_dts_file += importStatement(`${export_base_path}.d.mts`, true) + "\n"
 		}
 	}
