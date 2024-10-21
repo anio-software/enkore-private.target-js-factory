@@ -11,7 +11,7 @@
     "url": "git+https://github.com/fourtune-org/realm-js-and-web.git"
   },
   "exports": {
-    ".": "./auto/node-main.mjs",
+    ".": "./integration/_main.mjs",
     "./integration": "./integration/index.mjs",
     "./package.json": "./package.json",
     "./_debug/plugin": "./auto/plugin.mjs",
