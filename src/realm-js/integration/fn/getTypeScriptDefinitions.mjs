@@ -12,7 +12,7 @@ export default async function(fourtune_session) {
 		ts,
 		tsReadTSConfigFile,
 		tsInvokeTypeScript
-	} = getDependency("@fourtune/realm-js-and-web-utilities")
+	} = getDependency("@fourtune/base-realm-js-and-web")
 
 	const compiler_options = {
 		...await tsReadTSConfigFile(

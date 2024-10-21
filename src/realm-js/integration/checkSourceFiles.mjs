@@ -13,7 +13,7 @@ export default async function(fourtune_session) {
 		tsReadTSConfigFile,
 		tsInvokeTypeScript
 	} = getDependency(
-		"@fourtune/realm-js-and-web-utilities"
+		"@fourtune/base-realm-js-and-web"
 	)
 
 	const input_files = fourtune_session.getProjectSourceFiles().filter(({relative_path}) => {

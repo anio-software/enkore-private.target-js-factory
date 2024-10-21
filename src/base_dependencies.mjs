@@ -1,5 +1,5 @@
 export default {
-	"@fourtune/realm-js-and-web-utilities": {
-		version: "0.0.15",
+	"@fourtune/base-realm-js-and-web": {
+		version: "0.1.0",
 	}
 }

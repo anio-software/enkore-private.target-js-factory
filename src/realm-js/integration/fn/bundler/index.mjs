@@ -7,7 +7,7 @@ export default async function(fourtune_session, options) {
 		project_root, "realm-js"
 	)
 
-	const {jsBundler} = getDependency("@fourtune/realm-js-and-web-utilities")
+	const {jsBundler} = getDependency("@fourtune/base-realm-js-and-web")
 
 	return await jsBundler(
 		project_root, options.entry, {

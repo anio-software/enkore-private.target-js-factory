@@ -23,7 +23,7 @@ async function stripTypes(fourtune_session, relative_path, file_path) {
 		tsStripTypesFromCode,
 		jsResolveImportAliases
 	} = getDependency(
-		"@fourtune/realm-js-and-web-utilities"
+		"@fourtune/base-realm-js-and-web"
 	)
 
 	const code = (await fs.readFile(absolute_path)).toString()
