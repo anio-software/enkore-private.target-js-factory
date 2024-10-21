@@ -28,7 +28,7 @@ function getModuleNameFromPath(relative_path) {
 
 	if (module_name === ".") module_name = "default"
 
-	return module_name.split("/").join("__")
+	return module_name.split("/").join(".")
 }
 
 function normalizeInputFiles(fourtune_session) {
