@@ -32,6 +32,9 @@ export default async function(fourtune_session, module_name, module_exports) {
 				return `export${t_export} * from ${source_str}`
 			} else if (export_name === "__default") {
 				return `export${t_export} {default} from ${source_str}`
+			} else if (export_name === "__index") {
+				return `export${t_export} * from ${source_str}\n` +
+				       `export${t_export} {default} from ${source_str}`
 			} else {
 				//
 				// Normally, the file name is used to
