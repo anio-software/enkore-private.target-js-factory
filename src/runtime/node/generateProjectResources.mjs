@@ -2,7 +2,6 @@ import fs from "node:fs/promises"
 import path from "node:path"
 import {loadRealmDependencies} from "fourtune/base-realm"
 import findProjectResources from "./findProjectResources.mjs"
-import bundleResourceWithRollup from "./bundleResourceWithRollup.mjs"
 
 //
 // Generates the project's resources located at <project-root>/resources/<type>/
@@ -16,8 +15,7 @@ import bundleResourceWithRollup from "./bundleResourceWithRollup.mjs"
 export default async function(project_root, rollup_plugin) {
 	const {getDependency} = await loadRealmDependencies(project_root, "realm-js")
 
-	const rollup = getDependency("rollup")
-	const rollupResolveNode = getDependency("@rollup/plugin-node-resolve")
+	const {jsBundler} = getDependency("@fourtune/base-realm-js-and-web")
 
 	let project_resources = await findProjectResources(project_root)
 	let resources = []
@@ -36,10 +34,21 @@ export default async function(project_root, rollup_plugin) {
 			project_resource.type === "esmodule" &&
 			rollup_plugin !== null
 		) {
-			contents = await bundleResourceWithRollup(
-				project_root, rollup_plugin, {
-					rollup, rollupResolveNode
-				}, project_resource.path
+			const entry_code = (await fs.readFile(
+				path.join(
+					project_root,
+					"resources",
+					project_resource.type,
+					project_resource.path
+				)
+			)).toString()
+
+			contents = await jsBundler(
+				project_root, entry_code, {
+					input_file_type: "mjs",
+					treeshake: false,
+					additional_plugins: rollup_plugin ? [rollup_plugin] : []
+				}
 			)
 
 			// set processed flag because contents was processed by rollup
