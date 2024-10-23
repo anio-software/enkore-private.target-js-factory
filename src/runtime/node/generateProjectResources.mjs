@@ -34,20 +34,21 @@ export default async function(project_root, rollup_plugin) {
 			project_resource.type === "esmodule" &&
 			rollup_plugin !== null
 		) {
-			const entry_code = (await fs.readFile(
-				path.join(
-					project_root,
-					"resources",
-					project_resource.type,
-					project_resource.path
-				)
-			)).toString()
+			const absolute_path = path.join(
+				project_root,
+				"resources",
+				project_resource.type,
+				project_resource.path
+			)
 
 			contents = await jsBundler(
-				project_root, entry_code, {
+				project_root, `import ${JSON.stringify(absolute_path)}`, {
 					input_file_type: "mjs",
 					treeshake: false,
-					additional_plugins: rollup_plugin ? [rollup_plugin] : []
+					additional_plugins: rollup_plugin ? [{
+						when: "pre",
+						plugin: rollup_plugin
+					}] : []
 				}
 			)
 
