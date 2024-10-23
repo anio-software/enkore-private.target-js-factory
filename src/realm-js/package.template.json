@@ -15,8 +15,7 @@
     "./api": "./auto/node-main.mjs",
     "./integration": "./integration/index.mjs",
     "./package.json": "./package.json",
-    "./_debug/plugin": "./auto/plugin.mjs",
-    "./base-realm/version": "./auto/base-realm.version.mjs"
+    "./_debug/plugin": "./auto/plugin.mjs"
   },
   "typings": "./auto/node-main.d.mts",
   "scripts": {
