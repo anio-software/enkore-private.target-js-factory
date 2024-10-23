@@ -10,10 +10,6 @@ import {dts} from "rollup-plugin-dts"
 
 const require = createRequire(import.meta.url)
 
-const base_realm_package_json = await readJSONFile(
-	require.resolve("@fourtune/base-realm/package.json")
-)
-
 function autogenerateBanner(realm, version) {
 	return `/**
  * This file belongs to realm-${realm}@${version}.
@@ -27,7 +23,6 @@ async function writeNodeMain(realm, version) {
 	node_main_template += getRuntimeGlueCode("runtime")
 
 	node_main_template = node_main_template
-		.split(`<<@BASE_REALM>>`).join("./base-realm.mjs")
 		.split(`<<@ROLLUP_PLUGIN_FACTORY>>`).join("./pluginFactory.mjs")
 		.split(`<<@INITIALIZE_RUNTIME>>`).join("./runtime.mjs")
 
@@ -54,7 +49,6 @@ async function writeInstall(realm, version) {
 	let install_template = await bundleFile("./src/install.template.mjs")
 
 	install_template = install_template
-		.split(`<<@BASE_REALM>>`).join("./base-realm.mjs")
 		.split(`<<REALM>>`).join(realm)
 
 	install_template += `\n`
@@ -67,33 +61,9 @@ async function writeInstall(realm, version) {
 	)
 }
 
-async function writeBaseRealm(realm, version) {
-	const base_realm_code = await bundleFile(
-		"./node_modules/@fourtune/base-realm/src/index.mjs"
-	)
-
-	await fs.writeFile(
-		path.join("src", `realm-${realm}`, "auto", "base-realm.mjs"),
-		autogenerateBanner(realm, version) + base_realm_code
-	)
-
-	await fs.writeFile(
-		path.join("src", `realm-${realm}`, "auto", "base-realm.version.mjs"),
-		autogenerateBanner(realm, version) + `export default ${JSON.stringify(base_realm_package_json.version)};\n`
-	)
-}
-
 async function writePlugin(realm, version) {
 	const plugin_factory_code = await bundleFile(
-		"./src/runtime/plugin/main.mjs", [{
-			resolveId(id) {
-				if (id === "@fourtune/base-realm") {
-					return {id: "./base-realm.mjs", external: true}
-				}
-
-				return null
-			}
-		}]
+		"./src/runtime/plugin/main.mjs"
 	)
 
 	await fs.writeFile(
@@ -136,7 +106,6 @@ export default async function(realm, version) {
 	await writeNodeMain(realm, version)
 	await writeNodeMainTypes(realm, version)
 	await writeInstall(realm, version)
-	await writeBaseRealm(realm, version)
 	await writePlugin(realm, version)
 	await writeRuntime(realm, version)
 

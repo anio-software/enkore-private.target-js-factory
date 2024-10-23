@@ -1,6 +1,6 @@
 import fs from "node:fs/promises"
 import path from "node:path"
-import {loadRealmDependencies} from "@fourtune/base-realm"
+import {loadRealmDependencies} from "fourtune/base-realm"
 import findProjectResources from "./findProjectResources.mjs"
 import bundleResourceWithRollup from "./bundleResourceWithRollup.mjs"
 

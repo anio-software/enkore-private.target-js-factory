@@ -5,7 +5,7 @@ import base_dependencies from "./base_dependencies.mjs"
 import {
 	findProjectRootFromDirectory,
 	installRealmDependencies
-} from "<<@BASE_REALM>>"
+} from "fourtune/base-realm"
 
 async function runInstall(do_nothing = true, additional_dependencies = {}) {
 	if (do_nothing) return

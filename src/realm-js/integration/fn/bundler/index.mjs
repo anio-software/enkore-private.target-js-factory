@@ -1,4 +1,4 @@
-import {loadRealmDependencies} from "../../../auto/base-realm.mjs"
+import {loadRealmDependencies} from "fourtune/base-realm"
 //import fourtuneRollupPlugin from "../../../auto/plugin.mjs"
 
 export default async function(fourtune_session, options) {

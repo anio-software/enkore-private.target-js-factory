@@ -1,4 +1,4 @@
-import {loadRealmDependencies} from "../../auto/base-realm.mjs"
+import {loadRealmDependencies} from "fourtune/base-realm"
 import path from "node:path"
 
 export default async function(fourtune_session) {

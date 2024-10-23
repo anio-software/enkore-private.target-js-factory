@@ -1,5 +1,5 @@
 import path from "node:path"
-import {loadRealmDependencies} from "../auto/base-realm.mjs"
+import {loadRealmDependencies} from "fourtune/base-realm"
 
 export default async function(fourtune_session) {
 	const project_root = fourtune_session.getProjectRoot()

@@ -1,6 +1,6 @@
 import path from "node:path"
 import fs from "node:fs/promises"
-import {loadRealmDependencies} from "../auto/base-realm.mjs"
+import {loadRealmDependencies} from "fourtune/base-realm"
 
 async function copyAsIs(fourtune_session, relative_path, file_path) {
 	const project_root = fourtune_session.getProjectRoot()

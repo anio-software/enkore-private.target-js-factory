@@ -1,7 +1,7 @@
 import path from "node:path"
 import process from "node:process"
 
-import {findProjectRootFromDirectory} from "<<@BASE_REALM>>"
+import {findProjectRootFromDirectory} from "fourtune/base-realm"
 import rollupPluginFactory from "<<@ROLLUP_PLUGIN_FACTORY>>"
 import {initializeRuntime} from "<<@INITIALIZE_RUNTIME>>"
 
