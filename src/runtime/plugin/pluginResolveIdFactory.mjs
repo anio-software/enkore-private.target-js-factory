@@ -7,8 +7,8 @@ const __dirname = path.dirname(__filename)
 export default function() {
 	return async function(id) {
 		if (
-			id === `@fourtune/realm-js` ||
-			id === `@fourtune/realm-web`
+			id === `@fourtune/realm-js/api` ||
+			id === `@fourtune/realm-web/api`
 		) {
 			// this signals that Rollup should not ask other plugins or check
 			// the file system to find this id
