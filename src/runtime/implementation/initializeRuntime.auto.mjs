@@ -14,27 +14,25 @@ export default function(
 
 		init_data: runtime_init_data,
 
-		public_interface: {
-			createDefaultContext(...args) {
-				return createDefaultContext(runtime, ...args)
-			},
-			getProjectPackageJSON(...args) {
-				return getProjectPackageJSON(runtime, ...args)
-			},
-			getRuntimeVersion(...args) {
-				return getRuntimeVersion(runtime, ...args)
-			},
-			loadFourtuneConfiguration(...args) {
-				return loadFourtuneConfiguration(runtime, ...args)
-			},
-			loadResourceDynamic(...args) {
-				return loadResourceDynamic(runtime, ...args)
-			},
-			useContext(...args) {
-				return useContext(runtime, ...args)
-			}
+		createDefaultContext(...args) {
+			return createDefaultContext(runtime, ...args)
+		},
+		getProjectPackageJSON(...args) {
+			return getProjectPackageJSON(runtime, ...args)
+		},
+		getRuntimeVersion(...args) {
+			return getRuntimeVersion(runtime, ...args)
+		},
+		loadFourtuneConfiguration(...args) {
+			return loadFourtuneConfiguration(runtime, ...args)
+		},
+		loadResourceDynamic(...args) {
+			return loadResourceDynamic(runtime, ...args)
+		},
+		useContext(...args) {
+			return useContext(runtime, ...args)
 		}
 	}
 
-	return runtime.public_interface
+	return runtime
 }

@@ -72,9 +72,9 @@ async function writeInitializeRuntime() {
 			continue
 		}
 
-		runtime_public_methods += `\t\t\t${runtime_method}(...args) {\n`
-		runtime_public_methods += `\t\t\t\treturn ${runtime_method}(runtime, ...args)\n`
-		runtime_public_methods += `\t\t\t},\n`
+		runtime_public_methods += `\t\t${runtime_method}(...args) {\n`
+		runtime_public_methods += `\t\t\treturn ${runtime_method}(runtime, ...args)\n`
+		runtime_public_methods += `\t\t},\n`
 	}
 
 	runtime_public_methods = runtime_public_methods.slice(0, -2)
@@ -88,12 +88,10 @@ async function writeInitializeRuntime() {
 
 		init_data: runtime_init_data,
 
-		public_interface: {
 ${runtime_public_methods}
-		}
 	}
 
-	return runtime.public_interface
+	return runtime
 }\n`
 
 	await fs.writeFile(
