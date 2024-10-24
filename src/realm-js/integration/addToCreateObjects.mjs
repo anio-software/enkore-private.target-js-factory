@@ -54,7 +54,7 @@ export default async function(fourtune_session) {
 	for (const {relative_path} of fourtune_session.getProjectSourceFiles()) {
 		if (relative_path.endsWith(".d.mts")) {
 			fourtune_session.objects.add(
-				relative_path, {
+				path.join("src", relative_path), {
 					generator: copyAsIs,
 					generator_args: [relative_path]
 				}
@@ -63,14 +63,14 @@ export default async function(fourtune_session) {
 			const bare_name = relative_path.slice(0, -4)
 
 			fourtune_session.objects.add(
-				`${bare_name}.mjs`, {
+				path.join("src", `${bare_name}.mjs`), {
 					generator: stripTypes,
 					generator_args: [relative_path]
 				}
 			)
 
 			fourtune_session.objects.add(
-				`${bare_name}.d.mts`, {
+				path.join("src", `${bare_name}.d.mts`), {
 					generator: async () => {
 						const {dts_definitions} = fourtune_session.user_data
 
