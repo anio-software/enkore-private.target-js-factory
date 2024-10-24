@@ -17,7 +17,7 @@ export default async function(fourtune_session, writeFile) {
 		"baseUrl": "./",
 		"paths": {
 			"#/*": ["./src/*"],
-			"&/*": ["./objects/ephemerals/*"]
+			"&/*": ["./resources/tsmodule/*"]
 		}
 	}
 }\n`, {overwrite:true}
