@@ -11,9 +11,24 @@ async function copyAsIs(fourtune_session, relative_path, file_path) {
 	return code
 }
 
-async function stripTypes(fourtune_session, relative_path, file_path) {
+async function stripTypes(fourtune_session, relative_path, context, file_path) {
 	const project_root = fourtune_session.getProjectRoot()
-	const absolute_path = path.join(project_root, file_path)
+	let absolute_path = null
+	let aliases = {}
+
+	// absolute_path and alias change on context
+	if (context === "source") {
+		absolute_path = path.join(project_root, "build", "src", file_path)
+
+		const levels = path.dirname(file_path).split(path.sep).length
+
+		aliases = {
+			"#": "./" + ("./../".repeat(levels)),
+			"&": "./" + ("./../".repeat(levels + 1)) + "./ephemerals/"
+		}
+	} else {
+		throw new Error(`Invalid context "${context}".`)
+	}
 
 	const {getDependency} = await loadRealmDependencies(
 		project_root, "realm-js"
@@ -35,15 +50,8 @@ async function stripTypes(fourtune_session, relative_path, file_path) {
 		}
 	)).code
 
-	const levels = path.dirname(file_path).split(path.sep).length
-
 	return (await jsResolveImportAliases(
-		js, {
-			aliases: {
-				"#": "./" + ("./../".repeat(levels)),
-				"&": "./" + ("./../".repeat(levels + 1)) + "./ephemerals/"
-			}
-		}
+		js, {aliases}
 	)).code
 }
 
@@ -65,9 +73,7 @@ export default async function(fourtune_session) {
 			fourtune_session.objects.add(
 				path.join("src", `${bare_name}.mjs`), {
 					generator: stripTypes,
-					generator_args: [
-						path.join("build", "src", relative_path)
-					]
+					generator_args: ["source", relative_path]
 				}
 			)
 
