@@ -13,7 +13,7 @@ async function copyAsIs(fourtune_session, relative_path, file_path) {
 
 async function stripTypes(fourtune_session, relative_path, file_path) {
 	const project_root = fourtune_session.getProjectRoot()
-	const absolute_path = path.join(project_root, "build", "src", file_path)
+	const absolute_path = path.join(project_root, file_path)
 
 	const {getDependency} = await loadRealmDependencies(
 		project_root, "realm-js"
@@ -65,7 +65,9 @@ export default async function(fourtune_session) {
 			fourtune_session.objects.add(
 				path.join("src", `${bare_name}.mjs`), {
 					generator: stripTypes,
-					generator_args: [relative_path]
+					generator_args: [
+						path.join("build", "src", relative_path)
+					]
 				}
 			)
 
