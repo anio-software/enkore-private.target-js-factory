@@ -7,6 +7,8 @@ function resourceURLType(url) {
 		return "blob"
 	} else if (url.startsWith("esmodule://")) {
 		return "esmodule"
+	} else if (url.startsWith("tsmodule://")) {
+		return "tsmodule"
 	}
 
 	throw new Error(`Invalid resource url '${url}'.`)

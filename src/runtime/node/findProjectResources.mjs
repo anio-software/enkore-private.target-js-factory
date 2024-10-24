@@ -18,7 +18,12 @@ export default async function(project_root) {
 	const entries = await readdir(resources_path)
 
 	return entries.map(({relative_path}) => {
-		if (relative_path.startsWith("esmodule/")) {
+		if (relative_path.startsWith("tsmodule/")) {
+			return {
+				type: "tsmodule",
+				path: relative_path.slice("tsmodule/".length)
+			}
+		} else if (relative_path.startsWith("esmodule/")) {
 			return {
 				type: "esmodule",
 				path: relative_path.slice("esmodule/".length)

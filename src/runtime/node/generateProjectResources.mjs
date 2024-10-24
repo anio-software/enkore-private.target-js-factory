@@ -15,7 +15,7 @@ import findProjectResources from "./findProjectResources.mjs"
 export default async function(project_root, rollup_plugin) {
 	const {getDependency} = await loadRealmDependencies(project_root, "realm-js")
 
-	const {jsBundler} = getDependency("@fourtune/base-realm-js-and-web")
+	const {tsBundler} = getDependency("@fourtune/base-realm-js-and-web")
 
 	let project_resources = await findProjectResources(project_root)
 	let resources = []
@@ -31,7 +31,10 @@ export default async function(project_root, rollup_plugin) {
 		// resources, as would be the case with esmodule resources
 		//
 		if (
-			project_resource.type === "esmodule" &&
+			(
+			 project_resource.type === "esmodule" ||
+			 project_resource.type === "tsmodule"
+			) &&
 			rollup_plugin !== null
 		) {
 			const absolute_path = path.join(
@@ -41,9 +44,8 @@ export default async function(project_root, rollup_plugin) {
 				project_resource.path
 			)
 
-			contents = await jsBundler(
+			contents = await tsBundler(
 				project_root, `import ${JSON.stringify(absolute_path)}`, {
-					input_file_type: "mjs",
 					treeshake: false,
 					additional_plugins: rollup_plugin ? [{
 						when: "pre",
