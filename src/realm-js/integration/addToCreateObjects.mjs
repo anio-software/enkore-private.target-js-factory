@@ -24,7 +24,7 @@ async function stripTypes(fourtune_session, relative_path, context, file_path) {
 
 		aliases = {
 			"#": "./" + ("./../".repeat(levels)),
-			"&": "./" + ("./../".repeat(levels + 1)) + "./ephemerals/"
+			"&": "./" + ("./../".repeat(levels + 1)) + "./tsmodule.resources/"
 		}
 	} else {
 		throw new Error(`Invalid context "${context}".`)
