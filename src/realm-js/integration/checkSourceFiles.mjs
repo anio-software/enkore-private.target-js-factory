@@ -37,9 +37,10 @@ export default async function(fourtune_session) {
 		...project_ts_resources
 	]
 
+	// todo: use tsconfig.src.json for src/ files and tsconfig.resources.json for resources/tsmodule files.
 	const compiler_options = {
 		...await tsReadTSConfigFile(
-			path.join(project_root, "tsconfig.json"), project_root
+			path.join(project_root, "tsconfig.base.json"), project_root
 		),
 		allowJs: true,
 		checkJs: true,
