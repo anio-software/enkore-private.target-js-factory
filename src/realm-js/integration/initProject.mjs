@@ -2,7 +2,7 @@ import asyncSyncProjectInit from "./type/async-sync/initProject.mjs"
 
 export default async function(fourtune_session, writeFile) {
 	await writeFile(
-		"tsconfig.json",
+		"tsconfig.base.json",
 `{
 	"compilerOptions": {
 		"allowImportingTsExtensions": true,
@@ -14,13 +14,44 @@ export default async function(fourtune_session, writeFile) {
 		"module": "nodenext",
 		"moduleResolution": "nodenext",
 		"isolatedModules": true,
-		"baseUrl": "./",
+		"baseUrl": "./"
+	}
+}\n`, {overwrite:true}
+	)
+
+	await writeFile(
+		"tsconfig.src.json",
+`{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
 		"paths": {
 			"#/*": ["./src/*"],
 			"&/*": ["./resources/tsmodule/*"]
 		}
-	}
-}\n`, {overwrite:true}
+	},
+	"include": ["./src/**/*"]
+}\n`, {overwrite: true}
+	)
+
+	await writeFile(
+		"tsconfig.resources.json",
+`{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"paths": {}
+	},
+	"include": ["./resources/tsmodule/**/*"]
+}\n`, {overwrite: true}
+	)
+
+	await writeFile(
+		"tsconfig.json",
+`{
+	"references": [
+		{"path": "./tsconfig.src.json"},
+		{"path": "./tsconfig.resources.json"}
+	]
+}\n`, {overwrite: true}
 	)
 
 	const project_config = fourtune_session.getProjectConfig()
