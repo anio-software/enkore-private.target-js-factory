@@ -123,12 +123,14 @@ export async function initialize(
 	fourtune_session.hooks.register(
 		"createObjectFiles.pre", async () => {
 			fourtune_session.user_data.tsc_definitions = await getTypeScriptDefinitions(
-				fourtune_session, input_files_for_tsc.map(file => {
+				fourtune_session,
+				input_files_for_tsc.map(file => {
 					return path.join(
 						fourtune_session.getProjectRoot(), ".fourtune", "v0",
 						"build", file
 					)
-				})
+				}),
+				false
 			)
 		}
 	)
