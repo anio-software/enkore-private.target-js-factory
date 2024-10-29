@@ -1,3 +1,5 @@
+import fourtuneRollupPlugin from "../../../../auto/plugin.mjs"
+
 function getExportTypeAndName(filename) {
 	if (filename.endsWith(".d.mts")) {
 		return {
@@ -98,7 +100,14 @@ export async function initPackageLikeProject(fourtune_session) {
 
 				return await tsBundler(
 					fourtune_session.getProjectRoot(),
-					entry_code, {}
+					entry_code, {
+						additional_plugins: [{
+							when: "pre",
+							plugin: await fourtuneRollupPlugin(
+								fourtune_session.getProjectRoot()
+							)
+						}]
+					}
 				)
 			}
 		)
