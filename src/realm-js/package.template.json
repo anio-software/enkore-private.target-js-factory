@@ -16,7 +16,7 @@
       "import": "./auto/node-main.mjs",
       "types": "./auto/node-main.d.mts"
     },
-    "./integration": "./integration/index.mjs",
+    "./integration": "./integration/fourtune-ng/index.mjs",
     "./package.json": "./package.json",
     "./_debug/plugin": "./auto/plugin.mjs"
   },
