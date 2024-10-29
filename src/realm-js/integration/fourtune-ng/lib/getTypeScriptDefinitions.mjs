@@ -1,6 +1,9 @@
 import path from "node:path"
 
-export async function getTypeScriptDefinitions(fourtune_session, input_files) {
+export async function getTypeScriptDefinitions(
+	fourtune_session,
+	input_files
+) {
 	const project_root = fourtune_session.getProjectRoot()
 
 	const {
