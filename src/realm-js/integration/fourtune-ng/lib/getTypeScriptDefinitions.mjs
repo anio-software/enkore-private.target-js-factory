@@ -46,7 +46,10 @@ export async function getTypeScriptDefinitions(fourtune_session, input_files) {
 	}
 
 	const {errors, diagnostic_messages}  = await tsInvokeTypeScript(
-		host, input_files, compiler_options
+		project_root,
+		host,
+		input_files,
+		compiler_options
 	)
 
 	if (errors) {
