@@ -96,7 +96,8 @@ export async function initialize(
 ) {
 	const project_config = fourtune_session.getProjectConfig()
 
-	const input_files_for_tsc = []
+	const tsc_src_input_files = []
+	const tsc_assets_input_files = []
 
 	//
 	// this applies to every realm-js package:
@@ -109,7 +110,7 @@ export async function initialize(
 
 		if (source_file.name.endsWith(".mjs")) continue
 
-		input_files_for_tsc.push(source_file.source)
+		tsc_src_input_files.push(source_file.source)
 	}
 
 	for (const asset of assets) {
@@ -117,21 +118,36 @@ export async function initialize(
 
 		await handleInputFile(fourtune_session, asset)
 
-		input_files_for_tsc.push(asset.source)
+		tsc_assets_input_files.push(asset.source)
 	}
 
 	fourtune_session.hooks.register(
 		"createObjectFiles.pre", async () => {
-			fourtune_session.user_data.tsc_definitions = await getTypeScriptDefinitions(
+			const toAbsolutePath = (file) => {
+				return path.join(
+					fourtune_session.getProjectRoot(), ".fourtune", "v0",
+					"build", file
+				)
+			}
+
+			const src_map = await getTypeScriptDefinitions(
 				fourtune_session,
-				input_files_for_tsc.map(file => {
-					return path.join(
-						fourtune_session.getProjectRoot(), ".fourtune", "v0",
-						"build", file
-					)
-				}),
+				tsc_src_input_files.map(toAbsolutePath),
 				false
 			)
+
+			const assets_map = await getTypeScriptDefinitions(
+				fourtune_session,
+				tsc_assets_input_files.map(toAbsolutePath),
+				true
+			)
+
+			const definitions = new Map([
+				...src_map,
+				...assets_map
+			])
+
+			fourtune_session.user_data.tsc_definitions = definitions
 		}
 	)
 
