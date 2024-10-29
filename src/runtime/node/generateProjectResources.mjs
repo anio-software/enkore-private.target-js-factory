@@ -15,7 +15,7 @@ import findProjectResources from "./findProjectResources.mjs"
 export default async function(project_root, rollup_plugin) {
 	const {getDependency} = await loadRealmDependencies(project_root, "realm-js")
 
-	const {tsBundler} = getDependency("@fourtune/base-realm-js-and-web")
+	const {tsBundler, tsGetDeclaredExportNamesFromCode} = getDependency("@fourtune/base-realm-js-and-web")
 
 	let project_resources = await findProjectResources(project_root)
 	let resources = []
@@ -44,8 +44,28 @@ export default async function(project_root, rollup_plugin) {
 			) &&
 			rollup_plugin !== null
 		) {
+			const source_code = (await fs.readFile(
+				absolute_path
+			)).toString()
+
+			const export_names = await tsGetDeclaredExportNamesFromCode(source_code)
+			const source = JSON.stringify(absolute_path)
+			let entry_code = ``
+
+			if (export_names.length === 0) {
+				entry_code = `import ${source}\n`
+			} else if (export_names.length === 1 && export_names[0] === "default") {
+				entry_code  = `export {default} from ${source}\n`
+			} else {
+				if (export_names.includes("default")) {
+					entry_code  = `export {default} from ${source}\n`
+				}
+
+				entry_code  = `export * from ${source}\n`
+			}
+
 			contents = await tsBundler(
-				project_root, `import ${JSON.stringify(absolute_path)}`, {
+				project_root, entry_code, {
 					treeshake: false,
 					additional_plugins: rollup_plugin ? [{
 						when: "pre",
