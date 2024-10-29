@@ -3,7 +3,7 @@ import fs from "node:fs/promises"
 import readdir from "./util/readdir.mjs"
 
 export default async function(project_root) {
-	const resources_path = path.join(project_root, "resources")
+	const resources_path = path.join(project_root, "assets")
 
 	try {
 		const stat = await fs.stat(resources_path)

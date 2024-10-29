@@ -39,7 +39,7 @@ export default async function(project_root, rollup_plugin) {
 		) {
 			const absolute_path = path.join(
 				project_root,
-				"resources",
+				"assets",
 				project_resource.type,
 				project_resource.path
 			)
@@ -60,7 +60,7 @@ export default async function(project_root, rollup_plugin) {
 			contents = (await fs.readFile(
 				path.join(
 					project_root,
-					"resources",
+					"assets",
 					project_resource.type,
 					project_resource.path
 				)
