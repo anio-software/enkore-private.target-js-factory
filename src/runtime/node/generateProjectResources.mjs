@@ -24,6 +24,13 @@ export default async function(project_root, rollup_plugin) {
 		let contents = ""
 		let processed = false
 
+		const absolute_path = path.join(
+			project_root,
+			"assets",
+			project_resource.type,
+			project_resource.path
+		)
+
 		//
 		// ignore esmodules when rollup_plugin is null.
 		// this is to only fetch static resources
@@ -37,13 +44,6 @@ export default async function(project_root, rollup_plugin) {
 			) &&
 			rollup_plugin !== null
 		) {
-			const absolute_path = path.join(
-				project_root,
-				"assets",
-				project_resource.type,
-				project_resource.path
-			)
-
 			contents = await tsBundler(
 				project_root, `import ${JSON.stringify(absolute_path)}`, {
 					treeshake: false,
@@ -58,12 +58,7 @@ export default async function(project_root, rollup_plugin) {
 			processed = true
 		} else {
 			contents = (await fs.readFile(
-				path.join(
-					project_root,
-					"assets",
-					project_resource.type,
-					project_resource.path
-				)
+				absolute_path
 			)).toString()
 		}
 
