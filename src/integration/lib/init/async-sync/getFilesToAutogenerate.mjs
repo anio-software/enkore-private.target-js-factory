@@ -75,7 +75,7 @@ export default async function(fourtune_session) {
 		`//export const ${function_name}Sync : ImplementationDocType = impl\n`
 
 	files[`src/export/${function_name}<X>Factory.mts`] =
-		`import type {UserContextType} from "@fourtune/realm-js/runtime"\n` +
+		`import type {UserContext} from "@fourtune/realm-js/runtime"\n` +
 		`import {useContext} from "@fourtune/realm-js/runtime"\n` +
 		`\n` +
 		`import type {DependenciesType} from "##/DependenciesType.d.mts"\n` +
@@ -91,8 +91,8 @@ export default async function(fourtune_session) {
 		generateImportStatements(factory_imports) +
 		`\n` +
 		`/* ImplementationDocType is needed to make doctypes work in LSP */\n` +
-		`export function ${function_name}Factory(user : UserContextType = {}) : ImplementationDocType {\n` +
-		`//export function ${function_name}SyncFactory(user : UserContextType = {}) : ImplementationDocType {\n` +
+		`export function ${function_name}Factory(user : UserContext = {}) : ImplementationDocType {\n` +
+		`//export function ${function_name}SyncFactory(user : UserContext = {}) : ImplementationDocType {\n` +
 		`	const context = useContext(user)\n` +
 		`\n` +
 		`	const dependencies : DependenciesType = {${dependencies_members}}\n` +
