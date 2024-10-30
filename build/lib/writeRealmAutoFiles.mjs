@@ -1,9 +1,13 @@
-import readJSONFile from "../../src/runtime/node/util/readJSONFile.mjs"
-
 import cleanRealmAutoFiles from "./cleanRealmAutoFiles.mjs"
 import fs from "node:fs/promises"
 import path from "node:path"
 import bundleFile from "./bundleFile.mjs"
+
+async function readJSONFile(file) {
+	return JSON.parse((
+		await fs.readFile(file)
+	).toString())
+}
 
 function autogenerateBanner(realm, version) {
 	return `/**
