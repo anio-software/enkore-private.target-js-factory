@@ -20,7 +20,7 @@ async function runInstall() {
 		)
 	}
 
-	await installRealmDependencies(project_root, "realm-<<REALM>>", {
+	await installRealmDependencies(project_root, "realm-js", {
 		...dependencies
 	})
 }
