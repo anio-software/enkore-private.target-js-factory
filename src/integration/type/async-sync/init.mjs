@@ -7,18 +7,18 @@ export default async function(fourtune_session) {
 
 	for (const file in files) {
 		mapping[file] = [
-			"generateSyncAsyncVariantFromString",
+			"generateAsyncSyncVariantFromString",
 			files[file]
 		]
 	}
 
 	mapping[`Implementation<X>DocType.d.mts`] = [
-		"generateSyncAsyncVariant",
+		"generateAsyncSyncVariant",
 		`src/template/ImplementationDocType.d.mts`
 	]
 
 	mapping[`implementation<X>.mts`] = [
-		"generateSyncAsyncVariant",
+		"generateAsyncSyncVariant",
 		`src/template/implementation.mts`
 	]
 
