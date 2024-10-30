@@ -1,14 +1,12 @@
 import path from "node:path"
 import process from "node:process"
-import base_dependencies from "./base_dependencies.mjs"
+import dependencies from "./dependencies.mjs"
 
-import {
-	findProjectRootFromDirectory,
-	installRealmDependencies
-} from "fourtune/base-realm"
-
-async function runInstall(do_nothing = true, additional_dependencies = {}) {
-	if (do_nothing) return
+async function runInstall() {
+	const {
+		findProjectRootFromDirectory,
+		installRealmDependencies
+	} = await import("fourtune/base-realm")
 
 	const start_dir = path.dirname(process.argv[1])
 
@@ -23,10 +21,10 @@ async function runInstall(do_nothing = true, additional_dependencies = {}) {
 	}
 
 	await installRealmDependencies(project_root, "realm-<<REALM>>", {
-		...base_dependencies,
-		...additional_dependencies
+		...dependencies
 	})
 }
 
-/* just here so rollup keeps the function :) */
-await runInstall(true, {})
+if (!("ANIO_CICD" in process.env)) {
+	await runInstall()
+}

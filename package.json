@@ -1,14 +1,42 @@
 {
-  "private": true,
+  "name": "@fourtune/realm-js",
+  "type": "module",
   "version": "0.60.0",
-  "name": "@fourtune/realm-js-and-web",
-  "devDependencies": {
-    "@anio-js-foundation/create-temporary-resource": "^2.0.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "rollup": "^3.29.5",
-    "rollup-plugin-dts": "^6.1.1"
+  "description": "",
+  "author": "Anio Software <info@anio.software>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fourtune-org/realm-js-and-web.git"
+  },
+  "exports": {
+    ".": "./integration/_main.mjs",
+    "./project": {
+      "import": "./exports/project.mjs",
+      "types": "./exports/project.d.mts"
+    },
+    "./runtime": {
+      "import": "./exports/runtime.mjs",
+      "types": "./exports/runtime.d.mts"
+    },
+    "./resources": {
+      "import": "./exports/resources.mjs",
+      "types": "./exports/resources.d.mts"
+    },
+    "./integration": "./integration/fourtune-ng/index.mjs",
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "./build.sh"
+    "postinstall": "node ./src/_install.mjs"
+  },
+  "dependencies": {
+    "@anio-js-foundation/alphabet-identifier-generator": "1.0.0",
+    "@anio-js-foundation/generate-object-literal": "1.1.0",
+    "@anio-js-foundation/strip-suffix": "3.0.1",
+    "@anio-software/fs": "0.6.0",
+    "@fourtune/js-and-web-runtime-and-rollup-plugins": "^0.0.4"
+  },
+  "peerDependencies": {
+    "@types/node": "22.x"
   }
 }
