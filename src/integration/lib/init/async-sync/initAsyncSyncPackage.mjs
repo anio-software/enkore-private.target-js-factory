@@ -30,17 +30,11 @@ export async function initAsyncSyncPackage(fourtune_session) {
 		const generator = fourtune_session.autogenerate[generator_fn]
 
 		fourtune_session.autogenerate.addFile(
-			async_file_name, {
-				generator: generator(source, "async"),
-				generator_args: []
-			}
+			async_file_name, generator(source, "async")
 		)
 
 		fourtune_session.autogenerate.addFile(
-			sync_file_name, {
-				generator: generator(source, "sync"),
-				generator_args: []
-			}
+			sync_file_name, generator(source, "sync")
 		)
 	}
 }
