@@ -14,12 +14,12 @@ export default async function(fourtune_session) {
 
 	mapping[`Implementation<X>DocType.d.mts`] = [
 		"generateSyncAsyncVariant",
-		`template/ImplementationDocType.d.mts`
+		`src/template/ImplementationDocType.d.mts`
 	]
 
 	mapping[`implementation<X>.mts`] = [
 		"generateSyncAsyncVariant",
-		`template/implementation.mts`
+		`src/template/implementation.mts`
 	]
 
 	for (const file_name in mapping) {

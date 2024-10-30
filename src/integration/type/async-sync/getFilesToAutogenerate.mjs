@@ -57,11 +57,11 @@ export default async function(fourtune_session) {
 		dependencies_members += "\t"
 	}
 
-	files[`Dependencies<X>Type.d.mts`] =
+	files[`src/Dependencies<X>Type.d.mts`] =
 		generateImportStatements(dependency_type_imports) +
 		`export type DependenciesType = {${dependencies_type_members}}\n`
 
-	files[`export/${function_name}<X>.mts`] =
+	files[`src/export/${function_name}<X>.mts`] =
 		`import {${function_name}Factory as factory} from "##/export/${function_name}Factory.mts"\n` +
 		`//import {${function_name}SyncFactory as factory} from "##/export/${function_name}SyncFactory.mts"\n` +
 		`\n` +
@@ -74,7 +74,7 @@ export default async function(fourtune_session) {
 		`export const ${function_name} : ImplementationDocType = impl\n` +
 		`//export const ${function_name}Sync : ImplementationDocType = impl\n`
 
-	files[`export/${function_name}<X>Factory.mts`] =
+	files[`src/export/${function_name}<X>Factory.mts`] =
 		`import type {UserContextType} from "@fourtune/realm-js"\n` +
 		`import {useContext} from "@fourtune/realm-js"\n` +
 		`\n` +
