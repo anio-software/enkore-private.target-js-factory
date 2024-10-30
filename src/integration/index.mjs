@@ -3,9 +3,19 @@ import fs from "node:fs/promises"
 import {getTypeScriptDefinitions} from "./lib/getTypeScriptDefinitions.mjs"
 import {initAsyncSyncPackage} from "./lib/init/async-sync/initAsyncSyncPackage.mjs"
 import {initPackageLikeProject} from "./lib/init/package-like/initPackageLikeProject.mjs"
+import {initializeProjectGeneral} from "./initializeProjectGeneral.mjs"
+import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
+}
+
+export async function initializeProject(fourtune_session, writeFile) {
+	await initializeProjectGeneral(fourtune_session, writeFile)
+
+	if (fourtune_session.getProjectConfig().type === "package:async/sync") {
+		await initializeAsyncSyncProject(fourtune_session, writeFile)
+	}
 }
 
 async function stripTypes(fourtune_session, code, file_path) {
