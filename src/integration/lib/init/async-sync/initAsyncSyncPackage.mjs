@@ -12,12 +12,12 @@ export async function initAsyncSyncPackage(fourtune_session) {
 		]
 	}
 
-	mapping[`Implementation<X>DocType.d.mts`] = [
+	mapping[`src/Implementation<X>DocType.d.mts`] = [
 		"generateAsyncSyncVariant",
 		`src/template/ImplementationDocType.d.mts`
 	]
 
-	mapping[`implementation<X>.mts`] = [
+	mapping[`src/implementation<X>.mts`] = [
 		"generateAsyncSyncVariant",
 		`src/template/implementation.mts`
 	]
