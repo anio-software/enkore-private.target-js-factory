@@ -1,6 +1,6 @@
 export default async function(fourtune_session, writeFile) {
 	await writeFile(
-		`template/implementation.mts`,
+		`src/template/implementation.mts`,
 
 		`/* -------- required imports by template -------- */\n` +
 		`import type {ContextInstanceType} from "@fourtune/realm-js"\n` +
@@ -27,7 +27,7 @@ export default async function(fourtune_session, writeFile) {
 	)
 
 	await writeFile(
-		`template/ImplementationDocType.d.mts`,
+		`src/template/ImplementationDocType.d.mts`,
 
 		`/* define and describe your function api here */\n` +
 		`export type ImplementationDocType = {\n` +
