@@ -1,6 +1,7 @@
 import path from "node:path"
 import fs from "node:fs/promises"
 import {getTypeScriptDefinitions} from "./lib/getTypeScriptDefinitions.mjs"
+import {initAsyncSyncPackage} from "./lib/init/async-sync/initAsyncSyncPackage.mjs"
 import {initPackageLikeProject} from "./lib/init/package-like/initPackageLikeProject.mjs"
 
 export async function getIntegrationAPIVersion() {
@@ -85,6 +86,19 @@ async function handleInputFile(fourtune_session, input_file) {
 				relative_path: input_file.source
 			}
 		)
+	}
+}
+
+export async function preInitialize(
+	fourtune_session,
+	target_configuration,
+	assets,
+	source_files
+) {
+	const project_config = fourtune_session.getProjectConfig()
+
+	if (project_config.type === "package:async/sync") {
+		await initAsyncSyncPackage(fourtune_session)
 	}
 }
 
@@ -200,16 +214,8 @@ export async function initialize(
 	)
 
 	switch (project_config.type) {
-		case "package": {
-			await initPackageLikeProject(fourtune_session)
-		} break
-
-		//
-		// special kind of package:
-		// project/package with only one function that is async+sync
-		//
+		case "package":
 		case "package:async/sync": {
-			await initAsyncSyncProject(fourtune_session)
 			await initPackageLikeProject(fourtune_session)
 		} break
 
