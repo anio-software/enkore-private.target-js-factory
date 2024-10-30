@@ -75,8 +75,8 @@ export default async function(fourtune_session) {
 		`//export const ${function_name}Sync : ImplementationDocType = impl\n`
 
 	files[`src/export/${function_name}<X>Factory.mts`] =
-		`import type {UserContextType} from "@fourtune/realm-js"\n` +
-		`import {useContext} from "@fourtune/realm-js"\n` +
+		`import type {UserContextType} from "@fourtune/realm-js/runtime"\n` +
+		`import {useContext} from "@fourtune/realm-js/runtime"\n` +
 		`\n` +
 		`import type {DependenciesType} from "##/DependenciesType.d.mts"\n` +
 		`//import type {DependenciesType} from "##/DependenciesSyncType.d.mts"\n` +
