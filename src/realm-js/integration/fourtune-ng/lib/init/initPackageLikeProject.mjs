@@ -1,4 +1,6 @@
-import fourtuneRollupPlugin from "../../../../auto/plugin.mjs"
+import {factory as f1} from "@fourtune/js-and-web-runtime-and-rollup-plugins/project/rollup-plugin"
+import {factory as f2} from "@fourtune/js-and-web-runtime-and-rollup-plugins/runtime/rollup-plugin"
+import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/resources/rollup-plugin"
 
 function getExportTypeAndName(filename) {
 	if (filename.endsWith(".d.mts")) {
@@ -98,15 +100,27 @@ export async function initPackageLikeProject(fourtune_session) {
 					)
 				}
 
+				const additional_plugins = []
+
+				additional_plugins.push({
+					when: "pre",
+					plugin: await f1(fourtune_session.getProjectRoot())
+				})
+
+				additional_plugins.push({
+					when: "pre",
+					plugin: await f2(fourtune_session.getProjectRoot())
+				})
+
+				additional_plugins.push({
+					when: "pre",
+					plugin: await f3(fourtune_session.getProjectRoot())
+				})
+
 				return await tsBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
-						additional_plugins: [{
-							when: "pre",
-							plugin: await fourtuneRollupPlugin(
-								fourtune_session.getProjectRoot()
-							)
-						}]
+						additional_plugins
 					}
 				)
 			}
