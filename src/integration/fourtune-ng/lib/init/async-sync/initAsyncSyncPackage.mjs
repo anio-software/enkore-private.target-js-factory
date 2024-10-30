@@ -1,6 +1,6 @@
 import getFilesToAutogenerate from "./getFilesToAutogenerate.mjs"
 
-export default async function(fourtune_session) {
+export async function initAsyncSyncPackage(fourtune_session) {
 	const mapping = {}
 
 	const files = await getFilesToAutogenerate(fourtune_session)
