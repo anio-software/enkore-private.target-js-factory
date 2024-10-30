@@ -45,7 +45,7 @@ function importStatement(source, export_name, is_type = false) {
 	}
 }
 
-export async function initPackageLikeProject(fourtune_session) {
+export async function initPackageProject(fourtune_session) {
 	const output_modules = new Map()
 
 	for (const source of fourtune_session.input.getSourceFiles()) {

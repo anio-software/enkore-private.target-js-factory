@@ -2,7 +2,7 @@ import path from "node:path"
 import fs from "node:fs/promises"
 import {getTypeScriptDefinitions} from "./lib/getTypeScriptDefinitions.mjs"
 import {initAsyncSyncPackage} from "./lib/init/async-sync/initAsyncSyncPackage.mjs"
-import {initPackageLikeProject} from "./lib/init/package-like/initPackageLikeProject.mjs"
+import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 import {initializeProjectGeneral} from "./initializeProjectGeneral.mjs"
 import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
 
@@ -226,7 +226,7 @@ export async function initialize(
 	switch (project_config.type) {
 		case "package":
 		case "package:async/sync": {
-			await initPackageLikeProject(fourtune_session)
+			await initPackageProject(fourtune_session)
 		} break
 
 //		case "app": {
