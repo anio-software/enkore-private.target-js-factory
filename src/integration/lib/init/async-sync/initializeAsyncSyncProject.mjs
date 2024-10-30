@@ -1,4 +1,4 @@
-export default async function(fourtune_session, writeFile) {
+export async function initializeAsyncSyncProject(fourtune_session, writeFile) {
 	await writeFile(
 		`src/template/implementation.mts`,
 
