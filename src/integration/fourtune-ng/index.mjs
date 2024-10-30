@@ -1,7 +1,7 @@
 import path from "node:path"
 import fs from "node:fs/promises"
 import {getTypeScriptDefinitions} from "./lib/getTypeScriptDefinitions.mjs"
-import {initPackageLikeProject} from "./lib/init/initPackageLikeProject.mjs"
+import {initPackageLikeProject} from "./lib/init/package-like/initPackageLikeProject.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
