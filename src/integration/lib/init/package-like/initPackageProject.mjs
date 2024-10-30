@@ -28,12 +28,12 @@ function importStatement(source, export_name, is_type = false) {
 	// other things.
 	//
 	if (export_name === "__star_export") {
-		return `export${t_export} * from ${source_str}`
+		return `export${t_export} * from ${source_str}\n`
 	} else if (export_name === "__default") {
-		return `export${t_export} {default} from ${source_str}`
+		return `export${t_export} {default} from ${source_str}\n`
 	} else if (export_name === "__index") {
 		return `export${t_export} * from ${source_str}\n` +
-		       `export${t_export} {default} from ${source_str}`
+		       `export${t_export} {default} from ${source_str}\n`
 	} else {
 		//
 		// Normally, the file name is used to
@@ -41,7 +41,7 @@ function importStatement(source, export_name, is_type = false) {
 		// This means, myFunction.mjs would be exported as
 		// "myFunction"
 		//
-		return `export${t_export} {${export_name}} from ${source_str}`
+		return `export${t_export} {${export_name}} from ${source_str}\n`
 	}
 }
 
