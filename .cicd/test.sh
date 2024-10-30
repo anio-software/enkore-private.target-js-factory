@@ -1,3 +1,3 @@
 #!/bin/bash -eufx
 
-npm run build
+npm run prepare
