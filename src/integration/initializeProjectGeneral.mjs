@@ -5,8 +5,8 @@ export async function initializeProjectGeneral(
 		"tsconfig.json",
 `{
 	"references": [
-		{"path": "./tsconfig.src.json"},
-		{"path": "./tsconfig.resources.json"}
+		{"path": "./auto/cfg/tsconfig.src.json"},
+		{"path": "./auto/cfg/tsconfig.resources.json"}
 	]
 }\n`, {overwrite: true}
 	)
