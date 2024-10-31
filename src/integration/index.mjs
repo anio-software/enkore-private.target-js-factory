@@ -28,7 +28,8 @@ async function stripTypes(fourtune_session, code, file_path) {
 		replace_import_extensions: true
 	})).code
 
-	if (!file_path.startsWith("src/")) {
+	// don't resolve aliases for files located inside assets/ or auto/assets/
+	if (file_path.startsWith("assets/") || file_path.startsWith("auto/assets/")) {
 		return code
 	}
 
