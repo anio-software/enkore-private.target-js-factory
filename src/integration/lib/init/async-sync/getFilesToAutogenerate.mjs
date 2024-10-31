@@ -62,12 +62,12 @@ export default async function(fourtune_session) {
 		`export type DependenciesType = {${dependencies_type_members}}\n`
 
 	files[`src/export/${function_name}<X>.mts`] =
-		`import {${function_name}Factory as factory} from "##/export/${function_name}Factory.mts"\n` +
-		`//import {${function_name}SyncFactory as factory} from "##/export/${function_name}SyncFactory.mts"\n` +
+		`import {${function_name}Factory as factory} from "#~auto/export/${function_name}Factory.mts"\n` +
+		`//import {${function_name}SyncFactory as factory} from "#~auto/export/${function_name}SyncFactory.mts"\n` +
 		`\n` +
 		`/* ImplementationDocType is needed to make doctypes work in LSP */\n` +
-		`import type {ImplementationDocType} from "##/ImplementationDocType.d.mts"\n` +
-		`//import type {ImplementationDocType} from "##/ImplementationSyncDocType.d.mts"\n` +
+		`import type {ImplementationDocType} from "#~auto/ImplementationDocType.d.mts"\n` +
+		`//import type {ImplementationDocType} from "#~auto/ImplementationSyncDocType.d.mts"\n` +
 		`\n` +
 		`const impl = factory()\n` +
 		`\n` +
@@ -83,15 +83,15 @@ export default async function(fourtune_session) {
 		`import type {UserContext} from "@fourtune/realm-js/runtime"\n` +
 		`import {useContext} from "@fourtune/realm-js/runtime"\n` +
 		`\n` +
-		`import type {DependenciesType} from "##/DependenciesType.d.mts"\n` +
-		`//import type {DependenciesType} from "##/DependenciesSyncType.d.mts"\n` +
+		`import type {DependenciesType} from "#~auto/DependenciesType.d.mts"\n` +
+		`//import type {DependenciesType} from "#~auto/DependenciesSyncType.d.mts"\n` +
 		`\n` +
-		`import implementation from "##/implementation.mts"\n` +
-		`//import implementation from "##/implementationSync.mts"\n` +
+		`import implementation from "#~auto/implementation.mts"\n` +
+		`//import implementation from "#~auto/implementationSync.mts"\n` +
 		`\n` +
 		`/* needed to make doctypes work in LSP */\n` +
-		`import type {ImplementationDocType} from "##/ImplementationDocType.d.mts"\n` +
-		`//import type {ImplementationDocType} from "##/ImplementationSyncDocType.d.mts"\n` +
+		`import type {ImplementationDocType} from "#~auto/ImplementationDocType.d.mts"\n` +
+		`//import type {ImplementationDocType} from "#~auto/ImplementationSyncDocType.d.mts"\n` +
 		`\n` +
 		generateImportStatements(factory_imports) +
 		`\n` +
