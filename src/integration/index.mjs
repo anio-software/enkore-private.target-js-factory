@@ -6,7 +6,7 @@ import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs
 import {initializeProjectGeneral} from "./initializeProjectGeneral.mjs"
 import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
 import {resolveImportAliases} from "./lib/resolveImportAliases.mjs"
-import {getPathAliases} from "../getPathAliases.mjs"
+import {autogenerateTSConfigFiles} from "./lib/init/_generic/autogenerateTSConfigFiles.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -173,60 +173,7 @@ export async function initialize(
 		}
 	)
 
-	fourtune_session.autogenerate.addFile(
-		`cfg/tsconfig.base.json`, function() {
-			return JSON.stringify({
-				"compilerOptions": {
-					"allowImportingTsExtensions": true,
-					"allowSyntheticDefaultImports": true,
-					"types": ["node"],
-					"skipLibCheck": false,
-					"strict": true,
-					"target": "esnext",
-					"module": "nodenext",
-					"moduleResolution": "nodenext",
-					"isolatedModules": true,
-					"baseUrl": "../../"
-				}
-			}, null, 4) + "\n"
-		}
-	)
-
-	fourtune_session.autogenerate.addFile(
-		`cfg/tsconfig.src.json`, function() {
-			return JSON.stringify({
-				"extends": "./tsconfig.base.json",
-				"compilerOptions": {
-					"paths": getPathAliases("./", true)
-				},
-				"include": ["../../src/**/*"]
-			}, null, 4) + "\n"
-		}
-	)
-
-	fourtune_session.autogenerate.addFile(
-		`cfg/tsconfig.auto-src.json`, function() {
-			return JSON.stringify({
-				"extends": "./tsconfig.base.json",
-				"compilerOptions": {
-					"paths": getPathAliases("./", true)
-				},
-				"include": ["../../auto/src/**/*"]
-			}, null, 4) + "\n"
-		}
-	)
-
-	fourtune_session.autogenerate.addFile(
-		`cfg/tsconfig.assets.json`, function() {
-			return JSON.stringify({
-				"extends": "./tsconfig.base.json",
-				"compilerOptions": {
-					"paths": {}
-				},
-				"include": ["../../assets/tsmodule/**/*"]
-			}, null, 4) + "\n"
-		}
-	)
+	await autogenerateTSConfigFiles(fourtune_session)
 
 	switch (project_config.type) {
 		case "package":
