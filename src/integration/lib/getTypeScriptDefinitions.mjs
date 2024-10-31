@@ -1,20 +1,12 @@
 import path from "node:path"
+import {getPathAliases} from "../../getPathAliases.mjs"
 
 export async function getTypeScriptDefinitions(
 	fourtune_session,
 	input_files,
 	disable_aliases = true
 ) {
-	let aliases = {}
-
-	if (!disable_aliases) {
-		aliases = {
-			"#/*":  ["./.fourtune/v0/build/src/*"],
-			"##/*": ["./.fourtune/v0/build/auto/src/*"],
-			"&/*":  ["./.fourtune/v0/build/assets/tsmodule/*"],
-			"&&/*": ["./.fourtune/v0/build/auto/assets/tsmodule/*"]
-		}
-	}
+	const aliases = disable_aliases ? {} : getPathAliases("./.fourtune/v0/build/", true)
 
 	const project_root = fourtune_session.getProjectRoot()
 

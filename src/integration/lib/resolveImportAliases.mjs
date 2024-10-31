@@ -1,16 +1,12 @@
 import path from "node:path"
+import {getPathAliases} from "../../getPathAliases.mjs"
 
 export async function resolveImportAliases(
 	fourtune_session, code, file_path
 ) {
 	const levels = path.dirname(file_path).split(path.sep).length
 
-	const aliases = {
-		"##": `./${"../".repeat(levels)}/auto/src/`,
-		"#": `./${"../".repeat(levels)}/src/`,
-		"&": `./${"../".repeat(levels)}/assets/tsmodule/`,
-		// todo: add &&/
-	}
+	const aliases = getPathAliases(`./${"../".repeat(levels)}/`)
 
 	const {
 		jsResolveImportAliases,

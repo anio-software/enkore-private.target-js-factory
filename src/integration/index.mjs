@@ -6,6 +6,7 @@ import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs
 import {initializeProjectGeneral} from "./initializeProjectGeneral.mjs"
 import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
 import {resolveImportAliases} from "./lib/resolveImportAliases.mjs"
+import {getPathAliases} from "../getPathAliases.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -196,12 +197,7 @@ export async function initialize(
 			return JSON.stringify({
 				"extends": "./tsconfig.base.json",
 				"compilerOptions": {
-					"paths": {
-						"#/*": ["./src/*"],
-						"##/*": ["./auto/src/*"],
-						"&/*": ["./assets/tsmodule/*"],
-						"&&/*": ["./auto/assets/tsmodule/*"]
-					}
+					"paths": getPathAliases("./", true)
 				},
 				"include": ["../../src/**/*"]
 			}, null, 4) + "\n"
@@ -213,12 +209,7 @@ export async function initialize(
 			return JSON.stringify({
 				"extends": "./tsconfig.base.json",
 				"compilerOptions": {
-					"paths": {
-						"#/*": ["./src/*"],
-						"##/*": ["./auto/src/*"],
-						"&/*": ["./assets/tsmodule/*"],
-						"&&/*": ["./auto/assets/tsmodule/*"]
-					}
+					"paths": getPathAliases("./", true)
 				},
 				"include": ["../../auto/src/**/*"]
 			}, null, 4) + "\n"
