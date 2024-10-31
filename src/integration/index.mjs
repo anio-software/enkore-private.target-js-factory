@@ -20,7 +20,7 @@ export async function initializeProject(fourtune_session, writeFile) {
 }
 
 async function stripTypes(fourtune_session, code, file_path) {
-	const {tsStripTypesFromCode, jsResolveImportAliases} = await fourtune_session.getDependency(
+	const {tsStripTypesFromCode} = await fourtune_session.getDependency(
 		"@fourtune/base-realm-js-and-web"
 	)
 
