@@ -24,10 +24,10 @@ async function stripTypes(fourtune_session, code, file_path) {
 		"@fourtune/base-realm-js-and-web"
 	)
 
-	code = (await tsStripTypesFromCode(code, {
+	code = await tsStripTypesFromCode(code, {
 		filename: file_path,
 		replace_import_extensions: true
-	})).code
+	})
 
 	// don't resolve aliases for files located inside assets/ or auto/assets/
 	if (file_path.startsWith("assets/") || file_path.startsWith("auto/assets/")) {
