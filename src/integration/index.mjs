@@ -5,6 +5,7 @@ import {initAsyncSyncPackage} from "./lib/init/async-sync/initAsyncSyncPackage.m
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 import {initializeProjectGeneral} from "./initializeProjectGeneral.mjs"
 import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
+import {resolveImportAliases} from "./lib/resolveImportAliases.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -33,20 +34,9 @@ async function stripTypes(fourtune_session, code, file_path) {
 		return code
 	}
 
-	const levels = path.dirname(file_path).split(path.sep).length
-
-	const aliases = {
-		"#": `./${"../".repeat(levels)}/src/`,
-		"##": `./${"../".repeat(levels)}/auto/src/`,
-		"&": `./${"../".repeat(levels)}/assets/tsmodule/`,
-		// todo: add &&/
-	}
-
-	return (await jsResolveImportAliases(
-		code, {
-			aliases
-		}
-	)).code
+	return await resolveImportAliases(
+		fourtune_session, code, file_path
+	)
 }
 
 async function handleInputFile(fourtune_session, input_file) {
@@ -58,11 +48,13 @@ async function handleInputFile(fourtune_session, input_file) {
 	if (input_file.name.endsWith(".d.mts")) {
 		fourtune_session.objects.addObject(
 			input_file.source, async () => {
-				const code = (await fs.readFile(
+				let code = (await fs.readFile(
 					absolute_path
 				)).toString()
 
-				return code
+				return await resolveImportAliases(
+					fourtune_session, code, input_file.source
+				)
 			}
 		)
 	} else if (input_file.name.endsWith(".mts")) {
@@ -85,7 +77,11 @@ async function handleInputFile(fourtune_session, input_file) {
 				const key = `.fourtune/v0/build/${file_path}`
 
 				if (fourtune_session.user_data.tsc_definitions.has(key)) {
-					return fourtune_session.user_data.tsc_definitions.get(key)
+					const code = fourtune_session.user_data.tsc_definitions.get(key)
+
+					return await resolveImportAliases(
+						fourtune_session, code, file_path
+					)
 				}
 
 				return ""
