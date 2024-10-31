@@ -209,6 +209,23 @@ export async function initialize(
 	)
 
 	fourtune_session.autogenerate.addFile(
+		`cfg/tsconfig.auto-src.json`, function() {
+			return JSON.stringify({
+				"extends": "./tsconfig.base.json",
+				"compilerOptions": {
+					"paths": {
+						"#/*": ["./src/*"],
+						"##/*": ["./auto/src/*"],
+						"&/*": ["./assets/tsmodule/*"],
+						"&&/*": ["./auto/assets/tsmodule/*"]
+					}
+				},
+				"include": ["../../auto/src/**/*"]
+			}, null, 4) + "\n"
+		}
+	)
+
+	fourtune_session.autogenerate.addFile(
 		`cfg/tsconfig.assets.json`, function() {
 			return JSON.stringify({
 				"extends": "./tsconfig.base.json",
