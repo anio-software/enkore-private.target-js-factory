@@ -33,12 +33,12 @@ async function stripTypes(fourtune_session, code, file_path) {
 		return code
 	}
 
-	const levels = file_path.split(path.sep).length
+	const levels = path.dirname(file_path).split(path.sep).length
 
 	const aliases = {
-		"#": "./" + ("../".repeat(levels - 2)) + "/",
-		"##": "./" + ("../".repeat(levels - 1)) + "/auto/src/",
-		"&": "./" + ("../".repeat(levels - 1)) + "/assets/tsmodule/",
+		"#": `./${"../".repeat(levels)}/src/`,
+		"##": `./${"../".repeat(levels)}/auto/src/`,
+		"&": `./${"../".repeat(levels)}/assets/tsmodule/`,
 		// todo: add &&/
 	}
 
