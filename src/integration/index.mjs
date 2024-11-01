@@ -1,9 +1,11 @@
-import {initAsyncSyncPackage} from "./lib/init/async-sync/initAsyncSyncPackage.mjs"
-import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
 import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
-import {autogenerateTSConfigFiles} from "./lib/init/_generic/autogenerateTSConfigFiles.mjs"
+
+import {initAsyncSyncPackage} from "./lib/init/async-sync/initAsyncSyncPackage.mjs"
+import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
+
 import {initializeObjectCreation} from "./lib/init/_generic/initializeObjectCreation.mjs"
+import {autogenerateTSConfigFiles} from "./lib/init/_generic/autogenerateTSConfigFiles.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
