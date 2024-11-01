@@ -25,10 +25,15 @@ async function runInstall() {
 	})
 }
 
-process.stderr.write(
-	"anio cicd repo is " + process.env["ANIO_CICD_REPO"] + "\n"
-)
+// skip installation of realm dependencies in CI/CD environment
+// because this package doesn't have the "fourtune" package as a
+// dependency
+let skip_install = false
 
-if (!("ANIO_CICD" in process.env)) {
+if ("ANIO_CICD_REPO" in process.env) {
+	skip_install = process.env["ANIO_CICD_REPO"] === "fourtune-org/realm-js"
+}
+
+if (!skip_install) {
 	await runInstall()
 }
