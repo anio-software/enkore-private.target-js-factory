@@ -12,6 +12,9 @@
 # v0.6.0 - 24.09.2024 (by eXory2024)
 # Add manual "experimental" releases.
 #
+# v0.7.0 - 01.11.2024 (by eXory2024)
+# Add repository name to environment (ANIO_CICD_REPO)
+#
 
 name: CI/CD Experimental release
 
@@ -27,7 +30,8 @@ jobs:
       matrix:
         node-version: [21.x]
     env:
-      ANIO_CICD: "v0.6.0"
+      ANIO_CICD: "v0.7.0"
+      ANIO_CICD_REPO: "${{ github.repository }}"
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -49,7 +53,8 @@ jobs:
     permissions:
       id-token: write
     env:
-      ANIO_CICD: "v0.6.0"
+      ANIO_CICD: "v0.7.0"
+      ANIO_CICD_REPO: "${{ github.repository }}"
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
