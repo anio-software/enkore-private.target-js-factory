@@ -1,6 +1,6 @@
 import {initAsyncSyncPackage} from "./lib/init/async-sync/initAsyncSyncPackage.mjs"
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
-import {initializeProjectGeneral} from "./initializeProjectGeneral.mjs"
+import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
 import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
 import {autogenerateTSConfigFiles} from "./lib/init/_generic/autogenerateTSConfigFiles.mjs"
 import {initializeObjectCreation} from "./lib/init/_generic/initializeObjectCreation.mjs"
@@ -10,7 +10,7 @@ export async function getIntegrationAPIVersion() {
 }
 
 export async function initializeProject(fourtune_session, writeFile) {
-	await initializeProjectGeneral(fourtune_session, writeFile)
+	await initializeGenericProject(fourtune_session, writeFile)
 
 	if (fourtune_session.getProjectConfig().type === "package:async/sync") {
 		await initializeAsyncSyncProject(fourtune_session, writeFile)

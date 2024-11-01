@@ -1,4 +1,4 @@
-export async function initializeProjectGeneral(
+export async function initializeGenericProject(
 	fourtune_session, writeFile
 ) {
 	await writeFile(
