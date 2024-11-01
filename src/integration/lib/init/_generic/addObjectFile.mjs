@@ -2,7 +2,7 @@ import path from "node:path"
 import fs from "node:fs/promises"
 import {resolveImportAliases} from "../../resolveImportAliases.mjs"
 
-async function stripTypes(fourtune_session, code, file_path) {
+async function convertTypeScriptFile(fourtune_session, code, file_path) {
 	const {tsStripTypesFromCode} = await fourtune_session.getDependency(
 		"@fourtune/base-realm-js-and-web"
 	)
@@ -55,7 +55,7 @@ export async function addObjectFile(fourtune_session, input_file) {
 					absolute_path
 				)).toString()
 
-				return await stripTypes(
+				return await convertTypeScriptFile(
 					fourtune_session, code, input_file.source
 				)
 			}
