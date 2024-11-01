@@ -25,6 +25,10 @@ async function runInstall() {
 	})
 }
 
+process.stderr.write(
+	"anio cicd repo is " + process.env["ANIO_CICD_REPO"] + "\n"
+)
+
 if (!("ANIO_CICD" in process.env)) {
 	await runInstall()
 }
