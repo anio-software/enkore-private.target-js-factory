@@ -1,6 +1,6 @@
 import {factory as f1} from "@fourtune/js-and-web-runtime-and-rollup-plugins/project/rollup-plugin"
 import {factory as f2} from "@fourtune/js-and-web-runtime-and-rollup-plugins/runtime/rollup-plugin"
-import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/resources/rollup-plugin"
+import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/assets/rollup-plugin"
 
 function getExportTypeAndName(filename) {
 	if (filename.endsWith(".d.mts")) {

@@ -19,9 +19,9 @@
       "import": "./src/exports/runtime.mjs",
       "types": "./src/exports/runtime.d.mts"
     },
-    "./resources": {
-      "import": "./src/exports/resources.mjs",
-      "types": "./src/exports/resources.d.mts"
+    "./assets": {
+      "import": "./src/exports/assets.mjs",
+      "types": "./src/exports/assets.d.mts"
     },
     "./integration": "./src/integration/index.mjs",
     "./package.json": "./package.json"
