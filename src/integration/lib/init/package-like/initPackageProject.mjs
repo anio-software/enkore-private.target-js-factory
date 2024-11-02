@@ -104,17 +104,23 @@ export async function initPackageProject(fourtune_session) {
 
 				additional_plugins.push({
 					when: "pre",
-					plugin: await f1(fourtune_session.getProjectRoot())
+					plugin: await f1(
+						fourtune_session.getProjectRoot()
+					)
 				})
 
 				additional_plugins.push({
 					when: "pre",
-					plugin: await f2(fourtune_session.getProjectRoot())
+					plugin: await f2(
+						fourtune_session.getProjectRoot()
+					)
 				})
 
 				additional_plugins.push({
 					when: "pre",
-					plugin: await f3(fourtune_session.getProjectRoot())
+					plugin: await f3(
+						fourtune_session.getProjectRoot()
+					)
 				})
 
 				return await tsBundler(
