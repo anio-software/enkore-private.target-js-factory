@@ -45,6 +45,20 @@ function importStatement(source, export_name, is_type = false) {
 	}
 }
 
+function assetReporter(fourtune_session, assets, included_all_assets) {
+	if (included_all_assets) {
+		fourtune_session.emitWarning(
+			`all_assets_included`, null
+		)
+	}
+
+	for (const asset of assets) {
+		process.stderr.write(
+			`    ${asset.url.padEnd(60, " ")} ${(asset.size / 1000).toFixed(1)} kBytes\n`
+		)
+	}
+}
+
 export async function initPackageProject(fourtune_session) {
 	const output_modules = new Map()
 
@@ -119,7 +133,13 @@ export async function initPackageProject(fourtune_session) {
 				additional_plugins.push({
 					when: "pre",
 					plugin: await f3(
-						fourtune_session.getProjectRoot()
+						fourtune_session.getProjectRoot(),
+						(...args) => {
+							assetReporter(
+								fourtune_session,
+								...args
+							)
+						}
 					)
 				})
 
