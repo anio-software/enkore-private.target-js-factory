@@ -99,6 +99,12 @@ export async function initPackageProject(fourtune_session) {
 		}
 	}
 
+	const plugin1 = await f1(fourtune_session.getProjectRoot())
+	const plugin2 = await f2(fourtune_session.getProjectRoot())
+	const plugin3 = await f3(fourtune_session.getProjectRoot(), (...args) => {
+		assetReporter(fourtune_session,...args)
+	})
+
 	for (const [module_name, module_exports] of output_modules.entries()) {
 		const product = fourtune_session.products.addProduct(module_name)
 
@@ -121,32 +127,12 @@ export async function initPackageProject(fourtune_session) {
 
 				const additional_plugins = []
 
-				additional_plugins.push({
-					when: "pre",
-					plugin: await f1(
-						fourtune_session.getProjectRoot()
-					)
-				})
-
-				additional_plugins.push({
-					when: "pre",
-					plugin: await f2(
-						fourtune_session.getProjectRoot()
-					)
-				})
-
-				additional_plugins.push({
-					when: "pre",
-					plugin: await f3(
-						fourtune_session.getProjectRoot(),
-						(...args) => {
-							assetReporter(
-								fourtune_session,
-								...args
-							)
-						}
-					)
-				})
+				for (const plugin of [plugin1, plugin2, plugin3]) {
+					additional_plugins.push({
+						when: "pre",
+						plugin
+					})
+				}
 
 				return await tsBundler(
 					fourtune_session.getProjectRoot(),
