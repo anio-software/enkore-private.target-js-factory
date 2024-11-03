@@ -57,10 +57,18 @@ function assetReporter(
 		)
 	}
 
-	for (const asset of assets) {
+	if (assets.length) {
 		process.stderr.write(
-			`    ${asset.url.padEnd(60, " ")} ${(asset.size / 1000).toFixed(1)} kBytes\n`
+			`The following assets will be included: \n\n`
 		)
+
+		for (const asset of assets) {
+			process.stderr.write(
+				` >    ${asset.url.padEnd(60, " ")} ${(asset.size / 1000).toFixed(1)} kBytes\n`
+			)
+		}
+
+		process.stderr.write(`\n`)
 	}
 }
 
