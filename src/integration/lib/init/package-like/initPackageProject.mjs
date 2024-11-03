@@ -100,29 +100,39 @@ export async function initPackageProject(fourtune_session) {
 		const entry_code = getEntryCode(module_exports)
 
 		product.addDistributable(
-			"bundle", "index.mjs", async () => {
+			"bundle", ["index.mjs", "source.mjs"], async () => {
 				const {tsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
-				return await tsBundler(
+				const code = await tsBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
 						additional_plugins: plugins
 					}
 				)
+
+				return [
+					code,
+					`export default ${JSON.stringify(code)};\n`
+				]
 			}
 		)
 
 		product.addDistributable(
-			"bundle", "index.min.mjs", async () => {
+			"bundle", ["index.min.mjs", "source.min.mjs"], async () => {
 				const {tsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
-				return await tsBundler(
+				const code = await tsBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
 						additional_plugins: plugins,
 						minify: true
 					}
 				)
+
+				return [
+					code,
+					`export default ${JSON.stringify(code)};\n`
+				]
 			}
 		)
 
