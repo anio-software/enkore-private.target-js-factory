@@ -3,7 +3,7 @@
 //
 export default {
 	"@fourtune/base-realm-js-and-web": {
-		version: "0.20.2",
+		version: "0.30.0",
 	},
 
 	"@anio-js-foundation/create-modifier-function": {
