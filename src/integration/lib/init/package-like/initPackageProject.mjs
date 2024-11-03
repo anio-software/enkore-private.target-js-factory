@@ -1,6 +1,8 @@
 import {factory as f1} from "@fourtune/js-and-web-runtime-and-rollup-plugins/project/rollup-plugin"
 import {factory as f2} from "@fourtune/js-and-web-runtime-and-rollup-plugins/runtime/rollup-plugin"
 import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/assets/rollup-plugin"
+import {importStatement} from "./importStatement.mjs"
+import {getEntryCode} from "./getEntryCode.mjs"
 
 function getExportTypeAndName(filename) {
 	if (filename.endsWith(".d.mts")) {
@@ -16,33 +18,6 @@ function getExportTypeAndName(filename) {
 	}
 
 	return false
-}
-
-function importStatement(source, export_name, is_type = false) {
-	const source_str = JSON.stringify(source)
-	const t_export = is_type ? " type" : ""
-
-	//
-	// treat __star_export differently so such
-	// that this export may manually export
-	// other things.
-	//
-	if (export_name === "__star_export") {
-		return `export${t_export} * from ${source_str}\n`
-	} else if (export_name === "__default") {
-		return `export${t_export} {default} from ${source_str}\n`
-	} else if (export_name === "__index") {
-		return `export${t_export} * from ${source_str}\n` +
-		       `export${t_export} {default} from ${source_str}\n`
-	} else {
-		//
-		// Normally, the file name is used to
-		// create a named export in the output module.
-		// This means, myFunction.mjs would be exported as
-		// "myFunction"
-		//
-		return `export${t_export} {${export_name}} from ${source_str}\n`
-	}
 }
 
 function assetReporter(
@@ -113,39 +88,24 @@ export async function initPackageProject(fourtune_session) {
 		assetReporter(fourtune_session,...args)
 	})
 
+	const plugins = [plugin1, plugin2, plugin3].map(plugin => {
+		return {
+			when: "pre",
+			plugin
+		}
+	})
+
 	for (const [module_name, module_exports] of output_modules.entries()) {
 		const product = fourtune_session.products.addProduct(module_name)
 
 		product.addDistributable(
 			"bundle", "index.mjs", async () => {
 				const {tsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
-				let entry_code = ``
-
-				for (const [export_name, source] of module_exports.entries()) {
-					if (source.endsWith(".d.mts") || !source.endsWith(".mts")) {
-						continue
-					}
-
-					const extensionless_source = source.slice(0, -4)
-
-					entry_code += importStatement(
-						"./.fourtune/v0/objects/" + extensionless_source + ".mjs", export_name, false
-					)
-				}
-
-				const additional_plugins = []
-
-				for (const plugin of [plugin1, plugin2, plugin3]) {
-					additional_plugins.push({
-						when: "pre",
-						plugin
-					})
-				}
 
 				return await tsBundler(
 					fourtune_session.getProjectRoot(),
-					entry_code, {
-						additional_plugins
+					getEntryCode(module_exports), {
+						additional_plugins: plugins
 					}
 				)
 			}
