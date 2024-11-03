@@ -45,7 +45,11 @@ function importStatement(source, export_name, is_type = false) {
 	}
 }
 
-function assetReporter(fourtune_session, assets, included_all_assets) {
+function assetReporter(
+	fourtune_session,
+	assets,
+	included_all_assets
+) {
 	if (included_all_assets) {
 		fourtune_session.emitWarning(
 			`all_assets_included`, null
