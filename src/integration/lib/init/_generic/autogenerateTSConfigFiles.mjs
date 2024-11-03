@@ -51,7 +51,7 @@ export async function autogenerateTSConfigFiles(fourtune_session) {
 				"compilerOptions": {
 					"paths": {}
 				},
-				"include": ["../../assets/tsmodule/**/*"]
+				"include": ["../../assets/**/*"]
 			}, null, 4) + "\n"
 		}
 	)

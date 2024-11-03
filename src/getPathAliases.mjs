@@ -1,7 +1,7 @@
 const aliases = {
 	"#~src": `src/`,
 	"#~auto": `auto/src/`,
-	"#~assets": `assets/tsmodule/`
+	"#~assets": `assets/`
 }
 
 function removeDoubleSlashes(path) {
