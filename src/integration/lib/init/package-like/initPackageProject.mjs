@@ -97,6 +97,7 @@ export async function initPackageProject(fourtune_session) {
 
 	for (const [module_name, module_exports] of output_modules.entries()) {
 		const product = fourtune_session.products.addProduct(module_name)
+		const entry_code = getEntryCode(module_exports)
 
 		product.addDistributable(
 			"bundle", "index.mjs", async () => {
@@ -104,8 +105,22 @@ export async function initPackageProject(fourtune_session) {
 
 				return await tsBundler(
 					fourtune_session.getProjectRoot(),
-					getEntryCode(module_exports), {
+					entry_code, {
 						additional_plugins: plugins
+					}
+				)
+			}
+		)
+
+		product.addDistributable(
+			"bundle", "index.min.mjs", async () => {
+				const {tsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+
+				return await tsBundler(
+					fourtune_session.getProjectRoot(),
+					entry_code, {
+						additional_plugins: plugins,
+						minify: true
 					}
 				)
 			}
