@@ -18,8 +18,6 @@ export async function initializeObjectCreation(fourtune_session) {
 	}
 
 	for (const asset of assets) {
-		if (!asset.relative_path.startsWith("tsmodule/")) continue
-
 		await addObjectFile(fourtune_session, asset)
 
 		tsc_assets_input_files.push(asset.source)
