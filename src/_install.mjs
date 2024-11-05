@@ -1,5 +1,6 @@
 import process from "node:process"
 import dependencies from "./dependencies.mjs"
+import path from "node:path"
 
 async function runInstall() {
 	const {default: core} = await import("@fourtune/core")
