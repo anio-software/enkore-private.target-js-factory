@@ -22,7 +22,8 @@ async function runInstall() {
 	}
 
 	await installRealmDependencies(project_root, "js", {
-		...dependencies
+		version: 1,
+		dependencies
 	})
 }
 
