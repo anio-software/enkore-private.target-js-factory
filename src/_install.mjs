@@ -45,8 +45,8 @@ if (skip_install) {
 		await runInstall()
 	} catch (error) {
 		process.stderr.write(
-			`An error occurred while installing realm dependencies: ` +
-			error.message
+			`An error occurred while installing realm dependencies: \n` +
+			error.message + "\n"
 		)
 		process.exit(1)
 	}
