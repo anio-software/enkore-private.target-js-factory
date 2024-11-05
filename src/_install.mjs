@@ -10,7 +10,7 @@ if ("ANIO_CICD_REPO" in process.env) {
 	skip_install = process.env["ANIO_CICD_REPO"] === "fourtune-org/realm-js"
 }
 
-if (!skip_install) {
+if (skip_install) {
 	process.stderr.write(
 		`I HAVE SKIPPED THE INSTALLATION SCRIPT SINCE ANIO_CICD_REPO WAS SET!\n`
 	)
