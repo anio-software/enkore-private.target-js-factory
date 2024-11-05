@@ -1,7 +1,7 @@
 {
   "name": "@fourtune/realm-js",
   "type": "module",
-  "version": "0.200.0",
+  "version": "0.200.1",
   "description": "",
   "author": "Anio Software <info@anio.software>",
   "license": "MIT",
