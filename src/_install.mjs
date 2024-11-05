@@ -11,6 +11,10 @@ if ("ANIO_CICD_REPO" in process.env) {
 }
 
 if (!skip_install) {
+	process.stderr.write(
+		`I HAVE SKIPPED THE INSTALLATION SCRIPT SINCE ANIO_CICD_REPO WAS SET!\n`
+	)
+} else {
 	const {installRealmDependencies} = await import("@fourtune/core")
 
 	await installRealmDependencies(
