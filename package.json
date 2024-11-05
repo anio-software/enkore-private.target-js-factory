@@ -37,6 +37,7 @@
     "@fourtune/js-and-web-runtime-and-rollup-plugins": "^0.51.0"
   },
   "peerDependencies": {
-    "@types/node": "22.x"
+    "@types/node": "22.x",
+    "@fourtune/core": "0.x"
   }
 }
