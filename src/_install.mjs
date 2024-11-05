@@ -41,5 +41,13 @@ if (skip_install) {
 		`I HAVE SKIPPED THE INSTALLATION SCRIPT SINCE ANIO_CICD_REPO WAS SET!\n`
 	)
 } else {
-	await runInstall()
+	try {
+		await runInstall()
+	} catch (error) {
+		process.stderr.write(
+			`An error occurred while installing realm dependencies: ` +
+			error.message
+		)
+		process.exit(1)
+	}
 }
