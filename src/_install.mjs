@@ -8,8 +8,10 @@ async function runInstall() {
 		installRealmDependencies
 	} = core
 
+	const start_dir = path.dirname(process.argv[1])
+
 	const project_root = await findProjectRootFromDirectory(
-		path.dirname(process.argv[1])
+		start_dir
 	)
 
 	if (project_root === false) {
