@@ -1,27 +1,11 @@
 import process from "node:process"
 import dependencies from "./dependencies.mjs"
-import path from "node:path"
 
 async function runInstall() {
 	const {default: core} = await import("@fourtune/core")
-	const {
-		findProjectRootFromDirectory,
-		installRealmDependencies
-	} = core
+	const {installRealmDependencies} = core
 
-	const start_dir = path.dirname(process.argv[1])
-
-	const project_root = await findProjectRootFromDirectory(
-		start_dir
-	)
-
-	if (project_root === false) {
-		throw new Error(
-			`Unable to determine project root. Start directory is '${start_dir}'.`
-		)
-	}
-
-	await installRealmDependencies(project_root, "js", {
+	await installRealmDependencies("cli", "js", {
 		api_version: 1,
 		dependencies
 	})
