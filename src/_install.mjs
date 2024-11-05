@@ -15,8 +15,7 @@ if (skip_install) {
 		`I HAVE SKIPPED THE INSTALLATION SCRIPT SINCE ANIO_CICD_REPO WAS SET!\n`
 	)
 } else {
-	const core = await import("@fourtune/core")
-
+	const {default: core} = await import("@fourtune/core")
 	const {installRealmDependencies} = core
 
 	await installRealmDependencies(
