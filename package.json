@@ -10,7 +10,9 @@
     "url": "git+https://github.com/fourtune-org/realm-js.git"
   },
   "exports": {
-    ".": "./src/integration/index.mjs",
+    ".": {
+      "import": "./src/integration/index.mjs"
+    },
     "./project": {
       "import": "./src/exports/project.mjs",
       "types": "./src/exports/project.d.mts"
