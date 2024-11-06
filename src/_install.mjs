@@ -10,10 +10,7 @@ async function runInstall() {
 
 	setEnableDebugPrint(true)
 
-	await installRealmDependencies("cli", "js", {
-		api_version: 1,
-		dependencies
-	})
+	await installRealmDependencies("cli", "js", dependencies)
 }
 
 // skip installation of realm dependencies in CI/CD environment

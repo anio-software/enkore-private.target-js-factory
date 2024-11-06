@@ -24,6 +24,10 @@
       "types": "./src/exports/assets.d.mts"
     },
     "./integration": "./src/integration/index.mjs",
+    "./integration/dependencies": {
+      "import": "./src/dependencies.mjs",
+      "require": "./src/dependencies.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
