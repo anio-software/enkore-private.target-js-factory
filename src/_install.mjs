@@ -3,7 +3,12 @@ import dependencies from "./dependencies.mjs"
 
 async function runInstall() {
 	const {default: core} = await import("@fourtune/core")
-	const {installRealmDependencies} = core
+	const {
+		setEnableDebugPrint,
+		installRealmDependencies
+	} = core
+
+	setEnableDebugPrint(true)
 
 	await installRealmDependencies("cli", "js", {
 		api_version: 1,
