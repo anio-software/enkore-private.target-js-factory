@@ -23,7 +23,9 @@
       "import": "./src/exports/assets.mjs",
       "types": "./src/exports/assets.d.mts"
     },
-    "./integration": "./src/integration/index.mjs",
+    "./integration": {
+      "import": "./src/integration/index.mjs"
+    },
     "./integration/dependencies": {
       "import": "./src/dependencies.mjs",
       "require": "./src/dependencies.mjs"
