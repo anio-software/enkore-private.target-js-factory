@@ -1,4 +1,3 @@
-import path from "node:path"
 import {getTypeScriptDefinitions} from "../../getTypeScriptDefinitions.mjs"
 import {addObjectFile} from "./addObjectFile.mjs"
 
@@ -23,13 +22,12 @@ export async function initializeObjectCreation(fourtune_session) {
 		tsc_assets_input_files.push(asset.source)
 	}
 
+	const {getBuildPathFromProjectRoot} = fourtune_session.paths
+
 	fourtune_session.hooks.register(
 		"createObjectFiles.pre", async () => {
 			const toAbsolutePath = (file) => {
-				return path.join(
-					fourtune_session.getProjectRoot(), ".fourtune", "v0",
-					"build", file
-				)
+				return getBuildPathFromProjectRoot(file)
 			}
 
 			const src_map = await getTypeScriptDefinitions(

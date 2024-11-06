@@ -48,6 +48,7 @@ function assetReporter(
 }
 
 export async function initPackageProject(fourtune_session) {
+	const {getObjectsPath} = fourtune_session.paths
 	const output_modules = new Map()
 
 	for (const source of fourtune_session.input.getSourceFiles()) {
@@ -97,7 +98,7 @@ export async function initPackageProject(fourtune_session) {
 
 	for (const [module_name, module_exports] of output_modules.entries()) {
 		const product = fourtune_session.products.addProduct(module_name)
-		const entry_code = getEntryCode(module_exports)
+		const entry_code = getEntryCode(fourtune_session, module_exports)
 
 		product.addDistributable(
 			"bundle", [
@@ -158,7 +159,7 @@ export async function initPackageProject(fourtune_session) {
 						const extensionless_source = source.slice(0, -4)
 
 						entry_code += importStatement(
-							"./.fourtune/v0/objects/" + extensionless_source + ".d.mts", export_name, true
+							getObjectsPath(`${extensionless_source + ".d.mts"}`), export_name, true
 						)
 					}
 				}

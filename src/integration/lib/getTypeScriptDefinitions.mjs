@@ -6,7 +6,9 @@ export async function getTypeScriptDefinitions(
 	input_files,
 	disable_aliases = true
 ) {
-	const aliases = disable_aliases ? {} : getPathAliases("./.fourtune/v0/build/", true)
+	const {getBuildPath} = fourtune_session.paths
+
+	const aliases = disable_aliases ? {} : getPathAliases(`./${getBuildPath()}/`, true)
 
 	const project_root = fourtune_session.getProjectRoot()
 

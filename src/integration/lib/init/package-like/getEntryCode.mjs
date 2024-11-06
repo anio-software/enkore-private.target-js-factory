@@ -1,6 +1,8 @@
 import {importStatement} from "./importStatement.mjs"
 
-export function getEntryCode(module_exports) {
+export function getEntryCode(fourtune_session, module_exports) {
+	const {getObjectsPath} = fourtune_session.paths
+
 	let entry_code = ``
 
 	for (const [export_name, source] of module_exports.entries()) {
@@ -11,7 +13,8 @@ export function getEntryCode(module_exports) {
 		const extensionless_source = source.slice(0, -4)
 
 		entry_code += importStatement(
-			"./.fourtune/v0/objects/" + extensionless_source + ".mjs", export_name, false
+			getObjectsPath(`${extensionless_source + ".mjs"}`),
+			export_name, false
 		)
 	}
 

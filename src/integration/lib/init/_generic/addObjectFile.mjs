@@ -1,4 +1,3 @@
-import path from "node:path"
 import fs from "node:fs/promises"
 import {resolveImportAliases} from "../../resolveImportAliases.mjs"
 
@@ -23,10 +22,12 @@ async function convertTypeScriptFile(fourtune_session, code, file_path) {
 }
 
 export async function addObjectFile(fourtune_session, input_file) {
-	const absolute_path = path.join(
-		fourtune_session.getProjectRoot(), ".fourtune", "v0",
-		"build", input_file.source
-	)
+	const {
+		getBuildPath,
+		getBuildPathFromProjectRoot
+	} = fourtune_session.paths
+
+	const absolute_path = getBuildPathFromProjectRoot(input_file.source)
 
 	//
 	// this applies to every realm-js package:
@@ -63,7 +64,7 @@ export async function addObjectFile(fourtune_session, input_file) {
 
 		fourtune_session.objects.addObject(
 			`${extensionless_file_path}.d.mts`, async (fourtune_session, file_path) => {
-				const key = `.fourtune/v0/build/${file_path}`
+				const key = getBuildPath(file_path)
 
 				if (fourtune_session.user_data.tsc_definitions.has(key)) {
 					const code = fourtune_session.user_data.tsc_definitions.get(key)
