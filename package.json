@@ -34,10 +34,10 @@
     "@anio-js-foundation/generate-object-literal": "1.1.0",
     "@anio-js-foundation/strip-suffix": "3.0.1",
     "@anio-software/fs": "0.6.0",
-    "@fourtune/js-and-web-runtime-and-rollup-plugins": "^0.51.0"
+    "@fourtune/js-and-web-runtime-and-rollup-plugins": "^0.100.0"
   },
   "peerDependencies": {
-    "@types/node": "22.x",
-    "@fourtune/core": "0.x"
+    "@fourtune/core": "0.x",
+    "@types/node": "22.x"
   }
 }
