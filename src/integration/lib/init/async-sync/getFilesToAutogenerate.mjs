@@ -44,13 +44,13 @@ export default async function(fourtune_session) {
 		dependency_type_imports.push([`${dependency_function_name}Sync`, dependency, true])
 
 		dependencies_type_members += `\t${dependency_function_name}: typeof ${dependency_function_name},\n`
-		dependencies_type_members += `//\t${dependency_function_name}: typeof ${dependency_function_name}Sync,\n`
+		dependencies_type_members += `//>\t${dependency_function_name}: typeof ${dependency_function_name}Sync,\n`
 
 		factory_imports.push([`${dependency_function_name}Factory`, dependency])
 		factory_imports.push([`${dependency_function_name}SyncFactory`, dependency, true])
 
 		dependencies_members += `\t\t${dependency_function_name}: ${dependency_function_name}Factory(user),\n`
-		dependencies_members += `//\t\t${dependency_function_name}: ${dependency_function_name}SyncFactory(user),\n`
+		dependencies_members += `//>\t\t${dependency_function_name}: ${dependency_function_name}SyncFactory(user),\n`
 	}
 
 	if (Object.keys(dependencies).length) {
@@ -63,16 +63,16 @@ export default async function(fourtune_session) {
 
 	files[`src/export/${function_name}<X>.mts`] =
 		`import {${function_name}Factory as factory} from "#~auto/export/${function_name}Factory.mts"\n` +
-		`//import {${function_name}SyncFactory as factory} from "#~auto/export/${function_name}SyncFactory.mts"\n` +
+		`//>import {${function_name}SyncFactory as factory} from "#~auto/export/${function_name}SyncFactory.mts"\n` +
 		`\n` +
 		`/* ImplementationDocType is needed to make doctypes work in LSP */\n` +
 		`import type {ImplementationDocType} from "#~auto/ImplementationDocType.d.mts"\n` +
-		`//import type {ImplementationDocType} from "#~auto/ImplementationSyncDocType.d.mts"\n` +
+		`//>import type {ImplementationDocType} from "#~auto/ImplementationSyncDocType.d.mts"\n` +
 		`\n` +
 		`const impl = factory()\n` +
 		`\n` +
 		`export const ${function_name} : ImplementationDocType = impl\n` +
-		`//export const ${function_name}Sync : ImplementationDocType = impl\n`
+		`//>export const ${function_name}Sync : ImplementationDocType = impl\n`
 
 	files[`src/export/${function_name}<X>Factory.mts`] =
 		`import {\n` +
@@ -84,20 +84,20 @@ export default async function(fourtune_session) {
 		`import {useContext} from "@fourtune/realm-js/v0/runtime"\n` +
 		`\n` +
 		`import type {DependenciesType} from "#~auto/DependenciesType.d.mts"\n` +
-		`//import type {DependenciesType} from "#~auto/DependenciesSyncType.d.mts"\n` +
+		`//>import type {DependenciesType} from "#~auto/DependenciesSyncType.d.mts"\n` +
 		`\n` +
 		`import implementation from "#~auto/implementation.mts"\n` +
-		`//import implementation from "#~auto/implementationSync.mts"\n` +
+		`//>import implementation from "#~auto/implementationSync.mts"\n` +
 		`\n` +
 		`/* needed to make doctypes work in LSP */\n` +
 		`import type {ImplementationDocType} from "#~auto/ImplementationDocType.d.mts"\n` +
-		`//import type {ImplementationDocType} from "#~auto/ImplementationSyncDocType.d.mts"\n` +
+		`//>import type {ImplementationDocType} from "#~auto/ImplementationSyncDocType.d.mts"\n` +
 		`\n` +
 		generateImportStatements(factory_imports) +
 		`\n` +
 		`/* ImplementationDocType is needed to make doctypes work in LSP */\n` +
 		`export function ${function_name}Factory(user : UserContext = {}) : ImplementationDocType {\n` +
-		`//export function ${function_name}SyncFactory(user : UserContext = {}) : ImplementationDocType {\n` +
+		`//>export function ${function_name}SyncFactory(user : UserContext = {}) : ImplementationDocType {\n` +
 		`	const project = {\n` +
 		`		package_json: getProjectPackageJSON(),\n` +
 		`		fourtune_configuration: getFourtuneConfiguration()\n` +
@@ -108,9 +108,9 @@ export default async function(fourtune_session) {
 		`	const dependencies : DependenciesType = {${dependencies_members}}\n` +
 		`\n` +
 		`	return async function ${function_name}(...args: Parameters<ImplementationDocType>) : ReturnType<ImplementationDocType> {\n` +
-		`//	return function ${function_name}Sync(...args: Parameters<ImplementationDocType>) : ReturnType<ImplementationDocType> {\n` +
+		`//>	return function ${function_name}Sync(...args: Parameters<ImplementationDocType>) : ReturnType<ImplementationDocType> {\n` +
 		`		return await implementation(context, dependencies, ...args)\n` +
-		`//		return implementation(context, dependencies, ...args)\n` +
+		`//>		return implementation(context, dependencies, ...args)\n` +
 		`	}\n` +
 		`}\n`
 
