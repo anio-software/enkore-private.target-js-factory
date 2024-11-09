@@ -13,15 +13,15 @@
     ".": "./src/integration/index.mjs",
     "./integration": "./src/integration/index.mjs",
     "./integration/dependencies": "./src/dependencies.mjs",
-    "./project": {
+    "./v0/project": {
       "import": "./src/exports/project.mjs",
       "types": "./src/exports/project.d.mts"
     },
-    "./runtime": {
+    "./v0/runtime": {
       "import": "./src/exports/runtime.mjs",
       "types": "./src/exports/runtime.d.mts"
     },
-    "./assets": {
+    "./v0/assets": {
       "import": "./src/exports/assets.mjs",
       "types": "./src/exports/assets.d.mts"
     },
