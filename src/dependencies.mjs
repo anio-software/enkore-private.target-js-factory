@@ -5,7 +5,7 @@ export default {
 	api_version: 1,
 	dependencies: {
 		"@fourtune/base-realm-js-and-web": {
-			version: "0.50.2",
+			version: "0.700.0",
 		},
 
 		"@anio-js-foundation/create-modifier-function": {
