@@ -1,5 +1,5 @@
 function generateImportStatement(what, where, comment = false) {
-	return (comment ? "//" : "") + `import {${what}} from "${where}"\n`
+	return (comment ? "//>" : "") + `import {${what}} from "${where}"\n`
 }
 
 function generateImportStatements(statements) {
