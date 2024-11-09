@@ -78,10 +78,10 @@ export default async function(fourtune_session) {
 		`import {\n` +
 		`	getProjectPackageJSON,\n` +
 		`	getFourtuneConfiguration\n` +
-		`} from "@fourtune/realm-js/project"\n` +
+		`} from "@fourtune/realm-js/v0/project"\n` +
 		`\n` +
-		`import type {UserContext} from "@fourtune/realm-js/runtime"\n` +
-		`import {useContext} from "@fourtune/realm-js/runtime"\n` +
+		`import type {UserContext} from "@fourtune/realm-js/v0/runtime"\n` +
+		`import {useContext} from "@fourtune/realm-js/v0/runtime"\n` +
 		`\n` +
 		`import type {DependenciesType} from "#~auto/DependenciesType.d.mts"\n` +
 		`//import type {DependenciesType} from "#~auto/DependenciesSyncType.d.mts"\n` +

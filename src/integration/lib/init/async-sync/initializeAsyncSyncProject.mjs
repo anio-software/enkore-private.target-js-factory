@@ -3,7 +3,7 @@ export async function initializeAsyncSyncProject(fourtune_session, writeFile) {
 		`src/template/implementation.mts`,
 
 		`/* -------- required imports by template -------- */\n` +
-		`import type {ContextInstance} from "@fourtune/realm-js/runtime"\n` +
+		`import type {ContextInstance} from "@fourtune/realm-js/v0/runtime"\n` +
 		`import type {DependenciesType} from "#~auto/DependenciesType.d.mts"\n` +
 		`//import type {DependenciesType} from "#~auto/DependenciesSyncType.d.mts"\n` +
 		`\n` +
