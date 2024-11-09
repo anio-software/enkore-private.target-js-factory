@@ -31,11 +31,11 @@ export async function initializeAsyncSyncProject(fourtune_session, writeFile) {
 
 		`/* define and describe your function api here */\n` +
 		`export type ImplementationDocType = {\n` +
-		`       /**\n` +
-		`        * @brief My function's description\n` +
-		`        */\n` +
-		`       () : Promise<void>\n` +
-		`//>    () : void\n` +
+		`\t/**\n` +
+		`\t * @brief My function's description\n` +
+		`\t */\n` +
+		`\t() : Promise<void>\n` +
+		`//>\t() : void\n` +
 		`}\n`
 	)
 }
