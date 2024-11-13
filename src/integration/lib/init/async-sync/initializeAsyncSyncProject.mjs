@@ -42,8 +42,8 @@ export async function initializeAsyncSyncProject(fourtune_session, writeFile) {
 			`\t/**\n` +
 			`\t * @brief My function's description\n` +
 			`\t */\n` +
-			`\t() : Promise<void>\n` +
-			`//>\t() : void\n` +
+			`\t() : Promise<undefined>\n` +
+			`//>\t() : undefined\n` +
 			`}\n`
 		)
 	}
