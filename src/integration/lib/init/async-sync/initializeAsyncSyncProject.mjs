@@ -8,7 +8,7 @@ export async function initializeAsyncSyncProject(fourtune_session, writeFile) {
 		const import_base_path = `#~auto/fourtune/async.sync/${function_name}`
 
 		await writeFile(
-			`src/template/async.sync/${function_name}/implementation.mts`,
+			`src/template/async.sync/${function_name}/implementationXXX.mts`,
 
 			`/* -------- required imports by template -------- */\n` +
 			`import type {ContextInstance} from "@fourtune/realm-js/v0/runtime"\n` +
@@ -35,7 +35,7 @@ export async function initializeAsyncSyncProject(fourtune_session, writeFile) {
 		)
 
 		await writeFile(
-			`src/template/async.sync/${function_name}/ImplementationDocType.d.mts`,
+			`src/template/async.sync/${function_name}/ImplementationXXXDocType.d.mts`,
 
 			`/* define and describe your function api here */\n` +
 			`export type ImplementationDocType = {\n` +

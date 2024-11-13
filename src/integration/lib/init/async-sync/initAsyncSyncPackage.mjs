@@ -20,12 +20,12 @@ export async function initAsyncSyncPackage(fourtune_session) {
 
 		mapping[`src/async.sync/${function_name}/Implementation<X>DocType.d.mts`] = [
 			"generateAsyncSyncVariant",
-			`src/template/async.sync/${function_name}/ImplementationDocType.d.mts`
+			`src/template/async.sync/${function_name}/ImplementationXXXDocType.d.mts`
 		]
 
 		mapping[`src/async.sync/${function_name}/implementation<X>.mts`] = [
 			"generateAsyncSyncVariant",
-			`src/template/async.sync/${function_name}/implementation.mts`
+			`src/template/async.sync/${function_name}/implementationXXX.mts`
 		]
 	}
 
