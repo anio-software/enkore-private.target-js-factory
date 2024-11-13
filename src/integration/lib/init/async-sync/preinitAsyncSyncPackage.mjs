@@ -1,6 +1,44 @@
 import getFilesToAutogenerate from "./getFilesToAutogenerate.mjs"
+import path from "node:path"
 
-export async function preinitAsyncSyncPackage(fourtune_session) {
+function getTemplateFiles(fourtune_session, source_files, function_name) {
+	const ret = []
+
+	for (const entry of source_files) {
+		if (!(entry.relative_path.startsWith(`template/async.sync/${function_name}/`))) continue
+
+		if (entry.name === "implementationXXX.mts") continue
+		if (entry.name === "ImplementationXXXDocType.d.mts") continue
+
+		if (!entry.name.endsWith(".d.mts")) {
+			fourtune_session.emitWarning(
+				`pkg:async.sync.unsupported_file`, {
+					source: entry.source
+				}
+			)
+
+			continue
+		} else if (!(entry.name.includes("XXX"))) {
+			fourtune_session.emitWarning(
+				`pkg:async.sync.unsupported_file_name`, {
+					source: entry.source
+				}
+			)
+
+			continue
+		}
+
+		ret.push(entry)
+	}
+
+	return ret
+}
+
+export async function preinitAsyncSyncPackage(
+	fourtune_session,
+	source_files
+) {
+	const {generateAsyncSyncVariant} = fourtune_session.autogenerate
 	const mapping = {}
 
 	const files = await getFilesToAutogenerate(fourtune_session)
@@ -27,6 +65,25 @@ export async function preinitAsyncSyncPackage(fourtune_session) {
 			"generateAsyncSyncVariant",
 			`src/template/async.sync/${function_name}/implementationXXX.mts`
 		]
+
+		const templates = getTemplateFiles(
+			fourtune_session, source_files, function_name
+		)
+
+		for (const template of templates) {
+			const {name, source} = template
+
+			const async_file_name = name.split("XXX").join("")
+			const sync_file_name = name.split("XXX").join("Sync")
+
+			fourtune_session.autogenerate.addUserFile(
+				path.join("src", "export", async_file_name), generateAsyncSyncVariant(source, "async")
+			)
+
+			fourtune_session.autogenerate.addUserFile(
+				path.join("src", "export", sync_file_name), generateAsyncSyncVariant(source, "sync")
+			)
+		}
 	}
 
 	for (const file_name in mapping) {
