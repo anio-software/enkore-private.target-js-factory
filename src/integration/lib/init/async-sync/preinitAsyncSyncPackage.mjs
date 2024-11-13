@@ -1,7 +1,9 @@
 import getFilesToAutogenerate from "./getFilesToAutogenerate.mjs"
 import path from "node:path"
 
-function getTemplateFiles(fourtune_session, source_files, function_name) {
+function getTemplateFiles(
+	fourtune_session, source_files, function_name
+) {
 	const ret = []
 
 	for (const entry of source_files) {
