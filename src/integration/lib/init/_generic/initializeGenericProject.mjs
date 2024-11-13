@@ -5,9 +5,9 @@ export async function initializeGenericProject(
 		"tsconfig.json",
 `{
 	"references": [
-		{"path": "./auto/cfg/tsconfig.src.json"},
-		{"path": "./auto/cfg/tsconfig.assets.json"},
-		{"path": "./auto/cfg/tsconfig.auto-src.json"}
+		{"path": "./auto/fourtune/cfg/tsconfig.src.json"},
+		{"path": "./auto/fourtune/cfg/tsconfig.assets.json"},
+		{"path": "./auto/fourtune/cfg/tsconfig.auto-src.json"}
 	]
 }\n`, {overwrite: true}
 	)

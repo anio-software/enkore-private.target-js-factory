@@ -15,13 +15,14 @@ export async function getTypeScriptDefinitions(
 	const {
 		ts,
 		tsReadTSConfigFile,
-		tsInvokeTypeScript
+		tsInvokeTypeScript,
+		jsGetBaseTsConfigPath
 	} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
 	// todo: handle tsconfig.src.json/tsconfig.resources.json correctly
 	const compiler_options = {
 		...await tsReadTSConfigFile(
-			path.join(project_root, "auto", "cfg", "tsconfig.base.json")
+			await jsGetBaseTsConfigPath(project_root)
 		),
 		allowJs: false,
 		declaration: true,

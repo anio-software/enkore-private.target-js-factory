@@ -1,7 +1,7 @@
 import {getPathAliases} from "../../../../getPathAliases.mjs"
 
 export async function autogenerateTSConfigFiles(fourtune_session) {
-	fourtune_session.autogenerate.addFile(
+	fourtune_session.autogenerate.addFourtuneFile(
 		`cfg/tsconfig.base.json`, function() {
 			return JSON.stringify({
 				"compilerOptions": {
@@ -14,44 +14,47 @@ export async function autogenerateTSConfigFiles(fourtune_session) {
 					"module": "nodenext",
 					"moduleResolution": "nodenext",
 					"isolatedModules": true,
-					"baseUrl": "../../"
+					"baseUrl": "../../../"
 				}
 			}, null, 4) + "\n"
 		}
 	)
 
-	fourtune_session.autogenerate.addFile(
+	fourtune_session.autogenerate.addFourtuneFile(
 		`cfg/tsconfig.src.json`, function() {
 			return JSON.stringify({
 				"extends": "./tsconfig.base.json",
 				"compilerOptions": {
 					"paths": getPathAliases("./", true)
 				},
-				"include": ["../../src/**/*"]
+				"include": ["../../../src/**/*"]
 			}, null, 4) + "\n"
 		}
 	)
 
-	fourtune_session.autogenerate.addFile(
+	fourtune_session.autogenerate.addFourtuneFile(
 		`cfg/tsconfig.auto-src.json`, function() {
 			return JSON.stringify({
 				"extends": "./tsconfig.base.json",
 				"compilerOptions": {
 					"paths": getPathAliases("./", true)
 				},
-				"include": ["../../auto/src/**/*"]
+				"include": [
+					"../../../auto/fourtune/src/**/*",
+					"../../../auto/user/src/**/*"
+				]
 			}, null, 4) + "\n"
 		}
 	)
 
-	fourtune_session.autogenerate.addFile(
+	fourtune_session.autogenerate.addFourtuneFile(
 		`cfg/tsconfig.assets.json`, function() {
 			return JSON.stringify({
 				"extends": "./tsconfig.base.json",
 				"compilerOptions": {
 					"paths": {}
 				},
-				"include": ["../../assets/**/*"]
+				"include": ["../../../assets/**/*"]
 			}, null, 4) + "\n"
 		}
 	)
