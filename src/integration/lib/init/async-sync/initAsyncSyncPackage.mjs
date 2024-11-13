@@ -12,15 +12,22 @@ export async function initAsyncSyncPackage(fourtune_session) {
 		]
 	}
 
-	mapping[`src/Implementation<X>DocType.d.mts`] = [
-		"generateAsyncSyncVariant",
-		`src/template/ImplementationDocType.d.mts`
-	]
+	const {target} = fourtune_session.getProjectConfig()
+	const targets = Array.isArray(target) ? target : [target]
 
-	mapping[`src/implementation<X>.mts`] = [
-		"generateAsyncSyncVariant",
-		`src/template/implementation.mts`
-	]
+	for (const target of targets) {
+		const {function_name} = target
+
+		mapping[`src/async.sync/${function_name}/Implementation<X>DocType.d.mts`] = [
+			"generateAsyncSyncVariant",
+			`src/template/async.sync/${function_name}/ImplementationDocType.d.mts`
+		]
+
+		mapping[`src/async.sync/${function_name}/implementation<X>.mts`] = [
+			"generateAsyncSyncVariant",
+			`src/template/async.sync/${function_name}/implementation.mts`
+		]
+	}
 
 	for (const file_name in mapping) {
 		const async_file_name = file_name.split("<X>").join("")
