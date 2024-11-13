@@ -1,7 +1,7 @@
 import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
 import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
 
-import {initAsyncSyncPackage} from "./lib/init/async-sync/initAsyncSyncPackage.mjs"
+import {preinitAsyncSyncPackage} from "./lib/init/async-sync/preinitAsyncSyncPackage.mjs"
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 
 import {initializeObjectCreation} from "./lib/init/_generic/initializeObjectCreation.mjs"
@@ -28,7 +28,7 @@ export async function preInitialize(
 	const project_config = fourtune_session.getProjectConfig()
 
 	if (project_config.type === "package:async/sync") {
-		await initAsyncSyncPackage(fourtune_session)
+		await preinitAsyncSyncPackage(fourtune_session)
 	}
 }
 
