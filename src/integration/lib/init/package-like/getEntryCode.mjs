@@ -12,10 +12,12 @@ export function getEntryCode(fourtune_session, module_exports) {
 
 		const extensionless_source = source.slice(0, -4)
 
-		entry_code += importStatement(
-			getObjectsPath(`${extensionless_source + ".mjs"}`),
-			export_name, false
-		)
+		if (!extensionless_source.endsWith(".as")) {
+			entry_code += importStatement(
+				getObjectsPath(`${extensionless_source + ".mjs"}`),
+				export_name, false
+			)
+		}
 	}
 
 	return entry_code

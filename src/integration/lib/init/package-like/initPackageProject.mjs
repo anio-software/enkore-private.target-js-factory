@@ -154,7 +154,7 @@ export async function initPackageProject(fourtune_session) {
 
 				for (const [export_name, source] of module_exports.entries()) {
 					// this also catches .d.mts files
-					if (source.endsWith(".mts")) {
+					if (source.endsWith(".mts") && !source.endsWith(".as.mts")) {
 						const extensionless_source = source.slice(0, -4)
 
 						entry_code += importStatement(
