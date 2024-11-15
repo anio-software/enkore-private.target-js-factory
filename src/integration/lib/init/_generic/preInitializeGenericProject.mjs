@@ -1,4 +1,5 @@
 import path from "node:path"
+import {expandAsyncSyncVariantName} from "../../../../expandAsyncSyncVariantName.mjs"
 
 export async function preInitializeGenericProject(
 	fourtune_session, source_files
@@ -6,8 +7,13 @@ export async function preInitializeGenericProject(
 	for (const src of source_files) {
 		if (!(src.name.endsWith(".as.mts"))) continue
 
-		const async_file_name = src.name.slice(0, -7).split("XXX").join("") + ".mts"
-		const sync_file_name = src.name.slice(0, -7).split("XXX").join("Sync") + ".mts"
+		const [
+			async_name,
+			sync_name
+		] = expandAsyncSyncVariantName(src.name)
+
+		const async_file_name = `${async_name}.mts`
+		const sync_file_name = `${sync_name}.mts`
 
 		const generator = fourtune_session.autogenerate[
 			"generateAsyncSyncVariant"
