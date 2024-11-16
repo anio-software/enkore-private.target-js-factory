@@ -1,13 +1,9 @@
-import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
-import {initializeAsyncSyncProject} from "./lib/init/async-sync/initializeAsyncSyncProject.mjs"
-
-import {preInitializeGenericProject} from "./lib/init/_generic/preInitializeGenericProject.mjs"
-
-import {preinitAsyncSyncPackage} from "./lib/init/async-sync/preinitAsyncSyncPackage.mjs"
-import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
-
 import {initializeObjectCreation} from "./lib/init/_generic/initializeObjectCreation.mjs"
 import {autogenerateTSConfigFiles} from "./lib/init/_generic/autogenerateTSConfigFiles.mjs"
+import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
+import {preInitializeGenericProject} from "./lib/init/_generic/preInitializeGenericProject.mjs"
+
+import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -15,10 +11,6 @@ export async function getIntegrationAPIVersion() {
 
 export async function initializeProject(fourtune_session, writeFile) {
 	await initializeGenericProject(fourtune_session, writeFile)
-
-	if (fourtune_session.getProjectConfig().type === "package:async/sync") {
-		await initializeAsyncSyncProject(fourtune_session, writeFile)
-	}
 }
 
 export async function preInitialize(
@@ -30,10 +22,6 @@ export async function preInitialize(
 	const project_config = fourtune_session.getProjectConfig()
 
 	await preInitializeGenericProject(fourtune_session, source_files)
-
-	if (project_config.type === "package:async/sync") {
-		await preinitAsyncSyncPackage(fourtune_session, source_files)
-	}
 }
 
 export async function initialize(
@@ -48,8 +36,7 @@ export async function initialize(
 	await autogenerateTSConfigFiles(fourtune_session)
 
 	switch (project_config.type) {
-		case "package":
-		case "package:async/sync": {
+		case "package": {
 			await initPackageProject(fourtune_session)
 		} break
 
