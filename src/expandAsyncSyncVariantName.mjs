@@ -1,12 +1,23 @@
+export function getType(name) {
+	if (name.endsWith(".as.d.mts")) return "d.mts"
+	if (name.endsWith(".as.mts")) return "mts"
+
+	return null
+}
+
 export function expandAsyncSyncVariantName(name) {
-	if (!name.endsWith(".as.mts")) {
-		return name
+	const type = getType(name)
+
+	if (type === null || !name.includes("XXX")) {
+		throw new Error(
+			`expandAsyncSyncVariantName: unexpandable name '${name}'.`
+		)
 	}
 
-	// todo: check if "XXX" is in the name
+	const offset = `.as.${type}`.length
 
-	const sync_name = name.slice(0, -7).split("XXX").join("Sync")
-	const async_name = name.slice(0, -7).split("XXX").join("")
+	const sync_name = name.slice(0, -offset).split("XXX").join("Sync")
+	const async_name = name.slice(0, -offset).split("XXX").join("")
 
 	return [async_name, sync_name]
 }
