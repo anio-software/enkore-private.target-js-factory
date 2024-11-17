@@ -3,6 +3,7 @@ import {factory as f2} from "@fourtune/js-and-web-runtime-and-rollup-plugins/run
 import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/assets/rollup-plugin"
 import {importStatement} from "./importStatement.mjs"
 import {getEntryCode} from "./getEntryCode.mjs"
+import {getType} from "../../../../expandAsyncSyncVariantName.mjs"
 
 function getExportTypeAndName(filename) {
 	if (filename.endsWith(".d.mts")) {
@@ -54,6 +55,8 @@ export async function initPackageProject(fourtune_session) {
 	for (const source of fourtune_session.input.getSourceFiles()) {
 		if (!source.parents.length) continue
 		if (source.parents[0] !== "export") continue
+		// ignore .as.mts and .as.d.mts files
+		if (getType(source.name) !== null) continue
 
 		const parsed = getExportTypeAndName(source.name)
 
@@ -154,7 +157,7 @@ export async function initPackageProject(fourtune_session) {
 
 				for (const [export_name, source] of module_exports.entries()) {
 					// this also catches .d.mts files
-					if (source.endsWith(".mts") && !source.endsWith(".as.mts")) {
+					if (source.endsWith(".mts")) {
 						const extensionless_source = source.slice(0, -4)
 
 						entry_code += importStatement(
