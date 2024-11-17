@@ -38,18 +38,18 @@ export function generateFactoryFiles(
 
 		ret[`${base}.mts`] = async function(fourtune_session) {
 			return _generateFunctionCode(
-				`#~auto/user/${base_without_src}Factory.mts`,
+				`#~auto/${base_without_src}Factory.mts`,
 				`${options.export_name}Factory`,
-				`#~auto/user/${async_path}.mts`,
+				`#~auto/${async_path}.mts`,
 				options.export_name
 			)
 		}
 
 		ret[`${base}Sync.mts`] = async function(fourtune_session) {
 			return _generateFunctionCode(
-				`#~auto/user/${base_without_src}SyncFactory.mts`,
+				`#~auto/${base_without_src}SyncFactory.mts`,
 				`${options.export_name}SyncFactory`,
-				`#~auto/user/${sync_path}.mts`,
+				`#~auto/${sync_path}.mts`,
 				`${options.export_name}Sync`
 			)
 		}
@@ -70,7 +70,7 @@ export function generateFactoryFiles(
 			const dependencies = await tsGetDeclaredAnioSoftwareDependenciesFromCode(source)
 
 			return _generateFactoryCode(
-				`#~auto/user/${async_path}.mts`,
+				`#~auto/${async_path}.mts`,
 				"implementation",
 				`${options.export_name}Factory`,
 				dependencies,
@@ -94,7 +94,7 @@ export function generateFactoryFiles(
 			const dependencies = await tsGetDeclaredAnioSoftwareDependenciesFromCode(source)
 
 			return _generateFactoryCode(
-				`#~auto/user/${sync_path}.mts`,
+				`#~auto/${sync_path}.mts`,
 				"implementationSync",
 				`${options.export_name}SyncFactory`,
 				dependencies,
@@ -107,7 +107,7 @@ export function generateFactoryFiles(
 
 	ret[`${base}.mts`] = async function(fourtune_session) {
 		return _generateFunctionCode(
-			`#~auto/user/${base_without_src}Factory.mts`,
+			`#~auto/${base_without_src}Factory.mts`,
 			`${options.export_name}Factory`,
 			`#~${options.source_file}`,
 			"implementation"
