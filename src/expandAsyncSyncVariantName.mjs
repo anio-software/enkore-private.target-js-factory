@@ -16,8 +16,16 @@ export function expandAsyncSyncVariantName(name) {
 
 	const offset = `.as.${type}`.length
 
-	const sync_name = name.slice(0, -offset).split("XXX").join("Sync")
-	const async_name = name.slice(0, -offset).split("XXX").join("")
+	const tmp = name.slice(0, -offset).split("XXX")
+
+	if (tmp.length > 3) {
+		throw new Error(
+			`expandAsyncSyncVariantName: ambiguous expansion '${name}'.`
+		)
+	}
+
+	const sync_name = tmp.join("Sync")
+	const async_name = tmp.join("")
 
 	return [async_name, sync_name]
 }
