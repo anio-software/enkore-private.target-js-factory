@@ -1,4 +1,5 @@
 export function getType(name) {
+	if (!name.startsWith("__")) return null
 	if (name.endsWith(".as.d.mts")) return "d.mts"
 	if (name.endsWith(".as.mts")) return "mts"
 
@@ -24,8 +25,8 @@ export function expandAsyncSyncVariantName(name) {
 		)
 	}
 
-	const sync_name = tmp.join("Sync")
-	const async_name = tmp.join("")
+	const sync_name = tmp.join("Sync").slice(2)
+	const async_name = tmp.join("").slice(2)
 
 	return [async_name, sync_name]
 }
