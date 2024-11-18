@@ -6,7 +6,9 @@ export function getType(name) {
 	return null
 }
 
-export function expandAsyncSyncVariantName(name) {
+export function expandAsyncSyncVariantName(
+	name
+) {
 	const type = getType(name)
 
 	if (type === null || !name.includes("XXX")) {
