@@ -14,24 +14,16 @@ export function isExpandableFileName(
 	return false
 }
 
-export function getType(name) {
-	if (!name.startsWith("__")) return null
-	if (name.endsWith(".as.d.mts")) return "d.mts"
-	if (name.endsWith(".as.mts")) return "mts"
-
-	return null
-}
-
 export function expandAsyncSyncVariantName(
 	name
 ) {
-	const type = getType(name)
-
-	if (type === null || !name.includes("XXX")) {
+	if (!isExpandableFileName(name)) {
 		throw new Error(
 			`expandAsyncSyncVariantName: unexpandable name '${name}'.`
 		)
 	}
+
+	const type = name.endsWith(".as.d.mts") ? "d.mts" : "mts"
 
 	const offset = `.as.${type}`.length
 

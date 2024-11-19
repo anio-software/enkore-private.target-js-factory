@@ -1,13 +1,13 @@
 import path from "node:path"
-import {getType, expandAsyncSyncVariantName} from "../../../../expandAsyncSyncVariantName.mjs"
+import {isExpandableFileName, expandAsyncSyncVariantName} from "../../../../expandAsyncSyncVariantName.mjs"
 
 export async function preInitializeGenericProject(
 	fourtune_session, source_files
 ) {
 	for (const src of source_files) {
-		const type = getType(src.name)
+		if (!isExpandableFileName(src.name)) continue
 
-		if (!type) continue
+		const type = src.name.endsWith(".as.d.mts") ? "d.mts" : "mts"
 
 		const [
 			async_name,
