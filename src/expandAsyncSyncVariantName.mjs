@@ -1,12 +1,20 @@
 import path from "node:path"
 
+// this function only requires
+// that "XXX" is present in "name"
+export function isExpandableName(
+	name
+) {
+	return name.includes("XXX")
+}
+
 export function isExpandableFileName(
 	file_path
 ) {
 	const file_name = path.basename(file_path)
 
 	if (!file_name.startsWith("__")) return false
-	if (!file_name.includes("XXX")) return false
+	if (!isExpandableName(file_name)) return false
 
 	if (file_name.endsWith(".as.d.mts")) return true
 	if (file_name.endsWith(".as.mts")) return true
