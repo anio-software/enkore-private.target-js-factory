@@ -1,4 +1,4 @@
-import {expandAsyncSyncVariantName} from "../../expandAsyncSyncVariantName.mjs"
+import {expandAsyncSyncVariantFilePath} from "../../expandAsyncSyncVariantName.mjs"
 import {_generateFactoryCode} from "./_generateFactoryCode.mjs"
 import {_generateFunctionCode} from "./_generateFunctionCode.mjs"
 import fs from "node:fs/promises"
@@ -34,13 +34,13 @@ export function generateFactoryFiles(
 	const base_without_src = `${options.destination.slice(4)}/${options.export_name}`
 
 	if (options.source_file.endsWith(".as.mts")) {
-		const [async_path, sync_path] = expandAsyncSyncVariantName(options.source_file.slice(4))
+		const [async_path, sync_path] = expandAsyncSyncVariantFilePath(options.source_file.slice(4))
 
 		ret[`${base}.mts`] = async function(fourtune_session) {
 			return _generateFunctionCode(
 				`#~auto/${base_without_src}Factory.mts`,
 				`${options.export_name}Factory`,
-				`#~auto/${async_path}.mts`,
+				`#~auto/${async_path}`,
 				options.export_name
 			)
 		}
@@ -49,7 +49,7 @@ export function generateFactoryFiles(
 			return _generateFunctionCode(
 				`#~auto/${base_without_src}SyncFactory.mts`,
 				`${options.export_name}SyncFactory`,
-				`#~auto/${sync_path}.mts`,
+				`#~auto/${sync_path}`,
 				`${options.export_name}Sync`
 			)
 		}
@@ -70,7 +70,7 @@ export function generateFactoryFiles(
 			const dependencies = await tsGetDeclaredAnioSoftwareDependenciesFromCode(source)
 
 			return _generateFactoryCode(
-				`#~auto/${async_path}.mts`,
+				`#~auto/${async_path}`,
 				"implementation",
 				`${options.export_name}Factory`,
 				dependencies,
@@ -94,7 +94,7 @@ export function generateFactoryFiles(
 			const dependencies = await tsGetDeclaredAnioSoftwareDependenciesFromCode(source)
 
 			return _generateFactoryCode(
-				`#~auto/${sync_path}.mts`,
+				`#~auto/${sync_path}`,
 				"implementationSync",
 				`${options.export_name}SyncFactory`,
 				dependencies,

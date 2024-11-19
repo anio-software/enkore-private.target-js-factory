@@ -70,30 +70,3 @@ export function expandAsyncSyncVariantFilePath(
 		path.join(base_dir, `${sync_file_name}.${type}`)
 	]
 }
-
-export function expandAsyncSyncVariantName(
-	name
-) {
-	if (!isExpandableFileName(name)) {
-		throw new Error(
-			`expandAsyncSyncVariantName: unexpandable name '${name}'.`
-		)
-	}
-
-	const type = name.endsWith(".as.d.mts") ? "d.mts" : "mts"
-
-	const offset = `.as.${type}`.length
-
-	const tmp = name.slice(0, -offset).split("XXX")
-
-	if (tmp.length > 3) {
-		throw new Error(
-			`expandAsyncSyncVariantName: ambiguous expansion '${name}'.`
-		)
-	}
-
-	const sync_name = tmp.join("Sync").slice(2)
-	const async_name = tmp.join("").slice(2)
-
-	return [async_name, sync_name]
-}
