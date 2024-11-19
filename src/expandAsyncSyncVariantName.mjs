@@ -1,3 +1,19 @@
+import path from "node:path"
+
+export function isExpandableFileName(
+	file_path
+) {
+	const file_name = path.basename(file_path)
+
+	if (!file_name.startsWith("__")) return false
+	if (!file_name.includes("XXX")) return false
+
+	if (file_name.endsWith(".as.d.mts")) return true
+	if (file_name.endsWith(".as.mts")) return true
+
+	return false
+}
+
 export function getType(name) {
 	if (!name.startsWith("__")) return null
 	if (name.endsWith(".as.d.mts")) return "d.mts"
