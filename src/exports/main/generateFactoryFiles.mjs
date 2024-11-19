@@ -14,6 +14,8 @@ input object:
 export function generateFactoryFiles(
 	options
 ) {
+	const is_async_sync_source = options.source_file.endsWith(".as.mts")
+
 	const required_options = ["source_file", "export_name", "destination"]
 
 	for (const o of required_options) {
@@ -33,7 +35,7 @@ export function generateFactoryFiles(
 	const base = `${options.destination}/${options.export_name}`
 	const base_without_src = `${options.destination.slice(4)}/${options.export_name}`
 
-	if (options.source_file.endsWith(".as.mts")) {
+	if (is_async_sync_source) {
 		const [async_path, sync_path] = expandAsyncSyncVariantFilePath(options.source_file.slice(4))
 
 		ret[`${base}.mts`] = async function(fourtune_session) {
