@@ -1,5 +1,16 @@
 import {isExpandableFileName, isExpandableName} from "../../../expandAsyncSyncVariantName.mjs"
 import {_generateAsyncSyncFactoryFiles} from "./_generateAsyncSyncFactoryFiles.mjs"
+import path from "node:path"
+
+function appendSrc(files) {
+	let ret = {}
+
+	for (const file in files) {
+		ret[path.join("src", file)] = files[file]
+	}
+
+	return ret
+}
 
 /*
 input object:
@@ -19,6 +30,8 @@ export function generateFactoryFiles(
 		}
 	}
 
+	let files = {}
+
 	//
 	// if input source file is an async/sync variant file
 	// export_name **must** also be expandable
@@ -30,8 +43,10 @@ export function generateFactoryFiles(
 			)
 		}
 
-		return _generateAsyncSyncFactoryFiles(options)
+		files = _generateAsyncSyncFactoryFiles(options)
+	} else {
+		files = {}
 	}
 
-	return {}
+	return appendSrc(files)
 }
