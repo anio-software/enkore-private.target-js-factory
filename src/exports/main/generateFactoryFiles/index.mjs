@@ -31,6 +31,12 @@ export function generateFactoryFiles(
 		}
 	}
 
+	if (!options.source_file.startsWith("src/")) {
+		throw new Error(`source file must be inside src/.`)
+	} else if (!options.destination.startsWith("src/")) {
+		throw new Error(`destination must start with src/.`)
+	}
+
 	let files = {}
 
 	//
