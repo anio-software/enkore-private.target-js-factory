@@ -1,7 +1,33 @@
 import {getPaths} from "./getPaths.mjs"
 import {_generateFunctionCode} from "./_generateFunctionCode.mjs"
+import {_generateFactoryCode} from "./_generateFactoryCode.mjs"
 import {expandAsyncSyncVariantNew} from "../../../expandAsyncSyncVariantName.mjs"
 import path from "node:path"
+
+function generateFactoryFileFactory(options, paths, variant) {
+	return async (fourtune_session) => {
+		const {generateAsyncSyncVariant} = fourtune_session.autogenerate
+		const generate = generateAsyncSyncVariant(options.source_file)
+		const source = await  generate(fourtune_session, variant)
+		const base = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+
+		const {
+			tsGetDeclaredAnioSoftwareDependenciesFromCode
+		} = base
+
+		const dependencies = await tsGetDeclaredAnioSoftwareDependenciesFromCode(
+			source
+		)
+
+		return _generateFactoryCode(
+			paths.source,
+			variant === "async" ? "implementation" : "implementationSync",
+			path.basename(paths.output.factory).slice(0, -4),
+			dependencies,
+			variant === "async"
+		)
+	}
+}
 
 export function _generateAsyncSyncFactoryFiles(
 	options
@@ -25,8 +51,13 @@ export function _generateAsyncSyncFactoryFiles(
 		sync_export_name
 	)
 
-	ret[async_paths.output.factory] = () => ""
-	ret[sync_paths.output.factory] = () => ""
+	ret[async_paths.output.factory] = generateFactoryFileFactory(
+		options, async_paths, "async"
+	)
+
+	ret[sync_paths.output.factory] = generateFactoryFileFactory(
+		options, sync_paths, "sync"
+	)
 
 	return ret
 }
