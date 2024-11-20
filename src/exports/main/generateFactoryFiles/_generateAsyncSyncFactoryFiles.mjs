@@ -7,12 +7,10 @@ export function _generateAsyncSyncFactoryFiles(
 
 	const [async_paths, sync_paths] = getPaths(options)
 
-	console.log(async_paths, sync_paths)
-
 	ret[async_paths.output.fn] = () => ""
-	ret[async_paths.output.factory] = () => ""
-
 	ret[sync_paths.output.fn] = () => ""
+
+	ret[async_paths.output.factory] = () => ""
 	ret[sync_paths.output.factory] = () => ""
 
 	return ret
