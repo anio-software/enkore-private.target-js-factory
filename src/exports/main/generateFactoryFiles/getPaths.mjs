@@ -1,4 +1,4 @@
-import {expandAsyncSyncVariantFilePath, expandAsyncSyncVariantNew, isExpandableFileName} from "../../expandAsyncSyncVariantName.mjs"
+import {expandAsyncSyncVariantFilePath, expandAsyncSyncVariantNew, isExpandableFileName} from "../../../expandAsyncSyncVariantName.mjs"
 import path from "node:path"
 
 export function getPaths(

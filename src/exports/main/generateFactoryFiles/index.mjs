@@ -1,4 +1,4 @@
-import {isExpandableFileName, isExpandableName} from "../../expandAsyncSyncVariantName.mjs"
+import {isExpandableFileName, isExpandableName} from "../../../expandAsyncSyncVariantName.mjs"
 import {_generateAsyncSyncFactoryFiles} from "./_generateAsyncSyncFactoryFiles.mjs"
 
 /*

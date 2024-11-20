@@ -1,3 +1,3 @@
-import {generateFactoryFiles} from "./generateFactoryFiles.mjs"
+import {generateFactoryFiles} from "./generateFactoryFiles/index.mjs"
 
 export {generateFactoryFiles}
