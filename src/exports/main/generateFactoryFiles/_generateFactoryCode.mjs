@@ -51,7 +51,7 @@ export function _generateFactoryCode(
 
 	return `
 import {${import_name} as implementation} from ${src}
-import type {Dependencies, Signature} from ${src}
+import type {AnioJsDependencies, Signature} from ${src}
 import type {UserContext} from "@fourtune/realm-js/v0/runtime"
 import {getProject} from "@fourtune/realm-js/v0/project"
 import {useContext} from "@fourtune/realm-js/v0/runtime"
@@ -60,7 +60,7 @@ export function ${export_name}(user: UserContext = {}) : Signature {
 	const project = getProject()
 	const context = useContext(project, user)
 
-	const dependencies : Dependencies = {${dependencies_init}}
+	const dependencies : AnioJsDependencies = {${dependencies_init}}
 
 	return ${is_async ? "async " : ""}function(...args: Parameters<Signature>) : ReturnType<Signature> {
 		return ${is_async ? "await ": ""}implementation(context, dependencies, ...args)
