@@ -2,10 +2,11 @@ import path from "node:path"
 
 export function _generateFunctionCode(
 	factory_path,
-	factory_name,
 	implementation_path,
 	export_name
 ) {
+	const factory_name = path.basename(factory_path).slice(0, -4)
+
 	return `
 import {${factory_name} as factory} from ${JSON.stringify(path.normalize(factory_path))}
 import type {Signature} from ${JSON.stringify(path.normalize(implementation_path))}
