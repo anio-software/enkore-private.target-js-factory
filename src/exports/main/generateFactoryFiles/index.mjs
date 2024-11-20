@@ -1,5 +1,6 @@
 import {isExpandableFileName, isExpandableName} from "../../../expandAsyncSyncVariantName.mjs"
 import {_generateAsyncSyncFactoryFiles} from "./_generateAsyncSyncFactoryFiles.mjs"
+import {_generateFactoryFiles} from "./_generateFactoryFiles.mjs"
 import path from "node:path"
 
 function appendSrc(files) {
@@ -45,7 +46,7 @@ export function generateFactoryFiles(
 
 		files = _generateAsyncSyncFactoryFiles(options)
 	} else {
-		files = {}
+		files = _generateFactoryFiles(options)
 	}
 
 	return appendSrc(files)
