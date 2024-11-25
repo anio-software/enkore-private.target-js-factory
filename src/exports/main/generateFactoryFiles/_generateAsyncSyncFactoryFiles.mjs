@@ -18,13 +18,13 @@ function generateFactoryFileFactory(options, paths, variant) {
 			tsGenerateFunctionFactoryCode
 		} = base
 
-		return await tsGenerateFunctionFactoryCode(
-			paths.source,
-			path.basename(paths.output.factory).slice(0, -4),
-			path.basename(paths.output.fn).slice(0, -4),
+		const {factory} = await tsGenerateFunctionFactoryCode(
+			paths,
 			source,
 			variant === "async"
 		)
+
+		return factory
 	}
 }
 

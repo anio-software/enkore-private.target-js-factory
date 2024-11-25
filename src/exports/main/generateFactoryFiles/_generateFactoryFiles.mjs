@@ -26,13 +26,13 @@ export function _generateFactoryFiles(
 			tsGenerateFunctionFactoryCode
 		} = base
 
-		return await tsGenerateFunctionFactoryCode(
-			paths.source,
-			path.basename(paths.output.factory).slice(0, -4),
-			path.basename(paths.output.fn).slice(0, -4),
+		const {factory} = await tsGenerateFunctionFactoryCode(
+			paths,
 			source_code,
 			null
 		)
+
+		return factory
 	}
 
 	return ret
