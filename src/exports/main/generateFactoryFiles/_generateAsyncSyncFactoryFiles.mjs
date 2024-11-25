@@ -1,6 +1,5 @@
 import {getPaths} from "./getPaths.mjs"
 import {_generateFunctionCode} from "./_generateFunctionCode.mjs"
-import {_generateFactoryCode} from "./_generateFactoryCode.mjs"
 import {expandAsyncSyncVariantNew} from "../../../expandAsyncSyncVariantName.mjs"
 import path from "node:path"
 
