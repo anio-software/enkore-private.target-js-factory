@@ -10,7 +10,7 @@ function generateFactoryFileFactory(options, paths, variant) {
 		// NB: we must create our own version of async/sync
 		// since we would be potentially using outdated code
 		// (e.g. if we read the code from the file system (auto/src/ folder))
-		const generate = generateAsyncSyncVariant(options.source_file)
+		const generate = generateAsyncSyncVariant(options.source_file, variant)
 		const source = await  generate(fourtune_session, variant)
 		const base = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
