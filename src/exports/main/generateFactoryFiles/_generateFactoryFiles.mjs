@@ -15,9 +15,7 @@ export function _generateFactoryFiles(
 
 		const base = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
-		const {
-			tsGenerateFunctionFactoryCode
-		} = base
+		const {tsGenerateFunctionFactoryCode} = base
 
 		const {fn} = await tsGenerateFunctionFactoryCode(
 			paths,
@@ -35,9 +33,7 @@ export function _generateFactoryFiles(
 
 		const base = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
-		const {
-			tsGenerateFunctionFactoryCode
-		} = base
+		const {tsGenerateFunctionFactoryCode} = base
 
 		const {factory} = await tsGenerateFunctionFactoryCode(
 			paths,

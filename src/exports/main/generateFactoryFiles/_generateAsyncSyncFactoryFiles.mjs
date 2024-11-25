@@ -11,9 +11,7 @@ function generateFunctionFileFactory(options, paths, variant) {
 		const source = await  generate(fourtune_session, variant)
 		const base = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
-		const {
-			tsGenerateFunctionFactoryCode
-		} = base
+		const {tsGenerateFunctionFactoryCode} = base
 
 		const {fn} = await tsGenerateFunctionFactoryCode(
 			paths,
@@ -36,9 +34,7 @@ function generateFactoryFileFactory(options, paths, variant) {
 		const source = await  generate(fourtune_session, variant)
 		const base = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
-		const {
-			tsGenerateFunctionFactoryCode
-		} = base
+		const {tsGenerateFunctionFactoryCode} = base
 
 		const {factory} = await tsGenerateFunctionFactoryCode(
 			paths,
@@ -50,9 +46,7 @@ function generateFactoryFileFactory(options, paths, variant) {
 	}
 }
 
-export function _generateAsyncSyncFactoryFiles(
-	options
-) {
+export function _generateAsyncSyncFactoryFiles(options) {
 	let ret = {}
 
 	const [async_paths, sync_paths] = getPaths(options)
