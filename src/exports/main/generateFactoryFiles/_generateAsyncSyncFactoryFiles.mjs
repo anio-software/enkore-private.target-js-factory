@@ -22,7 +22,8 @@ function generateFactoryFileFactory(options, paths, variant) {
 			paths.source,
 			path.basename(paths.output.factory).slice(0, -4),
 			path.basename(paths.output.fn).slice(0, -4),
-			source
+			source,
+			variant === "async"
 		)
 	}
 }
