@@ -1,6 +1,4 @@
 import {getPaths} from "./getPaths.mjs"
-import {expandAsyncSyncVariantNew} from "../../../expandAsyncSyncVariantName.mjs"
-import path from "node:path"
 
 function generateFunctionFileFactory(options, paths, variant) {
 	return async (fourtune_session) => {
