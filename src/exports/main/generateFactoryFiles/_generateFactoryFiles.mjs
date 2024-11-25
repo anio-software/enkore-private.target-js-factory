@@ -1,5 +1,4 @@
 import {getPaths} from "./getPaths.mjs"
-import {_generateFunctionCode} from "./_generateFunctionCode.mjs"
 import path from "node:path"
 import fs from "node:fs/promises"
 
