@@ -22,25 +22,16 @@ export function _generateFactoryFiles(
 		)).toString()
 
 		const base = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+
 		const {
-			tsGetDeclaredAnioSoftwareDependenciesFromCode,
-			tsGetExportedFunctionFromCode
+			tsGenerateFunctionFactoryCode
 		} = base
 
-		const dependencies = await tsGetDeclaredAnioSoftwareDependenciesFromCode(
-			source_code
-		)
-
-		const {is_async} = await tsGetExportedFunctionFromCode(
-			source_code, "implementation"
-		)
-
-		return _generateFactoryCode(
+		return await tsGenerateFunctionFactoryCode(
 			paths.source,
-			"implementation",
 			path.basename(paths.output.factory).slice(0, -4),
-			dependencies,
-			is_async
+			path.basename(paths.output.fn).slice(0, -4),
+			source_code
 		)
 	}
 

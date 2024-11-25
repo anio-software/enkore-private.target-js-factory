@@ -16,19 +16,14 @@ function generateFactoryFileFactory(options, paths, variant) {
 		const base = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
 		const {
-			tsGetDeclaredAnioSoftwareDependenciesFromCode
+			tsGenerateFunctionFactoryCode
 		} = base
 
-		const dependencies = await tsGetDeclaredAnioSoftwareDependenciesFromCode(
-			source
-		)
-
-		return _generateFactoryCode(
+		return await tsGenerateFunctionFactoryCode(
 			paths.source,
-			variant === "async" ? "implementation" : "implementationSync",
 			path.basename(paths.output.factory).slice(0, -4),
-			dependencies,
-			variant === "async"
+			path.basename(paths.output.fn).slice(0, -4),
+			source
 		)
 	}
 }
