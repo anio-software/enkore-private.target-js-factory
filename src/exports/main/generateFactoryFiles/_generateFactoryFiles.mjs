@@ -30,7 +30,8 @@ export function _generateFactoryFiles(
 			paths.source,
 			path.basename(paths.output.factory).slice(0, -4),
 			path.basename(paths.output.fn).slice(0, -4),
-			source_code
+			source_code,
+			null
 		)
 	}
 
