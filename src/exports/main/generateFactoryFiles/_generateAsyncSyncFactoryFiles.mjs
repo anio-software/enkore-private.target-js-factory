@@ -3,6 +3,7 @@ import {getPaths} from "./getPaths.mjs"
 function generateFunctionFileFactory(options, paths, variant) {
 	return async (fourtune_session) => {
 		const {generateAsyncSyncVariant} = fourtune_session.autogenerate
+		//todo: use fourtune_session.paths.getBuildPathFromProjectRoot(options.source_file)?
 
 		// NB: we must create our own version of async/sync
 		// since we would be potentially using outdated code
@@ -26,6 +27,7 @@ function generateFunctionFileFactory(options, paths, variant) {
 function generateFactoryFileFactory(options, paths, variant) {
 	return async (fourtune_session) => {
 		const {generateAsyncSyncVariant} = fourtune_session.autogenerate
+		//todo: use fourtune_session.paths.getBuildPathFromProjectRoot(options.source_file)?
 
 		// NB: we must create our own version of async/sync
 		// since we would be potentially using outdated code
