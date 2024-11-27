@@ -5,7 +5,7 @@ export default {
 	api_version: 1,
 	dependencies: {
 		"@fourtune/base-realm-js-and-web": {
-			version: "0.8100.0",
+			version: "0.8100.1",
 		}
 	}
 }
