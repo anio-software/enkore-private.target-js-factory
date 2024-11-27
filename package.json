@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@anio-software/fs": "0.6.0",
-    "@fourtune/js-and-web-runtime-and-rollup-plugins": "^0.8500.0"
+    "@fourtune/js-and-web-runtime-and-rollup-plugins": "^0.8600.0"
   },
   "peerDependencies": {
     "@fourtune/core": "0.x",
