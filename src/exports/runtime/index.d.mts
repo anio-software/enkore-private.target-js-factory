@@ -1,1 +1,1 @@
-export type * from "@fourtune/types/realm-js-and-web/runtime"
+export * from "@fourtune/types/realm-js-and-web/runtime"
