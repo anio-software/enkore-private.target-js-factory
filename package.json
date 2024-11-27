@@ -13,6 +13,9 @@
     ".": "./src/exports/main/index.mjs",
     "./integration": "./src/integration/index.mjs",
     "./integration/dependencies": "./src/dependencies.mjs",
+    "./runtime": {
+      "types": "./src/exports/runtime/index.d.mts"
+    },
     "./v0/project": {
       "import": "./src/exports/v0/project.mjs",
       "types": "./src/exports/v0/project.d.mts"
