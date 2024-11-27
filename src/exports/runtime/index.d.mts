@@ -1,1 +1,1 @@
-export * from "@fourtune/types/realm-js-and-web/runtime"
+export * from "@fourtune/js-and-web-runtime-and-rollup-plugins/runtime-api"
