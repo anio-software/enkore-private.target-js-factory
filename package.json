@@ -17,6 +17,10 @@
       "import": "./src/exports/_versionless/runtime/index.mjs",
       "types": "./src/exports/_versionless/runtime/index.d.mts"
     },
+    "./v0/autogenerate": {
+      "import": "./src/exports/v0/autogenerate/index.mjs",
+      "types": "./src/exports/v0/autogenerate/index.d.mts"
+    },
     "./v0/project": {
       "import": "./src/exports/v0/project/index.mjs",
       "types": "./src/exports/v0/project/index.d.mts"
