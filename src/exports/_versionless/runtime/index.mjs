@@ -1,1 +1,1 @@
-export * from "@fourtune/js-and-web-runtime-and-rollup-plugins/runtime-api"
+export * from "@fourtune/js-and-web-runtime-and-rollup-plugins/_versionless/runtime-api"
