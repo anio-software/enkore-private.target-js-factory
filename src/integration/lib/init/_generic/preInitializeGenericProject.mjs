@@ -1,5 +1,6 @@
 import path from "node:path"
 import {isExpandableFileName, expandAsyncSyncVariantFilePath} from "../../../../expandAsyncSyncVariantName.mjs"
+import {generateAsyncSyncVariant} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/autogenerate-api"
 
 export async function preInitializeGenericProject(
 	fourtune_session, source_files
@@ -12,20 +13,16 @@ export async function preInitializeGenericProject(
 			sync_file_name
 		] = expandAsyncSyncVariantFilePath(src.name)
 
-		const generator = fourtune_session.autogenerate[
-			"generateAsyncSyncVariant"
-		]
-
 		fourtune_session.autogenerate.addUserFile(
 			path.join(
 				path.dirname(src.source), async_file_name
-			), generator(src.source, "async")
+			), generateAsyncSyncVariant(src.source, "async")
 		)
 
 		fourtune_session.autogenerate.addUserFile(
 			path.join(
 				path.dirname(src.source), sync_file_name
-			), generator(src.source, "sync")
+			), generateAsyncSyncVariant(src.source, "sync")
 		)
 	}
 }
