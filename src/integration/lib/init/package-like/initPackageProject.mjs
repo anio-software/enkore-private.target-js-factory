@@ -159,6 +159,8 @@ export async function initPackageProject(fourtune_session) {
 				for (const [export_name, source] of module_exports.entries()) {
 					let source_path = source
 
+					// d.mts files will never have an export name of
+					// __star_export, __index or __default
 					if (source.endsWith(".d.mts")) {
 						entry_code += exportStatement(
 							getObjectsPath(source), export_name, true
