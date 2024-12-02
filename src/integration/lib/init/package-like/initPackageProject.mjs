@@ -1,7 +1,7 @@
 import {factory as f1} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/project/rollup-plugin"
 import {factory as f2} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/runtime/rollup-plugin"
 import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/assets/rollup-plugin"
-import {importStatement} from "./importStatement.mjs"
+import {exportStatement} from "./exportStatement.mjs"
 import {getEntryCode} from "./getEntryCode.mjs"
 import {isExpandableFilePath} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/utils-api"
 
@@ -157,13 +157,13 @@ export async function initPackageProject(fourtune_session) {
 
 				for (const [export_name, source] of module_exports.entries()) {
 					if (source.endsWith(".d.mts")) {
-						entry_code += importStatement(
+						entry_code += exportStatement(
 							getObjectsPath(source), export_name, true
 						)
 					} else if (source.endsWith(".mts")) {
 						const extensionless_source = source.slice(0, -4)
 
-						entry_code += importStatement(
+						entry_code += exportStatement(
 							getObjectsPath(`${extensionless_source + ".d.mts"}`), export_name, true
 						)
 					}
