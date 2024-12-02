@@ -201,6 +201,33 @@ export async function initPackageProject(fourtune_session) {
 					}
 				}
 
+				let entry_code_2 = ``
+
+				for (const symbol of exported_symbols) {
+					if (symbol.name !== "default") {
+						entry_code_2 += `import type {${symbol.name}} from "${symbol.type_source}"\n`
+					} else {
+						entry_code_2 += `import type __default_import from "${symbol.type_source}"\n`
+					}
+				}
+
+				entry_code_2 += `\n`
+				entry_code_2 += `export type ModuleExport = {\n`
+
+				for (const symbol of exported_symbols) {
+					if (symbol.is_type_only) {
+						entry_code_2 += `    ${symbol.name}: ${symbol.name},\n`
+					} else {
+						if (symbol.name === "default") {
+							entry_code_2 += `    ${symbol.name}: typeof __default_import,\n`
+						} else {
+							entry_code_2 += `    ${symbol.name}: typeof ${symbol.name},\n`
+						}
+					}
+				}
+
+				entry_code_2 += `}\n`
+
 				return await jsBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
