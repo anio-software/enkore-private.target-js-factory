@@ -157,16 +157,17 @@ export async function initPackageProject(fourtune_session) {
 				let entry_code = ``
 
 				for (const [export_name, source] of module_exports.entries()) {
+					let source_path = source
+
 					if (source.endsWith(".d.mts")) {
 						entry_code += exportStatement(
 							getObjectsPath(source), export_name, true
 						)
 					} else if (source.endsWith(".mts")) {
 						const extensionless_source = source.slice(0, -4)
+						source_path = getObjectsPath(`${extensionless_source}.d.mts`)
 
-						entry_code += exportStatement(
-							getObjectsPath(`${extensionless_source + ".d.mts"}`), export_name, true
-						)
+						entry_code += exportStatement(source_path, export_name, true)
 					}
 				}
 
