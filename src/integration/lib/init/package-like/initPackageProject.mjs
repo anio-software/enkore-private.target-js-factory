@@ -164,7 +164,7 @@ export async function initPackageProject(fourtune_session) {
 			}
 		)
 
-		product.addDistributable("types", "index.d.mts",
+		product.addDistributable("types", ["index.d.mts", "ModuleExport.d.mts"],
 			async () => {
 				const {jsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 				let entry_code = ``
@@ -241,13 +241,19 @@ export async function initPackageProject(fourtune_session) {
 
 				entry_code_2 += `}\n`
 
-				return await jsBundler(
+				return [await jsBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
 						input_file_type: "dts",
 						on_rollup_log_fn: console.log
 					}
-				)
+				), await jsBundler(
+					fourtune_session.getProjectRoot(),
+					entry_code_2, {
+						input_file_type: "dts",
+						on_rollup_log_fn: console.log
+					}
+				)]
 
 				async function getExportNames(source) {
 					const {
