@@ -4,7 +4,6 @@ import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/
 import {exportStatement} from "./exportStatement.mjs"
 import {getEntryCode} from "./getEntryCode.mjs"
 import {isExpandableFilePath} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/utils-api"
-import fs from "node:fs/promises"
 
 function getExportTypeAndName(filename) {
 	if (filename.endsWith(".d.mts")) {
@@ -257,9 +256,14 @@ export async function initPackageProject(fourtune_session) {
 					} = await fourtune_session.getDependency("@anio-software/ts-utils")
 
 					const code = parseCode(
-						(await fs.readFile(
-							source
-						)).toString()
+						await jsBundler(
+							fourtune_session.getProjectRoot(),
+							`export type * from "${source}"`,
+							{
+								input_file_type: "dts",
+								on_rollup_log_fn: console.log
+							}
+						)
 					)
 
 					return getExportNames(code)
