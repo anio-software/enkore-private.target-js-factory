@@ -155,6 +155,7 @@ export async function initPackageProject(fourtune_session) {
 			async () => {
 				const {jsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 				let entry_code = ``
+				let exported_symbols = []
 
 				for (const [export_name, source] of module_exports.entries()) {
 					let source_path = source
@@ -165,11 +166,38 @@ export async function initPackageProject(fourtune_session) {
 						entry_code += exportStatement(
 							getObjectsPath(source), export_name, true
 						)
+
+						exported_symbols.push({
+							name: export_name,
+							is_type_only: true,
+							type_source: getObjectsPath(source)
+						})
 					} else if (source.endsWith(".mts")) {
 						const extensionless_source = source.slice(0, -4)
 						source_path = getObjectsPath(`${extensionless_source}.d.mts`)
 
 						entry_code += exportStatement(source_path, export_name, true)
+
+						// __star_export and __index
+						// both can have an arbitrary amount of named
+						// exports so we first have to de-star them
+						// (we could do this with every export but
+						//  it's an expensive operation)
+						if (export_name === "__star_export" || export_name === "__index") {
+							for (const name of await getExportNames(source_path)) {
+								exported_symbols.push({
+									name,
+									is_type_only: false,
+									type_source: source_path
+								})
+							}
+						} else {
+							exported_symbols.push({
+								name: export_name === "__default" ? "default" : export_name,
+								is_type_only: false,
+								type_source: source_path
+							})
+						}
 					}
 				}
 
