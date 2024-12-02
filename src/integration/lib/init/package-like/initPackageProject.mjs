@@ -49,7 +49,7 @@ function assetReporter(
 }
 
 export async function initPackageProject(fourtune_session) {
-	const {getObjectsPath, getObjectsPathFromProjectRoot} = fourtune_session.paths
+	const {getObjectsPath} = fourtune_session.paths
 	const output_modules = new Map()
 
 	for (const source of fourtune_session.input.getSourceFiles()) {
