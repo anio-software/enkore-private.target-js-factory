@@ -4,6 +4,7 @@ import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/
 import {exportStatement} from "./exportStatement.mjs"
 import {getEntryCode} from "./getEntryCode.mjs"
 import {isExpandableFilePath} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/utils-api"
+import fs from "node:fs/promises"
 
 function getExportTypeAndName(filename) {
 	if (filename.endsWith(".d.mts")) {
@@ -49,7 +50,7 @@ function assetReporter(
 }
 
 export async function initPackageProject(fourtune_session) {
-	const {getObjectsPath} = fourtune_session.paths
+	const {getObjectsPath, getObjectsPathFromProjectRoot} = fourtune_session.paths
 	const output_modules = new Map()
 
 	for (const source of fourtune_session.input.getSourceFiles()) {
@@ -176,6 +177,21 @@ export async function initPackageProject(fourtune_session) {
 						on_rollup_log_fn: console.log
 					}
 				)
+
+				async function getExportNames(source) {
+					const {
+						parseCode,
+						getExportNames
+					} = await fourtune_session.getDependency("@anio-software/ts-utils")
+
+					const code = parseCode(
+						(await fs.readFile(
+							source
+						)).toString()
+					)
+
+					return getExportNames(code)
+				}
 			}
 		)
 	}
