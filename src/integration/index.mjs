@@ -35,7 +35,7 @@ export async function initialize(
 	await initializeObjectCreation(fourtune_session)
 	await autogenerateTSConfigFiles(fourtune_session)
 
-	switch (project_config.type) {
+	switch (project_config.realm.type) {
 		case "package": {
 			await initPackageProject(fourtune_session)
 		} break
@@ -50,7 +50,7 @@ export async function initialize(
 
 		default: {
 			throw new Error(
-				`Unknown target type '${project_config.type}'.`
+				`Unknown target type '${project_config.realm.type}'.`
 			)
 		}
 	}
