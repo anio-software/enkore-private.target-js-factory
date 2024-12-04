@@ -8,8 +8,8 @@ export default {
 			version: "0.11000.1"
 		},
 
-		"@anio-software/ts-utils": {
-			version: "0.0.5",
+		"@aniojs/node-ts-utils": {
+			version: "0.1.2",
 			import_kind: "star"
 		}
 	}
