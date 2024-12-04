@@ -271,7 +271,7 @@ export async function initPackageProject(fourtune_session) {
 					const {
 						parseCode,
 						getExportNames
-					} = fourtune_session.getDependency("@anio-software/ts-utils")
+					} = fourtune_session.getDependency("@aniojs/node-ts-utils")
 
 					const code = parseCode(
 						await tsTypeDeclarationBundler(
