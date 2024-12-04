@@ -6,11 +6,6 @@ export default {
 	dependencies: {
 		"@fourtune/base-realm-js-and-web": {
 			version: "0.11000.1"
-		},
-
-		"@aniojs/node-ts-utils": {
-			version: "0.1.3",
-			import_kind: "star"
 		}
 	}
 }
