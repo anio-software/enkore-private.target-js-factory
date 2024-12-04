@@ -166,7 +166,7 @@ export async function initPackageProject(fourtune_session) {
 
 		product.addDistributable("types", ["index.d.mts", "ModuleExport.d.mts"],
 			async () => {
-				const {jsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+				const {tsTypeDeclarationBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 				let entry_code = ``
 				let exported_symbols = []
 
@@ -241,16 +241,14 @@ export async function initPackageProject(fourtune_session) {
 
 				entry_code_2 += `}\n`
 
-				return [await jsBundler(
+				return [await tsTypeDeclarationBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
-						input_file_type: "dts",
 						on_rollup_log_fn: console.log
 					}
-				), await jsBundler(
+				), await tsTypeDeclarationBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code_2, {
-						input_file_type: "dts",
 						on_rollup_log_fn: console.log
 					}
 				)]
@@ -262,11 +260,10 @@ export async function initPackageProject(fourtune_session) {
 					} = await fourtune_session.getDependency("@anio-software/ts-utils")
 
 					const code = parseCode(
-						await jsBundler(
+						await tsTypeDeclarationBundler(
 							fourtune_session.getProjectRoot(),
 							`export type * from "${source}"`,
 							{
-								input_file_type: "dts",
 								on_rollup_log_fn: console.log
 							}
 						)
