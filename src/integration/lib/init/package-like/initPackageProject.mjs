@@ -123,9 +123,9 @@ export async function initPackageProject(fourtune_session) {
 				"source.mjs",
 				"source.d.mts"
 			], async () => {
-				const {tsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+				const {jsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
-				const code = await tsBundler(
+				const code = await jsBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
 						additional_plugins: plugins
@@ -146,9 +146,9 @@ export async function initPackageProject(fourtune_session) {
 				"source.min.mjs",
 				"source.min.d.mts"
 			], async () => {
-				const {tsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+				const {jsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
-				const code = await tsBundler(
+				const code = await jsBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
 						additional_plugins: plugins,
