@@ -105,6 +105,8 @@ export async function initPackageProject(fourtune_session) {
 		externals = fourtune_session.getRealmOptions().external_npm_packages
 	}
 
+	const on_rollup_log_fn = console.log
+
 	for (const [module_name, module_exports] of output_modules.entries()) {
 		const product = fourtune_session.products.addProduct(module_name)
 		const entry_code = getEntryCode(fourtune_session, module_exports)
@@ -135,7 +137,8 @@ export async function initPackageProject(fourtune_session) {
 					fourtune_session.getProjectRoot(),
 					entry_code, {
 						externals,
-						additional_plugins: plugins
+						additional_plugins: plugins,
+						on_rollup_log_fn
 					}
 				)
 
@@ -160,7 +163,8 @@ export async function initPackageProject(fourtune_session) {
 					entry_code, {
 						externals,
 						additional_plugins: plugins,
-						minify: true
+						minify: true,
+						on_rollup_log_fn
 					}
 				)
 
@@ -253,13 +257,13 @@ export async function initPackageProject(fourtune_session) {
 					fourtune_session.getProjectRoot(),
 					entry_code, {
 						externals,
-						on_rollup_log_fn: console.log
+						on_rollup_log_fn
 					}
 				), await tsTypeDeclarationBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code_2, {
 						externals,
-						on_rollup_log_fn: console.log
+						on_rollup_log_fn
 					}
 				)]
 
@@ -275,7 +279,7 @@ export async function initPackageProject(fourtune_session) {
 							`export type * from "${source}"`,
 							{
 								externals,
-								on_rollup_log_fn: console.log
+								on_rollup_log_fn
 							}
 						)
 					)
