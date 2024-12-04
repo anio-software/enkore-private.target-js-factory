@@ -2,7 +2,7 @@ import fs from "node:fs/promises"
 import {resolveImportAliases} from "../../resolveImportAliases.mjs"
 
 async function convertTypeScriptFile(fourtune_session, code, file_path) {
-	const {tsStripTypesFromCode} = await fourtune_session.getDependency(
+	const {tsStripTypesFromCode} = fourtune_session.getDependency(
 		"@fourtune/base-realm-js-and-web"
 	)
 

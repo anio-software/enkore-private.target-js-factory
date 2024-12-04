@@ -131,7 +131,7 @@ export async function initPackageProject(fourtune_session) {
 				"source.mjs",
 				"source.d.mts"
 			], async () => {
-				const {jsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+				const {jsBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
 				const code = await jsBundler(
 					fourtune_session.getProjectRoot(),
@@ -156,7 +156,7 @@ export async function initPackageProject(fourtune_session) {
 				"source.min.mjs",
 				"source.min.d.mts"
 			], async () => {
-				const {jsBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+				const {jsBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 
 				const code = await jsBundler(
 					fourtune_session.getProjectRoot(),
@@ -178,7 +178,7 @@ export async function initPackageProject(fourtune_session) {
 
 		product.addDistributable("types", ["index.d.mts", "ModuleExport.d.mts"],
 			async () => {
-				const {tsTypeDeclarationBundler} = await fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+				const {tsTypeDeclarationBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 				let entry_code = ``
 				let exported_symbols = []
 
@@ -271,7 +271,7 @@ export async function initPackageProject(fourtune_session) {
 					const {
 						parseCode,
 						getExportNames
-					} = await fourtune_session.getDependency("@anio-software/ts-utils")
+					} = fourtune_session.getDependency("@anio-software/ts-utils")
 
 					const code = parseCode(
 						await tsTypeDeclarationBundler(

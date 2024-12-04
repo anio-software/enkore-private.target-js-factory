@@ -11,7 +11,7 @@ export async function resolveImportAliases(
 	const {
 		jsResolveImportAliases,
 		tsResolveImportAliases
-	} = await fourtune_session.getDependency(
+	} = fourtune_session.getDependency(
 		"@fourtune/base-realm-js-and-web"
 	)
 
