@@ -176,8 +176,11 @@ export async function initPackageProject(fourtune_session) {
 			}
 		)
 
-		product.addDistributable("types", ["index.d.mts", "ModuleExport.d.mts"],
-			async () => {
+		product.addDistributable(
+			"types", [
+				"index.d.mts",
+				"ModuleExport.d.mts"
+			], async () => {
 				const {tsTypeDeclarationBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 				let entry_code = ``
 				let exported_symbols = []
