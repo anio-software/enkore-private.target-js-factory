@@ -41,6 +41,7 @@ export async function autogenerateTSConfigFiles(fourtune_session) {
 				},
 				"include": [
 					"../../../auto/fourtune/src/**/*",
+					"../../../auto/synthetic/src/**/*",
 					"../../../auto/user/src/**/*"
 				]
 			}, null, 4) + "\n"
