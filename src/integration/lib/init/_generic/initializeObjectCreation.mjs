@@ -1,5 +1,6 @@
 import {getTypeScriptDefinitions} from "../../getTypeScriptDefinitions.mjs"
 import {addObjectFile} from "./addObjectFile.mjs"
+import {isExpandableFilePath} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/utils-api"
 
 export async function initializeObjectCreation(fourtune_session) {
 	const source_files = fourtune_session.input.getSourceFiles()
@@ -9,6 +10,8 @@ export async function initializeObjectCreation(fourtune_session) {
 	const tsc_assets_input_files = []
 
 	for (const source_file of source_files) {
+		if (isExpandableFilePath(source_file.name)) continue
+
 		await addObjectFile(fourtune_session, source_file)
 
 		if (source_file.name.endsWith(".mjs")) continue
