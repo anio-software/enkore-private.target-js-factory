@@ -179,6 +179,7 @@ export async function initPackageProject(fourtune_session) {
 		product.addDistributable(
 			"types", [
 				"index.d.mts",
+				"index.min.d.mts",
 				"ModuleExport.d.mts"
 			], async () => {
 				const {tsTypeDeclarationBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
@@ -256,19 +257,25 @@ export async function initPackageProject(fourtune_session) {
 
 				entry_code_2 += `}\n`
 
-				return [await tsTypeDeclarationBundler(
+				const index_dmts = await tsTypeDeclarationBundler(
 					fourtune_session.getProjectRoot(),
 					entry_code, {
 						externals,
 						on_rollup_log_fn
 					}
-				), await tsTypeDeclarationBundler(
-					fourtune_session.getProjectRoot(),
-					entry_code_2, {
-						externals,
-						on_rollup_log_fn
-					}
-				)]
+				)
+
+				return [
+					index_dmts,
+					index_dmts,
+					await tsTypeDeclarationBundler(
+						fourtune_session.getProjectRoot(),
+						entry_code_2, {
+							externals,
+							on_rollup_log_fn
+						}
+					)
+				]
 
 				async function getExportNames(source) {
 					const {
