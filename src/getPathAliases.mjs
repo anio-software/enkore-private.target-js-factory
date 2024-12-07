@@ -2,7 +2,8 @@ const aliases = {
 	"#~src": `src/`,
 	"#~fourtune": `auto/fourtune/src/`,
 	"#~auto": `auto/user/src/`,
-	"#~synthetic": `auto/synthetic/src`,
+	"#~synthetic/async.sync": `auto/synthetic/async.sync/src`,
+	"#~synthetic/user": `auto/synthetic/user/src`,
 	"#~assets": `assets/`
 }
 
