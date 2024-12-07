@@ -9,18 +9,14 @@ export async function resolveImportAliases(
 	const aliases = getPathAliases(`./${"../".repeat(levels)}/`)
 
 	const {
-		jsResolveImportAliases,
 		tsResolveImportAliases
 	} = fourtune_session.getDependency(
 		"@fourtune/base-realm-js-and-web"
 	)
 
-	if (source_file_path.endsWith(".d.mts")) {
+	// both catches .d.mts and .mts
+	if (source_file_path.endsWith(".mts")) {
 		return await tsResolveImportAliases(
-			code, {aliases}
-		)
-	} else if (source_file_path.endsWith(".mts")) {
-		return await jsResolveImportAliases(
 			code, {aliases}
 		)
 	}
