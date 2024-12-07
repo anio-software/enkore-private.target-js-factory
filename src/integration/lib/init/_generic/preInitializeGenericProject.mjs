@@ -25,12 +25,14 @@ export async function preInitializeGenericProject(
 		] = expandAsyncSyncVariantFilePath(src.name)
 
 		fourtune_session.autogenerate.addSyntheticFile(
+			"async.sync",
 			path.join(
 				path.dirname(src.source), async_file_name
 			), asyncSyncGeneratorFactory(src.source, "async")
 		)
 
 		fourtune_session.autogenerate.addSyntheticFile(
+			"async.sync",
 			path.join(
 				path.dirname(src.source), sync_file_name
 			), asyncSyncGeneratorFactory(src.source, "sync")
