@@ -14,6 +14,7 @@ export async function autogenerateTSConfigFiles(fourtune_session) {
 					"module": "nodenext",
 					"moduleResolution": "nodenext",
 					"isolatedModules": true,
+					"verbatimModuleSyntax": true,
 					"baseUrl": "../../../"
 				}
 			}, null, 4) + "\n"
