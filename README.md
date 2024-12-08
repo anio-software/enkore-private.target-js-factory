@@ -116,8 +116,8 @@ getAsset("js-bundle://test.mts")
 getAsset("text://test.mts")
 ```
 
-> ⚠️ It's advised to only ever pass string literals into `getAsset` in order for the bundle optimization to work.
-> 
+> [!WARNING]  
+> It's advised to only ever pass string literals into `getAsset` in order for the bundle optimization to work.
 > If a dynamic variable is passed, **every** asset going through **every** protocol will be embedded into the product. 
 
 
