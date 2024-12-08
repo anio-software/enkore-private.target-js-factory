@@ -1,4 +1,4 @@
-# @fourtune/realm-js
+# 🍀 @fourtune/realm-js
 
 This package is used for all fourtune JavaScript/TypeScript projects.
 
