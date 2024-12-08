@@ -51,6 +51,16 @@ const wrapped_context = createContext({
         return true
     }
 })
+
+// ----- a package using the fourtune runtime api will do something like this internally: ----- 
+import {useContext} from "@fourtune/realm-js/runtime"
+//                                           ^ not versioned because
+//                                             useContext is designed to work
+//                                             with any API version
+
+const context = useContext(wrapped_context, 0)
+
+context.log.info("Hello from the package")
 ```
 
 The following options can be set to modify the behaviour of the created context:
