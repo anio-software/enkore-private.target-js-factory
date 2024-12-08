@@ -48,7 +48,9 @@ Exports can be grouped into "modules" to generate a bundle for each module:
 > 
 > - `__default.mts` use the default export as the default export of the bundle.
 > 
-> - `__index.mts` is a combination of the above (i.e. default + all named exports).r
+> - `__index.mts` is a combination of the above (i.e. default + all named exports).
+> 
+> It's best to avoid export names that start with an underscore.
 
 # APIs
 
