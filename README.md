@@ -107,18 +107,16 @@ getAsset("protocol://path/to/asset")
 For example, a TypeScript asset can be bundled up before being embedded into the product or accessed in its raw form with `text://`:
 
 ```ts
+import {getAsset} from "@fourtune/realm-js/v0/assets"
+
 // result: bundled javascript code
 getAsset("js-bundle://test.mts")
 
-// result: file as is
+// result: source code of "test.mts" as is
 getAsset("text://test.mts")
 ```
 
----
 
-```ts
-import {getAsset} from "@fourtune/realm-js/v0/assets"
-```
 
 ## Project
 
