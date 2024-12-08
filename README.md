@@ -2,6 +2,9 @@
 
 This package is used for all fourtune JavaScript/TypeScript projects.
 
+> [!WARNING]  
+> 🚧 This project is still heavily under construction and not ready for any real serious project.
+
 # Realm options
 
 ```ts
