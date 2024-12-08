@@ -39,7 +39,12 @@ The runtime API provides a way of handling logging.
 ```js
 import {createContext} from "@fourtune/realm-js/v0/runtime"
 
-const context = createContext()
+//
+// createContext creates a wrapped context instance
+// which then can be passed to libraries supporting
+// the fourtune runtime API.
+//
+const wrapped_context = createContext()
 ```
 
 ## Asset
