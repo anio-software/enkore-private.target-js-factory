@@ -14,7 +14,7 @@ options: {
 |Option|Description|
 |:---|:---|
 |`external_npm_packages`|Mark packages that should not be bundled.|
-|`runtime`|Tell fourtune what the intended runtime is.|
+|`runtime`|Tell fourtune what the intended runtime is. This will have an effect on how the `package.json` is evaluated and what the TypeScript settings will be.|
 
 # Basic Folder Structure
 
@@ -137,4 +137,12 @@ getAsset("text://test.mts")
 
 ## Project
 
-(to be written)
+This API simply provides information about the project, such as the contents of the project's `package.json` and `fourtune.config.mjs`.
+
+```ts
+import {getProjectPackageJSON} from "@fourtune/realm-js/v0/project"
+
+console.log(
+    getProjectPackageJSON().version
+)
+```
