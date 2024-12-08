@@ -5,7 +5,7 @@ This realm is used for fourtune TypeScript projects.
 > [!WARNING]  
 > 🚧 This project is still heavily under construction and not ready for any real serious project.
 
-# Realm options
+## Realm options
 
 ```ts
 options: {
@@ -19,7 +19,7 @@ options: {
 |`external_npm_packages`|Mark packages that should not be bundled.|
 |`runtime`|Tell fourtune what the intended runtime is. This will have an effect on how the `package.json` is evaluated and what the TypeScript settings will be.|
 
-# Basic Folder Structure
+## Basic Folder Structure
 
 ```
 assets/
@@ -52,11 +52,23 @@ Exports can be grouped into "modules" to generate a bundle for each module:
 > 
 > It's best to avoid export names that start with an underscore.
 
-# APIs
+## Async/Sync Variant Files
+
+Async/Sync variant files are special files that contain the asynchronous as well as the synchronous implementation of an API/function in a single file.
+
+Those files start with two underscores `__` and end with either `.as.mts` or `.as.d.mts`.
+
+The underscores are there to discourage users from directly importing those files.
+
+See, when you create an async/sync variant fourtune will automatically create two new files based on your source file.
+
+These will be available at `#~synthetic/async.sync/<file-path>`.
+
+## APIs
 
 The realm exposes three main APIs that are all versioned under the same number. These APIs work dynamically (i.e. by just executing the project's code) as well as when bundling. Special measures are taken so that the resulting bundle size is optimized.
 
-## 🔌 Runtime API
+### 🔌 Runtime API
 
 The runtime API provides a way of handling logging.
 
@@ -104,7 +116,7 @@ The following options can be set to modify the behaviour of the created context:
 
 ---
 
-### Log Levels
+#### Log Levels
 
 Log levels are represented not by a number but by a string:
 
@@ -118,7 +130,7 @@ Log levels are represented not by a number but by a string:
 |`trace`|Used exclusively for in-depth debugging.|
 
 	
-## 📦 Assets API
+### 📦 Assets API
 
 The asset API provides a simple way to embed static resources in the resulting product.
 
@@ -149,14 +161,14 @@ getAsset("text://test.mts")
 
 ---
 
-### Supported Protocols
+#### Supported Protocols
 
 |Protocol|Description|Required file type|
 |:---|:---|---:|
 |`text://`|Return the file contents as a string.|any|
 |`js-bundle://`|Strip TypeScript types and bundle the JavaScript code.|Only .mts files.|
 
-## 📜 Project API
+### 📜 Project API
 
 This API simply provides information about the project, such as the contents of the project's `package.json` and `fourtune.config.mjs`.
 
@@ -167,3 +179,12 @@ console.log(
     getProjectPackageJSON().version
 )
 ```
+
+### 🖨️ Autogenerate API
+
+This API is exclusively used in the **build** process.
+
+```ts
+import {generateFactoryFiles} from "@fourtune/realm-js/v0/autogenerate"
+```
+
