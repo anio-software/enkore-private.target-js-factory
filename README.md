@@ -54,13 +54,13 @@ Exports can be grouped into "modules" to generate a bundle for each module:
 
 # Async/Sync Variant Files
 
-Async/Sync variant files are special files that contain the asynchronous as well as the synchronous implementation of an API/function in a single file.
+Async/Sync variant files are special files that contain the asynchronous as well as the synchronous implementation of a function/type in a single file.
 
 Those files must start with two underscores `__`, contain `XXX` exactly once, and end with either `.as.mts` or `.as.d.mts`.
 
 The `XXX` is expanded to nothing for the async version and expanded to `Sync` for the synchronous version.
 
-For example `__myFunctionXXX.as.mts` would create two files called `myFunction.mts` and `myFunctionSync.mts`.
+For example `__myFunctionXXX.as.mts` will create two files called `myFunction.mts` and `myFunctionSync.mts`.
 
 > [!NOTE]  
 > The underscores are there to discourage users from directly importing async/sync variant files.
@@ -68,6 +68,14 @@ For example `__myFunctionXXX.as.mts` would create two files called `myFunction.m
 When you define an async/sync variant fourtune will automatically create two new files based on your source file (one for the async version and one for the sync version).
 
 These will be available at `#~synthetic/async.sync/<file-path>`.
+
+In order to have a line do something different in the synchronous variant a marker `//>` is used at the start of a line:
+
+```ts
+console.log("This will be printed in the asynchronous variant.")
+//>console.log("This will be printed in the synchronous variant.")
+```
+This will replace the line above.
 
 # APIs
 
