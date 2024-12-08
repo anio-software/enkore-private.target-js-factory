@@ -38,13 +38,13 @@ Exports can be grouped into "modules" to generate a bundle for each module:
 Modules can be nested as well.
 
 > [!NOTE]  
-> There are three export names that are treated differently:
+> There are three export names that have a special meaning:
 > 
-> `__star_export.mts` means export every named export from that file.
+> - `__star_export.mts` means export every named export from that file.
 > 
-> `__default.mts` means export the default export of the file.
+> - `__default.mts` means export the default export of the file.
 > 
-> `__index.mts` is a combination of the above (i.e. default + all named exports).
+> - `__index.mts` is a combination of the above (i.e. default + all named exports).
 
 # APIs
 
