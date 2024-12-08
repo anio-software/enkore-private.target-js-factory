@@ -58,6 +58,10 @@ import {useContext} from "@fourtune/realm-js/runtime"
 //                                             useContext is designed to work
 //                                             with any API version
 
+//
+// useContext asserts that the wrapped_context
+// is of the specified version
+//
 const context = useContext(wrapped_context, 0)
 
 context.log.info("Hello from the package")
@@ -67,6 +71,7 @@ The following options can be set to modify the behaviour of the created context:
 
 |Name|Signature|Description
 |:---|:---|:---|
+|tag|n/a|A string that identifies the context.|
 |shouldLog|`(ctx, level, pkg, tag): boolean`|Determine whether to log a message or not.|
 |logWithLevel|`(ctx, level, lines): void`|Log a message with a specified level.|
 |getCurrentLogLevel|`(ctx): LogLevel`|Get the current log level. (possibly from the environment)|
