@@ -18,11 +18,10 @@ options: {
 ```
 assets/
 src/
-	export/
-			[module_name]/
-							<export_name>
-			<export_name>
-
+    export/
+          [module_name]/
+                        <export_name>
+           <export_name>
 ```
 
 `src/export` is a special location where every file represents a **named** export.
