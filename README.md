@@ -31,6 +31,21 @@ src/
 
 For example `src/export/MyFunction.mts` would result in a named export `MyFunction` in the default module.
 
+Exports can be grouped into "modules" to generate a bundle for each module:
+
+`src/export/<module_name>/<export_name>`
+
+Modules can be nested as well.
+
+> [!NOTE]  
+> There are three export names that are treated differently:
+> 
+> `__star_export.mts` means export every named export from that file.
+> 
+> `__default.mts` means export the default export of the file.
+> 
+> `__index.mts` is a combination of the above (i.e. default + all named exports).
+
 # APIs
 
 The realm exposes three main APIs that are all versioned under the same number. These APIs work dynamically (i.e. by just executing the project's code) as well as when bundling. Special measures are taken so that the resulting bundle size is optimized.
@@ -122,18 +137,18 @@ getAsset("text://test.mts")
 ```
 
 > [!WARNING]  
-> It's advised to only ever pass string literals into `getAsset` in order for the bundle optimization to work.
+> It's advised to only ever pass string literals to `getAsset` in order for the bundle optimization to properly work.
 > 
 > If a dynamic variable is passed, **every** asset going through **every** protocol will be embedded into the product. 
 
 ---
 
-### Protocols
+### Supported Protocols
 
-|Protocol|Description|
-|:---|:---|
-|`text://`|Return the file contents as a string.|
-|`js-bundle://`|Strip TypeScript types, bundle JavaScript code.|
+|Protocol|Description|Required file type|
+|:---|:---|---:|
+|`text://`|Return the file contents as a string.|any|
+|`js-bundle://`|Strip TypeScript types, bundle JavaScript code.|Only .mts files.|
 
 ## Project
 
