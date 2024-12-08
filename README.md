@@ -36,7 +36,7 @@ The realm exposes three main APIs that are all versioned under the same number. 
 
 The runtime API provides a way of handling logging.
 
-```js
+```ts
 import {createContext} from "@fourtune/realm-js/v0/runtime"
 
 //
@@ -72,7 +72,7 @@ The following options can be set to modify the behaviour of the created context:
 
 |Name|Signature|Description
 |:---|:---|:---|
-|tag|n/a|A string that identifies the context.|
+|tag|`string`|A string that identifies the context.|
 |shouldLog|`(ctx, level, pkg, tag): boolean`|Determine whether to log a message or not.|
 |logWithLevel|`(ctx, level, lines): void`|Log a message with a specified level.|
 |getCurrentLogLevel|`(ctx): LogLevel`|Get the current log level. (possibly from the environment)|
@@ -96,7 +96,23 @@ Log levels are represented, not by a number, but by a string:
 	
 ## Asset
 
-```js
+The asset API provides a simple way to embed static resources in the resulting product.
+
+Every asset can be loaded through a different protocol, resulting in a different result:
+
+```ts
+getAsset("protocol://path/to/asset")
+```
+
+For example, a TypeScript asset can be bundled up before being embedded into the product:
+
+```ts
+getAsset("js-bundle://test.mts")
+```
+
+---
+
+```ts
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 ```
 
