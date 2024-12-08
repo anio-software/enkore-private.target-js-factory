@@ -35,7 +35,8 @@ Exports can be grouped into "modules" to generate a bundle for each module:
 
 `src/export/<module_name>/<export_name>`
 
-Modules can be nested as well.
+> [!TIP]
+> Modules can be nested as well.
 
 > [!NOTE]  
 > There are three export names that have a special meaning:
