@@ -62,7 +62,7 @@ The `XXX` is expanded to nothing for the async version and expanded to `Sync` fo
 
 For example `__myFunctionXXX.as.mts` would create two files called `myFunction.mts` and `myFunctionSync.mts`.
 
-> ![NOTE]
+> [!NOTE]  
 > The underscores are there to discourage users from directly importing async/sync variant files.
 
 When you define an async/sync variant fourtune will automatically create two new files based on your source file (one for the async version and one for the sync version).
