@@ -46,7 +46,7 @@ Exports can be grouped into "modules" to generate a bundle for each module:
 > 
 > - `__star_export.mts` means export every named export from that file.
 > 
-> - `__default.mts` means export the default export of the file.
+> - `__default.mts` use the default export as the default export of the bundle.
 > 
 > - `__index.mts` is a combination of the above (i.e. default + all named exports).
 
@@ -54,7 +54,7 @@ Exports can be grouped into "modules" to generate a bundle for each module:
 
 The realm exposes three main APIs that are all versioned under the same number. These APIs work dynamically (i.e. by just executing the project's code) as well as when bundling. Special measures are taken so that the resulting bundle size is optimized.
 
-## Runtime
+## Runtime API
 
 The runtime API provides a way of handling logging.
 
@@ -104,7 +104,7 @@ The following options can be set to modify the behaviour of the created context:
 
 ### Log Levels
 
-Log levels are represented, not by a number, but by a string:
+Log levels are represented not by a number but by a string:
 
 |Name|Description|
 |:---|:---|
@@ -112,11 +112,11 @@ Log levels are represented, not by a number, but by a string:
 |`error`||
 |`warn`||
 |`info`||
-|`debug`||
-|`trace`||
+|`debug`|Used exclusively for debugging.|
+|`trace`|Used exclusively for in-depth debugging.|
 
 	
-## Asset
+## Asset API
 
 The asset API provides a simple way to embed static resources in the resulting product.
 
@@ -154,7 +154,7 @@ getAsset("text://test.mts")
 |`text://`|Return the file contents as a string.|any|
 |`js-bundle://`|Strip TypeScript types, bundle JavaScript code.|Only .mts files.|
 
-## Project
+## Project API
 
 This API simply provides information about the project, such as the contents of the project's `package.json` and `fourtune.config.mjs`.
 
