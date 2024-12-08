@@ -152,7 +152,7 @@ getAsset("text://test.mts")
 |Protocol|Description|Required file type|
 |:---|:---|---:|
 |`text://`|Return the file contents as a string.|any|
-|`js-bundle://`|Strip TypeScript types, bundle JavaScript code.|Only .mts files.|
+|`js-bundle://`|Strip TypeScript types and bundle the JavaScript code.|Only .mts files.|
 
 ## 📜 Project API
 
