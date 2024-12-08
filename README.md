@@ -36,9 +36,17 @@ The realm exposes three main APIs that are all versioned under the same number. 
 
 The runtime API provides a way of handling logging.
 
+```js
+import {createContext} from "@fourtune/realm-js/v0/runtime"
+
+const context = createContext()
+```
+
 ## Asset
 
-(to be written)
+```js
+import {getAsset} from "@fourtune/realm-js/v0/assets"
+```
 
 ## Project
 
