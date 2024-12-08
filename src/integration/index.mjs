@@ -5,6 +5,7 @@ import {preInitializeGenericProject} from "./lib/init/_generic/preInitializeGene
 
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 import {checkProjectPackageJSON} from "./checkProjectPackageJSON.mjs"
+import {orderProjectPackageJSON} from "./orderProjectPackageJSON.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -34,6 +35,7 @@ export async function initialize(
 	const project_config = fourtune_session.getProjectConfig()
 
 	await checkProjectPackageJSON(fourtune_session)
+	await orderProjectPackageJSON(fourtune_session)
 
 	await initializeObjectCreation(fourtune_session)
 	await autogenerateTSConfigFiles(fourtune_session)
