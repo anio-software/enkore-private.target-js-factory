@@ -2,7 +2,7 @@
 
 This package is used for all fourtune JavaScript/TypeScript projects.
 
-Realm options:
+# Realm options
 
 ```ts
 options: {
@@ -10,6 +10,11 @@ options: {
 	runtime: "node" | "browser" | "agnostic"
 }
 ```
+
+|Option|Description|
+|:---|:---|
+|`external_npm_packages`|Mark packages that should not be bundled.|
+|`runtime`|Tell fourtune what the intended runtime is.|
 
 # Basic Folder Structure
 
