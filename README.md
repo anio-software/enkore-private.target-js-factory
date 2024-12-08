@@ -44,7 +44,13 @@ import {createContext} from "@fourtune/realm-js/v0/runtime"
 // which then can be passed to libraries supporting
 // the fourtune runtime API.
 //
-const wrapped_context = createContext()
+const wrapped_context = createContext({
+    // example where the created context would log 
+    // all messages regardless of log level
+    shouldLog() {
+        return true
+    }
+})
 ```
 
 The following options can be set to modify the behaviour of the created context:
