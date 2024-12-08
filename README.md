@@ -64,6 +64,7 @@ import {useContext} from "@fourtune/realm-js/runtime"
 //
 const context = useContext(wrapped_context, 0)
 
+// package actually using the context
 context.log.info("Hello from the package")
 ```
 
@@ -77,6 +78,22 @@ The following options can be set to modify the behaviour of the created context:
 |getCurrentLogLevel|`(ctx): LogLevel`|Get the current log level. (possibly from the environment)|
 |printLine|`(ctx, line): void`|Print a line.|
 
+---
+
+### Log Levels
+
+Log levels are represented, not by a number, but by a string:
+
+|Name|Description|
+|:---|:---|
+|`emerg` (to be implemented)|Unrecoverable error.|
+|`error`||
+|`warn`||
+|`info`||
+|`debug`||
+|`trace`||
+
+	
 ## Asset
 
 ```js
