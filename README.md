@@ -51,10 +51,10 @@ The following options can be set to modify the behaviour of the created context:
 
 |Name|Signature|Description
 |---|---|---|
-|shouldLog|`(context, level, pkg, tag): boolean`|Determine whether to log a message or not.|
-|logWithLevel|`(context, level, lines): void`|Log a message with a specified level.|
-|getCurrentLogLevel|`(context): LogLevel`|Get the current log level. (possibly from the environment)|
-|printLine|`(context, line): void`|Print a line.|
+|shouldLog|`(ctx, level, pkg, tag): boolean`|Determine whether to log a message or not.|
+|logWithLevel|`(ctx, level, lines): void`|Log a message with a specified level.|
+|getCurrentLogLevel|`(ctx): LogLevel`|Get the current log level. (possibly from the environment)|
+|printLine|`(ctx, line): void`|Print a line.|
 
 ## Asset
 
