@@ -1,6 +1,6 @@
 # 🍀 @fourtune/realm-js
 
-This package is used for all fourtune TypeScript projects.
+This realm is used for fourtune TypeScript projects.
 
 > [!WARNING]  
 > 🚧 This project is still heavily under construction and not ready for any real serious project.
