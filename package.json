@@ -17,24 +17,24 @@
     "./integration": "./src/integration/index.mjs",
     "./integration/dependencies": "./src/dependencies.mjs",
     "./runtime": {
-      "import": "./src/exports/_versionless/runtime/index.mjs",
-      "types": "./src/exports/_versionless/runtime/index.d.mts"
+      "types": "./src/exports/_versionless/runtime/index.d.mts",
+      "import": "./src/exports/_versionless/runtime/index.mjs"
     },
     "./v0/autogenerate": {
-      "import": "./src/exports/v0/autogenerate/index.mjs",
-      "types": "./src/exports/v0/autogenerate/index.d.mts"
+      "types": "./src/exports/v0/autogenerate/index.d.mts",
+      "import": "./src/exports/v0/autogenerate/index.mjs"
     },
     "./v0/project": {
-      "import": "./src/exports/v0/project/index.mjs",
-      "types": "./src/exports/v0/project/index.d.mts"
+      "types": "./src/exports/v0/project/index.d.mts",
+      "import": "./src/exports/v0/project/index.mjs"
     },
     "./v0/runtime": {
-      "import": "./src/exports/v0/runtime/index.mjs",
-      "types": "./src/exports/v0/runtime/index.d.mts"
+      "types": "./src/exports/v0/runtime/index.d.mts",
+      "import": "./src/exports/v0/runtime/index.mjs"
     },
     "./v0/assets": {
-      "import": "./src/exports/v0/assets/index.mjs",
-      "types": "./src/exports/v0/assets/index.d.mts"
+      "types": "./src/exports/v0/assets/index.d.mts",
+      "import": "./src/exports/v0/assets/index.mjs"
     },
     "./package.json": "./package.json"
   },
