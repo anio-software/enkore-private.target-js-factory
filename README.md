@@ -98,6 +98,8 @@ Log levels are represented, not by a number, but by a string:
 
 The asset API provides a simple way to embed static resources in the resulting product.
 
+Assets must be located inside the `/assets/` folder and can be of any type.
+
 Every asset can be loaded through a different protocol yielding different representations of the same asset:
 
 ```ts
@@ -121,6 +123,14 @@ getAsset("text://test.mts")
 > 
 > If a dynamic variable is passed, **every** asset going through **every** protocol will be embedded into the product. 
 
+---
+
+### Protocols
+
+|Protocol|Description|
+|:---|:---|
+|`text://`|Return the file contents as a string.|
+|`js-bundle://`|Strip TypeScript types, bundle JavaScript code.|
 
 ## Project
 
