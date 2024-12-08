@@ -98,16 +98,20 @@ Log levels are represented, not by a number, but by a string:
 
 The asset API provides a simple way to embed static resources in the resulting product.
 
-Every asset can be loaded through a different protocol, resulting in a different result:
+Every asset can be loaded through a different protocol yielding different representations of the same asset:
 
 ```ts
 getAsset("protocol://path/to/asset")
 ```
 
-For example, a TypeScript asset can be bundled up before being embedded into the product:
+For example, a TypeScript asset can be bundled up before being embedded into the product or accessed in its raw form with `text://`:
 
 ```ts
+// result: bundled javascript code
 getAsset("js-bundle://test.mts")
+
+// result: file as is
+getAsset("text://test.mts")
 ```
 
 ---
