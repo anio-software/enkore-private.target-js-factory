@@ -3,23 +3,7 @@ import {factory as f2} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/
 import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/assets/rollup-plugin"
 import {exportStatement} from "./exportStatement.mjs"
 import {getEntryCode} from "./getEntryCode.mjs"
-import {isExpandableFilePath} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/utils-api"
-
-function getExportTypeAndName(filename) {
-	if (filename.endsWith(".d.mts")) {
-		return {
-			type: "d.mts",
-			name: filename.slice(0, -6)
-		}
-	} else if (filename.endsWith(".mts")) {
-		return {
-			type: "mts",
-			name: filename.slice(0, -4)
-		}
-	}
-
-	return false
-}
+import {getOutputModules} from "./getOutputModules.mjs"
 
 function assetReporter(
 	fourtune_session,
@@ -50,41 +34,7 @@ function assetReporter(
 
 export async function initPackageProject(fourtune_session) {
 	const {getObjectsPath} = fourtune_session.paths
-	const output_modules = new Map()
-
-	for (const source of fourtune_session.input.getSourceFiles()) {
-		if (!source.parents.length) continue
-		if (source.parents[0] !== "export") continue
-		// ignore .as.mts and .as.d.mts files
-		if (isExpandableFilePath(source.name)) continue
-
-		const parsed = getExportTypeAndName(source.name)
-
-		if (!parsed) continue
-
-		source.parents = source.parents.slice(1)
-
-		const export_name = parsed.name
-		const module_name = source.parents.length ? source.parents.join(".") : "default"
-
-		if (!output_modules.has(module_name)) {
-			output_modules.set(module_name, new Map())
-		}
-
-		const module_exports = output_modules.get(module_name)
-
-		if (module_exports.has(export_name)) {
-			const using = module_exports.get(export_name)
-
-			fourtune_session.emitWarning(
-				`pkg.duplicate_export`, {
-					module_name, export_name, using
-				}
-			)
-		} else {
-			module_exports.set(export_name, source.source)
-		}
-	}
+	const output_modules = getOutputModules(fourtune_session)
 
 	const plugin1 = await f1(fourtune_session.getProjectRoot())
 	const plugin2 = await f2(fourtune_session.getProjectRoot())
