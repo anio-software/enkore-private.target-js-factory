@@ -4,6 +4,7 @@ import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/
 import {exportStatement} from "./exportStatement.mjs"
 import {getEntryCode} from "./getEntryCode.mjs"
 import {getOutputModules} from "./getOutputModules.mjs"
+import path from "node:path"
 
 function assetReporter(
 	fourtune_session,
@@ -230,21 +231,17 @@ export async function initPackageProject(fourtune_session) {
 				async function getExportNames(source) {
 					const {
 						parseCode,
-						getExportNames
+						getExportsRecursive
 					} = fourtune_session.getDependency("@aniojs/node-ts-utils")
 
-					const code = parseCode(
-						await tsTypeDeclarationBundler(
-							fourtune_session.getProjectRoot(),
-							`export type * from "${source}"`,
-							{
-								externals,
-								on_rollup_log_fn
-							}
-						)
+					const tmp = getExportsRecursive(
+						path.join(fourtune_session.getProjectRoot(), "index.mts"),
+						parseCode(`export type * from "./${source}"`)
 					)
 
-					return getExportNames(code)
+					return tmp.exports.filter(exp => {
+						return !externals.includes(exp.originModule)
+					}).map(exp => exp.name)
 				}
 			}
 		)
