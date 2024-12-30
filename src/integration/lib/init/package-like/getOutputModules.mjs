@@ -16,6 +16,10 @@ function getExportTypeAndName(filename) {
 	return false
 }
 
+function removeExtension(source, type) {
+	return source.slice(0, -(`.${type}`.length))
+}
+
 export function getOutputModules(fourtune_session) {
 	const output_modules = new Map()
 
@@ -49,7 +53,12 @@ export function getOutputModules(fourtune_session) {
 				}
 			)
 		} else {
-			module_exports.set(export_name, source.source)
+			module_exports.set(export_name, {
+				source: source.source,
+				extensionlessSource: removeExtension(source.source, parsed.type),
+				type: parsed.type,
+				name: parsed.name
+			})
 		}
 	}
 
