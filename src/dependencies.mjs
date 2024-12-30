@@ -9,7 +9,7 @@ export default {
 		},
 
 		"@aniojs/node-ts-utils": {
-			version: "0.3.1",
+			version: "0.5.0",
 			import_kind: "star"
 		}
 	}
