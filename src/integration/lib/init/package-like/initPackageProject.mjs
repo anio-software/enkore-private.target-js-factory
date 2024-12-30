@@ -234,14 +234,10 @@ export async function initPackageProject(fourtune_session) {
 						getExportsRecursive
 					} = fourtune_session.getDependency("@aniojs/node-ts-utils")
 
-					const tmp = getExportsRecursive(
+					return getExportsRecursive(
 						path.join(fourtune_session.getProjectRoot(), "index.mts"),
 						parseCode(`export type * from "./${source}"`)
-					)
-
-					return tmp.exports.filter(exp => {
-						return !externals.includes(exp.originModule)
-					}).map(exp => exp.name)
+					).exportNames
 				}
 			}
 		)
