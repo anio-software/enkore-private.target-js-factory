@@ -62,20 +62,6 @@ export async function initPackageProject(fourtune_session) {
 		const product = fourtune_session.products.addProduct(module_name)
 		const entry_code = getEntryCode(fourtune_session, module_exports)
 
-		//
-		// validate that no such files as
-		// __star_export.d.mts exist
-		//
-		for (const [export_name, {source}] of module_exports) {
-			if (!source.endsWith(".d.mts")) continue
-
-			if (["__star_export", "__index", "__default"].includes(export_name)) {
-				throw new Error(
-					`An exported d.mts file may not be named "${export_name}.d.mts".`
-				)
-			}
-		}
-
 		product.addDistributable(
 			"bundle", [
 				"index.mjs",
