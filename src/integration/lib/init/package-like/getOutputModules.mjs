@@ -45,7 +45,7 @@ export function getOutputModules(fourtune_session) {
 		const module_exports = output_modules.get(module_name)
 
 		if (module_exports.has(export_name)) {
-			const using = module_exports.get(export_name)
+			const using = module_exports.get(export_name).source
 
 			fourtune_session.emitWarning(
 				`pkg.duplicate_export`, {

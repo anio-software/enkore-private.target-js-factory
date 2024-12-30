@@ -66,7 +66,7 @@ export async function initPackageProject(fourtune_session) {
 		// validate that no such files as
 		// __star_export.d.mts exist
 		//
-		for (const [export_name, source] of module_exports) {
+		for (const [export_name, {source}] of module_exports) {
 			if (!source.endsWith(".d.mts")) continue
 
 			if (["__star_export", "__index", "__default"].includes(export_name)) {
@@ -137,7 +137,7 @@ export async function initPackageProject(fourtune_session) {
 				let entry_code = ``
 				let exported_symbols = []
 
-				for (const [export_name, source] of module_exports.entries()) {
+				for (const [export_name, {source}] of module_exports.entries()) {
 					let source_path = source
 
 					// d.mts files will never have an export name of
