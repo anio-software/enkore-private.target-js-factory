@@ -1,6 +1,9 @@
 import {exportStatement} from "./exportStatement.mjs"
 
-export function getTypeEntryCode(fourtune_session, entryPointExportMap) {
+export function getTypeEntryCode(
+	fourtune_session,
+	entryPointExportMap
+) {
 	const {getObjectsPath} = fourtune_session.paths
 
 	let entry_code = ``
