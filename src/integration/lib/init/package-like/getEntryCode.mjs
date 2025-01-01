@@ -8,12 +8,12 @@ export function getEntryCode(
 
 	let entry_code = ``
 
-	for (const [export_name, {type, extensionlessSource}] of entryPointExportMap.entries()) {
+	for (const [exportName, {type, extensionlessSource}] of entryPointExportMap.entries()) {
 		if (type !== "mts") continue
 
 		entry_code += exportStatement(
 			getObjectsPath(`${extensionlessSource}.mjs`),
-			export_name,
+			exportName,
 			false
 		)
 	}
