@@ -1,8 +1,8 @@
 import {factory as f1} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/project/rollup-plugin"
 import {factory as f2} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/runtime/rollup-plugin"
 import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/assets/rollup-plugin"
-import {exportStatement} from "./exportStatement.mjs"
 import {getEntryCode} from "./getEntryCode.mjs"
+import {getTypeEntryCode} from "./getTypeEntryCode.mjs"
 import {getOutputModules} from "./getOutputModules.mjs"
 import path from "node:path"
 
@@ -61,6 +61,7 @@ export async function initPackageProject(fourtune_session) {
 	for (const [module_name, module_exports] of output_modules.entries()) {
 		const product = fourtune_session.products.addProduct(module_name)
 		const entry_code = getEntryCode(fourtune_session, module_exports)
+		const type_entry_code = getTypeEntryCode(fourtune_session, module_exports)
 
 		product.addDistributable(
 			"bundle", [
@@ -120,7 +121,6 @@ export async function initPackageProject(fourtune_session) {
 				"ModuleExport.d.mts"
 			], async () => {
 				const {tsTypeDeclarationBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
-				let entry_code = ``
 				let exported_symbols = []
 
 				for (const [export_name, {source}] of module_exports.entries()) {
@@ -129,10 +129,6 @@ export async function initPackageProject(fourtune_session) {
 					// d.mts files will never have an export name of
 					// __star_export, __index or __default
 					if (source.endsWith(".d.mts")) {
-						entry_code += exportStatement(
-							getObjectsPath(source), export_name, true
-						)
-
 						exported_symbols.push({
 							name: export_name,
 							is_type_only: true,
@@ -141,8 +137,6 @@ export async function initPackageProject(fourtune_session) {
 					} else if (source.endsWith(".mts")) {
 						const extensionless_source = source.slice(0, -4)
 						source_path = getObjectsPath(`${extensionless_source}.d.mts`)
-
-						entry_code += exportStatement(source_path, export_name, true)
 
 						// __star_export and __index
 						// both can have an arbitrary amount of named
@@ -196,7 +190,7 @@ export async function initPackageProject(fourtune_session) {
 
 				const index_dmts = await tsTypeDeclarationBundler(
 					fourtune_session.getProjectRoot(),
-					entry_code, {
+					type_entry_code, {
 						externals,
 						on_rollup_log_fn
 					}
