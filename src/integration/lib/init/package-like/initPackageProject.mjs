@@ -35,7 +35,7 @@ function assetReporter(
 
 export async function initPackageProject(fourtune_session) {
 	const {getObjectsPath} = fourtune_session.paths
-	const output_modules = getEntryPointMap(fourtune_session)
+	const entryPointMap = getEntryPointMap(fourtune_session)
 
 	const plugin1 = await f1(fourtune_session.getProjectRoot())
 	const plugin2 = await f2(fourtune_session.getProjectRoot())
@@ -58,7 +58,7 @@ export async function initPackageProject(fourtune_session) {
 
 	const on_rollup_log_fn = console.log
 
-	for (const [module_name, module_exports] of output_modules.entries()) {
+	for (const [module_name, module_exports] of entryPointMap.entries()) {
 		const product = fourtune_session.products.addProduct(module_name)
 		const entry_code = getEntryCode(fourtune_session, module_exports)
 		const type_entry_code = getTypeEntryCode(fourtune_session, module_exports)
