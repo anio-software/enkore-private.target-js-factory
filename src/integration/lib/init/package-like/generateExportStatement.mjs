@@ -1,4 +1,4 @@
-export function exportStatement(source, export_name, is_type = false) {
+export function generateExportStatement(source, export_name, is_type = false) {
 	const source_str = JSON.stringify(source)
 	const t_export = is_type ? " type" : ""
 
