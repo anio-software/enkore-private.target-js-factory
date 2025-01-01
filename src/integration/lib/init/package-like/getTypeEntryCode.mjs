@@ -5,17 +5,17 @@ export function getTypeEntryCode(fourtune_session, module_exports) {
 
 	let entry_code = ``
 
-	for (const [export_name, {type, source, extensionlessSource}] of module_exports.entries()) {
+	for (const [exportName, {type, source, extensionlessSource}] of module_exports.entries()) {
 		if (type === "d.mts") {
 			entry_code += exportStatement(
 				getObjectsPath(source),
-				export_name,
+				exportName,
 				true
 			)
 		} else if (type === "mts") {
 			entry_code += exportStatement(
 				getObjectsPath(`${extensionlessSource}.d.mts`),
-				export_name,
+				exportName,
 				true
 			)
 		}
