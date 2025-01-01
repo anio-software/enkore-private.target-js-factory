@@ -20,8 +20,8 @@ function removeExtension(source, type) {
 	return source.slice(0, -(`.${type}`.length))
 }
 
-export function getOutputModules(fourtune_session) {
-	const output_modules = new Map()
+export function getEntryPointMap(fourtune_session) {
+	const entryPointMap = new Map()
 
 	for (const source of fourtune_session.input.getSourceFiles()) {
 		if (!source.parents.length) continue
@@ -38,14 +38,14 @@ export function getOutputModules(fourtune_session) {
 		const export_name = parsed.name
 		const module_name = source.parents.length ? source.parents.join(".") : "default"
 
-		if (!output_modules.has(module_name)) {
-			output_modules.set(module_name, new Map())
+		if (!entryPointMap.has(module_name)) {
+			entryPointMap.set(module_name, new Map())
 		}
 
-		const module_exports = output_modules.get(module_name)
+		const entryPointExportMap = entryPointMap.get(module_name)
 
-		if (module_exports.has(export_name)) {
-			const using = module_exports.get(export_name).source
+		if (entryPointExportMap.has(export_name)) {
+			const using = entryPointExportMap.get(export_name).source
 
 			fourtune_session.emitWarning(
 				`pkg.duplicate_export`, {
@@ -53,7 +53,7 @@ export function getOutputModules(fourtune_session) {
 				}
 			)
 		} else {
-			module_exports.set(export_name, {
+			entryPointExportMap.set(export_name, {
 				source: source.source,
 				extensionlessSource: removeExtension(source.source, parsed.type),
 				type: parsed.type,
@@ -62,5 +62,5 @@ export function getOutputModules(fourtune_session) {
 		}
 	}
 
-	return output_modules
+	return entryPointMap
 }

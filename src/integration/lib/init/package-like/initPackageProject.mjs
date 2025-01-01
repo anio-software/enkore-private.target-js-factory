@@ -3,7 +3,7 @@ import {factory as f2} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/
 import {factory as f3} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/assets/rollup-plugin"
 import {getEntryCode} from "./getEntryCode.mjs"
 import {getTypeEntryCode} from "./getTypeEntryCode.mjs"
-import {getOutputModules} from "./getOutputModules.mjs"
+import {getEntryPointMap} from "./getEntryPointMap.mjs"
 import path from "node:path"
 
 function assetReporter(
@@ -35,7 +35,7 @@ function assetReporter(
 
 export async function initPackageProject(fourtune_session) {
 	const {getObjectsPath} = fourtune_session.paths
-	const output_modules = getOutputModules(fourtune_session)
+	const output_modules = getEntryPointMap(fourtune_session)
 
 	const plugin1 = await f1(fourtune_session.getProjectRoot())
 	const plugin2 = await f2(fourtune_session.getProjectRoot())
