@@ -58,10 +58,10 @@ export async function initPackageProject(fourtune_session) {
 
 	const on_rollup_log_fn = console.log
 
-	for (const [entryPointName, module_exports] of entryPointMap.entries()) {
+	for (const [entryPointName, entryPointExportMap] of entryPointMap.entries()) {
 		const product = fourtune_session.products.addProduct(entryPointName)
-		const entry_code = getEntryCode(fourtune_session, module_exports)
-		const type_entry_code = getTypeEntryCode(fourtune_session, module_exports)
+		const entry_code = getEntryCode(fourtune_session, entryPointExportMap)
+		const type_entry_code = getTypeEntryCode(fourtune_session, entryPointExportMap)
 
 		product.addDistributable(
 			"bundle", [
@@ -123,7 +123,7 @@ export async function initPackageProject(fourtune_session) {
 				const {tsTypeDeclarationBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
 				let exported_symbols = []
 
-				for (const [export_name, {source}] of module_exports.entries()) {
+				for (const [export_name, {source}] of entryPointExportMap.entries()) {
 					let source_path = source
 
 					// d.mts files will never have an export name of
