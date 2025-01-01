@@ -63,22 +63,27 @@ export async function initPackageProject(fourtune_session) {
 		const entry_code = getEntryCode(fourtune_session, entryPointExportMap)
 		const type_entry_code = getTypeEntryCode(fourtune_session, entryPointExportMap)
 
+		async function bundle(minify) {
+			const {jsBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
+
+			return await jsBundler(
+				fourtune_session.getProjectRoot(),
+				entry_code, {
+					externals,
+					additional_plugins: plugins,
+					minify,
+					on_rollup_log_fn
+				}
+			)
+		}
+
 		product.addDistributable(
 			"bundle", [
 				"index.mjs",
 				"source.mjs",
 				"source.d.mts"
 			], async () => {
-				const {jsBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
-
-				const code = await jsBundler(
-					fourtune_session.getProjectRoot(),
-					entry_code, {
-						externals,
-						additional_plugins: plugins,
-						on_rollup_log_fn
-					}
-				)
+				const code = await bundle(false)
 
 				return [
 					code,
@@ -94,17 +99,7 @@ export async function initPackageProject(fourtune_session) {
 				"source.min.mjs",
 				"source.min.d.mts"
 			], async () => {
-				const {jsBundler} = fourtune_session.getDependency("@fourtune/base-realm-js-and-web")
-
-				const code = await jsBundler(
-					fourtune_session.getProjectRoot(),
-					entry_code, {
-						externals,
-						additional_plugins: plugins,
-						minify: true,
-						on_rollup_log_fn
-					}
-				)
+				const code = await bundle(true)
 
 				return [
 					code,
