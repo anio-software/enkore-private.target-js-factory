@@ -58,8 +58,8 @@ export async function initPackageProject(fourtune_session) {
 
 	const on_rollup_log_fn = console.log
 
-	for (const [module_name, module_exports] of entryPointMap.entries()) {
-		const product = fourtune_session.products.addProduct(module_name)
+	for (const [entryPointName, module_exports] of entryPointMap.entries()) {
+		const product = fourtune_session.products.addProduct(entryPointName)
 		const entry_code = getEntryCode(fourtune_session, module_exports)
 		const type_entry_code = getTypeEntryCode(fourtune_session, module_exports)
 
