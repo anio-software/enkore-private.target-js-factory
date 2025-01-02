@@ -1,5 +1,5 @@
 import {initializeGeneric} from "./init/initializeGeneric.mjs"
-import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
+import {initializeProjectGeneric} from "./init/initializeProjectGeneric.mjs"
 import {preInitializeGeneric} from "./init/preinitializeGeneric.mjs"
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 
@@ -8,7 +8,7 @@ export async function getIntegrationAPIVersion() {
 }
 
 export async function initializeProject(fourtune_session, writeFile) {
-	await initializeGenericProject(fourtune_session, writeFile)
+	await initializeProjectGeneric(fourtune_session, writeFile)
 }
 
 export async function preInitialize(
