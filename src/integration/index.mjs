@@ -1,11 +1,8 @@
-import {initializeObjectCreation} from "./init/initializeObjectCreation.mjs"
-import {autogenerateTSConfigFiles} from "./lib/init/_generic/autogenerateTSConfigFiles.mjs"
+import {initializeGeneric} from "./init/initializeGeneric.mjs"
 import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
 import {preInitializeGenericProject} from "./lib/init/_generic/preInitializeGenericProject.mjs"
 
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
-import {checkProjectPackageJSON} from "./init/checkProjectPackageJSON.mjs"
-import {orderProjectPackageJSON} from "./init/orderProjectPackageJSON.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
@@ -34,11 +31,7 @@ export async function initialize(
 ) {
 	const project_config = fourtune_session.getProjectConfig()
 
-	await checkProjectPackageJSON(fourtune_session)
-	await orderProjectPackageJSON(fourtune_session)
-
-	await initializeObjectCreation(fourtune_session)
-	await autogenerateTSConfigFiles(fourtune_session)
+	await initializeGeneric(fourtune_session)
 
 	switch (project_config.realm.type) {
 		case "package": {
