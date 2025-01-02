@@ -4,8 +4,8 @@ import {initializeGenericProject} from "./lib/init/_generic/initializeGenericPro
 import {preInitializeGenericProject} from "./lib/init/_generic/preInitializeGenericProject.mjs"
 
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
-import {checkProjectPackageJSON} from "./checkProjectPackageJSON.mjs"
-import {orderProjectPackageJSON} from "./orderProjectPackageJSON.mjs"
+import {checkProjectPackageJSON} from "./init/checkProjectPackageJSON.mjs"
+import {orderProjectPackageJSON} from "./init/orderProjectPackageJSON.mjs"
 
 export async function getIntegrationAPIVersion() {
 	return 0
