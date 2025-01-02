@@ -1,5 +1,5 @@
 import fs from "node:fs/promises"
-import {resolveImportAliases} from "../../resolveImportAliases.mjs"
+import {resolveImportAliases} from "../lib/resolveImportAliases.mjs"
 
 async function convertTypeScriptFile(fourtune_session, code, file_path) {
 	const {tsStripTypesFromCode} = fourtune_session.getDependency(
@@ -21,7 +21,7 @@ async function convertTypeScriptFile(fourtune_session, code, file_path) {
 	)
 }
 
-export async function addObjectFile(fourtune_session, input_file) {
+export async function _addObjectFile(fourtune_session, input_file) {
 	const {
 		getBuildPath,
 		getBuildPathFromProjectRoot

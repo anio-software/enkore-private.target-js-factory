@@ -1,4 +1,4 @@
-import {initializeObjectCreation} from "./lib/init/_generic/initializeObjectCreation.mjs"
+import {initializeObjectCreation} from "./init/initializeObjectCreation.mjs"
 import {autogenerateTSConfigFiles} from "./lib/init/_generic/autogenerateTSConfigFiles.mjs"
 import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
 import {preInitializeGenericProject} from "./lib/init/_generic/preInitializeGenericProject.mjs"
