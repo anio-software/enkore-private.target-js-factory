@@ -36,6 +36,7 @@ export function getEntryPointMap(fourtune_session) {
 		source.parents = source.parents.slice(1)
 
 		const exportName = parsed.name
+		const extensionlessSource = removeExtension(source.source, parsed.type)
 		const entryPointName = source.parents.length ? source.parents.join(".") : "default"
 
 		if (!entryPointMap.has(entryPointName)) {
@@ -55,7 +56,7 @@ export function getEntryPointMap(fourtune_session) {
 		} else {
 			entryPointExportMap.set(exportName, {
 				source: source.source,
-				extensionlessSource: removeExtension(source.source, parsed.type),
+				extensionlessSource,
 				type: parsed.type,
 				name: parsed.name
 			})
