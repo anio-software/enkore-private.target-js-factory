@@ -18,7 +18,7 @@ function indent(str) {
 	return ret.join("\n")
 }
 
-export async function orderProjectPackageJSON(fourtune_session) {
+export async function _orderProjectPackageJSON(fourtune_session) {
 	const package_json_path = path.join(fourtune_session.getProjectRoot(), "package.json")
 
 	const package_json = JSON.parse((await fs.readFile(

@@ -2,7 +2,7 @@ import {getTypeScriptDefinitions} from "../lib/getTypeScriptDefinitions.mjs"
 import {_addObjectFile} from "./_addObjectFile.mjs"
 import {isExpandableFilePath} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/utils-api"
 
-export async function initializeObjectCreation(fourtune_session) {
+export async function _initializeObjectCreation(fourtune_session) {
 	const source_files = fourtune_session.input.getSourceFiles()
 	const assets = fourtune_session.input.getAssetFiles()
 

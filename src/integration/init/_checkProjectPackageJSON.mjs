@@ -1,7 +1,7 @@
 import fs from "node:fs/promises"
 import path from "node:path"
 
-export async function checkProjectPackageJSON(fourtune_session) {
+export async function _checkProjectPackageJSON(fourtune_session) {
 	const package_json = JSON.parse((await fs.readFile(
 		path.join(fourtune_session.getProjectRoot(), "package.json")
 	)).toString())
