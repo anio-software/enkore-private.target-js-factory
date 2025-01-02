@@ -36,20 +36,20 @@ export function getEntryPointMap(fourtune_session) {
 		source.parents = source.parents.slice(1)
 
 		const export_name = parsed.name
-		const module_name = source.parents.length ? source.parents.join(".") : "default"
+		const entryPointName = source.parents.length ? source.parents.join(".") : "default"
 
-		if (!entryPointMap.has(module_name)) {
-			entryPointMap.set(module_name, new Map())
+		if (!entryPointMap.has(entryPointName)) {
+			entryPointMap.set(entryPointName, new Map())
 		}
 
-		const entryPointExportMap = entryPointMap.get(module_name)
+		const entryPointExportMap = entryPointMap.get(entryPointName)
 
 		if (entryPointExportMap.has(export_name)) {
 			const using = entryPointExportMap.get(export_name).source
 
 			fourtune_session.emitWarning(
 				`pkg.duplicate_export`, {
-					module_name, export_name, using
+					entryPointName, export_name, using
 				}
 			)
 		} else {
