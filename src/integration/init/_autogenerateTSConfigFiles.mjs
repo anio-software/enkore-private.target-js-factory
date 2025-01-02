@@ -1,6 +1,6 @@
-import {getPathAliases} from "../../../../getPathAliases.mjs"
+import {getPathAliases} from "../../getPathAliases.mjs"
 
-export async function autogenerateTSConfigFiles(fourtune_session) {
+export async function _autogenerateTSConfigFiles(fourtune_session) {
 	fourtune_session.autogenerate.addFourtuneFile(
 		`cfg/tsconfig.base.json`, function() {
 			return JSON.stringify({
