@@ -5,7 +5,7 @@ import {
 	expandAsyncSyncVariantSourceFile
 } from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/utils-api"
 
-export async function preInitializeGenericProject(
+export async function preInitializeGeneric(
 	fourtune_session, source_files
 ) {
 	const asyncSyncGeneratorFactory = function(src_file, variant) {

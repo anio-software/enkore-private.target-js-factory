@@ -1,7 +1,6 @@
 import {initializeGeneric} from "./init/initializeGeneric.mjs"
 import {initializeGenericProject} from "./lib/init/_generic/initializeGenericProject.mjs"
-import {preInitializeGenericProject} from "./lib/init/_generic/preInitializeGenericProject.mjs"
-
+import {preInitializeGeneric} from "./init/preinitializeGeneric.mjs"
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 
 export async function getIntegrationAPIVersion() {
@@ -20,7 +19,7 @@ export async function preInitialize(
 ) {
 	const project_config = fourtune_session.getProjectConfig()
 
-	await preInitializeGenericProject(fourtune_session, source_files)
+	await preInitializeGeneric(fourtune_session, source_files)
 }
 
 export async function initialize(
