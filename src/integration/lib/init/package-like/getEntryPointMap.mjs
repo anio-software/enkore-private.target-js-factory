@@ -53,14 +53,16 @@ export function getEntryPointMap(fourtune_session) {
 					entryPointName, exportName, using
 				}
 			)
-		} else {
-			entryPointExportMap.set(exportName, {
-				source: source.source,
-				extensionlessSource,
-				type: parsed.type,
-				name: parsed.name
-			})
+
+			continue
 		}
+
+		entryPointExportMap.set(exportName, {
+			source: source.source,
+			extensionlessSource,
+			type: parsed.type,
+			name: parsed.name
+		})
 	}
 
 	return entryPointMap
