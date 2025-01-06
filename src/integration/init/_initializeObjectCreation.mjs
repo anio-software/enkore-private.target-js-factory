@@ -1,56 +1,78 @@
 import {getTypeScriptDefinitions} from "../lib/getTypeScriptDefinitions.mjs"
 import {_addObjectFile} from "./_addObjectFile.mjs"
-import {isExpandableFilePath} from "@fourtune/js-and-web-runtime-and-rollup-plugins/v0/utils-api"
+import fs from "node:fs/promises"
+
+/*
+  parents: [],
+  name: 'scandirCallback.mts',
+  relative_path: 'scandirCallback.mts',
+  source: 'auto/synthetic/async.sync/src/scandirCallback.mts'
+*/
+
+import {resolveImportAliases} from "../lib/resolveImportAliases.mjs"
+
+async function convertTypeScriptFile(fourtune_session, code, file_path) {
+	const {tsStripTypesFromCode} = fourtune_session.getDependency(
+		"@fourtune/base-realm-js-and-web"
+	)
+
+	code = await tsStripTypesFromCode(code, {
+		filename: file_path,
+		replace_import_extensions: true
+	})
+
+	return await resolveImportAliases(
+		fourtune_session, code, file_path
+	)
+}
 
 export async function _initializeObjectCreation(fourtune_session) {
-	const source_files = fourtune_session.input.getSourceFiles()
-	const assets = fourtune_session.input.getAssetFiles()
+	const {getBuildPathFromProjectRoot, getBuildPath} = fourtune_session.paths
 
-	const tsc_src_input_files = []
-	const tsc_assets_input_files = []
+	const tscInputFiles = []
 
-	for (const source_file of source_files) {
-		if (isExpandableFilePath(source_file.name)) continue
+	for (const file of fourtune_session.input.getFilteredSourceFiles()) {
+		const extensionlessSource = file.source.slice(0, -4)
+		const absolutePath = getBuildPathFromProjectRoot(file.source)
 
-		await _addObjectFile(fourtune_session, source_file)
+		tscInputFiles.push(getBuildPathFromProjectRoot(file.source))
 
-		if (source_file.name.endsWith(".mjs")) continue
+		fourtune_session.objects.addObject(
+			`${extensionlessSource}.mjs`, async () => {
+				const code = (await fs.readFile(
+					absolutePath
+				)).toString()
 
-		tsc_src_input_files.push(source_file.source)
+				return await convertTypeScriptFile(
+					fourtune_session, code, file.source
+				)
+			}
+		)
+
+		fourtune_session.objects.addObject(
+			`${extensionlessSource}.d.mts`, async (fourtune_session) => {
+				const key = getBuildPath(`${extensionlessSource}.d.mts`)
+
+				if (!fourtune_session.user_data.tsc_definitions.has(key)) {
+					fourtune_session.emit.error(
+						undefined, `cannot find declarations for ${file.source}.`
+					)
+
+					return `/* error: cannot find declarations */\n`
+				}
+
+				return fourtune_session.user_data.tsc_definitions.get(key)
+			}
+		)
 	}
-
-	for (const asset of assets) {
-		await _addObjectFile(fourtune_session, asset)
-
-		tsc_assets_input_files.push(asset.source)
-	}
-
-	const {getBuildPathFromProjectRoot} = fourtune_session.paths
 
 	fourtune_session.hooks.register(
 		"createObjectFiles.pre", async () => {
-			const toAbsolutePath = (file) => {
-				return getBuildPathFromProjectRoot(file)
-			}
-
-			const src_map = await getTypeScriptDefinitions(
+			fourtune_session.user_data.tsc_definitions = await getTypeScriptDefinitions(
 				fourtune_session,
-				tsc_src_input_files.map(toAbsolutePath),
+				tscInputFiles,
 				false
 			)
-
-			const assets_map = await getTypeScriptDefinitions(
-				fourtune_session,
-				tsc_assets_input_files.map(toAbsolutePath),
-				true
-			)
-
-			const definitions = new Map([
-				...src_map,
-				...assets_map
-			])
-
-			fourtune_session.user_data.tsc_definitions = definitions
 		}
 	)
 }
