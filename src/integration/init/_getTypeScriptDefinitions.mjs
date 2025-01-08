@@ -1,15 +1,7 @@
-import path from "node:path"
-import {getPathAliases} from "../../getPathAliases.mjs"
-
 export async function _getTypeScriptDefinitions(
 	fourtune_session,
-	input_files,
-	disable_aliases = true
+	input_files
 ) {
-	const {getBuildPath} = fourtune_session.paths
-
-	const aliases = disable_aliases ? {} : getPathAliases(`./${getBuildPath()}/`, true)
-
 	const project_root = fourtune_session.getProjectRoot()
 
 	const {
@@ -31,11 +23,8 @@ export async function _getTypeScriptDefinitions(
 		baseUrl: "./"
 	}
 
-	compiler_options.paths = {
-		...compiler_options.paths,
-		// overwrite # alias to point to "build/src" instead of "src/"
-		...aliases
-	}
+	// don't resolve any path aliases at this point
+	compiler_options.paths = {}
 
 	//
 	// write files into memory, not on disk
