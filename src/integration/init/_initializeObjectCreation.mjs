@@ -1,24 +1,6 @@
 import {_getTypeScriptDefinitions} from "./_getTypeScriptDefinitions.mjs"
 import fs from "node:fs/promises"
 
-/*
-  parents: [],
-  name: 'scandirCallback.mts',
-  relative_path: 'scandirCallback.mts',
-  source: 'auto/synthetic/async.sync/src/scandirCallback.mts'
-*/
-
-async function convertTypeScriptFile(fourtune_session, code, file_path) {
-	const {tsStripTypesFromCode} = fourtune_session.getDependency(
-		"@fourtune/base-realm-js-and-web"
-	)
-
-	return await tsStripTypesFromCode(code, {
-		filename: file_path,
-		replace_import_extensions: true
-	})
-}
-
 export async function _initializeObjectCreation(fourtune_session) {
 	const {getBuildPathFromProjectRoot, getBuildPath} = fourtune_session.paths
 
@@ -36,9 +18,14 @@ export async function _initializeObjectCreation(fourtune_session) {
 					absolutePath
 				)).toString()
 
-				return await convertTypeScriptFile(
-					fourtune_session, code, file.source
+				const {tsStripTypesFromCode} = fourtune_session.getDependency(
+					"@fourtune/base-realm-js-and-web"
 				)
+
+				return await tsStripTypesFromCode(code, {
+					filename: file.source,
+					replace_import_extensions: true
+				})
 			}
 		)
 
