@@ -47,9 +47,13 @@ export function createPackageJSON(
 	delete newPackageJSON["files"]
 
 	if (typeOnly) {
+		const oldPackageName = newPackageJSON["name"]
+
 		newPackageJSON["name"] = typesPackageName(
-			newPackageJSON["name"]
+			oldPackageName
 		)
+
+		newPackageJSON["description"] = `Types for the package "${oldPackageName}".`
 
 		delete newPackageJSON["repository"]
 		delete newPackageJSON["engines"]
