@@ -69,8 +69,7 @@ export async function _initializeObjectCreation(fourtune_session) {
 		"createObjectFiles.pre", async () => {
 			fourtune_session.user_data.tsc_definitions = await _getTypeScriptDefinitions(
 				fourtune_session,
-				tscInputFiles,
-				false
+				tscInputFiles
 			)
 		}
 	)
