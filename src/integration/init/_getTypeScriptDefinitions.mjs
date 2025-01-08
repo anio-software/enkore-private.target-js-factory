@@ -1,7 +1,7 @@
 import path from "node:path"
 import {getPathAliases} from "../../getPathAliases.mjs"
 
-export async function getTypeScriptDefinitions(
+export async function _getTypeScriptDefinitions(
 	fourtune_session,
 	input_files,
 	disable_aliases = true

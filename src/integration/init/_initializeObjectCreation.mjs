@@ -1,4 +1,4 @@
-import {getTypeScriptDefinitions} from "../lib/getTypeScriptDefinitions.mjs"
+import {_getTypeScriptDefinitions} from "./_getTypeScriptDefinitions.mjs"
 import {_addObjectFile} from "./_addObjectFile.mjs"
 import fs from "node:fs/promises"
 
@@ -78,7 +78,7 @@ export async function _initializeObjectCreation(fourtune_session) {
 
 	fourtune_session.hooks.register(
 		"createObjectFiles.pre", async () => {
-			fourtune_session.user_data.tsc_definitions = await getTypeScriptDefinitions(
+			fourtune_session.user_data.tsc_definitions = await _getTypeScriptDefinitions(
 				fourtune_session,
 				tscInputFiles,
 				false
