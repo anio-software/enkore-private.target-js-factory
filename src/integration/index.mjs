@@ -45,8 +45,6 @@ export async function preInitialize(
 	assets,
 	source_files
 ) {
-	const project_config = fourtune_session.getProjectConfig()
-
 	await preInitializeGeneric(fourtune_session, source_files)
 }
 
