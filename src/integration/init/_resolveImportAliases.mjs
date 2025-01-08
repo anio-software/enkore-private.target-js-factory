@@ -1,7 +1,7 @@
 import path from "node:path"
 import {getPathAliases} from "../../getPathAliases.mjs"
 
-export async function resolveImportAliases(
+export async function _resolveImportAliases(
 	fourtune_session, code, source_file_path
 ) {
 	const levels = path.dirname(source_file_path).split(path.sep).length

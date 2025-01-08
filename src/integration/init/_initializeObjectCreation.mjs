@@ -8,7 +8,7 @@ import fs from "node:fs/promises"
   source: 'auto/synthetic/async.sync/src/scandirCallback.mts'
 */
 
-import {resolveImportAliases} from "../lib/resolveImportAliases.mjs"
+import {_resolveImportAliases} from "./_resolveImportAliases.mjs"
 
 async function convertTypeScriptFile(fourtune_session, code, file_path) {
 	const {tsStripTypesFromCode} = fourtune_session.getDependency(
@@ -20,7 +20,7 @@ async function convertTypeScriptFile(fourtune_session, code, file_path) {
 		replace_import_extensions: true
 	})
 
-	return await resolveImportAliases(
+	return await _resolveImportAliases(
 		fourtune_session, code, file_path
 	)
 }
@@ -68,7 +68,7 @@ export async function _initializeObjectCreation(fourtune_session) {
 
 				const code = fourtune_session.user_data.tsc_definitions.get(key)
 
-				return await resolveImportAliases(
+				return await _resolveImportAliases(
 					fourtune_session, code, file.source
 				)
 			}
