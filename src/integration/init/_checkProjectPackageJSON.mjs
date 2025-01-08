@@ -14,6 +14,7 @@ export async function _checkProjectPackageJSON(fourtune_session) {
 
 	const required_fields = [
 		"type",
+		"private",
 		"exports"
 	]
 

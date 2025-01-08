@@ -28,6 +28,7 @@ export async function _orderProjectPackageJSON(fourtune_session) {
 	const all_keys = Object.keys(package_json)
 
 	const key_order = [
+		"private",
 		"name",
 		"version",
 		"author",
