@@ -87,7 +87,6 @@ export async function createPackageProduct(
 				`entries/${entryPointFileName}/index.min.d.mts`,
 				`entries/${entryPointFileName}/source.d.mts`,
 				`entries/${entryPointFileName}/source.min.d.mts`
-				
 			],
 			async () => {
 				const entryCode = entryExportsToEntryCode(
