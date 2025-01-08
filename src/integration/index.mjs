@@ -10,6 +10,13 @@ export async function getIntegrationAPIVersion() {
 	return 0
 }
 
+/**
+ * This function is called by 'fourtune' to filter
+ * out source files.
+ *
+ * The filtered source files will be available at
+ * fourtuneSession.input.getFilteredSourceFiles().
+ */
 export async function inputSourceFileFilter(file) {
 	//
 	// We only accept .mts files. However, this does not
