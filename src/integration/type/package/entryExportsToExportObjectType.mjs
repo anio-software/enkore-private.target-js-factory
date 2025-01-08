@@ -6,7 +6,7 @@ export function entryExportsToExportObjectType(
 	const {getObjectsPath} = fourtune_session.paths
 
 	let importCode = ``
-	let code = `export type __ExportObject = {\n`
+	let code = `export type __ModuleImportObject = {\n`
 
 	for (const [exportName, exportDescriptor] of entryPointExports.entries()) {
 		if (exportDescriptor.isTypeOnly) continue
