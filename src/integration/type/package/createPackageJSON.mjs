@@ -44,7 +44,10 @@ export function createPackageJSON(
 	delete newPackageJSON["private"]
 	delete newPackageJSON["devDependencies"]
 	delete newPackageJSON["scripts"]
-	delete newPackageJSON["files"]
+
+	newPackageJSON["files"] = [
+		"./entries/"
+	]
 
 	if (typeOnly) {
 		const oldPackageName = newPackageJSON["name"]
