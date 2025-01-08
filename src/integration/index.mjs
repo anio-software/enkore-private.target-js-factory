@@ -4,7 +4,7 @@ import {initializeProjectGeneric} from "./init/initializeProjectGeneric.mjs"
 import {preInitializeGeneric} from "./init/preinitializeGeneric.mjs"
 import {initializeGeneric} from "./init/initializeGeneric.mjs"
 
-import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
+import {initPackageProject} from "./type/package/initialize.mjs"
 
 import {_resolveImportAliases} from "./init/_resolveImportAliases.mjs"
 
