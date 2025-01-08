@@ -49,6 +49,12 @@ export async function _initializeObjectCreation(fourtune_session) {
 			}
 		)
 
+		/**
+		 * Running each source file through the typescript compiler
+		 * separately is extremely slow.
+		 *
+		 * Instead, run every source file through tsc and cache the result.
+		 */
 		fourtune_session.objects.addObject(
 			`${extensionlessSource}.d.mts`, async (fourtune_session) => {
 				const key = getBuildPath(`${extensionlessSource}.d.mts`)
