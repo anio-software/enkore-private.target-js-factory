@@ -61,7 +61,11 @@ export async function _initializeObjectCreation(fourtune_session) {
 					return `/* error: cannot find declarations */\n`
 				}
 
-				return fourtune_session.user_data.tsc_definitions.get(key)
+				const code = fourtune_session.user_data.tsc_definitions.get(key)
+
+				return await resolveImportAliases(
+					fourtune_session, code, file.source
+				)
 			}
 		)
 	}
