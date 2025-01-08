@@ -8,21 +8,15 @@ import fs from "node:fs/promises"
   source: 'auto/synthetic/async.sync/src/scandirCallback.mts'
 */
 
-import {_resolveImportAliases} from "./_resolveImportAliases.mjs"
-
 async function convertTypeScriptFile(fourtune_session, code, file_path) {
 	const {tsStripTypesFromCode} = fourtune_session.getDependency(
 		"@fourtune/base-realm-js-and-web"
 	)
 
-	code = await tsStripTypesFromCode(code, {
+	return await tsStripTypesFromCode(code, {
 		filename: file_path,
 		replace_import_extensions: true
 	})
-
-	return await _resolveImportAliases(
-		fourtune_session, code, file_path
-	)
 }
 
 export async function _initializeObjectCreation(fourtune_session) {
@@ -66,11 +60,7 @@ export async function _initializeObjectCreation(fourtune_session) {
 					return `/* error: cannot find declarations */\n`
 				}
 
-				const code = fourtune_session.user_data.tsc_definitions.get(key)
-
-				return await _resolveImportAliases(
-					fourtune_session, code, file.source
-				)
+				return fourtune_session.user_data.tsc_definitions.get(key)
 			}
 		)
 	}

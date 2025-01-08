@@ -6,8 +6,20 @@ import {initializeGeneric} from "./init/initializeGeneric.mjs"
 
 import {initPackageProject} from "./lib/init/package-like/initPackageProject.mjs"
 
+import {_resolveImportAliases} from "./init/_resolveImportAliases.mjs"
+
 export async function getIntegrationAPIVersion() {
 	return 0
+}
+
+export async function preprocessCode(sess, filePath, code) {
+	// leave non .mts files alone
+	if (!filePath.endsWith(".mts")) return code
+
+	// resolve import aliases
+	return await _resolveImportAliases(
+		sess, code, filePath
+	)
 }
 
 /**
