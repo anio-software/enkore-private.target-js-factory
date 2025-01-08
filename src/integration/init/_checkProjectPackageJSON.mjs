@@ -31,7 +31,8 @@ export async function _checkProjectPackageJSON(fourtune_session) {
 		"types",
 		"typings",
 		"exports",
-		"main"
+		"main",
+		"files"
 	]
 
 	for (const field of deprecated_fields) {

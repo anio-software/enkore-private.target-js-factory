@@ -43,8 +43,7 @@ export async function _orderProjectPackageJSON(fourtune_session) {
 
 		"scripts",
 
-		"engines",
-		"files"
+		"engines"
 	]
 
 	const misc_keys = all_keys.filter(key => !key_order.includes(key))
