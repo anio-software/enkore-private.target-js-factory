@@ -1,5 +1,4 @@
 import {_getTypeScriptDefinitions} from "./_getTypeScriptDefinitions.mjs"
-import {_addObjectFile} from "./_addObjectFile.mjs"
 import fs from "node:fs/promises"
 
 /*
