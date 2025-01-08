@@ -14,8 +14,7 @@ export async function _checkProjectPackageJSON(fourtune_session) {
 
 	const required_fields = [
 		"type",
-		"private",
-		"exports"
+		"private"
 	]
 
 	for (const field of required_fields) {
@@ -31,6 +30,7 @@ export async function _checkProjectPackageJSON(fourtune_session) {
 	const deprecated_fields = [
 		"types",
 		"typings",
+		"exports",
 		"main"
 	]
 

@@ -34,7 +34,6 @@ export async function _orderProjectPackageJSON(fourtune_session) {
 		"author",
 		"description",
 		"license",
-		"exports",
 		"repository",
 		"type",
 
