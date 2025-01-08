@@ -1,6 +1,12 @@
 import fs from "node:fs/promises"
 import path from "node:path"
 
+// todo:
+//
+// - force private: true to be set
+// - don't allow exports key to be set (prohibited field)
+// - engines field can be populated automatically? (prohibited field)
+
 export async function _checkProjectPackageJSON(fourtune_session) {
 	const package_json = JSON.parse((await fs.readFile(
 		path.join(fourtune_session.getProjectRoot(), "package.json")
