@@ -1,49 +1,40 @@
 {
-  "name": "@fourtune/realm-js",
-  "type": "module",
-  "version": "0.50000.0-alpha.0",
-  "description": "",
+  "name": "@enkore/realm-js",
+  "version": "0.0.0",
   "author": "Anio Software <info@anio.software>",
+  "description": "Next generation of @fourtune/realm-js.",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fourtune-org/realm-js.git"
-  },
   "exports": {
     ".": {
-      "import": "./src/exports/index.mjs",
-      "require": "./src/exports/index.mjs"
+      "types": "./dist/default/index.d.mts",
+      "default": "./dist/default/index.mjs"
     },
-    "./integration": "./src/integration/index.mjs",
-    "./integration/dependencies": "./src/dependencies.mjs",
-    "./runtime": {
-      "types": "./src/exports/_versionless/runtime/index.d.mts",
-      "import": "./src/exports/_versionless/runtime/index.mjs"
+    "./package.json": {
+      "default": "./package.json"
     },
-    "./v0/autogenerate": {
-      "types": "./src/exports/v0/autogenerate/index.d.mts",
-      "import": "./src/exports/v0/autogenerate/index.mjs"
-    },
-    "./v0/project": {
-      "types": "./src/exports/v0/project/index.d.mts",
-      "import": "./src/exports/v0/project/index.mjs"
-    },
-    "./v0/runtime": {
-      "types": "./src/exports/v0/runtime/index.d.mts",
-      "import": "./src/exports/v0/runtime/index.mjs"
-    },
-    "./v0/assets": {
-      "types": "./src/exports/v0/assets/index.d.mts",
-      "import": "./src/exports/v0/assets/index.mjs"
-    },
-    "./package.json": "./package.json"
+    "./realmIntegrationAPI": {
+      "default": "./dist/default/index.mjs"
+    }
   },
-  "dependencies": {
-    "@anio-software/fs": "0.6.0",
-    "@fourtune/js-and-web-runtime-and-rollup-plugins": "^0.35000.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enkore-org/realm-js.git"
   },
-  "peerDependencies": {
-    "@fourtune/core": "0.x",
-    "@types/node": "22.x"
-  }
+  "type": "module",
+  "devDependencies": {
+    "@aniojs-types/node-my-ts": "^0.15.0",
+    "@aniojs-types/node-ts-utils": "^0.9.0",
+    "@enkore-types/realm-js-and-web-utils": "^0.0.7",
+    "@enkore/spec": "^0.120.0",
+    "@fourtune/core": "^0.1101.0",
+    "@fourtune/realm-js": "^1.0.4",
+    "fourtune": "^0.30000.1",
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "prepare": "./node_modules/.bin/fourtune ."
+  },
+  "files": [
+    "./dist/"
+  ]
 }

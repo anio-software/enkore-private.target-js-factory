@@ -1,0 +1,25 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "paths": {
+            "#~src/*": [
+                "./src/*"
+            ],
+            "#~fourtune/*": [
+                "./auto/fourtune/src/*"
+            ],
+            "#~synthetic/async.sync/*": [
+                "./auto/synthetic/async.sync/src/*"
+            ],
+            "#~synthetic/user/*": [
+                "./auto/synthetic/user/src/*"
+            ],
+            "#~assets/*": [
+                "./assets/*"
+            ]
+        }
+    },
+    "include": [
+        "../../../src/**/*"
+    ]
+}

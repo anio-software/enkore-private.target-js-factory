@@ -1,4 +1,4 @@
-# This is CI/CD version 0.6.0
+# This is CI/CD version 0.8.0
 #
 # Changelog
 #
@@ -15,6 +15,9 @@
 # v0.7.0 - 01.11.2024 (by eXory2024)
 # Add repository name to environment (ANIO_CICD_REPO)
 #
+# v0.8.0 - 09.12.2024 (by eXory2024)
+# Bump node version to v22
+#
 
 name: CI/CD
 
@@ -28,9 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [21.x]
+        node-version: [22.x]
     env:
-      ANIO_CICD: "v0.7.0"
+      ANIO_CICD: "v0.8.0"
       ANIO_CICD_REPO: "${{ github.repository }}"
     steps:
       - uses: actions/checkout@v3
@@ -54,14 +57,14 @@ jobs:
     permissions:
       id-token: write
     env:
-      ANIO_CICD: "v0.7.0"
+      ANIO_CICD: "v0.8.0"
       ANIO_CICD_REPO: "${{ github.repository }}"
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 21.x
+          node-version: 22.x
           registry-url: "https://registry.npmjs.org"
 
       - name: "Install node modules (if present)"
