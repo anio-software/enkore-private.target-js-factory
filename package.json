@@ -25,7 +25,7 @@
     "@aniojs-types/node-my-ts": "^0.15.0",
     "@aniojs/node-fs": "^0.5.3",
     "@enkore-types/realm-js-and-web-utils": "^0.0.8",
-    "@enkore/spec": "^0.120.0",
+    "@enkore/spec": "^0.140.0",
     "@fourtune/core": "^0.1101.0",
     "@fourtune/realm-js": "^1.0.4",
     "fourtune": "^0.30000.1",
