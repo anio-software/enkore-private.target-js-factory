@@ -4,6 +4,8 @@ export type Export = {
 	name: string
 	descriptor: MyTSExport
 	relativePath: string
+	pathToJsFile: string
+	pathToDtsFile: string
 }
 
 export type InternalData = {

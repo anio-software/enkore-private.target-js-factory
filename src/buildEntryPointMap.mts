@@ -78,10 +78,15 @@ export function buildEntryPointMap(
 				return
 			}
 
+			// we know file ends with ".mts"
+			const extensionlessSource = file.relativePath.slice(0, -4)
+
 			exportMap.set(exportName, {
 				name: exportName,
 				descriptor: exportDescriptor,
-				relativePath: file.relativePath
+				relativePath: file.relativePath,
+				pathToJsFile: `objects/${extensionlessSource}.mjs`,
+				pathToDtsFile: `objects/${extensionlessSource}.d.mts`
 			})
 		}
 	}
