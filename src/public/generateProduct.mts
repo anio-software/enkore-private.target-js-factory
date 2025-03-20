@@ -7,12 +7,12 @@ import {getExternals} from "#~src/getExternals.mts"
 import path from "node:path"
 import {writeAtomicFile} from "@aniojs/node-fs"
 
-const impl: API["generateProduct"] = async function(
-	session, productName
-) {
+const impl: API["generateProduct"] = async function(session, productName) {
 	const utils = getRealmDependency(session, "@enkore/realm-js-and-web-utils")
 
-	for (const [entryPointPath, entryPointMap] of getInternalData(session).entryPointMap.entries()) {
+	const {entryPointMap} = getInternalData(session)
+
+	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
 		const externals: string[] = getExternals(entryPointPath, session)
 
 		type LogFn = JsBundlerOptions["onRollupLogFunction"]
@@ -27,8 +27,8 @@ const impl: API["generateProduct"] = async function(
 			onRollupLogFunction
 		}
 
-		const jsEntryCode = generateEntryPointCode(entryPointMap, false)
-		const declarationsEntryCode = generateEntryPointCode(entryPointMap, true)
+		const jsEntryCode = generateEntryPointCode(exportsMap, false)
+		const declarationsEntryCode = generateEntryPointCode(exportsMap, true)
 
 		const jsBundle = await utils.jsBundler(
 			session.project.root, jsEntryCode, {
