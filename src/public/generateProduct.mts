@@ -1,37 +1,11 @@
 import type {API} from "#~src/API.d.mts"
-import type {EnkoreSessionAPI} from "@enkore/spec"
 import {getInternalData} from "#~src/getInternalData.mts"
 import {getRealmDependency} from "#~src/getRealmDependency.mts"
 import {generateEntryPointCode} from "#~src/generateEntryPointCode.mts"
 import type {JsBundlerOptions} from "@enkore-types/realm-js-and-web-utils"
+import {getExternals} from "#~src/getExternals.mts"
 import path from "node:path"
 import {writeAtomicFile} from "@aniojs/node-fs"
-
-function getExternals(entryPointPath: string, session: EnkoreSessionAPI) {
-	const externals: Map<string, number> = new Map()
-
-	const realmConfig = session.realm.getConfig("js")
-
-	if (realmConfig.externalPackages) {
-		for (const pkg of realmConfig.externalPackages) {
-			externals.set(pkg, 1)
-		}
-	}
-
-	if (realmConfig.exports && entryPointPath in realmConfig.exports) {
-		const entryPointConfig = realmConfig.exports[entryPointPath]
-
-		if (entryPointConfig.externalPackages) {
-			for (const pkg of entryPointConfig.externalPackages) {
-				externals.set(pkg, 1)
-			}
-		}
-	}
-
-	return [...externals.entries()].map(([key]) => {
-		return key
-	})
-}
 
 const impl: API["generateProduct"] = async function(
 	session, productName
