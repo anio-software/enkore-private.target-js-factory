@@ -6,7 +6,7 @@ import type {JsBundlerOptions} from "@enkore-types/realm-js-and-web-utils"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 
-export async function generateNPMPackage(session: EnkoreSessionAPI): Promise<string> {
+export async function generateNPMPackage(session: EnkoreSessionAPI) {
 	const utils = getRealmDependency(session, "@enkore/realm-js-and-web-utils")
 
 	const {entryPointMap} = getInternalData(session)
@@ -57,6 +57,4 @@ export async function generateNPMPackage(session: EnkoreSessionAPI): Promise<str
 		//	path.join(`/tmp/enkoretest/dist/pkg/${entryPointPath}/index.d.mts`), declarationBundle, {createParents: true}
 		//)
 	}
-
-	return ""
 }

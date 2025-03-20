@@ -5,7 +5,7 @@ import {getExternals} from "./getExternals.mts"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.mts"
 
-export async function generateNPMTypesPackage(session: EnkoreSessionAPI): Promise<string> {
+export async function generateNPMTypesPackage(session: EnkoreSessionAPI) {
 	const utils = getRealmDependency(session, "@enkore/realm-js-and-web-utils")
 
 	const {entryPointMap} = getInternalData(session)
@@ -23,6 +23,4 @@ export async function generateNPMTypesPackage(session: EnkoreSessionAPI): Promis
 			}
 		)
 	}
-
-	return ""
 }
