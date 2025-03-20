@@ -14,13 +14,10 @@ export function generateEntryPointCode(
 	for (const [exportName, meta] of entryPoint.entries()) {
 		if (!declarationOnly && meta.descriptor.kind === "type") continue
 
-		// we know path ends with ".mts" see buildEntryPointMap()
-		const sourceWithoutExtension = meta.relativePath.slice(0, -4)
-
 		if (meta.descriptor.kind === "type") {
-			code += `export type {${exportName}} from "./objects/${sourceWithoutExtension}.d.mts"\n`
+			code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
 		} else {
-			code += `export {${exportName}} from "./objects/${sourceWithoutExtension}.mjs"\n`
+			code += `export {${exportName}} from "./${meta.pathToJsFile}"\n`
 		}
 	}
 

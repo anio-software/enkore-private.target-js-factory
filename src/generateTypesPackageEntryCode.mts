@@ -13,10 +13,7 @@ export function generateTypesPackageEntryCode(
 	code += `export type __ModuleExport = {\n`
 
 	for (const [exportName, meta] of entryPoint.entries()) {
-		// we know path ends with ".mts" see buildEntryPointMap()
-		const sourceWithoutExtension = meta.relativePath.slice(0, -4)
-
-		importCode += `import {${exportName}} from "./objects/${sourceWithoutExtension}.mjs"\n`
+		importCode += `import {${exportName}} from "./${meta.pathToJsFile}"\n`
 
 		if (meta.descriptor.kind !== "type") {
 			code += `    ${exportName}: typeof ${exportName},\n`
@@ -26,12 +23,9 @@ export function generateTypesPackageEntryCode(
 	code += `}\n`
 
 	for (const [exportName, meta] of entryPoint.entries()) {
-		// we know path ends with ".mts" see buildEntryPointMap()
-		const sourceWithoutExtension = meta.relativePath.slice(0, -4)
-
 		if (meta.descriptor.kind !== "type") continue
 
-		code += `export type {${exportName}} from "./objects/${sourceWithoutExtension}.d.mts"\n`
+		code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
 	}
 
 	return importCode + code
