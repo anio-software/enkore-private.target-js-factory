@@ -5,6 +5,7 @@ import {getExternals} from "./getExternals.mts"
 import type {JsBundlerOptions} from "@enkore-types/realm-js-and-web-utils"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateEntryPointCode} from "./generateEntryPointCode.mts"
+import {writeAtomicFile} from "@aniojs/node-fs"
 
 export async function generateNPMPackage(session: EnkoreSessionAPI) {
 	const utils = getRealmDependency(session, "@enkore/realm-js-and-web-utils")
@@ -45,16 +46,16 @@ export async function generateNPMPackage(session: EnkoreSessionAPI) {
 			}
 		)
 
-		//await writeAtomicFile(
-		//	path.join(`/tmp/enkoretest/dist/pkg/${entryPointPath}/index.mjs`), jsBundle, {createParents: true}
-		//)
+		await writeAtomicFile(
+			`./dist/${entryPointPath}/index.mjs`, jsBundle, {createParents: true}
+		)
 
-		//await writeAtomicFile(
-		//	path.join(`/tmp/enkoretest/dist/pkg/${entryPointPath}/index.min.mjs`), minifiedJsBundle, {createParents: true}
-		//)
+		await writeAtomicFile(
+			`./dist/${entryPointPath}/index.min.mjs`, minifiedJsBundle, {createParents: true}
+		)
 
-		//await writeAtomicFile(
-		//	path.join(`/tmp/enkoretest/dist/pkg/${entryPointPath}/index.d.mts`), declarationBundle, {createParents: true}
-		//)
+		await writeAtomicFile(
+			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
+		)
 	}
 }
