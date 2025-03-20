@@ -12,6 +12,8 @@ export {generateProduct} from "#~src/public/generateProduct.mts"
 export {getBoilerplateFiles} from "#~src/public/getBoilerplateFiles.mts"
 export {getGitIgnoredFiles} from "#~src/public/getGitIgnoredFiles.mts"
 export {projectSourceFileFilter} from "#~src/public/projectSourceFileFilter.mts"
+export {testProduct} from "#~src/public/testProduct.mts"
+export {publishProduct} from "#~src/public/publishProduct.mts"
 
 import {preInitialize} from "#~src/public/hook/preInitialize.mts"
 import {preLint} from "#~src/public/hook/preLint.mts"
