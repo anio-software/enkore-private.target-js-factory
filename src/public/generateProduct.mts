@@ -12,12 +12,16 @@ const impl: API["generateProduct"] = async function(
 	const utils = getRealmDependency(session, "@enkore/realm-js-and-web-utils")
 
 	for (const [entryPointPath, entryPointMap] of getInternalData(session).entryPointMap.entries()) {
+		type LogFn = JsBundlerOptions["onRollupLogFunction"]
+
+		const onRollupLogFunction: LogFn = (level, message) => {
+
+		}
+
 		const jsBundlerOptions: JsBundlerOptions = {
 			treeshake: true,
 			externals: [],
-			onRollupLogFunction(level, message) {
-				
-			}
+			onRollupLogFunction
 		}
 
 		const jsEntryCode = generateEntryPointCode(entryPointMap, false)
@@ -38,7 +42,9 @@ const impl: API["generateProduct"] = async function(
 		)
 
 		const declarationBundle = await utils.tsDeclarationBundler(
-			session.project.root, declarationsEntryCode, {}
+			session.project.root, declarationsEntryCode, {
+				onRollupLogFunction
+			}
 		)
 
 		//await writeAtomicFile(
