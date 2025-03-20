@@ -24,7 +24,12 @@ export function getProductPackageJSON(
 	}
 
 	newPackageJSON.exports = (() => {
-		const ret: Record<string, any> = {}
+		const ret: Record<string, any> = {
+			//"./__enkoreBuildInfo": {
+			//	"types": "./__enkoreBuildInfo/index.d.mts",
+			//	"default": "./__enkoreBuildInfo/index.mjs"
+			//}
+		}
 
 		for (const [entryPointPath] of entryPointMap.entries()) {
 			const exp: Record<string, string> = {
