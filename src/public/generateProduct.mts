@@ -3,9 +3,9 @@ import {generateNPMPackage} from "#~src/generateNPMPackage.mts"
 import {generateNPMTypesPackage} from "#~src/generateNPMTypesPackage.mts"
 
 const impl: API["generateProduct"] = async function(session, productName) {
-	if (productName === "package") {
+	if (productName === "npmPackage") {
 		await generateNPMPackage(session)
-	} else if (productName === "typesPackage") {
+	} else if (productName === "npmTypesPackage") {
 		await generateNPMTypesPackage(session)
 	}
 }

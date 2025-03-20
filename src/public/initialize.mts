@@ -41,14 +41,14 @@ const impl: API["initialize"] = async function(session) {
 	}
 
 	const products = [{
-		name: "package"
+		name: "npmPackage"
 	}]
 
 	const {createTypesPackage} = session.realm.getConfig("js")
 
 	if (typeof createTypesPackage !== "undefined") {
 		products.push({
-			name: "typesPackage"
+			name: "npmTypesPackage"
 		})
 	}
 
