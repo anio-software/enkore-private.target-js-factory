@@ -5,6 +5,16 @@ import path from "node:path"
 import type {InternalData} from "./InternalData.d.mts"
 import {getInternalData} from "./getInternalData.mts"
 
+function stripStartingUnderscores(str: string) {
+	for (let i = 0; i < str.length; ++i) {
+		if (str[i] !== "_") {
+			return str.slice(i)
+		}
+	}
+
+	return str
+}
+
 function startsWithUpperCaseLetter(str: string) {
 	return str.toUpperCase().slice(0, 1) === str.slice(0, 1)
 }
@@ -58,7 +68,9 @@ export function buildEntryPointMap(
 		}
 
 		function addExport(exportName: string) {
-			const exportIndicatesTypeExport = startsWithUpperCaseLetter(exportName)
+			const exportIndicatesTypeExport = startsWithUpperCaseLetter(
+				stripStartingUnderscores(exportName)
+			)
 
 			const exportDescriptor = mod.getModuleExportByName(
 				exportName, exportIndicatesTypeExport
