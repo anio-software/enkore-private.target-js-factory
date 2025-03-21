@@ -31,14 +31,22 @@ export function buildEntryPointMap(
 
 		const exportMap = map.get(exportPath)!
 
+		//
+		// NB: don't use the files inside project/* folder but the files
+		// inside the build/* folder!!
+		//
+		const absolutePath = path.join(
+			session.project.root, "build", file.relativePath
+		)
+
 		// i wonder if this works if the file has a type error??
 		const {program: myProg} = nodeMyTS.createProgram(
 			session.project.root,
-			[file.absolutePath],
+			[absolutePath],
 			getInternalData(session).myTSProgram.compilerOptions
 		)
 
-		const mod = myProg.getModule(file.absolutePath)
+		const mod = myProg.getModule(absolutePath)
 
 		//
 		// handle special case "__aggregatedExports"
