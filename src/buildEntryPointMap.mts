@@ -4,7 +4,6 @@ import type {
 import path from "node:path"
 import type {InternalData} from "./InternalData.d.mts"
 import {getInternalData} from "./getInternalData.mts"
-import {getRealmDependency} from "./getRealmDependency.mts"
 
 function startsWithUpperCaseLetter(str: string) {
 	return str.toUpperCase().slice(0, 1) === str.slice(0, 1)
@@ -17,7 +16,7 @@ export function buildEntryPointMap(
 ): EntryPointMap {
 	const exportProjectFiles = session.enkore.getProjectFiles("export")
 	const map: InternalData["entryPointMap"] = new Map()
-	const nodeMyTS = getRealmDependency(session, "@aniojs/node-my-ts")
+	const {myTSProgram} = getInternalData(session)
 
 	for (const file of exportProjectFiles) {
 		if (!file.fileName.endsWith(".mts")) continue
@@ -35,18 +34,9 @@ export function buildEntryPointMap(
 		// NB: don't use the files inside project/* folder but the files
 		// inside the build/* folder!!
 		//
-		const absolutePath = path.join(
+		const mod = myTSProgram.getModule(path.join(
 			session.project.root, "build", file.relativePath
-		)
-
-		// i wonder if this works if the file has a type error??
-		const {program: myProg} = nodeMyTS.createProgram(
-			session.project.root,
-			[absolutePath],
-			getInternalData(session).myTSProgram.compilerOptions
-		)
-
-		const mod = myProg.getModule(absolutePath)
+		))
 
 		//
 		// handle special case "__aggregatedExports"
