@@ -11,7 +11,7 @@ const impl: API["getRealmDependenciesToInstall"] = async function() {
 		),
 		"@aniojs/node-my-ts": createEntity(
 			"EnkoreCoreRealmDependencyInstallSpecification", 0, 0, {
-				version: "0.16.1",
+				version: "0.16.2",
 				importKind: "star"
 			}
 		)
