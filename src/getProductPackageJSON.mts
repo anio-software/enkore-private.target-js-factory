@@ -27,6 +27,24 @@ function exactDependencies(
 	return exactDependencies
 }
 
+function removeNonTypeDependencies(
+	peerDependencies: Record<string, string>|undefined
+): Record<string, string> {
+	if (!peerDependencies) return {}
+
+	const typeOnlyPeerDependencies: Record<string, string> = {}
+
+	for (const dependencyName in peerDependencies) {
+		if (!dependencyName.startsWith("@types/")) {
+			continue
+		}
+
+		typeOnlyPeerDependencies[dependencyName] = peerDependencies[dependencyName]
+	}
+
+	return typeOnlyPeerDependencies
+}
+
 export function getProductPackageJSON(
 	session: EnkoreSessionAPI,
 	packageName: string,
@@ -53,7 +71,9 @@ export function getProductPackageJSON(
 	// allow @types/ peerDependencies
 	if (typeOnly) {
 		newPackageJSON.dependencies = {}
-		newPackageJSON.peerDependencies = {}
+		newPackageJSON.peerDependencies = removeNonTypeDependencies(
+			newPackageJSON.peerDependencies
+		)
 	}
 
 	const {publishWithExactDependencyVersions} = realmOptions
