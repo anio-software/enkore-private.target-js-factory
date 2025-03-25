@@ -24,6 +24,7 @@
   "devDependencies": {
     "@aniojs/node-fs": "^0.5.3",
     "@enkore-types/rollup": "^0.0.2",
+    "@enkore-types/typescript": "^0.0.3",
     "@enkore/spec": "^0.172.0",
     "@fourtune/core": "^0.1101.0",
     "@fourtune/realm-js": "^1.0.5",
