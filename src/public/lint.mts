@@ -33,7 +33,7 @@ const impl: API["lint"] = async function(session, file) {
 
 	for (const msg of nodeMyTS.typeCheckModule(mod)) {
 		session.enkore.emitMessage(
-			"warning", msg.message
+			"error", msg.message
 		)
 	}
 
