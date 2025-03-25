@@ -3,7 +3,7 @@ import {createEntity} from "@enkore/spec"
 
 const impl: API["getRealmDependenciesToInstall"] = async function() {
 	return {
-		"@enkore-types/rollup": createEntity(
+		"@enkore/rollup": createEntity(
 			"EnkoreCoreRealmDependencyInstallSpecification", 0, 0, {
 				version: "0.0.2",
 				importKind: "star"
