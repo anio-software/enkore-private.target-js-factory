@@ -9,7 +9,7 @@ const impl: API["preprocess"] = async function(
 		return sourceCode
 	}
 
-	const nodeMyTS = getRealmDependency(session, "@aniojs/node-my-ts")
+	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
 	const src = nodeMyTS.createSourceFile(file.absolutePath)
 
 	const dirLevel = path.dirname(file.relativePath).split("/").length

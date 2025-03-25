@@ -13,7 +13,7 @@ const impl: API["initialize"] = async function(session) {
 		return path.join("build", file.relativePath)
 	})
 
-	const nodeMyTS = getRealmDependency(session, "@aniojs/node-my-ts")
+	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
 	const {compilerOptions} = nodeMyTS.readTSConfigFile(
 		session.project.root, "tsconfig/base.json"
 	)

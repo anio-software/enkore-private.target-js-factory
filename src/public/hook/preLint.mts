@@ -3,7 +3,7 @@ import {getInternalData} from "#~src/getInternalData.mts"
 import {getRealmDependency} from "#~src/getRealmDependency.mts"
 
 const impl: API["hook"]["preLint"] = async function(session) {
-	const nodeMyTS = getRealmDependency(session, "@aniojs/node-my-ts")
+	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
 
 	const realmOptions = session.realm.getConfig("js")

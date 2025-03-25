@@ -1,4 +1,4 @@
-import type {MyTSProgram, MyTSExport} from "@aniojs-types/node-my-ts"
+import type {MyTSProgram, MyTSExport} from "@enkore-types/typescript"
 
 export type Export = {
 	name: string

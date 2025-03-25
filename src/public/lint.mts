@@ -10,7 +10,7 @@ const impl: API["lint"] = async function(session, file) {
 
 	let messages: NodeAPIMessage[] = []
 
-	const nodeMyTS = getRealmDependency(session, "@aniojs/node-my-ts")
+	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
 	const myNewProgram = getInternalData(session).myTSProgram
 
 	const mod = myNewProgram.getModule(`build/${file.relativePath}`)

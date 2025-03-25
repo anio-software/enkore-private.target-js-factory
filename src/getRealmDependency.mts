@@ -1,9 +1,9 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
-import type {ModuleExport as NodeMyTS} from "@aniojs-types/node-my-ts"
+import type {__ModuleExport as TypeScript} from "@enkore-types/typescript"
 import type {__ModuleExport as Rollup} from "@enkore-types/rollup"
 
 type Dependencies = {
-	"@aniojs/node-my-ts": NodeMyTS
+	"@enkore/typescript": TypeScript
 	"@enkore/rollup": Rollup
 }
 

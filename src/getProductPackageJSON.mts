@@ -67,7 +67,7 @@ export function getProductPackageJSON(
 	}
 
 	// todo: check dependencies of type only package
-	// by calling getRealmDependency(session, "@aniojs/node-my-ts").getModuleImportAndExportSpecifiers()
+	// by calling getRealmDependency(session, "@enkore/typescript").getModuleImportAndExportSpecifiers()
 	// allow @types/ peerDependencies
 	if (typeOnly) {
 		newPackageJSON.dependencies = {}
