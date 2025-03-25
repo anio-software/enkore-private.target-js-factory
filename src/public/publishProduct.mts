@@ -8,6 +8,7 @@ const impl: API["publishProduct"] = async function(
 
 	const child = spawnSync("npm", [
 		"publish",
+		"--provenance",
 		"--access",
 		"public"
 	], {
