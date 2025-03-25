@@ -4,12 +4,37 @@ import type {InternalData} from "./InternalData.d.mts"
 
 type EntryPointMap = InternalData["entryPointMap"]
 
+function exactDependencies(
+	dependencies: Record<string, string>|undefined
+): Record<string, string> {
+	if (!dependencies) return {}
+
+	const exactDependencies: Record<string, string> = {}
+
+	for (const dependencyName in dependencies) {
+		const dependencyVersion = dependencies[dependencyName]
+
+		exactDependencies[dependencyName] = (() => {
+			if (dependencyVersion.startsWith("~") ||
+			    dependencyVersion.startsWith("^")) {
+				return dependencyVersion.slice(1)
+			}
+
+			return dependencyVersion
+		})()
+	}
+
+	return exactDependencies
+}
+
 export function getProductPackageJSON(
 	session: EnkoreSessionAPI,
 	packageName: string,
 	entryPointMap: EntryPointMap,
 	typeOnly: boolean
 ): NodePackageJSON {
+	const realmOptions = session.realm.getConfig("js")
+
 	let newPackageJSON: NodePackageJSON = {
 		name: packageName,
 		type: "module",
@@ -21,6 +46,14 @@ export function getProductPackageJSON(
 		dependencies: session.project.packageJSON.dependencies,
 
 		files: ["./dist"]
+	}
+
+	const {publishWithExactDependencyVersions} = realmOptions
+
+	if (publishWithExactDependencyVersions === true) {
+		newPackageJSON.dependencies = exactDependencies(
+			newPackageJSON.dependencies
+		)
 	}
 
 	const {repository} = session.project.packageJSON
