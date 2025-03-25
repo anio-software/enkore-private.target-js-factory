@@ -4,7 +4,7 @@ import type {__ModuleExport as Rollup} from "@enkore-types/rollup"
 
 type Dependencies = {
 	"@aniojs/node-my-ts": NodeMyTS
-	"@enkore-types/rollup": Rollup
+	"@enkore/rollup": Rollup
 }
 
 export function getRealmDependency<T extends keyof Dependencies>(

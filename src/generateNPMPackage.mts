@@ -9,7 +9,7 @@ import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "#~src/getProductPackageJSON.mts"
 
 export async function generateNPMPackage(session: EnkoreSessionAPI) {
-	const utils = getRealmDependency(session, "@enkore-types/rollup")
+	const utils = getRealmDependency(session, "@enkore/rollup")
 
 	const {entryPointMap} = getInternalData(session)
 
