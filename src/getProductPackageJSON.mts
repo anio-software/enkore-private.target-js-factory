@@ -17,7 +17,7 @@ function exactDependencies(
 		exactDependencies[dependencyName] = (() => {
 			if (dependencyVersion.startsWith("~") ||
 			    dependencyVersion.startsWith("^")) {
-				return dependencyVersion.slice(1)
+				return `=${dependencyVersion.slice(1)}`
 			}
 
 			return dependencyVersion
