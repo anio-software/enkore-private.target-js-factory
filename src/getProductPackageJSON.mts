@@ -50,6 +50,10 @@ export function getProductPackageJSON(
 
 	// todo: check dependencies of type only package
 	// by calling getRealmDependency(session, "@aniojs/node-my-ts").getModuleImportAndExportSpecifiers()
+	if (typeOnly) {
+		newPackageJSON.dependencies = {}
+		newPackageJSON.peerDependencies = {}
+	}
 
 	const {publishWithExactDependencyVersions} = realmOptions
 
