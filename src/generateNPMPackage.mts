@@ -2,14 +2,14 @@ import type {EnkoreSessionAPI} from "@enkore/spec"
 import {getRealmDependency} from "./getRealmDependency.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {getExternals} from "./getExternals.mts"
-import type {JsBundlerOptions} from "@enkore-types/realm-js-and-web-utils"
+import type {JsBundlerOptions} from "@enkore-types/rollup"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "#~src/getProductPackageJSON.mts"
 
 export async function generateNPMPackage(session: EnkoreSessionAPI) {
-	const utils = getRealmDependency(session, "@enkore/realm-js-and-web-utils")
+	const utils = getRealmDependency(session, "@enkore-types/rollup")
 
 	const {entryPointMap} = getInternalData(session)
 
