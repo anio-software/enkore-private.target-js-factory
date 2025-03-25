@@ -22,7 +22,6 @@
   },
   "type": "module",
   "devDependencies": {
-    "@aniojs-types/node-my-ts": "^0.16.4",
     "@aniojs/node-fs": "^0.5.3",
     "@enkore-types/rollup": "^0.0.2",
     "@enkore/spec": "^0.172.0",
