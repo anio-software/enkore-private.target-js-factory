@@ -48,6 +48,9 @@ export function getProductPackageJSON(
 		files: ["./dist"]
 	}
 
+	// todo: check dependencies of type only package
+	// by calling getRealmDependency(session, "@aniojs/node-my-ts").getModuleImportAndExportSpecifiers()
+
 	const {publishWithExactDependencyVersions} = realmOptions
 
 	if (publishWithExactDependencyVersions === true) {
