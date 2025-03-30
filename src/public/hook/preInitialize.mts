@@ -64,7 +64,7 @@ const impl: API["hook"]["preInitialize"] = async function(
 		).map(entry => {
 			return {
 				absolutePath: entry.absolute_path,
-				source: path.join(dir, entry.relative_path)
+				source: path.join("project", dir, entry.relative_path)
 			}
 		})
 	}
