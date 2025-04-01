@@ -6,13 +6,6 @@ import {getAsset} from "@fourtune/realm-js/v0/assets"
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session
 ) {
-	const realmConfig = session.realm.getConfig("js")
-	let isNodeEnvironment = false
-
-	if (realmConfig.runtime === "node" || realmConfig.runtime === "agnostic") {
-		isNodeEnvironment = true
-	}
-
 	function defineFile(path: string, content: string, overwrite?: boolean) {
 		return createEntity("EnkoreBoilerplateFile", 0, 0, {
 			scope: "realm",
@@ -24,8 +17,10 @@ const impl: API["getBoilerplateFiles"] = async function(
 
 	const tsconfigBase = JSON.parse(getAsset("text://tsconfig/base.json") as string)
 
-	if (isNodeEnvironment) {
+	if (this.target === "node") {
 		tsconfigBase.compilerOptions.types.push("node")
+	} else if (this.target === "web") {
+		tsconfigBase.compilerOptions.types.push("web")
 	}
 
 	return [
