@@ -1,11 +1,12 @@
 import type {API} from "#~src/API.d.mts"
+import type {APIContext} from "#~src/APIContext.d.mts"
 import {getRealmDependency} from "#~src/getRealmDependency.mts"
 import path from "node:path"
 import {getInternalData} from "#~src/getInternalData.mts"
 import type {MyTSModule} from "@enkore-types/typescript"
 
 const impl: API["compile"] = async function(
-	session, file, code
+	this: APIContext, session, file, code
 ) {
 	const sourceFilePath = file.relativePath
 	const fileName = path.basename(sourceFilePath)

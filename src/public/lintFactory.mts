@@ -1,9 +1,12 @@
 import type {API} from "#~src/API.d.mts"
+import type {APIContext} from "#~src/APIContext.d.mts"
 import {getRealmDependency} from "#~src/getRealmDependency.mts"
 import type {NodeAPIMessage} from "@enkore/spec/primitives"
 import {getInternalData} from "#~src/getInternalData.mts"
 
-const impl: API["lint"] = async function(session, file) {
+const impl: API["lint"] = async function(
+	this: APIContext, session, file
+) {
 	// can do better?:
 	// myNewProgram.getModule check
 	if (file.wasFiltered) return [];

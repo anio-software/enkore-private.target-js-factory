@@ -1,8 +1,9 @@
 import type {API} from "#~src/API.d.mts"
+import type {APIContext} from "#~src/APIContext.d.mts"
 import {spawnSync} from "node:child_process"
 
 const impl: API["publishProduct"] = async function(
-	session, productName
+	this: APIContext, session, productName
 ) {
 	session.enkore.emitMessage("info", `publishing '${productName}'`)
 

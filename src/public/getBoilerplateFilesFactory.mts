@@ -1,8 +1,11 @@
 import type {API} from "#~src/API.d.mts"
+import type {APIContext} from "#~src/APIContext.d.mts"
 import {createEntity} from "@enkore/spec"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 
-const impl: API["getBoilerplateFiles"] = async function(session) {
+const impl: API["getBoilerplateFiles"] = async function(
+	this: APIContext, session
+) {
 	const realmConfig = session.realm.getConfig("js")
 	let isNodeEnvironment = false
 

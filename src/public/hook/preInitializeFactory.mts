@@ -1,4 +1,5 @@
 import type {API} from "#~src/API.d.mts"
+import type {APIContext} from "#~src/APIContext.d.mts"
 import {createEntity} from "@enkore/spec"
 import {scandir} from "@aniojs/node-fs"
 import path from "node:path"
@@ -9,7 +10,7 @@ import {
 } from "@enkore/realm-js-and-web-utils"
 
 const impl: API["hook"]["preInitialize"] = async function(
-	session
+	this: APIContext, session
 ) {
 	const allProjectFiles = [
 		...await scan("src"),

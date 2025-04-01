@@ -1,9 +1,10 @@
 import type {API} from "#~src/API.d.mts"
+import type {APIContext} from "#~src/APIContext.d.mts"
 import {getRealmDependency} from "#~src/getRealmDependency.mts"
 import path from "node:path"
 
 const impl: API["preprocess"] = async function(
-	session, file, sourceCode
+	this: APIContext, session, file, sourceCode
 ) {
 	if (!file.fileName.endsWith(".mts")) {
 		return sourceCode

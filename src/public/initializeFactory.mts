@@ -1,10 +1,14 @@
 import type {API} from "#~src/API.d.mts"
+import type {APIContext} from "#~src/APIContext.d.mts"
 import {getRealmDependency} from "#~src/getRealmDependency.mts"
 import path from "node:path"
 import {getInternalData} from "#~src/getInternalData.mts"
 import {buildEntryPointMap} from "#~src/buildEntryPointMap.mts"
 
-const impl: API["initialize"] = async function(session) {
+const impl: API["initialize"] = async function(
+	this: APIContext,
+	session
+) {
 	session.enkore.emitMessage("debug", "initialize realm")
 
 	const typeScriptFiles = session.enkore.getProjectFiles(
