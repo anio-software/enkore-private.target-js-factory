@@ -19,13 +19,7 @@ const apiFactoryFiles = await scandir(
 )
 
 const apiMethods = apiFactoryFiles.map(e => {
-	const name = e.relative_path.slice(0, -("Factory.mts".length))
-
-	if (name.includes("/")) {
-		return name.split("/")
-	}
-
-	return name
+	return e.relative_path.slice(0, -("Factory.mts".length))
 })
 
 export default {
