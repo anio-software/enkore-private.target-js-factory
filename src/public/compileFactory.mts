@@ -89,4 +89,6 @@ const impl: API["compile"] = async function(
 	}
 }
 
-export const compile = impl
+export function compileFactory(context: APIContext) {
+	return impl!.bind(context)
+}

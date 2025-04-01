@@ -7,4 +7,6 @@ const impl: API["hook"]["preCompile"] = async function(
 
 }
 
-export const preCompile = impl
+export function preCompileFactory(context: APIContext) {
+	return impl!.bind(context)
+}

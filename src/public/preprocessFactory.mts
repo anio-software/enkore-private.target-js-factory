@@ -37,4 +37,6 @@ const impl: API["preprocess"] = async function(
 	)
 }
 
-export const preprocess = impl
+export function preprocessFactory(context: APIContext) {
+	return impl!.bind(context)
+}

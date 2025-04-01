@@ -13,4 +13,6 @@ const impl: API["generateProduct"] = async function(
 	}
 }
 
-export const generateProduct = impl
+export function generateProductFactory(context: APIContext) {
+	return impl!.bind(context)
+}

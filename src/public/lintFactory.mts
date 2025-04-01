@@ -43,4 +43,6 @@ const impl: API["lint"] = async function(
 	return messages
 }
 
-export const lint = impl
+export function lintFactory(context: APIContext) {
+	return impl!.bind(context)
+}

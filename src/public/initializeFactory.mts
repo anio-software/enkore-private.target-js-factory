@@ -61,4 +61,6 @@ const impl: API["initialize"] = async function(
 	}
 }
 
-export const initialize = impl
+export function initializeFactory(context: APIContext) {
+	return impl!.bind(context)
+}

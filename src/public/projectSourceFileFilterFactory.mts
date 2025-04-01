@@ -11,4 +11,6 @@ const impl: API["projectSourceFileFilter"] = async function(
 	return file.fileName.endsWith(".mts")
 }
 
-export const projectSourceFileFilter = impl
+export function projectSourceFileFilterFactory(context: APIContext) {
+	return impl!.bind(context)
+}

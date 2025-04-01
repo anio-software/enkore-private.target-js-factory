@@ -36,4 +36,6 @@ const impl: API["getBoilerplateFiles"] = async function(
 	]
 }
 
-export const getBoilerplateFiles = impl
+export function getBoilerplateFilesFactory(context: APIContext) {
+	return impl!.bind(context)
+}

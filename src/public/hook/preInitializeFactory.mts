@@ -71,4 +71,6 @@ const impl: API["hook"]["preInitialize"] = async function(
 	}
 }
 
-export const preInitialize = impl
+export function preInitializeFactory(context: APIContext) {
+	return impl!.bind(context)
+}

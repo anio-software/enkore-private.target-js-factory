@@ -24,4 +24,6 @@ const impl: API["publishProduct"] = async function(
 	}
 }
 
-export const publishProduct = impl
+export function publishProductFactory(context: APIContext) {
+	return impl!.bind(context)
+}

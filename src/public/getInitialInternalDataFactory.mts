@@ -9,4 +9,6 @@ const impl: API["getInitialInternalData"] = async function(
 	}
 }
 
-export const getInitialInternalData = impl
+export function getInitialInternalDataFactory(context: APIContext) {
+	return impl!.bind(context)
+}

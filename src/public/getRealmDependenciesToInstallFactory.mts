@@ -21,4 +21,6 @@ const impl: API["getRealmDependenciesToInstall"] = async function(
 	}
 }
 
-export const getRealmDependenciesToInstall = impl
+export function getRealmDependenciesToInstallFactory(context: APIContext) {
+	return impl!.bind(context)
+}

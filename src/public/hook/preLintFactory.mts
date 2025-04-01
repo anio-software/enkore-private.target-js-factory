@@ -68,4 +68,6 @@ const impl: API["hook"]["preLint"] = async function(
 	}
 }
 
-export const preLint = impl
+export function preLintFactory(context: APIContext) {
+	return impl!.bind(context)
+}

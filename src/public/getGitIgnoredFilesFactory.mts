@@ -7,4 +7,6 @@ const impl: API["getGitIgnoredFiles"] = async function(
 	return []
 }
 
-export const getGitIgnoredFiles = impl
+export function getGitIgnoredFilesFactory(context: APIContext) {
+	return impl!.bind(context)
+}

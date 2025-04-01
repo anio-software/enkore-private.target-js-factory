@@ -7,4 +7,6 @@ const impl: API["testProduct"] = async function(
 	session.enkore.emitMessage("info", `testing '${productName}'`)
 }
 
-export const testProduct = impl
+export function testProductFactory(context: APIContext) {
+	return impl!.bind(context)
+}
