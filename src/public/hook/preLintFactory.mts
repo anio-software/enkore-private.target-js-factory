@@ -12,15 +12,15 @@ const impl: API["hook"]["preLint"] = async function(
 	const realmOptions = session.realm.getConfig("js")
 
 	if (realmOptions.exports) {
-		for (const x in realmOptions.exports) {
-			const p = realmOptions.exports[x]
+		for (const exportPath in realmOptions.exports) {
+			const exp = realmOptions.exports[exportPath]
 
-			if (!p.checkAgainstInterface) continue
-			if (!p.checkAgainstInterface.named) continue
+			if (!exp.checkAgainstInterface) continue
+			if (!exp.checkAgainstInterface.named) continue
 
-			const [interfaceSource, interfaceName] = p.checkAgainstInterface.named
+			const [interfaceSource, interfaceName] = exp.checkAgainstInterface.named
 
-			const modules = getInternalData(session).entryPointMap.get(x)!;
+			const modules = getInternalData(session).entryPointMap.get(exportPath)!;
 
 			let testCodeImports = ``, testCode = ``
 
