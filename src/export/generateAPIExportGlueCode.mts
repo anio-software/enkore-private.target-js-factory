@@ -76,6 +76,10 @@ export function generateAPIExportGlueCode(
 
 	let code = ``
 
+	code += `export const apiID = ${apiVariable}.apiID\n`
+	code += `export const apiMajorVersion =  ${apiVariable}.apiMajorVersion\n`
+	code += `export const apiRevision = ${apiVariable}.apiRevision\n`
+
 	for (const [key, value] of apiMethodTree) {
 		code += `export const ${key}: ${apiType}["${key}"] = `
 
