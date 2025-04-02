@@ -16,9 +16,9 @@ const impl: API["hook"]["preLint"] = async function(
 			const exp = realmOptions.exports[exportPath]
 
 			if (!exp.checkAgainstInterface) continue
-			if (!exp.checkAgainstInterface.named) continue
+			if (!exp.checkAgainstInterface) continue
 
-			const [interfaceSource, interfaceName] = exp.checkAgainstInterface.named
+			const [interfaceSource, interfaceName] = exp.checkAgainstInterface
 
 			const modules = getInternalData(session).entryPointMap.get(exportPath)!;
 
