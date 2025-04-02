@@ -1,19 +1,19 @@
 import type {API} from "#~src/API.d.mts"
 import type {APIContext} from "#~src/APIContext.d.mts"
 import {getInternalData} from "#~src/getInternalData.mts"
-import {getRealmDependency} from "#~src/getRealmDependency.mts"
+import {getTargetDependency} from "#~src/getTargetDependency.mts"
 
 const impl: API["hook"]["preLint"] = async function(
 	this: APIContext, session
 ) {
-	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
 
-	const realmOptions = session.target.getConfig(this.target)
+	const targetOptions = session.target.getConfig(this.target)
 
-	if (realmOptions.exports) {
-		for (const exportPath in realmOptions.exports) {
-			const exp = realmOptions.exports[exportPath]
+	if (targetOptions.exports) {
+		for (const exportPath in targetOptions.exports) {
+			const exp = targetOptions.exports[exportPath]
 
 			if (!exp.checkAgainstInterface) continue
 			if (!exp.checkAgainstInterface) continue
