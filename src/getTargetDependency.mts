@@ -7,7 +7,7 @@ type Dependencies = {
 	"@enkore/rollup": Rollup
 }
 
-export function getRealmDependency<T extends keyof Dependencies>(
+export function getTargetDependency<T extends keyof Dependencies>(
 	session: EnkoreSessionAPI,
 	dependencyName: T
 ): Dependencies[T] {
