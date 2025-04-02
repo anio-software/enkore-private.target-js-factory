@@ -48,7 +48,7 @@ const impl: API["initialize"] = async function(
 		name: "npmPackage"
 	}]
 
-	const {createTypesPackage} = session.realm.getConfig("js")
+	const {createTypesPackage} = session.target.getConfig(this.target)
 
 	if (typeof createTypesPackage !== "undefined") {
 		products.push({

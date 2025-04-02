@@ -20,7 +20,7 @@ import {preCompileFactory} from "#~src/public/hook/preCompileFactory.mts"
 
 export function generateAPI(apiContext: APIContext): API {
 	return {
-		apiID: "EnkoreRealmIntegrationAPI",
+		apiID: "EnkoreTargetIntegrationAPI",
 		apiMajorVersion: 0,
 		apiRevision: 0,
 

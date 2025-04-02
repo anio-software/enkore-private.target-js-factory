@@ -1,3 +1,3 @@
 export type APIContext = {
-	target: "node" | "web" | "none"
+	target: "js-none" | "js-node" | "js-web"
 }

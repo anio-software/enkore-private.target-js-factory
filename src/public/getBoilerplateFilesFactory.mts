@@ -17,9 +17,9 @@ const impl: API["getBoilerplateFiles"] = async function(
 
 	const tsconfigBase = JSON.parse(getAsset("text://tsconfig/base.json") as string)
 
-	if (this.target === "node") {
+	if (this.target === "js-node") {
 		tsconfigBase.compilerOptions.types.push("node")
-	} else if (this.target === "web") {
+	} else if (this.target === "js-web") {
 		tsconfigBase.compilerOptions.types.push("web")
 	}
 

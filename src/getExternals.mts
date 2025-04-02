@@ -1,9 +1,14 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {APIContext} from "./APIContext.d.mts"
 
-export function getExternals(entryPointPath: string, session: EnkoreSessionAPI) {
+export function getExternals(
+	apiContext: APIContext,
+	entryPointPath: string,
+	session: EnkoreSessionAPI
+) {
 	const externals: Map<string, number> = new Map()
 
-	const realmConfig = session.realm.getConfig("js")
+	const realmConfig = session.target.getConfig(apiContext.target)
 
 	if (realmConfig.externalPackages) {
 		for (const pkg of realmConfig.externalPackages) {

@@ -11,5 +11,5 @@ export function getRealmDependency<T extends keyof Dependencies>(
 	session: EnkoreSessionAPI,
 	dependencyName: T
 ): Dependencies[T] {
-	return session.realm.getDependency(dependencyName) as Dependencies[T]
+	return session.target.getDependency(dependencyName) as Dependencies[T]
 }

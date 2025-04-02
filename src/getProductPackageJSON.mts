@@ -1,4 +1,5 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {APIContext} from "./APIContext.d.mts"
 import type {NodePackageJSON} from "@enkore/spec/primitives"
 import type {InternalData} from "./InternalData.d.mts"
 
@@ -46,12 +47,13 @@ function removeNonTypeDependencies(
 }
 
 export function getProductPackageJSON(
+	apiContext: APIContext,
 	session: EnkoreSessionAPI,
 	packageName: string,
 	entryPointMap: EntryPointMap,
 	typeOnly: boolean
 ): NodePackageJSON {
-	const realmOptions = session.realm.getConfig("js")
+	const realmOptions = session.target.getConfig(apiContext.target)
 
 	let newPackageJSON: NodePackageJSON = {
 		name: packageName,

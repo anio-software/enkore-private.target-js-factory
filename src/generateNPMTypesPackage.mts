@@ -1,4 +1,5 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {APIContext} from "./APIContext.d.mts"
 import {getRealmDependency} from "./getRealmDependency.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {getExternals} from "./getExternals.mts"
@@ -7,13 +8,16 @@ import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.mts
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "#~src/getProductPackageJSON.mts"
 
-export async function generateNPMTypesPackage(session: EnkoreSessionAPI) {
+export async function generateNPMTypesPackage(
+	apiContext: APIContext,
+	session: EnkoreSessionAPI
+) {
 	const utils = getRealmDependency(session, "@enkore/rollup")
 
 	const {entryPointMap} = getInternalData(session)
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
-		const externals: string[] = getExternals(entryPointPath, session)
+		const externals: string[] = getExternals(apiContext, entryPointPath, session)
 		const onRollupLogFunction = getOnRollupLogFunction(session)
 
 		const declarationsEntryCode = generateTypesPackageEntryCode(exportsMap)
@@ -30,7 +34,7 @@ export async function generateNPMTypesPackage(session: EnkoreSessionAPI) {
 		)
 	}
 
-	const realmOptions = session.realm.getConfig("js")
+	const realmOptions = session.target.getConfig(apiContext.target)
 
 	if (typeof realmOptions.createTypesPackage === "undefined") {
 		throw new Error(`createTypesPackage is undefined`)
@@ -52,6 +56,7 @@ export async function generateNPMTypesPackage(session: EnkoreSessionAPI) {
 
 	await writeAtomicFileJSON(
 		`./package.json`, getProductPackageJSON(
+			apiContext,
 			session,
 			packageName,
 			entryPointMap,

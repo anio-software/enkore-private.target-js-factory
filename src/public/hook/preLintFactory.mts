@@ -9,7 +9,7 @@ const impl: API["hook"]["preLint"] = async function(
 	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
 
-	const realmOptions = session.realm.getConfig("js")
+	const realmOptions = session.target.getConfig(this.target)
 
 	if (realmOptions.exports) {
 		for (const exportPath in realmOptions.exports) {

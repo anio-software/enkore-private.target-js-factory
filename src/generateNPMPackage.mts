@@ -1,4 +1,5 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {APIContext} from "./APIContext.d.mts"
 import {getRealmDependency} from "./getRealmDependency.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {getExternals} from "./getExternals.mts"
@@ -8,13 +9,16 @@ import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "#~src/getProductPackageJSON.mts"
 
-export async function generateNPMPackage(session: EnkoreSessionAPI) {
+export async function generateNPMPackage(
+	apiContext: APIContext,
+	session: EnkoreSessionAPI
+) {
 	const utils = getRealmDependency(session, "@enkore/rollup")
 
 	const {entryPointMap} = getInternalData(session)
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
-		const externals: string[] = getExternals(entryPointPath, session)
+		const externals: string[] = getExternals(apiContext, entryPointPath, session)
 		const onRollupLogFunction = getOnRollupLogFunction(session)
 
 		const jsBundlerOptions: JsBundlerOptions = {
@@ -62,6 +66,7 @@ export async function generateNPMPackage(session: EnkoreSessionAPI) {
 
 	await writeAtomicFileJSON(
 		`./package.json`, getProductPackageJSON(
+			apiContext,
 			session,
 			session.project.packageJSON.name,
 			entryPointMap,
