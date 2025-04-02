@@ -2,18 +2,18 @@ import type {API} from "#~src/API.d.mts"
 import type {APIContext} from "#~src/APIContext.d.mts"
 import {createEntity} from "@enkore/spec"
 
-const impl: API["getRealmDependenciesToInstall"] = async function(
+const impl: API["getDependenciesToInstall"] = async function(
 	this: APIContext
 ) {
 	return {
 		"@enkore/rollup": createEntity(
-			"EnkoreCoreRealmDependencyInstallSpecification", 0, 0, {
+			"EnkoreCoreTargetDependencyInstallSpecification", 0, 0, {
 				version: "0.0.2",
 				importKind: "star"
 			}
 		),
 		"@enkore/typescript": createEntity(
-			"EnkoreCoreRealmDependencyInstallSpecification", 0, 0, {
+			"EnkoreCoreTargetDependencyInstallSpecification", 0, 0, {
 				version: "0.0.3",
 				importKind: "star"
 			}
@@ -21,6 +21,6 @@ const impl: API["getRealmDependenciesToInstall"] = async function(
 	}
 }
 
-export function getRealmDependenciesToInstallFactory(context: APIContext) {
+export function getDependenciesToInstallFactory(context: APIContext) {
 	return impl!.bind(context)
 }
