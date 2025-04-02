@@ -1,6 +1,6 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
 import type {APIContext} from "./APIContext.d.mts"
-import {getRealmDependency} from "./getRealmDependency.mts"
+import {getTargetDependency} from "./getTargetDependency.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {getExternals} from "./getExternals.mts"
 import type {JsBundlerOptions} from "@enkore-types/rollup"
@@ -13,7 +13,7 @@ export async function generateNPMPackage(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
-	const utils = getRealmDependency(session, "@enkore/rollup")
+	const utils = getTargetDependency(session, "@enkore/rollup")
 
 	const {entryPointMap} = getInternalData(session)
 
