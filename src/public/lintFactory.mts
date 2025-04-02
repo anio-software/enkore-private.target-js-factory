@@ -1,6 +1,6 @@
 import type {API} from "#~src/API.d.mts"
 import type {APIContext} from "#~src/APIContext.d.mts"
-import {getRealmDependency} from "#~src/getRealmDependency.mts"
+import {getTargetDependency} from "#~src/getTargetDependency.mts"
 import type {NodeAPIMessage} from "@enkore/spec/primitives"
 import {getInternalData} from "#~src/getInternalData.mts"
 
@@ -13,7 +13,7 @@ const impl: API["lint"] = async function(
 
 	let messages: NodeAPIMessage[] = []
 
-	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myNewProgram = getInternalData(session).myTSProgram
 
 	const mod = myNewProgram.getModule(`build/${file.relativePath}`)
