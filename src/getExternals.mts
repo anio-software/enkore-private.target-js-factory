@@ -8,16 +8,16 @@ export function getExternals(
 ) {
 	const externals: Map<string, number> = new Map()
 
-	const realmConfig = session.target.getConfig(apiContext.target)
+	const targetConfig = session.target.getConfig(apiContext.target)
 
-	if (realmConfig.externalPackages) {
-		for (const pkg of realmConfig.externalPackages) {
+	if (targetConfig.externalPackages) {
+		for (const pkg of targetConfig.externalPackages) {
 			externals.set(pkg, 1)
 		}
 	}
 
-	if (realmConfig.exports && entryPointPath in realmConfig.exports) {
-		const entryPointConfig = realmConfig.exports[entryPointPath]
+	if (targetConfig.exports && entryPointPath in targetConfig.exports) {
+		const entryPointConfig = targetConfig.exports[entryPointPath]
 
 		if (entryPointConfig.externalPackages) {
 			for (const pkg of entryPointConfig.externalPackages) {
