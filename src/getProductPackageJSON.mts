@@ -53,7 +53,7 @@ export function getProductPackageJSON(
 	entryPointMap: EntryPointMap,
 	typeOnly: boolean
 ): NodePackageJSON {
-	const realmOptions = session.target.getConfig(apiContext.target)
+	const targetOptions = session.target.getConfig(apiContext.target)
 
 	let newPackageJSON: NodePackageJSON = {
 		name: packageName,
@@ -69,7 +69,7 @@ export function getProductPackageJSON(
 	}
 
 	// todo: check dependencies of type only package
-	// by calling getRealmDependency(session, "@enkore/typescript").getModuleImportAndExportSpecifiers()
+	// by calling getTargetDependency(session, "@enkore/typescript").getModuleImportAndExportSpecifiers()
 	// allow @types/ peerDependencies
 	if (typeOnly) {
 		newPackageJSON.dependencies = {}
@@ -78,7 +78,7 @@ export function getProductPackageJSON(
 		)
 	}
 
-	const {publishWithExactDependencyVersions} = realmOptions
+	const {publishWithExactDependencyVersions} = targetOptions
 
 	if (publishWithExactDependencyVersions === true) {
 		newPackageJSON.dependencies = exactDependencies(
