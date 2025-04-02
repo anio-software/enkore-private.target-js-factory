@@ -1,6 +1,6 @@
 import type {API} from "#~src/API.d.mts"
 import type {APIContext} from "#~src/APIContext.d.mts"
-import {getRealmDependency} from "#~src/getRealmDependency.mts"
+import {getTargetDependency} from "#~src/getTargetDependency.mts"
 import path from "node:path"
 
 const impl: API["preprocess"] = async function(
@@ -10,7 +10,7 @@ const impl: API["preprocess"] = async function(
 		return sourceCode
 	}
 
-	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const src = nodeMyTS.createSourceFile(file.absolutePath)
 
 	const dirLevel = path.dirname(file.relativePath).split("/").length
