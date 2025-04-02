@@ -2,7 +2,7 @@ import type {API} from "#~src/API.d.mts"
 import type {APIContext} from "#~src/APIContext.d.mts"
 
 import {getInitialInternalDataFactory} from "#~src/public/getInitialInternalDataFactory.mts"
-import {getRealmDependenciesToInstallFactory} from "#~src/public/getRealmDependenciesToInstallFactory.mts"
+import {getDependenciesToInstallFactory} from "#~src/public/getDependenciesToInstallFactory.mts"
 import {initializeFactory} from "#~src/public/initializeFactory.mts"
 import {preprocessFactory} from "#~src/public/preprocessFactory.mts"
 import {lintFactory} from "#~src/public/lintFactory.mts"
@@ -25,7 +25,7 @@ export function generateAPI(apiContext: APIContext): API {
 		apiRevision: 0,
 
 		getInitialInternalData: getInitialInternalDataFactory(apiContext),
-		getRealmDependenciesToInstall: getRealmDependenciesToInstallFactory(apiContext),
+		getDependenciesToInstall: getDependenciesToInstallFactory(apiContext),
 		initialize: initializeFactory(apiContext),
 		preprocess: preprocessFactory(apiContext),
 		lint: lintFactory(apiContext),
