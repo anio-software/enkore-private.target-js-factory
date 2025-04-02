@@ -1,1 +1,1 @@
-# @enkore/realm-js-factory
+# @enkore/target-js-factory

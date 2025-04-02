@@ -1,6 +1,6 @@
 {
-  "name": "@enkore/realm-js-factory",
-  "version": "0.0.8",
+  "name": "@enkore/target-js-factory",
+  "version": "0.0.0",
   "author": "Anio Software <info@anio.software>",
   "description": "",
   "license": "MIT",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/enkore-org/realm-js-factory.git"
+    "url": "git+https://github.com/enkore-org/target-js-factory.git"
   },
   "type": "module",
   "devDependencies": {
