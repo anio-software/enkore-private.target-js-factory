@@ -1,6 +1,6 @@
 import type {API} from "#~src/API.d.mts"
 import type {APIContext} from "#~src/APIContext.d.mts"
-import {getRealmDependency} from "#~src/getRealmDependency.mts"
+import {getTargetDependency} from "#~src/getTargetDependency.mts"
 import path from "node:path"
 import {getInternalData} from "#~src/getInternalData.mts"
 import type {MyTSModule} from "@enkore-types/typescript"
@@ -14,7 +14,7 @@ const impl: API["compile"] = async function(
 
 	session.enkore.emitMessage("info", "called compile " + sourceFilePath)
 
-	const nodeMyTS = getRealmDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (sourceFilePath.startsWith("assets/")) {
