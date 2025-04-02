@@ -1,6 +1,6 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
 import type {APIContext} from "./APIContext.d.mts"
-import {getRealmDependency} from "./getRealmDependency.mts"
+import {getTargetDependency} from "./getTargetDependency.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {getExternals} from "./getExternals.mts"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
@@ -12,7 +12,7 @@ export async function generateNPMTypesPackage(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
-	const utils = getRealmDependency(session, "@enkore/rollup")
+	const utils = getTargetDependency(session, "@enkore/rollup")
 
 	const {entryPointMap} = getInternalData(session)
 
@@ -34,14 +34,14 @@ export async function generateNPMTypesPackage(
 		)
 	}
 
-	const realmOptions = session.target.getConfig(apiContext.target)
+	const targetOptions = session.target.getConfig(apiContext.target)
 
-	if (typeof realmOptions.createTypesPackage === "undefined") {
+	if (typeof targetOptions.createTypesPackage === "undefined") {
 		throw new Error(`createTypesPackage is undefined`)
 	}
 
 	const packageName = (() => {
-		let {orgName} = realmOptions.createTypesPackage
+		let {orgName} = targetOptions.createTypesPackage
 
 		if (orgName.startsWith("@")) orgName = orgName.slice(1)
 
