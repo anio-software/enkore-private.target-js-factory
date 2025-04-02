@@ -47,9 +47,22 @@ const impl: API["hook"]["preLint"] = async function(
 				getInternalData(session).myTSProgram.compilerOptions
 			)
 
-			console.log(
-				nodeMyTS.typeCheckModule(testProg.getModule(vFile.path), true)
+			const diagnosticMessages = nodeMyTS.typeCheckModule(
+				testProg.getModule(vFile.path), true
 			)
+
+			for (const message of diagnosticMessages) {
+				session.enkore.emitMessage(
+					"error",
+					`checkAgainstInterface: ts(${message.code}) ${message.message}`
+				)
+			}
+
+			if (!diagnosticMessages.length) {
+				session.enkore.emitMessage(
+					`info`, `export '${exportPath}' type checks against interface '${interfaceName}' from '${interfaceSource}'`
+				)
+			}
 		}
 	}
 
