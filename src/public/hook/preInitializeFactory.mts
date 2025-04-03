@@ -3,9 +3,11 @@ import type {APIContext} from "#~src/APIContext.d.mts"
 import {createEntity} from "@enkore/spec"
 import {scandir} from "@aniojs/node-fs"
 import path from "node:path"
-import {isAsyncSyncExpandableFilePath} from "#~src/utils/isAsyncSyncExpandableFilePath.mts"
-import {expandAsyncSyncVariantFilePath} from "#~src/utils/expandAsyncSyncVariantFilePath.mts"
-import {expandAsyncSyncVariantSourceFile} from "#~src/utils/expandAsyncSyncVariantSourceFile.mts"
+import {
+	isAsyncSyncExpandableFilePath,
+	expandAsyncSyncVariantFilePath,
+	expandAsyncSyncVariantSourceFile
+} from "@enkore/target-js-utils"
 
 const impl: API["hook"]["preInitialize"] = async function(
 	this: APIContext, session
