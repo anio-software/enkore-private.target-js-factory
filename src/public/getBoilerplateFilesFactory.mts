@@ -8,7 +8,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 ) {
 	function defineFile(path: string, content: string, overwrite?: boolean) {
 		return createEntity("EnkoreBoilerplateFile", 0, 0, {
-			scope: "realm",
+			scope: "target",
 			content,
 			path,
 			overwrite
