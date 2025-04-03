@@ -68,6 +68,14 @@ export function getProductPackageJSON(
 		files: ["./dist"]
 	}
 
+	if (apiContext.target === "js-node") {
+		// todo: add @types/node peer dep?
+
+		newPackageJSON["engines"] = {
+			"node": ">=23.6.x"
+		}
+	}
+
 	// todo: check dependencies of type only package
 	// by calling getTargetDependency(session, "@enkore/typescript").getModuleImportAndExportSpecifiers()
 	// allow @types/ peerDependencies
