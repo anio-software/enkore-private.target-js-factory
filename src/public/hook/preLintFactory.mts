@@ -10,6 +10,7 @@ const impl: API["hook"]["preLint"] = async function(
 	const myProgram = getInternalData(session).myTSProgram
 
 	const targetOptions = session.target.getConfig(this.target)
+	const {entryPointMap} = getInternalData(session)
 
 	if (targetOptions.exports) {
 		for (const exportPath in targetOptions.exports) {
@@ -20,7 +21,16 @@ const impl: API["hook"]["preLint"] = async function(
 
 			const [interfaceSource, interfaceName] = exp.checkAgainstInterface
 
-			const modules = getInternalData(session).entryPointMap.get(exportPath)!;
+			if (!entryPointMap.has(exportPath)) {
+				session.enkore.emitMessage(
+					`error`,
+					`no such export path '${exportPath}'`
+				)
+
+				continue
+			}
+
+			const modules = entryPointMap.get(exportPath)!
 
 			let testCodeImports = ``, testCode = ``
 
