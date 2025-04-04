@@ -23,7 +23,7 @@
     "@enkore-types/rollup": "^0.0.2",
     "@enkore-types/typescript": "^0.0.5",
     "@enkore/spec": "^0.210.0",
-    "@enkore/target-js-utils": "^0.0.2",
+    "@enkore/target-js-utils": "^0.0.3",
     "@fourtune/core": "^0.1101.0",
     "@fourtune/realm-js": "^1.0.5",
     "fourtune": "^0.30000.1"
