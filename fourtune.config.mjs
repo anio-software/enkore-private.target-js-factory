@@ -2,6 +2,10 @@ import {scandir} from "@aniojs/node-fs"
 import path from "node:path"
 import {fileURLToPath} from "node:url"
 
+function mapEntry(e) {
+	return e.relative_path.slice(0, -("Factory.mts".length))
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const apiFactoryFiles = await scandir(
@@ -18,9 +22,7 @@ const apiFactoryFiles = await scandir(
 	}
 )
 
-const apiMethods = apiFactoryFiles.map(e => {
-	return e.relative_path.slice(0, -("Factory.mts".length))
-})
+const apiMethods = apiFactoryFiles.map(mapEntry)
 
 const runtimeApiFactoryFiles = await scandir(
 	path.join(__dirname, "src", "runtime", "public"),
@@ -36,9 +38,7 @@ const runtimeApiFactoryFiles = await scandir(
 	}
 )
 
-const runtimeApiMethods = runtimeApiFactoryFiles.map(e => {
-	return e.relative_path.slice(0, -("Factory.mts".length))
-})
+const runtimeApiMethods = runtimeApiFactoryFiles.map(mapEntry)
 
 export default {
 	realm: {
