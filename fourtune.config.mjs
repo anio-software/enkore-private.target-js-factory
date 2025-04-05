@@ -17,7 +17,7 @@ function filterEntry(e) {
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const apiMethods = (await scandir(
-	path.join(__dirname, "src", "public"),
+	path.join(__dirname, "src", "targetIntegration", "public"),
 	{
 		sorted: true,
 		filter: filterEntry
