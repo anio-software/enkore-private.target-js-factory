@@ -22,6 +22,24 @@ const apiMethods = apiFactoryFiles.map(e => {
 	return e.relative_path.slice(0, -("Factory.mts".length))
 })
 
+const runtimeApiFactoryFiles = await scandir(
+	path.join(__dirname, "src", "runtime", "public"),
+	{
+		sorted: true,
+		filter(e) {
+			if (e.type !== "regularFile") return false
+			if (!e.name.includes("Factory")) return false
+			if (!e.name.endsWith(".mts")) return false
+
+			return true
+		}
+	}
+)
+
+const runtimeApiMethods = runtimeApiFactoryFiles.map(e => {
+	return e.relative_path.slice(0, -("Factory.mts".length))
+})
+
 export default {
 	realm: {
 		name: "js",
@@ -32,6 +50,12 @@ export default {
 		"src/export/getAPIMethodNames.mts": function() {
 			return `export function getAPIMethodNames() {
 	return ${JSON.stringify(apiMethods)}
+}\n`
+		},
+
+		"src/export/runtime/getRuntimeAPIMethodNames.mts": function() {
+			return `export function getRuntimeAPIMethodNames() {
+	return ${JSON.stringify(runtimeApiMethods)}
 }\n`
 		}
 	}
