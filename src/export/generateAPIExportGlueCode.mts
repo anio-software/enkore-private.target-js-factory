@@ -1,5 +1,5 @@
-import {methodNamesToTree} from "#~src/util/methodNamesToTree.mts"
-import {printObjectPropertyTree} from "#~src/util/printObjectPropertyTree.mts"
+import {methodNamesToTree} from "#~src/methodNamesToTree.mts"
+import {printObjectPropertyTree} from "#~src/printObjectPropertyTree.mts"
 
 export function generateAPIExportGlueCode(
 	apiType: string,
