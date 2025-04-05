@@ -7,7 +7,7 @@ import type {JsBundlerOptions} from "@enkore-types/rollup"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
-import {getProductPackageJSON} from "#~src/getProductPackageJSON.mts"
+import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 
 export async function generateNPMPackage(
 	apiContext: APIContext,

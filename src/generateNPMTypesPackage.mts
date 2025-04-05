@@ -6,7 +6,7 @@ import {getExternals} from "./getExternals.mts"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
-import {getProductPackageJSON} from "#~src/getProductPackageJSON.mts"
+import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,
