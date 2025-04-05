@@ -39,8 +39,8 @@ export default {
 	},
 
 	autogenerate: {
-		"src/export/getAPIMethodNames.mts": function() {
-			return `export function getAPIMethodNames() {
+		"src/export/targetIntegration/getTargetIntegrationAPIMethodNames.mts": function() {
+			return `export function getTargetIntegrationAPIMethodNames() {
 	return ${JSON.stringify(apiMethods)}
 }\n`
 		},
