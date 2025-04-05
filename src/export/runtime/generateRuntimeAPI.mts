@@ -1,4 +1,7 @@
-import {readEnkoreConfigFile} from "@enkore/common"
+import {
+	readEnkoreConfigFile,
+	getProjectRootFromArgumentAndValidate
+} from "@enkore/common"
 import {readFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
 
@@ -14,8 +17,12 @@ import {getProjectFactory} from "#~src/runtime/public/getProjectFactory.mts"
 import {getProjectPackageJSONFactory} from "#~src/runtime/public/getProjectPackageJSONFactory.mts"
 
 export async function generateRuntimeAPI(
-	projectRoot: string
+	userProjectRoot: string | ["inferFromCLIArgs"]
 ): Promise<RuntimeAPI> {
+	const projectRoot = await getProjectRootFromArgumentAndValidate(
+		userProjectRoot
+	)
+
 	const projectConfig = await readEnkoreConfigFile(projectRoot)
 	const projectPackageJSON: any = await readFileJSON(
 		path.join(projectRoot, "package.json")
