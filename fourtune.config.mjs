@@ -16,25 +16,21 @@ function filterEntry(e) {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const apiFactoryFiles = await scandir(
+const apiMethods = (await scandir(
 	path.join(__dirname, "src", "public"),
 	{
 		sorted: true,
 		filter: filterEntry
 	}
-)
+)).map(mapEntry)
 
-const apiMethods = apiFactoryFiles.map(mapEntry)
-
-const runtimeApiFactoryFiles = await scandir(
+const runtimeApiMethods = (await scandir(
 	path.join(__dirname, "src", "runtime", "public"),
 	{
 		sorted: true,
 		filter: filterEntry
 	}
-)
-
-const runtimeApiMethods = runtimeApiFactoryFiles.map(mapEntry)
+)).map(mapEntry)
 
 export default {
 	realm: {
