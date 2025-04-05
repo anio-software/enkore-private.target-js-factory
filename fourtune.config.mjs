@@ -6,19 +6,21 @@ function mapEntry(e) {
 	return e.relative_path.slice(0, -("Factory.mts".length))
 }
 
+function filterEntry(e) {
+	if (e.type !== "regularFile") return false
+	if (!e.name.includes("Factory")) return false
+	if (!e.name.endsWith(".mts")) return false
+
+	return true
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const apiFactoryFiles = await scandir(
 	path.join(__dirname, "src", "public"),
 	{
 		sorted: true,
-		filter(e) {
-			if (e.type !== "regularFile") return false
-			if (!e.name.includes("Factory")) return false
-			if (!e.name.endsWith(".mts")) return false
-
-			return true
-		}
+		filter: filterEntry
 	}
 )
 
@@ -28,13 +30,7 @@ const runtimeApiFactoryFiles = await scandir(
 	path.join(__dirname, "src", "runtime", "public"),
 	{
 		sorted: true,
-		filter(e) {
-			if (e.type !== "regularFile") return false
-			if (!e.name.includes("Factory")) return false
-			if (!e.name.endsWith(".mts")) return false
-
-			return true
-		}
+		filter: filterEntry
 	}
 )
 
