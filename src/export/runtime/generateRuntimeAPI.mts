@@ -1,3 +1,7 @@
+import {readEnkoreConfigFile} from "@enkore/common"
+import {readFileJSON} from "@aniojs/node-fs"
+import path from "node:path"
+
 import type {RuntimeAPI} from "#~src/runtime/RuntimeAPI.d.mts"
 import type {RuntimeAPIContext} from "#~src/runtime/RuntimeAPIContext.d.mts"
 import {compareLogLevelFactory} from "#~src/runtime/public/compareLogLevelFactory.mts"
@@ -10,8 +14,19 @@ import {getProjectFactory} from "#~src/runtime/public/getProjectFactory.mts"
 import {getProjectPackageJSONFactory} from "#~src/runtime/public/getProjectPackageJSONFactory.mts"
 
 export async function generateRuntimeAPI(
-	context: RuntimeAPIContext
+	projectRoot: string
 ): Promise<RuntimeAPI> {
+	const projectConfig = await readEnkoreConfigFile(projectRoot)
+	const projectPackageJSON: any = await readFileJSON(
+		path.join(projectRoot, "package.json")
+	)
+
+	const context: RuntimeAPIContext = {
+		projectRoot,
+		projectConfig,
+		projectPackageJSON
+	}
+
 	return {
 		apiID: "EnkoreTargetJSRuntimeAPI",
 		apiMajorVersion: 0,
