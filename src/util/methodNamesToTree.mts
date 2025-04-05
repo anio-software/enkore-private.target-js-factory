@@ -1,4 +1,4 @@
-import type {ObjectPropertyTree} from "#~src/util/ObjectPropertyTree.d.mts"
+import type {ObjectPropertyTree} from "./ObjectPropertyTree.d.mts"
 
 export function methodNamesToTree(methodNames: string[]): ObjectPropertyTree {
 	const map: ObjectPropertyTree = new Map()
