@@ -4,7 +4,7 @@ import type {RuntimeAPIContext} from "#~src/runtime/RuntimeAPIContext.d.mts"
 const impl: RuntimeAPI["getEnkoreConfiguration"] = function(
 	this: RuntimeAPIContext
 ) {
-	return {} as any
+	return JSON.parse(JSON.stringify(this.projectConfig))
 }
 
 export function getEnkoreConfigurationFactory(context: RuntimeAPIContext) {

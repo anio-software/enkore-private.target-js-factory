@@ -4,7 +4,7 @@ import type {RuntimeAPIContext} from "#~src/runtime/RuntimeAPIContext.d.mts"
 const impl: RuntimeAPI["getProjectPackageJSON"] = function(
 	this: RuntimeAPIContext
 ) {
-	return {} as any
+	return JSON.parse(JSON.stringify(this.projectPackageJSON))
 }
 
 export function getProjectPackageJSONFactory(context: RuntimeAPIContext) {
