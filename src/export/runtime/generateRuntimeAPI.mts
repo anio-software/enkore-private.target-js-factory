@@ -9,9 +9,9 @@ import {getEnkoreConfigurationFactory} from "#~src/runtime/public/getEnkoreConfi
 import {getProjectFactory} from "#~src/runtime/public/getProjectFactory.mts"
 import {getProjectPackageJSONFactory} from "#~src/runtime/public/getProjectPackageJSONFactory.mts"
 
-export function generateRuntimeAPI(
+export async function generateRuntimeAPI(
 	context: RuntimeAPIContext
-): RuntimeAPI {
+): Promise<RuntimeAPI> {
 	return {
 		apiID: "EnkoreTargetJSRuntimeAPI",
 		apiMajorVersion: 0,
