@@ -1,5 +1,5 @@
-import type {API} from "#~src/API.d.mts"
-import type {APIContext} from "#~src/APIContext.d.mts"
+import type {API} from "#~src/targetIntegration/API.d.mts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 
 import {getInitialInternalDataFactory} from "#~src/targetIntegration/public/getInitialInternalDataFactory.mts"
 import {getDependenciesToInstallFactory} from "#~src/targetIntegration/public/getDependenciesToInstallFactory.mts"

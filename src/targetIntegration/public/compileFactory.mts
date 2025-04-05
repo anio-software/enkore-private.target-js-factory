@@ -1,8 +1,8 @@
-import type {API} from "#~src/API.d.mts"
-import type {APIContext} from "#~src/APIContext.d.mts"
-import {getTargetDependency} from "#~src/getTargetDependency.mts"
+import type {API} from "#~src/targetIntegration/API.d.mts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 import path from "node:path"
-import {getInternalData} from "#~src/getInternalData.mts"
+import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import type {MyTSModule} from "@enkore-types/typescript"
 
 const impl: API["compile"] = async function(

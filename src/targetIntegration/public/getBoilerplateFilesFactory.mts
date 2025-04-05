@@ -1,5 +1,5 @@
-import type {API} from "#~src/API.d.mts"
-import type {APIContext} from "#~src/APIContext.d.mts"
+import type {API} from "#~src/targetIntegration/API.d.mts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {createEntity} from "@enkore/spec"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 

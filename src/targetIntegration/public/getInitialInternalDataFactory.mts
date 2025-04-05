@@ -1,5 +1,5 @@
-import type {API} from "#~src/API.d.mts"
-import type {APIContext} from "#~src/APIContext.d.mts"
+import type {API} from "#~src/targetIntegration/API.d.mts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 
 const impl: API["getInitialInternalData"] = async function(
 	this: APIContext

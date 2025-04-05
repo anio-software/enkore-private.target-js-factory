@@ -1,7 +1,7 @@
-import type {API} from "#~src/API.d.mts"
-import type {APIContext} from "#~src/APIContext.d.mts"
-import {generateNPMPackage} from "#~src/generateNPMPackage.mts"
-import {generateNPMTypesPackage} from "#~src/generateNPMTypesPackage.mts"
+import type {API} from "#~src/targetIntegration/API.d.mts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.mts"
+import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.mts"
 
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
