@@ -18,7 +18,7 @@ import {preInitializeFactory} from "#~src/public/hook/preInitializeFactory.mts"
 import {preLintFactory} from "#~src/public/hook/preLintFactory.mts"
 import {preCompileFactory} from "#~src/public/hook/preCompileFactory.mts"
 
-export function generateAPI(apiContext: APIContext): API {
+export function generateTargetIntegrationAPI(apiContext: APIContext): API {
 	return {
 		apiID: "EnkoreTargetIntegrationAPI",
 		apiMajorVersion: 0,
