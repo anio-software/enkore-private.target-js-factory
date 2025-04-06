@@ -1,7 +1,6 @@
 import type {
 	EnkoreJSRuntimeContextOptions
 } from "@enkore/spec"
-import type {JSRuntimeLogLevel} from "@enkore/spec/primitives"
 import {isValidLogLevelString} from "../isValidLogLevelString.mts"
 
 function toLowerCase(v: any): string {
@@ -12,7 +11,7 @@ function toLowerCase(v: any): string {
 
 export const defaultGetCurrentLogLevel: EnkoreJSRuntimeContextOptions["getCurrentLogLevel"] = function(
 	context
-): JSRuntimeLogLevel {
+) {
 	void context;
 
 	const defaultLogLevel = "info"
