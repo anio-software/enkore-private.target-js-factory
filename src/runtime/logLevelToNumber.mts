@@ -1,6 +1,6 @@
 import type {JSRuntimeLogLevel} from "@enkore/spec/primitives"
 
-export function logLevelToNumber(level: JSRuntimeLogLevel): number {
+export function logLevelToNumber(level: JSRuntimeLogLevel): number|false {
 	const map: {
 		[Level in JSRuntimeLogLevel]: number
 	} = {
@@ -17,5 +17,5 @@ export function logLevelToNumber(level: JSRuntimeLogLevel): number {
 		return map[level]
 	}
 
-	return -1
+	return false
 }
