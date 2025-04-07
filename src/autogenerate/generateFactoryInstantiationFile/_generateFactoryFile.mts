@@ -21,6 +21,7 @@ export function _generateFactoryFile(
 		destinationPath: options.destination,
 		generator(session) {
 			return _generateFactoryCode(
+				apiContext,
 				session,
 				options,
 				exportName,

@@ -1,4 +1,5 @@
 import {type EnkoreSessionAPI} from "@enkore/spec"
+import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.mts"
 import type {Options} from "./Options.mts"
 import type {Variant} from "./Variant.mts"
 import type {MyTSFunctionDeclaration} from "@enkore-types/typescript"
@@ -17,6 +18,7 @@ function convertPath(path: string) {
 }
 
 export function _generateFactoryCode(
+	apiContext: AutogenerateAPIContext,
 	session: EnkoreSessionAPI,
 	options: Options,
 	exportName: string,
