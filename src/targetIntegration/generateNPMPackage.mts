@@ -9,7 +9,7 @@ import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 
-export async function generateNPMPackage(
+async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
@@ -63,6 +63,15 @@ export async function generateNPMPackage(
 			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
 		)
 	}
+}
+
+export async function generateNPMPackage(
+	apiContext: APIContext,
+	session: EnkoreSessionAPI
+) {
+	const {entryPointMap} = getInternalData(session)
+
+	await createDistFiles(apiContext, session)
 
 	await writeAtomicFileJSON(
 		`./package.json`, getProductPackageJSON(
