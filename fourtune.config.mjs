@@ -32,6 +32,14 @@ const runtimeApiMethods = (await scandir(
 	}
 )).map(mapEntry)
 
+const autogenerateApiMethods = (await scandir(
+	path.join(__dirname, "src", "autogenerate", "public"),
+	{
+		sorted: true,
+		filter: filterEntry
+	}
+)).map(mapEntry)
+
 export default {
 	realm: {
 		name: "js",
@@ -48,6 +56,12 @@ export default {
 		"src/export/runtime/getRuntimeAPIMethodNames.mts": function() {
 			return `export function getRuntimeAPIMethodNames() {
 	return ${JSON.stringify(runtimeApiMethods)}
+}\n`
+		},
+
+		"src/export/autogenerate/getAutogenerateAPIMethodNames.mts": function() {
+			return `export function getAutogenerateAPIMethodNames() {
+	return ${JSON.stringify(autogenerateApiMethods)}
 }\n`
 		}
 	}
