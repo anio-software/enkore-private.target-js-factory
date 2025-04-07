@@ -1,9 +1,7 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
-import type {
-	MyTSFunctionDeclaration,
-	__ModuleExport as NodeMyTS
-} from "@enkore-types/typescript"
+import type {MyTSFunctionDeclaration} from "@enkore-types/typescript"
 import type {Options} from "./Options.mts"
+import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 
 type Dependency = {
 	key: string
@@ -19,10 +17,10 @@ type Ret = {
 
 export function _getImplementation(
 	session: EnkoreSessionAPI,
-	nodeMyTS: NodeMyTS,
 	options: Options,
 	implementationFunctionName: string
 ): Ret {
+	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const dependencies: Dependency[] = []
 
 	const {program} = nodeMyTS.createProgram(

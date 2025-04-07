@@ -1,9 +1,10 @@
 import {type EnkoreSessionAPI} from "@enkore/spec"
 import type {Options} from "./Options.mts"
 import type {Variant} from "./Variant.mts"
-import type {MyTSFunctionDeclaration, __ModuleExport as NodeMyTS} from "@enkore-types/typescript"
+import type {MyTSFunctionDeclaration} from "@enkore-types/typescript"
 import {_getImplementation} from "./_getImplementation.mts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.mts"
+import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 
 function convertPath(path: string) {
 	if (path.startsWith("project/src")) {
@@ -21,16 +22,14 @@ export function _generateFactoryCode(
 	exportName: string,
 	variant: Variant
 ) {
-	const nodeMyTS = session.target.getDependency(
-		"@enkore/typescript"
-	) as NodeMyTS
+	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 
 	const implementationFunctionName = (
 		variant === "syncVariant"
 	) ? "__implementationSync" : "__implementation"
 
 	const {implementation, overloads, dependencies} = _getImplementation(
-		session, nodeMyTS, options, implementationFunctionName
+		session, options, implementationFunctionName
 	)
 
 	const hasDependencies = implementation.parameters[1]?.type === "__EnkoreFunctionDependencies"
@@ -46,7 +45,7 @@ export function _generateFactoryCode(
 	code += `} from "@enkore-jsr/runtime/v0"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
-	code += generateNeededTypeDeclarations(nodeMyTS, implementation)
+	code += generateNeededTypeDeclarations(session, implementation)
 	code += `// ^^^--- types needed for implementation\n`
 	code += `\n`
 

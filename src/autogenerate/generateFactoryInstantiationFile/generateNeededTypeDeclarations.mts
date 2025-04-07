@@ -1,13 +1,15 @@
+import type {EnkoreSessionAPI} from "@enkore/spec"
 import type {
-	__ModuleExport as NodeMyTS,
 	MyTSFunctionDeclaration,
 	MyTSTopLevelTypeDescriptor
 } from "@enkore-types/typescript"
+import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 
 export function generateNeededTypeDeclarations(
-	nodeMyTS: NodeMyTS,
+	session: EnkoreSessionAPI,
 	implementation: MyTSFunctionDeclaration
 ): string {
+	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const typesNeeded: MyTSTopLevelTypeDescriptor[] = []
 	const typesPicked: Map<string, true> = new Map()
 
