@@ -1,3 +1,5 @@
+import type {TargetJSIdentifier} from "#~src/TargetJSIdentifier.d.mts"
+
 export type APIContext = {
-	target: "js-none" | "js-node" | "js-web"
+	target: TargetJSIdentifier
 }
