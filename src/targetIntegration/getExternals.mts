@@ -8,16 +8,16 @@ export function getExternals(
 ) {
 	const externals: Map<string, number> = new Map()
 
-	const targetConfig = session.target.getOptions(apiContext.target)
+	const targetOptions = session.target.getOptions(apiContext.target)
 
-	if (targetConfig.externalPackages) {
-		for (const pkg of targetConfig.externalPackages) {
+	if (targetOptions.externalPackages) {
+		for (const pkg of targetOptions.externalPackages) {
 			externals.set(pkg, 1)
 		}
 	}
 
-	if (targetConfig.exports && entryPointPath in targetConfig.exports) {
-		const entryPointConfig = targetConfig.exports[entryPointPath]
+	if (targetOptions.exports && entryPointPath in targetOptions.exports) {
+		const entryPointConfig = targetOptions.exports[entryPointPath]
 
 		if (entryPointConfig.externalPackages) {
 			for (const pkg of entryPointConfig.externalPackages) {
