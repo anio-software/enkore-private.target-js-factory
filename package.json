@@ -17,6 +17,10 @@
       "types": "./dist/runtime/index.d.mts",
       "default": "./dist/runtime/index.mjs"
     },
+    "./autogenerate": {
+      "types": "./dist/autogenerate/index.d.mts",
+      "default": "./dist/autogenerate/index.mjs"
+    },
     "./package.json": {
       "default": "./package.json"
     }
