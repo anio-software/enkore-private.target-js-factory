@@ -48,7 +48,7 @@ const impl: API["initialize"] = async function(
 		name: "npmPackage"
 	}]
 
-	const {createTypesPackage} = session.target.getConfig(this.target)
+	const {createTypesPackage} = session.target.getOptions(this.target)
 
 	if (typeof createTypesPackage !== "undefined") {
 		products.push({

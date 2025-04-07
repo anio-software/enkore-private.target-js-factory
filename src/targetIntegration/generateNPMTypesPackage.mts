@@ -34,7 +34,7 @@ export async function generateNPMTypesPackage(
 		)
 	}
 
-	const targetOptions = session.target.getConfig(apiContext.target)
+	const targetOptions = session.target.getOptions(apiContext.target)
 
 	if (typeof targetOptions.createTypesPackage === "undefined") {
 		throw new Error(`createTypesPackage is undefined`)

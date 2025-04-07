@@ -9,7 +9,7 @@ const impl: API["hook"]["preLint"] = async function(
 	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
 
-	const targetOptions = session.target.getConfig(this.target)
+	const targetOptions = session.target.getOptions(this.target)
 	const {entryPointMap} = getInternalData(session)
 
 	if (targetOptions.exports) {
