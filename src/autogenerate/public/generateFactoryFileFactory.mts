@@ -16,7 +16,7 @@ const impl: AutogenerateAPI["generateFactoryFile"] = function(
 	checkOptions(options)
 
 	if (isAsyncSyncExpandableFilePath(options.source)) {
-		return expand(options, impl)
+		return expand(this, options, impl)
 	}
 
 	return [
