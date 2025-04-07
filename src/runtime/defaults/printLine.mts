@@ -2,7 +2,7 @@ import type {
 	EnkoreJSRuntimeContextOptions
 } from "@enkore/spec"
 
-export const defaultPrintLine: EnkoreJSRuntimeContextOptions["printLine"] = function(
+export const defaultPrintLine: NonNullable<EnkoreJSRuntimeContextOptions["printLine"]> = function(
 	context, line
 ) {
 	void context;

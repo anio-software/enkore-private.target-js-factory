@@ -9,7 +9,7 @@ function toLowerCase(v: any): string {
 	return v.toLowerCase()
 }
 
-export const defaultGetCurrentLogLevel: EnkoreJSRuntimeContextOptions["getCurrentLogLevel"] = function(
+export const defaultGetCurrentLogLevel: NonNullable<EnkoreJSRuntimeContextOptions["getCurrentLogLevel"]> = function(
 	context
 ) {
 	void context;
