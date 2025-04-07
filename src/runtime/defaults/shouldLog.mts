@@ -15,10 +15,14 @@ export const defaultShouldLog: EnkoreJSRuntimeContextOptions["shouldLog"] = func
 	void tag;
 
 	const currentLogLevel = (() => {
+		if (!context.options.getCurrentLogLevel) {
+			return defaultGetCurrentLogLevel!(context)!
+		}
+
 		let newLogLevel = context.options.getCurrentLogLevel(context)
 
 		if (newLogLevel === null) {
-			return defaultGetCurrentLogLevel(context)!
+			return defaultGetCurrentLogLevel!(context)!
 		}
 
 		return newLogLevel
