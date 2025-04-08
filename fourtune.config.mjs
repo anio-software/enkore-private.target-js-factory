@@ -24,8 +24,8 @@ const apiMethods = (await scandir(
 	}
 )).map(mapEntry)
 
-const runtimeApiMethods = (await scandir(
-	path.join(__dirname, "src", "runtime", "public"),
+const projectApiMethods = (await scandir(
+	path.join(__dirname, "src", "project", "public"),
 	{
 		sorted: true,
 		filter: filterEntry
@@ -53,9 +53,9 @@ export default {
 }\n`
 		},
 
-		"src/export/runtime/getRuntimeAPIMethodNames.mts": function() {
-			return `export function getRuntimeAPIMethodNames() {
-	return ${JSON.stringify(runtimeApiMethods)}
+		"src/export/project/getProjectAPIMethodNames.mts": function() {
+			return `export function getProjectAPIMethodNames() {
+	return ${JSON.stringify(projectApiMethods)}
 }\n`
 		},
 

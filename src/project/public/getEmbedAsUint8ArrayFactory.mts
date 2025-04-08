@@ -1,5 +1,5 @@
-import type {ProjectAPI} from "#~src/runtime/ProjectAPI.d.mts"
-import type {ProjectAPIContext} from "#~src/runtime/ProjectAPIContext.d.mts"
+import type {ProjectAPI} from "#~src/project/ProjectAPI.d.mts"
+import type {ProjectAPIContext} from "#~src/project/ProjectAPIContext.d.mts"
 
 const impl: ProjectAPI["getEmbedAsUint8Array"] = function(
 	this: ProjectAPIContext, embedPath: string
