@@ -7,8 +7,6 @@ import path from "node:path"
 
 import type {RuntimeAPI} from "#~src/runtime/RuntimeAPI.d.mts"
 import type {RuntimeAPIContext} from "#~src/runtime/RuntimeAPIContext.d.mts"
-import {compareLogLevelFactory} from "#~src/runtime/public/compareLogLevelFactory.mts"
-import {createContextFactory} from "#~src/runtime/public/createContextFactory.mts"
 import {getEmbedAsStringFactory} from "#~src/runtime/public/getEmbedAsStringFactory.mts"
 import {getEmbedAsURLFactory} from "#~src/runtime/public/getEmbedAsURLFactory.mts"
 import {getEmbedAsUint8ArrayFactory} from "#~src/runtime/public/getEmbedAsUint8ArrayFactory.mts"
@@ -35,11 +33,9 @@ export async function generateRuntimeAPI(
 	}
 
 	return {
-		apiID: "EnkoreTargetJSRuntimeAPI",
+		apiID: "EnkoreTargetJSProjectAPI",
 		apiMajorVersion: 0,
 		apiRevision: 0,
-		compareLogLevel: compareLogLevelFactory(context),
-		createContext: createContextFactory(context),
 		getEmbedAsString: getEmbedAsStringFactory(context),
 		getEmbedAsURL: getEmbedAsURLFactory(context),
 		getEmbedAsUint8Array: getEmbedAsUint8ArrayFactory(context),
