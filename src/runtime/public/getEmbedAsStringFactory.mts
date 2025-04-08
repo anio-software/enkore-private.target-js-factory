@@ -1,12 +1,12 @@
-import type {RuntimeAPI} from "#~src/runtime/RuntimeAPI.d.mts"
-import type {RuntimeAPIContext} from "#~src/runtime/RuntimeAPIContext.d.mts"
+import type {ProjectAPI} from "#~src/runtime/ProjectAPI.d.mts"
+import type {ProjectAPIContext} from "#~src/runtime/ProjectAPIContext.d.mts"
 
-const impl: RuntimeAPI["getEmbedAsString"] = function(
-	this: RuntimeAPIContext, embedPath: string
+const impl: ProjectAPI["getEmbedAsString"] = function(
+	this: ProjectAPIContext, embedPath: string
 ) {
 	return ""
 }
 
-export function getEmbedAsStringFactory(context: RuntimeAPIContext) {
+export function getEmbedAsStringFactory(context: ProjectAPIContext) {
 	return impl!.bind(context)
 }

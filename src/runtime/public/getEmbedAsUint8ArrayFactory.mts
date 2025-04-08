@@ -1,12 +1,12 @@
-import type {RuntimeAPI} from "#~src/runtime/RuntimeAPI.d.mts"
-import type {RuntimeAPIContext} from "#~src/runtime/RuntimeAPIContext.d.mts"
+import type {ProjectAPI} from "#~src/runtime/ProjectAPI.d.mts"
+import type {ProjectAPIContext} from "#~src/runtime/ProjectAPIContext.d.mts"
 
-const impl: RuntimeAPI["getEmbedAsUint8Array"] = function(
-	this: RuntimeAPIContext, embedPath: string
+const impl: ProjectAPI["getEmbedAsUint8Array"] = function(
+	this: ProjectAPIContext, embedPath: string
 ) {
 	return new Uint8Array()
 }
 
-export function getEmbedAsUint8ArrayFactory(context: RuntimeAPIContext) {
+export function getEmbedAsUint8ArrayFactory(context: ProjectAPIContext) {
 	return impl!.bind(context)
 }

@@ -5,8 +5,8 @@ import {
 import {readFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
 
-import type {RuntimeAPI} from "#~src/runtime/RuntimeAPI.d.mts"
-import type {RuntimeAPIContext} from "#~src/runtime/RuntimeAPIContext.d.mts"
+import type {ProjectAPI} from "#~src/runtime/ProjectAPI.d.mts"
+import type {ProjectAPIContext} from "#~src/runtime/ProjectAPIContext.d.mts"
 import {getEmbedAsStringFactory} from "#~src/runtime/public/getEmbedAsStringFactory.mts"
 import {getEmbedAsURLFactory} from "#~src/runtime/public/getEmbedAsURLFactory.mts"
 import {getEmbedAsUint8ArrayFactory} from "#~src/runtime/public/getEmbedAsUint8ArrayFactory.mts"
@@ -16,7 +16,7 @@ import {getProjectPackageJSONFactory} from "#~src/runtime/public/getProjectPacka
 
 export async function generateRuntimeAPI(
 	userProjectRoot: string | ["inferFromCLIArgs"]
-): Promise<RuntimeAPI> {
+): Promise<ProjectAPI> {
 	const projectRoot = await getProjectRootFromArgumentAndValidate(
 		userProjectRoot
 	)
@@ -26,7 +26,7 @@ export async function generateRuntimeAPI(
 		path.join(projectRoot, "package.json")
 	)
 
-	const context: RuntimeAPIContext = {
+	const context: ProjectAPIContext = {
 		projectRoot,
 		projectConfig,
 		projectPackageJSON
