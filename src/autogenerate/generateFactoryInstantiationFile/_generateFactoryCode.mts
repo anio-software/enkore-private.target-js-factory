@@ -41,6 +41,7 @@ export function _generateFactoryCode(
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
 	code += `import {\n`
+	code += `\ttype EnkoreJSRuntimeProject,\n`
 	code += `\ttype EnkoreJSRuntimeContext,\n`
 	code += `\ttype EnkoreJSRuntimeContextOptions,\n`
 	code += `\tcreateContext as enkoreCreateContext\n`
@@ -72,10 +73,11 @@ export function _generateFactoryCode(
 
 	code += `\n`
 	code += `export function ${exportName}Factory(\n`
+	code += `\tproject: EnkoreJSRuntimeProject,\n`
 	code += `\tctxOrOptions: EnkoreJSRuntimeContext|EnkoreJSRuntimeContextOptions\n`
 	code += `): typeof __enkoreUserFunction {\n`
 
-	code += `\tconst context: EnkoreJSRuntimeContext = enkoreCreateContext(ctxOrOptions)\n`
+	code += `\tconst context: EnkoreJSRuntimeContext = enkoreCreateContext(project, ctxOrOptions)\n`
 
 	if (hasDependencies) {
 		code += `\tconst dependencies: __EnkoreFunctionDependencies = `
