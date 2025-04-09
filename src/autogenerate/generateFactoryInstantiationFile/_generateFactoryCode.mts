@@ -46,6 +46,7 @@ export function _generateFactoryCode(
 	code += `\ttype EnkoreJSRuntimeContextOptions,\n`
 	code += `\tcreateContext as enkoreCreateContext\n`
 	code += `} from "@enkore/js-runtime/v0"\n`
+	code += `import {getProject as enkoreGetProject} from "@enkore-target/${apiContext.target}/project"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
 	code += generateNeededTypeDeclarations(session, implementation)
@@ -100,10 +101,17 @@ export function _generateFactoryCode(
 	}
 
 	code += `\n`
+	code += `\tconst localContext: EnkoreJSRuntimeContext = {\n`
+	code += `\t\t...context,\n`
+	code += `\t\tproject: {\n`
+	code += `\t\t\tpackageJSON: enkoreGetProject().packageJSON\n`
+	code += `\t\t}\n`
+	code += `\t}\n`
+	code += `\n`
 
 	code += `\tconst fn: any = ${asyncStr("async ")}function ${exportName}(...args: any[]) {\n`
 	code += `\t\t// @ts-ignore:next-line\n`
-	code += `\t\treturn ${asyncStr("await ")}${implementation.name}(context, ${hasDependencies ? "dependencies, " : ""}...args);\n`
+	code += `\t\treturn ${asyncStr("await ")}${implementation.name}(localContext, ${hasDependencies ? "dependencies, " : ""}...args);\n`
 	code += `\t}\n`
 
 	code += `\n`
