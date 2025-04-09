@@ -44,7 +44,7 @@ export function _generateFactoryCode(
 	code += `\ttype EnkoreJSRuntimeContext,\n`
 	code += `\ttype EnkoreJSRuntimeContextOptions,\n`
 	code += `\tcreateContext as enkoreCreateContext\n`
-	code += `} from "@enkore-target/${apiContext.target}/runtime"\n`
+	code += `} from "@enkore/js-runtime/v0"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
 	code += generateNeededTypeDeclarations(session, implementation)
