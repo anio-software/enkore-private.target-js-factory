@@ -20,7 +20,7 @@ import {preLintFactory} from "#~src/targetIntegration/public/hook/preLintFactory
 import {preCompileFactory} from "#~src/targetIntegration/public/hook/preCompileFactory.mts"
 
 export async function generateTargetIntegrationAPI(target: TargetJSIdentifier): Promise<API> {
-	const apiContext = {
+	const apiContext: APIContext = {
 		target
 	}
 
