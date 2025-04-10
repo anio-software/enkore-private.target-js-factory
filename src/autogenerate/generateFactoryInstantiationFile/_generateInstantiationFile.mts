@@ -30,7 +30,9 @@ import {getProject as enkoreGetProject} from "@enkore-target/${apiContext.target
 import {createContext as enkoreCreateContext} from "@enkore/js-runtime/v0"
 import {${exportName}Factory as factory} from "./${exportName}Factory.mts"
 
-export const ${exportName} = factory(enkoreCreateContext(enkoreGetProject(), undefined))
+export const ${exportName} = factory(
+	enkoreCreateContext(enkoreGetProject(), undefined)
+)
 `.slice(1)
 		}
 	})
