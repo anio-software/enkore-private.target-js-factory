@@ -102,15 +102,13 @@ export function _generateFactoryCode(
 	//code += `\tif (localContext.entityMajorVersion === 0\n`
 	//code += `\t    localContext.entityMajorVersion === 1) {\n`
 	code += `\t\tconst currentPackageJSON = enkoreGetProject().packageJSON;\n`
-	code += `\t\tconst project: typeof context.project = {\n`
-	code += `\t\t\tpackageJSON: {\n`
-	code += `\t\t\t\tname: currentPackageJSON.name,\n`
-	code += `\t\t\t\tversion: currentPackageJSON.version,\n`
-	code += `\t\t\t\tauthor: currentPackageJSON.author,\n`
-	code += `\t\t\t\tlicense: currentPackageJSON.license\n`
-	code += `\t\t\t}\n`
+	code += `\t\tconst originatingPackage: typeof context.originatingPackage = {\n`
+	code += `\t\t\tname: currentPackageJSON.name,\n`
+	code += `\t\t\tversion: currentPackageJSON.version,\n`
+	code += `\t\t\tauthor: currentPackageJSON.author,\n`
+	code += `\t\t\tlicense: currentPackageJSON.license\n`
 	code += `\t\t}\n`
-	code += `\t\tlocalContext.project = project;\n`
+	code += `\t\tlocalContext.originatingPackage = originatingPackage;\n`
 	code += `\t}\n`
 	code += `\n`
 
