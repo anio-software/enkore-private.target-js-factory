@@ -41,7 +41,6 @@ export function _generateFactoryCode(
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
 	code += `import {\n`
-	code += `\ttype EnkoreJSRuntimeProject,\n`
 	code += `\ttype EnkoreJSRuntimeContext,\n`
 	code += `} from "@enkore/js-runtime/v0"\n`
 	code += `import {getProject as enkoreGetProject} from "@enkore-target/${apiContext.target}/project"\n`
