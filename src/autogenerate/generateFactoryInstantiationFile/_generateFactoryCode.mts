@@ -95,11 +95,22 @@ export function _generateFactoryCode(
 	}
 
 	code += `\n`
-	code += `\tconst localContext: EnkoreJSRuntimeContext = {\n`
-	code += `\t\t...context,\n`
-	code += `\t\tproject: {\n`
-	code += `\t\t\tpackageJSON: enkoreGetProject().packageJSON\n`
+	code += `\tconst localContext: EnkoreJSRuntimeContext = {...context}\n`
+	code += `\n`
+
+	code += `\tif (localContext.entityMajorVersion === 0) {\n`
+	//code += `\tif (localContext.entityMajorVersion === 0\n`
+	//code += `\t    localContext.entityMajorVersion === 1) {\n`
+	code += `\t\tconst currentPackageJSON = enkoreGetProject().packageJSON;\n`
+	code += `\t\tconst project: typeof context.project = {\n`
+	code += `\t\t\tpackageJSON: {\n`
+	code += `\t\t\t\tname: currentPackageJSON.name,\n`
+	code += `\t\t\t\tversion: currentPackageJSON.version,\n`
+	code += `\t\t\t\tauthor: currentPackageJSON.author,\n`
+	code += `\t\t\t\tlicense: currentPackageJSON.license\n`
+	code += `\t\t\t}\n`
 	code += `\t\t}\n`
+	code += `\t\tlocalContext.project = project;\n`
 	code += `\t}\n`
 	code += `\n`
 
