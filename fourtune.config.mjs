@@ -25,7 +25,7 @@ const apiMethods = (await scandir(
 )).map(mapEntry)
 
 const projectApiMethods = (await scandir(
-	path.join(__dirname, "src", "project", "public"),
+	path.join(__dirname, "assets", "project", "public"),
 	{
 		sorted: true,
 		filter: filterEntry
