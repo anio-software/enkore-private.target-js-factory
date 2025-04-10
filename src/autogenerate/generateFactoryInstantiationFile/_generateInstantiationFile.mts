@@ -26,11 +26,11 @@ export function _generateInstantiationFile(
 			// we assume/know that the factory file is right beside
 			// the instantiation file
 			return `
-import {getProject} from "@enkore-target/${apiContext.target}/project"
-import {createContext} from "@enkore/js-runtime/v0"
+import {getProject as enkoreGetProject} from "@enkore-target/${apiContext.target}/project"
+import {createContext as enkoreCreateContext} from "@enkore/js-runtime/v0"
 import {${exportName}Factory as factory} from "./${exportName}Factory.mts"
 
-export const ${exportName} = factory(createContext(getProject(), undefined))
+export const ${exportName} = factory(enkoreCreateContext(enkoreGetProject(), undefined))
 `.slice(1)
 		}
 	})
