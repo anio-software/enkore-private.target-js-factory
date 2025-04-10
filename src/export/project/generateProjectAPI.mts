@@ -5,14 +5,14 @@ import {
 import {readFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
 
-import type {ProjectAPI} from "#~src/project/ProjectAPI.d.mts"
-import type {ProjectAPIContext} from "#~src/project/ProjectAPIContext.d.mts"
-import {getEmbedAsStringFactory} from "#~src/project/public/getEmbedAsStringFactory.mts"
-import {getEmbedAsURLFactory} from "#~src/project/public/getEmbedAsURLFactory.mts"
-import {getEmbedAsUint8ArrayFactory} from "#~src/project/public/getEmbedAsUint8ArrayFactory.mts"
-import {getEnkoreConfigurationFactory} from "#~src/project/public/getEnkoreConfigurationFactory.mts"
-import {getProjectFactory} from "#~src/project/public/getProjectFactory.mts"
-import {getProjectPackageJSONFactory} from "#~src/project/public/getProjectPackageJSONFactory.mts"
+import type {ProjectAPI} from "#~assets/project/ProjectAPI.d.mts"
+import type {ProjectAPIContext} from "#~assets/project/ProjectAPIContext.d.mts"
+import {getEmbedAsStringFactory} from "#~assets/project/public/getEmbedAsStringFactory.mts"
+import {getEmbedAsURLFactory} from "#~assets/project/public/getEmbedAsURLFactory.mts"
+import {getEmbedAsUint8ArrayFactory} from "#~assets/project/public/getEmbedAsUint8ArrayFactory.mts"
+import {getEnkoreConfigurationFactory} from "#~assets/project/public/getEnkoreConfigurationFactory.mts"
+import {getProjectFactory} from "#~assets/project/public/getProjectFactory.mts"
+import {getProjectPackageJSONFactory} from "#~assets/project/public/getProjectPackageJSONFactory.mts"
 
 export async function generateProjectAPI(
 	userProjectRoot: string | ["inferFromCLIArgs"]
