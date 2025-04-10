@@ -77,8 +77,6 @@ export function _generateFactoryCode(
 	code += `\tcontext: EnkoreJSRuntimeContext|EnkoreJSRuntimeContextOptions\n`
 	code += `): typeof __enkoreUserFunction {\n`
 
-	code += `\tconst context: EnkoreJSRuntimeContext = enkoreCreateContext(project, ctxOrOptions)\n`
-
 	if (hasDependencies) {
 		code += `\tconst dependencies: __EnkoreFunctionDependencies = `
 
