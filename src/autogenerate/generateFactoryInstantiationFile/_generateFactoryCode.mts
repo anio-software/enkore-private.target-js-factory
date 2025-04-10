@@ -43,7 +43,6 @@ export function _generateFactoryCode(
 	code += `import {\n`
 	code += `\ttype EnkoreJSRuntimeProject,\n`
 	code += `\ttype EnkoreJSRuntimeContext,\n`
-	code += `\tcreateContext as enkoreCreateContext\n`
 	code += `} from "@enkore/js-runtime/v0"\n`
 	code += `import {getProject as enkoreGetProject} from "@enkore-target/${apiContext.target}/project"\n`
 	code += `\n`
