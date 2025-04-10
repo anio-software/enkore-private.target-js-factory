@@ -72,7 +72,6 @@ export function _generateFactoryCode(
 
 	code += `\n`
 	code += `export function ${exportName}Factory(\n`
-	code += `\tproject: EnkoreJSRuntimeProject,\n`
 	code += `\tcontext: EnkoreJSRuntimeContext|EnkoreJSRuntimeContextOptions\n`
 	code += `): typeof __enkoreUserFunction {\n`
 
