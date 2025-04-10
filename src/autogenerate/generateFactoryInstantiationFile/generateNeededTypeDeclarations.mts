@@ -27,14 +27,8 @@ export function generateNeededTypeDeclarations(
 		if (type.name === "node()") continue
 		if (typesPicked.has(type.name)) continue
 
-		// more complete ignore list:
-		// import {
-		// 	type EnkoreJSRuntimeContext,
-		// 	type EnkoreJSRuntimeContextOptions,
-		// 	createContext as enkoreCreateContext
-		// } from "@enkore-jsr/runtime/v0"
 		if (type.source === "import") {
-			if (type.importDeclaration.moduleSpecifier === "@enkore-jsr/runtime/v0") {
+			if (type.importDeclaration.moduleSpecifier.startsWith("@enkore/js-runtime")) {
 				continue
 			}
 		}
