@@ -32,7 +32,7 @@
   "type": "module",
   "devDependencies": {
     "@aniojs/node-fs": "^0.5.3",
-    "@enkore-types/rollup": "^0.0.2",
+    "@enkore-types/rollup": "^0.0.3",
     "@enkore-types/typescript": "^0.0.9",
     "@enkore/common": "^0.0.79",
     "@enkore/spec": "^0.228.0",

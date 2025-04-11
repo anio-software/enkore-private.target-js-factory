@@ -8,7 +8,7 @@ const impl: API["getDependenciesToInstall"] = async function(
 	return {
 		"@enkore/rollup": createEntity(
 			"EnkoreCoreTargetDependencyInstallSpecification", 0, 0, {
-				version: "0.0.2",
+				version: "0.0.3",
 				importKind: "star"
 			}
 		),
