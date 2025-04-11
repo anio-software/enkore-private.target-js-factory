@@ -3,7 +3,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
-import type {MyTSModule} from "@enkore-types/typescript"
+import {getTypeScriptDefinition} from "#~src/targetIntegration/getTypeScriptDefinition.mts"
 
 const impl: API["compile"] = async function(
 	this: APIContext, session, file, code
@@ -33,7 +33,7 @@ const impl: API["compile"] = async function(
 			})
 
 			ret.push({
-				contents: getTypeScriptDefinition(myTSModule),
+				contents: getTypeScriptDefinition(session, myTSModule),
 				name: fileName.slice(0, -4) + ".d.mts.txt"
 			})
 		}
@@ -49,44 +49,9 @@ const impl: API["compile"] = async function(
 		contents: nodeMyTS.stripTypes(myTSModule.source, true),
 		name: fileName.slice(0, -4) + ".mjs"
 	}, {
-		contents: getTypeScriptDefinition(myTSModule),
+		contents: getTypeScriptDefinition(session, myTSModule),
 		name: fileName.slice(0, -4) + ".d.mts"
 	}]
-
-	// todo: move into separate file
-	function getTypeScriptDefinition(mod: MyTSModule): string {
-		const {declarations,diagnosticMessages} = nodeMyTS.generateDeclarationsForModule(
-			mod, (ctx) => {
-				return [
-					nodeMyTS.expandModuleImportAndExportDeclarations(ctx),
-					// fix imports
-					nodeMyTS.remapModuleImportAndExportSpecifiers(ctx, (moduleSpecifier, decl) => {
-						if (moduleSpecifier.endsWith(".d.mts")) {
-							return undefined
-						}
-
-						if (moduleSpecifier.endsWith(".mts")) {
-							if (decl.isTypeOnly) {
-								return moduleSpecifier.slice(0, -4) + ".d.mts"
-							} else {
-								return moduleSpecifier.slice(0, -4) + ".mjs"
-							}
-						}
-
-						return undefined
-					})
-				]
-			}
-		)
-
-		for (const msg of diagnosticMessages) {
-			session.enkore.emitMessage(
-				"error", msg.message
-			)
-		}
-
-		return declarations
-	}
 }
 
 export function compileFactory(context: APIContext) {
