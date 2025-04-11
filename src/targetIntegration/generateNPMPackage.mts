@@ -18,12 +18,13 @@ async function createDistFiles(
 	const {entryPointMap} = getInternalData(session)
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
-		const externals: string[] = getExternals(apiContext, entryPointPath, session)
+		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
+		const externalTypePackages: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
 		const onRollupLogFunction = getOnRollupLogFunction(session)
 
 		const jsBundlerOptions: JsBundlerOptions = {
 			treeshake: true,
-			externals,
+			externals: externalPackages,
 			onRollupLogFunction
 		}
 
@@ -46,7 +47,7 @@ async function createDistFiles(
 
 		const declarationBundle = await utils.tsDeclarationBundler(
 			session.project.root, declarationsEntryCode, {
-				externals,
+				externals: externalTypePackages,
 				onRollupLogFunction
 			}
 		)

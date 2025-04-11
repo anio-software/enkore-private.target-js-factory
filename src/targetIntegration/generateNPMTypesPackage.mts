@@ -17,7 +17,7 @@ export async function generateNPMTypesPackage(
 	const {entryPointMap} = getInternalData(session)
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
-		const externals: string[] = getExternals(apiContext, entryPointPath, session)
+		const externals: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
 		const onRollupLogFunction = getOnRollupLogFunction(session)
 
 		const declarationsEntryCode = generateTypesPackageEntryCode(exportsMap)

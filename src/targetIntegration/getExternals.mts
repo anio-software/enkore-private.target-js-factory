@@ -4,14 +4,17 @@ import type {APIContext} from "./APIContext.d.mts"
 export function getExternals(
 	apiContext: APIContext,
 	entryPointPath: string,
-	session: EnkoreSessionAPI
+	session: EnkoreSessionAPI,
+	kind: "packages" | "typePackages"
 ) {
+	const configKey = kind === "typePackages" ? "externalTypePackages" : "externalPackages"
+
 	const externals: Map<string, number> = new Map()
 
 	const targetOptions = session.target.getOptions(apiContext.target)
 
-	if (targetOptions.externalPackages) {
-		for (const pkg of targetOptions.externalPackages) {
+	if (targetOptions[configKey]) {
+		for (const pkg of targetOptions[configKey]) {
 			externals.set(pkg, 1)
 		}
 	}
@@ -19,8 +22,8 @@ export function getExternals(
 	if (targetOptions.exports && entryPointPath in targetOptions.exports) {
 		const entryPointConfig = targetOptions.exports[entryPointPath]
 
-		if (entryPointConfig.externalPackages) {
-			for (const pkg of entryPointConfig.externalPackages) {
+		if (entryPointConfig[configKey]) {
+			for (const pkg of entryPointConfig[configKey]) {
 				externals.set(pkg, 1)
 			}
 		}
