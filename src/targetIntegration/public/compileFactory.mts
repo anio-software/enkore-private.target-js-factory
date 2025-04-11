@@ -5,53 +5,47 @@ import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import {getTypeScriptDefinition} from "#~src/targetIntegration/getTypeScriptDefinition.mts"
 
+type OnlyArray<T> = T extends object[] ? T : never
+type ObjectFile = OnlyArray<Awaited<ReturnType<API["compile"]>>>[number]
+
 const impl: API["compile"] = async function(
 	this: APIContext, session, file, code
 ) {
+	const ret: ObjectFile[] = []
+
 	const sourceFilePath = file.relativePath
 	const fileName = path.basename(sourceFilePath)
-	const isTypeScriptFile = fileName.endsWith(".mts")
 
 	session.enkore.emitMessage("info", "called compile " + sourceFilePath)
+
+	// todo: i think this doesn't apply to assets/
+	if (file.wasFiltered) return "ignore"
 
 	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
 
-	if (sourceFilePath.startsWith("assets/")) {
-		const ret = [{
-			contents: code,
-			name: fileName + ".txt"
-		}]
+	if (fileName.endsWith(".mts")) {
+		const myTSModule = myProgram.getModule(`build/${sourceFilePath}`)
 
-		// todo: handle/allow .mjs files?
-		if (isTypeScriptFile) {
-			const myTSModule = myProgram.getModule(`build/${sourceFilePath}`)
+		ret.push({
+			contents: nodeMyTS.stripTypes(myTSModule.source, true),
+			name: fileName.slice(0, -4) + ".mjs"
+		})
 
-			ret.push({
-				contents: nodeMyTS.stripTypes(myTSModule.source, true),
-				name: fileName.slice(0, -4) + ".mjs.txt"
-			})
-
-			ret.push({
-				contents: getTypeScriptDefinition(session, myTSModule),
-				name: fileName.slice(0, -4) + ".d.mts.txt"
-			})
-		}
-
-		return ret
+		ret.push({
+			contents: getTypeScriptDefinition(session, myTSModule),
+			name: fileName.slice(0, -4) + ".d.mts"
+		})
 	}
 
-	if (file.wasFiltered) return "ignore"
+	if (sourceFilePath.startsWith("assets/")) {
+		ret.push({
+			contents: code,
+			name: fileName + ".txt"
+		})
+	}
 
-	const myTSModule = myProgram.getModule(`build/${sourceFilePath}`)
-
-	return [{
-		contents: nodeMyTS.stripTypes(myTSModule.source, true),
-		name: fileName.slice(0, -4) + ".mjs"
-	}, {
-		contents: getTypeScriptDefinition(session, myTSModule),
-		name: fileName.slice(0, -4) + ".d.mts"
-	}]
+	return ret
 }
 
 export function compileFactory(context: APIContext) {
