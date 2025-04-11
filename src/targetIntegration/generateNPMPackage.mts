@@ -8,12 +8,19 @@ import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
+import {generateAPIExportGlueCode} from "#~src/export/generateAPIExportGlueCode.mts"
+import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"
+import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
+import {getAsset} from "@fourtune/realm-js/v0/assets"
 
 async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
+	const projectContext = await generateProjectAPIContext(session.project.root)
+
 	const utils = getTargetDependency(session, "@enkore/rollup")
+	const myTS = getTargetDependency(session, "@enkore/typescript")
 
 	const {entryPointMap} = getInternalData(session)
 
@@ -25,7 +32,40 @@ async function createDistFiles(
 		const jsBundlerOptions: JsBundlerOptions = {
 			treeshake: true,
 			externals: externalPackages,
-			onRollupLogFunction
+			onRollupLogFunction,
+			additionalPlugins: [{
+				when: "pre",
+				plugin: {
+					name: "enkore-target-js-project-plugin",
+
+					resolveId(id: string) {
+						if (id === `@enkore-target/js-none/project`) {
+							return `\x00enkore-project`
+						} else if (id === `\x00generateProjectAPIFromContext`) {
+							return `\x00generateProjectAPIFromContext`
+						}
+
+						return null
+					},
+
+					async load(id: string) {
+						if (id === `\x00generateProjectAPIFromContext`) {
+							return getAsset("js-bundle://project/generateProjectAPIFromContext.mts") as string
+						} else if (id === `\x00enkore-project`) {
+							return myTS.stripTypes(
+								myTS.createSourceFileFromCode(
+									`import {generateProjectAPIFromContext} from "\x00generateProjectAPIFromContext"\n` +
+									`const projectContext = ${JSON.stringify(projectContext)};\n` +
+									`const projectAPI = await generateProjectAPIFromContext(projectContext);\n` +
+									`${generateAPIExportGlueCode("API", "projectAPI", getProjectAPIMethodNames())}\n`
+								)
+							)
+						}
+
+						return null
+					}
+				}
+			}]
 		}
 
 		const jsEntryCode = generateEntryPointCode(exportsMap, false)
