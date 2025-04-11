@@ -20,7 +20,6 @@ export async function generateProjectAPIContext(
 	)
 
 	return {
-		projectRoot,
 		projectConfig,
 		projectPackageJSON
 	}
