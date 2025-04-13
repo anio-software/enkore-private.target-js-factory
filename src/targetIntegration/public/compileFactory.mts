@@ -19,7 +19,7 @@ const impl: API["compile"] = async function(
 	session.enkore.emitMessage("info", "called compile " + sourceFilePath)
 
 	// todo: i think this doesn't apply to assets/
-	if (file.wasFiltered) return "ignore"
+	if (file.wasFiltered) return "unsupported"
 
 	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
