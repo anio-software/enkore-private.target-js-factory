@@ -48,6 +48,10 @@ export function buildEntryPointMap(
 			session.project.root, "build", file.relativePath
 		))
 
+		if (!mod) {
+			throw new Error(`Unable to get source file 'build/${file.relativePath}'.`)
+		}
+
 		//
 		// handle special case "__aggregatedExports"
 		//
