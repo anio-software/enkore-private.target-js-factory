@@ -12,12 +12,25 @@ const impl: API["lint"] = async function(
 	// myNewProgram.getModule check
 	if (file.wasFiltered) return [];
 
-	let messages: NodeAPIMessage[] = []
-
 	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myNewProgram = getInternalData(session).myTSProgram
 
-	const mod = getModuleGuarded(myNewProgram, `build/${file.relativePath}`)
+	const mod = myNewProgram.getModule(`build/${file.relativePath}`)
+
+	if (!mod) {
+		// not an error if we are doing a partial build
+		if (session.enkore.getOptions()._partialBuild === true) {
+			return []
+		}
+
+		return [{
+			severity: "error",
+			id: undefined,
+			message: `failed to find module for file 'build/${file.relativePath}'`
+		}]
+	}
+
+	let messages: NodeAPIMessage[] = []
 
 	for (const moduleSpecifier of nodeMyTS.getModuleImportAndExportSpecifiers(mod)) {
 		if (moduleSpecifier.endsWith(".mjs")) {
