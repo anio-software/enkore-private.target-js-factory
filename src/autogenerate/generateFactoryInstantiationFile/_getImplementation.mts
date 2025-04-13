@@ -31,7 +31,7 @@ export function _getImplementation(
 		).compilerOptions
 	)
 
-	const mod = program.getModule(options.source)
+	const mod = program.getModule(options.source)!
 
 	if (!mod.moduleExports.has(implementationFunctionName)) {
 		throw new Error(
