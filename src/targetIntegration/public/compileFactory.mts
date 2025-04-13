@@ -22,6 +22,14 @@ const impl: API["compile"] = async function(
 	// todo: i think this doesn't apply to assets/
 	if (file.wasFiltered) return "unsupported"
 
+	// skip files that are not inside project/assets if we are
+	// doing a partial build
+	if (session.enkore.getOptions()._partialBuild === true) {
+		if (!sourceFilePath.startsWith("assets/")) {
+			return "skip"
+		}
+	}
+
 	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
 
