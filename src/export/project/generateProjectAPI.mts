@@ -7,6 +7,6 @@ export async function generateProjectAPI(
 	userProjectRoot: string | ["inferFromCLIArgs"]
 ): Promise<ProjectAPI> {
 	return await generateProjectAPIFromContext(
-		await generateProjectAPIContext(userProjectRoot)
+		await generateProjectAPIContext(userProjectRoot, true)
 	)
 }

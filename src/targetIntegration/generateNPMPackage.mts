@@ -17,7 +17,7 @@ async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
-	const projectContext = await generateProjectAPIContext(session.project.root)
+	const projectContext = await generateProjectAPIContext(session.project.root, false)
 
 	const utils = getTargetDependency(session, "@enkore/rollup")
 	const myTS = getTargetDependency(session, "@enkore/typescript")
