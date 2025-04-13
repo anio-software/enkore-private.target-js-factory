@@ -3,7 +3,7 @@ import type {
 	MyTSModule
 } from "@enkore-types/typescript"
 
-export function getModuleAsserted(prog: MyTSProgram, filePath: string): MyTSModule {
+export function getModuleGuarded(prog: MyTSProgram, filePath: string): MyTSModule {
 	const mod = prog.getModule(filePath)
 
 	if (!mod) {
