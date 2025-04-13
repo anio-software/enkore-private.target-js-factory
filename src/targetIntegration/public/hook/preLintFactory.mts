@@ -58,7 +58,7 @@ const impl: API["hook"]["preLint"] = async function(
 			)
 
 			const diagnosticMessages = nodeMyTS.typeCheckModule(
-				testProg.getModule(vFile.path), true
+				testProg.getModule(vFile.path)!, true
 			)
 
 			for (const message of diagnosticMessages) {
