@@ -3,7 +3,6 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 import type {NodeAPIMessage} from "@enkore/spec/primitives"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
-import {getModuleGuarded} from "#~src/targetIntegration/getModuleGuarded.mts"
 
 const impl: API["lint"] = async function(
 	this: APIContext, session, file
