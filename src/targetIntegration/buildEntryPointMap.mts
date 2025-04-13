@@ -73,7 +73,7 @@ export function buildEntryPointMap(
 				stripLeadingUnderscores(exportName)
 			)
 
-			const exportDescriptor = mod!.getModuleExportByName(
+			const exportDescriptor = mod.getModuleExportByName(
 				exportName, exportIndicatesTypeExport
 			)
 
