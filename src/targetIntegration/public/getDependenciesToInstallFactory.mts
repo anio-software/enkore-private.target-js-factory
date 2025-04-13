@@ -14,7 +14,7 @@ const impl: API["getDependenciesToInstall"] = async function(
 		),
 		"@enkore/typescript": createEntity(
 			"EnkoreCoreTargetDependencyInstallSpecification", 0, 0, {
-				version: "0.0.9",
+				version: "0.0.10",
 				importKind: "star"
 			}
 		)
