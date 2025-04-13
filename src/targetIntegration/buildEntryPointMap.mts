@@ -25,6 +25,15 @@ type EntryPointMap = InternalData["entryPointMap"]
 export function buildEntryPointMap(
 	session: EnkoreSessionAPI
 ): EntryPointMap {
+	// don't create map if we are building assets only
+	if (session.enkore.getOptions()._partialBuild === true) {
+		session.enkore.emitMessage(
+			`debug`, `returning empty entryPointMap.`
+		)
+
+		return new Map()
+	}
+
 	const exportProjectFiles = session.enkore.getProjectFiles("export")
 	const map: InternalData["entryPointMap"] = new Map()
 	const {myTSProgram} = getInternalData(session)
