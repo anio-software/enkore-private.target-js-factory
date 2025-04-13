@@ -3,6 +3,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 import type {NodeAPIMessage} from "@enkore/spec/primitives"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
+import {getModuleGuarded} from "#~src/targetIntegration/getModuleGuarded.mts"
 
 const impl: API["lint"] = async function(
 	this: APIContext, session, file
@@ -16,7 +17,7 @@ const impl: API["lint"] = async function(
 	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myNewProgram = getInternalData(session).myTSProgram
 
-	const mod = myNewProgram.getModule(`build/${file.relativePath}`)
+	const mod = getModuleGuarded(myNewProgram, `build/${file.relativePath}`)
 
 	for (const moduleSpecifier of nodeMyTS.getModuleImportAndExportSpecifiers(mod)) {
 		if (moduleSpecifier.endsWith(".mjs")) {

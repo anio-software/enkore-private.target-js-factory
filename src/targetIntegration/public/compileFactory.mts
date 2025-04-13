@@ -4,6 +4,7 @@ import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.m
 import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import {getTypeScriptDefinition} from "#~src/targetIntegration/getTypeScriptDefinition.mts"
+import {getModuleGuarded} from "#~src/targetIntegration/getModuleGuarded.mts"
 
 type OnlyArray<T> = T extends object[] ? T : never
 type ObjectFile = OnlyArray<Awaited<ReturnType<API["compile"]>>>[number]
@@ -25,7 +26,7 @@ const impl: API["compile"] = async function(
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (fileName.endsWith(".mts")) {
-		const myTSModule = myProgram.getModule(`build/${sourceFilePath}`)
+		const myTSModule = getModuleGuarded(myProgram, `build/${sourceFilePath}`)
 
 		ret.push({
 			contents: nodeMyTS.stripTypes(myTSModule.source, true),

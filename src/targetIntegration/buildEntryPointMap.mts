@@ -4,6 +4,7 @@ import type {
 import path from "node:path"
 import type {InternalData} from "./InternalData.d.mts"
 import {getInternalData} from "./getInternalData.mts"
+import {getModuleGuarded} from "./getModuleGuarded.mts"
 
 function stripLeadingUnderscores(str: string) {
 	for (let i = 0; i < str.length; ++i) {
@@ -44,13 +45,9 @@ export function buildEntryPointMap(
 		// NB: don't use the files inside project/* folder but the files
 		// inside the build/* folder!!
 		//
-		const mod = myTSProgram.getModule(path.join(
+		const mod = getModuleGuarded(myTSProgram, path.join(
 			session.project.root, "build", file.relativePath
 		))
-
-		if (!mod) {
-			throw new Error(`Unable to get source file 'build/${file.relativePath}'.`)
-		}
 
 		//
 		// handle special case "__aggregatedExports"
