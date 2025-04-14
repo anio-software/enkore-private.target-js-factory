@@ -23,6 +23,10 @@ export async function generateProjectAPIContext(
 		path.join(projectRoot, "package.json")
 	)
 
+	//
+	// if this API was called from node at runtime we need to make sure
+	// objects/embeds is up-to-date. We achieve this by running a partial build
+	//
 	if (invokeEnkore) {
 		const enkorePath = resolveImportSpecifierFromProjectRoot(
 			projectRoot, "enkore"
@@ -48,6 +52,8 @@ export async function generateProjectAPIContext(
 
 		console.log(messages)
 	}
+
+	// we know objects/embeds is up-to-date at this point here
 
 	return {
 		projectConfig,
