@@ -5,6 +5,7 @@ import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import {getTypeScriptDefinition} from "#~src/targetIntegration/getTypeScriptDefinition.mts"
 import {getModuleGuarded} from "#~src/targetIntegration/getModuleGuarded.mts"
+import {embedFileBundler} from "#~src/targetIntegration/embedFileBundler.mts"
 
 type OnlyArray<T> = T extends object[] ? T : never
 type ObjectFile = OnlyArray<Awaited<ReturnType<API["compile"]>>>[number]
@@ -53,6 +54,23 @@ const impl: API["compile"] = async function(
 			contents: code,
 			name: `${fileName}.enkoreRawEmbedFile`
 		})
+
+		if (isTypeScriptFile) {
+			const myTSModule = getModuleGuarded(myProgram, `build/${sourceFilePath}`)
+			const exportNames = myTSModule.getModuleExportNames()
+
+			let embedExportCode = `export * from "./build/${file.relativePath}"\n`
+
+			// default export needs to be dealt with separately
+			if (exportNames.includes("default")) {
+				embedExportCode += `export {default} from "./build/${file.relativePath}"\n`
+			}
+
+			ret.push({
+				contents: await embedFileBundler(session, embedExportCode),
+				name: `${fileName}.enkoreJsBundleFile`
+			})
+		}
 	}
 
 	return ret
