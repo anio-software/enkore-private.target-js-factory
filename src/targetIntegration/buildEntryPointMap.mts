@@ -25,7 +25,7 @@ type EntryPointMap = InternalData["entryPointMap"]
 export function buildEntryPointMap(
 	session: EnkoreSessionAPI
 ): EntryPointMap {
-	// don't create map if we are building assets only
+	// don't create map if we are building embeds only
 	if (session.enkore.getOptions()._partialBuild === true) {
 		session.enkore.emitMessage(
 			`debug`, `returning empty entryPointMap.`

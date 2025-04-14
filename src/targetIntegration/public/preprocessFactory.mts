@@ -17,15 +17,15 @@ const impl: API["preprocess"] = async function(
 	const root = dirLevel === 0 ? "./" : "../".repeat(dirLevel)
 
 	const aliases = (() => {
-		if (file.relativePath.startsWith("assets/")) {
+		if (file.relativePath.startsWith("embeds/")) {
 			return {
-				"#~assets": `${root}assets`
+				"#~embeds": `${root}embeds`
 			}
 		}
 
 		return {
 			"#~src": `${root}src`,
-			"#~assets": `${root}assets`,
+			"#~embeds": `${root}embeds`,
 			"#~export": `${root}export`
 		}
 	})() as Record<string, string>

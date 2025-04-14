@@ -1,6 +1,6 @@
 {
     "references": [
         {"path": "./tsconfig/src.json"},
-        {"path": "./tsconfig/assets.json"}
+        {"path": "./tsconfig/embeds.json"}
     ]
 }

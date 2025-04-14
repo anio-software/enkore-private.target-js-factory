@@ -2,13 +2,13 @@
     "extends": "./base.json",
     "compilerOptions": {
         "paths": {
-            "#~assets/*": [
-                "./project/assets/*"
+            "#~embeds/*": [
+                "./project/embeds/*"
             ]
         }
     },
     "include": [
-        "../project/assets/**/*",
-        "../build/assets/**/*"
+        "../project/embeds/**/*",
+        "../build/embeds/**/*"
     ]
 }

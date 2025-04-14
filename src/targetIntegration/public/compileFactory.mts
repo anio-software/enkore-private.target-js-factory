@@ -19,13 +19,13 @@ const impl: API["compile"] = async function(
 
 	session.enkore.emitMessage("info", "called compile " + sourceFilePath)
 
-	// todo: i think this doesn't apply to assets/
+	// todo: i think this doesn't apply to embeds/
 	if (file.wasFiltered) return "unsupported"
 
-	// skip files that are not inside project/assets if we are
+	// skip files that are not inside project/embeds if we are
 	// doing a partial build
 	if (session.enkore.getOptions()._partialBuild === true) {
-		if (!sourceFilePath.startsWith("assets/")) {
+		if (!sourceFilePath.startsWith("embeds/")) {
 			return "skip"
 		}
 	}
@@ -47,7 +47,7 @@ const impl: API["compile"] = async function(
 		})
 	}
 
-	if (sourceFilePath.startsWith("assets/")) {
+	if (sourceFilePath.startsWith("embeds/")) {
 		ret.push({
 			contents: code,
 			name: fileName + ".txt"

@@ -8,8 +8,8 @@
             "#~export/*": [
                 "./project/export/*"
             ],
-            "#~assets/*": [
-                "./project/assets/*"
+            "#~embeds/*": [
+                "./project/embeds/*"
             ]
         }
     },

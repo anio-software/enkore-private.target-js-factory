@@ -12,7 +12,7 @@ const impl: API["initialize"] = async function(
 	session.enkore.emitMessage("debug", "initialize target")
 
 	const typeScriptFiles = session.enkore.getProjectFiles(
-		session.enkore.getOptions()._partialBuild === true ? "assets" : undefined
+		session.enkore.getOptions()._partialBuild === true ? "embeds" : undefined
 	).map(file => {
 		return path.join("build", file.relativePath)
 	})
