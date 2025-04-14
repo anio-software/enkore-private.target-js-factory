@@ -16,6 +16,7 @@ const impl: API["compile"] = async function(
 
 	const sourceFilePath = file.relativePath
 	const fileName = path.basename(sourceFilePath)
+	const isTypeScriptFile = fileName.endsWith(".mts")
 
 	session.enkore.emitMessage("info", "called compile " + sourceFilePath)
 
@@ -33,7 +34,7 @@ const impl: API["compile"] = async function(
 	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
 	const myProgram = getInternalData(session).myTSProgram
 
-	if (fileName.endsWith(".mts")) {
+	if (isTypeScriptFile) {
 		const myTSModule = getModuleGuarded(myProgram, `build/${sourceFilePath}`)
 
 		ret.push({
