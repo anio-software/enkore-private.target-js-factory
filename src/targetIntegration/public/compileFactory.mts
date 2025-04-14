@@ -50,7 +50,7 @@ const impl: API["compile"] = async function(
 	if (sourceFilePath.startsWith("embeds/")) {
 		ret.push({
 			contents: code,
-			name: fileName + ".txt"
+			name: `${fileName}.enkoreRawEmbedFile`
 		})
 	}
 
