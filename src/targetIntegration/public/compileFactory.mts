@@ -23,14 +23,19 @@ const impl: API["compile"] = async function(
 
 	session.enkore.emitMessage("info", "called compile " + sourceFilePath)
 
-	// todo: i think this doesn't apply to embeds/
-	if (file.wasFiltered) return "unsupported"
-
-	// skip files that are not inside project/embeds if we are
-	// doing a partial build
-	if (partialBuild) {
-		if (!isEmbedFile) {
+	//
+	// check early exit condition
+	// 1.) if we are doing a partial build, ignore all files that are not
+	//     embed files
+	// 2.) we have a filtered (unsupported) file that isn't an embed file
+	//
+	if (!isEmbedFile) {
+		if (partialBuild) {
 			return "skip"
+		}
+
+		if (file.wasFiltered) {
+			return "unsupported"
 		}
 	}
 
