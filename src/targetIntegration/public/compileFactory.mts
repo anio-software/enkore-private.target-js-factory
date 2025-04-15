@@ -19,6 +19,7 @@ const impl: API["compile"] = async function(
 	const fileName = path.basename(sourceFilePath)
 	const isEmbedFile = sourceFilePath.startsWith("embeds/")
 	const isTypeScriptFile = fileName.endsWith(".mts")
+	const partialBuild = session.enkore.getOptions()._partialBuild === true
 
 	session.enkore.emitMessage("info", "called compile " + sourceFilePath)
 
@@ -27,7 +28,7 @@ const impl: API["compile"] = async function(
 
 	// skip files that are not inside project/embeds if we are
 	// doing a partial build
-	if (session.enkore.getOptions()._partialBuild === true) {
+	if (partialBuild) {
 		if (!isEmbedFile) {
 			return "skip"
 		}
