@@ -59,6 +59,8 @@ const impl: API["compile"] = async function(
 	if (isEmbedFile) {
 		ret.push({
 			contents: code,
+			// this file extension lets us find all "base" embed files
+			// from within the objects/ folder :)
 			name: `${fileName}.enkoreRawEmbedFile`
 		})
 
