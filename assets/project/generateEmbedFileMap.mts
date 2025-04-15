@@ -1,7 +1,13 @@
 import type {ScandirEntry} from "@aniojs/node-fs"
 import type {ProjectEmbedFile} from "./ProjectAPIContext.mts"
 import path from "node:path"
-import {readFileString} from "@aniojs/node-fs"
+import fs from "node:fs/promises"
+
+async function readFileBase64(path: string): Promise<string> {
+	const contents = await fs.readFile(path)
+
+	return contents.toString("base64")
+}
 
 export async function generateEmbedFileMap(
 	entries: ScandirEntry[]
@@ -29,7 +35,7 @@ export async function generateEmbedFileMap(
 		map.set(
 			`text://${embed.filePath}`, {
 				sourceFilePath: embed.filePath,
-				data: await readFileString(
+				data: await readFileBase64(
 					`${embed.origin}.enkoreRawEmbedFile`
 				)
 			}
@@ -39,7 +45,7 @@ export async function generateEmbedFileMap(
 			map.set(
 				`js-bundle://${embed.filePath}`, {
 					sourceFilePath: embed.filePath,
-					data: await readFileString(
+					data: await readFileBase64(
 						`${embed.origin}.enkoreJsBundleFile`
 					)
 				}
@@ -49,7 +55,7 @@ export async function generateEmbedFileMap(
 			map.set(
 				`dts://${embed.filePath}`, {
 					sourceFilePath: embed.filePath,
-					data: await readFileString(
+					data: await readFileBase64(
 						`${embed.origin.slice(0, -4)}.d.mts`
 					)
 				}
@@ -59,7 +65,7 @@ export async function generateEmbedFileMap(
 			map.set(
 				`js://${embed.filePath}`, {
 					sourceFilePath: embed.filePath,
-					data: await readFileString(
+					data: await readFileBase64(
 						`${embed.origin.slice(0, -4)}.mjs`
 					)
 				}
