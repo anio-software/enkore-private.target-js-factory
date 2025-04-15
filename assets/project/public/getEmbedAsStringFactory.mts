@@ -5,7 +5,7 @@ import {getEmbedData} from "../getEmbedData.mts"
 const impl: ProjectAPI["getEmbedAsString"] = function(
 	this: ProjectAPIContext, embedPath: string
 ) {
-	return getEmbedData(this, embedPath)
+	return (new TextDecoder).decode(getEmbedData(this, embedPath))
 }
 
 export function getEmbedAsStringFactory(context: ProjectAPIContext) {
