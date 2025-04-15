@@ -3,10 +3,11 @@ import {
 	getProjectRootFromArgumentAndValidate,
 	resolveImportSpecifierFromProjectRoot
 } from "@enkore/common"
-import {readFileJSON} from "@aniojs/node-fs"
+import {readFileJSON, scandir} from "@aniojs/node-fs"
 import path from "node:path"
 import {importAPI} from "@enkore/spec"
 import {createNodeAPIOptions} from "@enkore/spec/factory"
+import {generateEmbedFileMap} from "./generateEmbedFileMap.mts"
 
 import type {ProjectAPIContext} from "./ProjectAPIContext.d.mts"
 
@@ -54,9 +55,18 @@ export async function generateProjectAPIContext(
 	}
 
 	// we know objects/embeds is up-to-date at this point here
+	const embedEntries = await scandir(path.join(projectRoot, "objects", "embeds"), {
+		allow_missing_dir: true,
+		filter(entry) {
+			return entry.type === "regularFile"
+		}
+	})
+
+	const projectEmbedFileMap = await generateEmbedFileMap(embedEntries)
 
 	return {
 		projectConfig,
-		projectPackageJSON
+		projectPackageJSON,
+		projectEmbedFileMap
 	}
 }
