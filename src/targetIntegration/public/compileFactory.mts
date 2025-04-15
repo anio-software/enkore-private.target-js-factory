@@ -56,6 +56,14 @@ const impl: API["compile"] = async function(
 		})
 	}
 
+	//
+	// generate files necessary for embeds API:
+	//
+	//    'text://' -> <path>.enkoreRawEmbedFile
+	//    'js://' -> <path.slice(0, -4)>.mjs (.mts files only, generated earlier)
+	//    'dts://' -> <path.slice(0, -4)>.d.mts (.mts files only, generated earlier)
+	//    'js-bundle://' -> <path>.enkoreJsBundleFile (.mts files only)
+	//
 	if (isEmbedFile) {
 		ret.push({
 			contents: code,
