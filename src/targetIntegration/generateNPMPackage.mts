@@ -6,13 +6,49 @@ import {getExternals} from "./getExternals.mts"
 import type {JsBundlerOptions} from "@enkore-types/rollup"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateEntryPointCode} from "./generateEntryPointCode.mts"
-import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
+import {writeAtomicFile, writeAtomicFileJSON, readFileString} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 import {generateAPIExportGlueCode} from "#~src/export/generateAPIExportGlueCode.mts"
 import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {randomIdentifierSync} from "@aniojs/random-ident"
+import type {RequestedEmbedsFromCodeResult} from "@enkore-types/babel"
+
+async function getRequestedEmbedsFromFile(
+	apiContext: APIContext,
+	session: EnkoreSessionAPI,
+	filePath: string
+): Promise<RequestedEmbedsFromCodeResult> {
+	const cache = getInternalData(session).requestedEmbedsFileCache
+
+	if (cache.has(filePath)) {
+		console.log("got ", filePath, "from cache ;)")
+		return cache.get(filePath)!
+	}
+
+	const enkoreProjectModuleSpecifiers = [
+		`@enkore-target/${apiContext.target}/project`
+	]
+
+	const enkoreProjectGetEmbedProperties = [
+		"getEmbedAsString",
+		"getEmbedAsUint8Array",
+		"getEmbedAsURL"
+	]
+
+	const babel = getTargetDependency(session, "@enkore/babel")
+
+	const result = await babel.getRequestedEmbedsFromCode(
+		enkoreProjectModuleSpecifiers,
+		enkoreProjectGetEmbedProperties,
+		await readFileString(filePath)
+	)
+
+	cache.set(filePath, result)
+
+	return result
+}
 
 async function createDistFiles(
 	apiContext: APIContext,
@@ -51,8 +87,21 @@ async function createDistFiles(
 					},
 
 					async transform(code, id) {
-						// todo: trim projectContext according to this.getModuleIds()
-						console.log(Array.from(this.getModuleIds()))
+						const imports = Array.from(
+							this.getModuleIds()
+						).filter(entry => {
+							return entry.startsWith(session.project.root)
+						})
+
+						for (const entry of imports) {
+							const result = await getRequestedEmbedsFromFile(
+								apiContext,
+								session,
+								entry
+							)
+
+							// todo: process result
+						}
 
 						return code.split(projectContextToken).join(
 							JSON.stringify(JSON.stringify(projectContext))
