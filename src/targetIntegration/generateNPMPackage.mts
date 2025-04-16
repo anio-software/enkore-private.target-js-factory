@@ -29,6 +29,8 @@ async function createDistFiles(
 	const {entryPointMap} = getInternalData(session)
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
+		let includeAllEmbedsReasons: string[] = []
+
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
 		const externalTypePackages: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
 		const onRollupLogFunction = getOnRollupLogFunction(session)
@@ -88,6 +90,8 @@ async function createDistFiles(
 							}
 
 							newProjectContext.projectEmbedFileMap = newProjectEmbedFileMap
+						} else if (includeEmbeds[0] === "all") {
+							includeAllEmbedsReasons = includeEmbeds[1]
 						}
 
 						return code.split(projectContextToken).join(
@@ -150,6 +154,15 @@ async function createDistFiles(
 		await writeAtomicFile(
 			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
 		)
+
+		if (includeAllEmbedsReasons.length) {
+			session.enkore.emitMessage(
+				"warning",
+				"tbd",
+				`entry point '${entryPointPath}' has ALL embeds included in it.` +
+				` Reason(s) why: ${includeAllEmbedsReasons.join(", ")}.`
+			)
+		}
 	}
 }
 
