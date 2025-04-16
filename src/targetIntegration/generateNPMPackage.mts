@@ -87,9 +87,12 @@ async function createDistFiles(
 					},
 
 					async transform(code, id) {
-						const imports = Array.from(
+						// make sure "id" is always included
+						// in this array, it doesn't harm if it already is
+						// included.
+						const imports = [id, ...Array.from(
 							this.getModuleIds()
-						).filter(entry => {
+						)].filter(entry => {
 							return entry.startsWith(session.project.root)
 						})
 
