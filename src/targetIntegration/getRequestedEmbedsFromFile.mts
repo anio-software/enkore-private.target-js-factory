@@ -13,7 +13,6 @@ export async function getRequestedEmbedsFromFile(
 	const cache = getInternalData(session).requestedEmbedsFileCache
 
 	if (cache.has(filePath)) {
-		console.log("got ", filePath, "from cache ;)")
 		return cache.get(filePath)!
 	}
 
