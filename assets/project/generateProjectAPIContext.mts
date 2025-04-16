@@ -3,6 +3,7 @@ import {
 	getProjectRootFromArgumentAndValidate,
 	resolveImportSpecifierFromProjectRoot
 } from "@enkore/common"
+import type {NodePackageJSON} from "@enkore/spec/primitives"
 import {readFileJSON, scandir} from "@aniojs/node-fs"
 import path from "node:path"
 import {importAPI} from "@enkore/spec"
@@ -20,9 +21,9 @@ export async function generateProjectAPIContext(
 	)
 
 	const projectConfig = await readEnkoreConfigFile(projectRoot)
-	const projectPackageJSON: any = await readFileJSON(
+	const projectPackageJSON = (await readFileJSON(
 		path.join(projectRoot, "package.json")
-	)
+	)) as NodePackageJSON
 
 	//
 	// if this API was called from node at runtime we need to make sure
