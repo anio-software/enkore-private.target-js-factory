@@ -41,6 +41,7 @@ async function createDistFiles(
 			treeshake: true,
 			externals: externalPackages,
 			onRollupLogFunction,
+			// todo: move in separate file
 			additionalPlugins: [{
 				when: "pre",
 				plugin: {
