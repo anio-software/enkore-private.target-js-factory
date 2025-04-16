@@ -76,13 +76,13 @@ async function createDistFiles(
 						const includeEmbeds = combineRequestedEmbedsFromCodeResults(tmp)
 						const newProjectContext = {...projectContext}
 
-						if (includeEmbeds === "none") {
+						if (includeEmbeds[0] === "none") {
 							newProjectContext.projectEmbedFileMap = {}
-						} else if (includeEmbeds !== "all") {
+						} else if (includeEmbeds[0] === "specific") {
 							const newProjectEmbedFileMap: Record<string, any> = {}
 
 							for (const key in newProjectContext.projectEmbedFileMap) {
-								if (!includeEmbeds.has(key)) continue
+								if (!includeEmbeds[1].has(key)) continue
 
 								newProjectEmbedFileMap[key] = newProjectContext.projectEmbedFileMap[key]
 							}
