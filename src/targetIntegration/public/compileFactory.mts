@@ -39,16 +39,19 @@ const impl: API["compile"] = async function(
 		}
 	}
 
-	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
+	const babel = getTargetDependency(session, "@enkore/babel")
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (isTypeScriptFile) {
-		const myTSModule = getModuleGuarded(myProgram, `build/${sourceFilePath}`)
-
 		ret.push({
-			contents: nodeMyTS.stripTypes(myTSModule.source, true),
+			contents: babel.stripTypeScriptTypes(code, {
+				filePath: path.join(session.project.root, "build", sourceFilePath),
+				rewriteImportExtensions: true
+			}),
 			name: fileName.slice(0, -4) + ".mjs"
 		})
+
+		const myTSModule = getModuleGuarded(myProgram, `build/${sourceFilePath}`)
 
 		ret.push({
 			contents: getTypeScriptDefinition(session, myTSModule),
