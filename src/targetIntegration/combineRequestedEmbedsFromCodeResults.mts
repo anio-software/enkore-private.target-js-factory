@@ -1,15 +1,23 @@
 import type {RequestedEmbedsFromCodeResult} from "@enkore-types/babel"
 
+type Ret = [
+	"specific", Map<string, true>
+] | [
+	"all"
+] | [
+	"none"
+]
+
 export function combineRequestedEmbedsFromCodeResults(
 	results: RequestedEmbedsFromCodeResult[]
-): Map<string, true>|"all"|"none" {
+): Ret {
 	// keep track of requested embeds
 	const requestedEmbeds: Map<string, true> = new Map()
 
 	for (const result of results) {
 		if (result.codeRequestsEmbeds === false) continue
 		if (result.requestedEmbeds === "unknown") {
-			return "all"
+			return ["all"]
 		}
 
 		for (const embed of result.requestedEmbeds) {
@@ -18,8 +26,8 @@ export function combineRequestedEmbedsFromCodeResults(
 	}
 
 	if (!requestedEmbeds.size) {
-		return "none"
+		return ["none"]
 	}
 
-	return requestedEmbeds
+	return ["specific", requestedEmbeds]
 }
