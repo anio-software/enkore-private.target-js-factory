@@ -13,7 +13,7 @@ import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProje
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {randomIdentifierSync} from "@aniojs/random-ident"
-import {getRequestedEmbedsFromFile} from "./getRequestedEmbedsFromFile.mts"
+import {getRequestedEmbedsFromFileCached} from "./getRequestedEmbedsFromFileCached.mts"
 import type {RequestedEmbedsFromCodeResult} from "@enkore-types/babel"
 import {combineRequestedEmbedsFromCodeResults} from "./combineRequestedEmbedsFromCodeResults.mts"
 
@@ -66,7 +66,7 @@ async function createDistFiles(
 						const tmp: RequestedEmbedsFromCodeResult[] = []
 
 						for (const entry of imports) {
-							tmp.push(await getRequestedEmbedsFromFile(
+							tmp.push(await getRequestedEmbedsFromFileCached(
 								apiContext,
 								session,
 								entry

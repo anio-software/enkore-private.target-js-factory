@@ -5,7 +5,7 @@ import {readFileString} from "@aniojs/node-fs"
 import {getInternalData} from "./getInternalData.mts"
 import {getTargetDependency} from "./getTargetDependency.mts"
 
-export async function getRequestedEmbedsFromFile(
+export async function getRequestedEmbedsFromFileCached(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
 	filePath: string
