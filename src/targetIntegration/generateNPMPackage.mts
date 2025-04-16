@@ -47,7 +47,7 @@ async function createDistFiles(
 					name: "enkore-target-js-project-plugin",
 
 					resolveId(id: string) {
-						if (id === `@enkore-target/js-none/project`) {
+						if (id === `@enkore-target/${apiContext.target}/project`) {
 							return `\x00enkore-project`
 						} else if (id === `\x00generateProjectAPIFromContext`) {
 							return `\x00generateProjectAPIFromContext`
