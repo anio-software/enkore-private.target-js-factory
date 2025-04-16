@@ -5,10 +5,7 @@ export async function embedFileBundler(
 	session: EnkoreSessionAPI, entryCode: string
 ): Promise<string> {
 	const {jsBundler} = getTargetDependency(session, "@enkore/rollup")
-	const {
-		createSourceFileFromCode,
-		stripTypes
-	} = getTargetDependency(session, "@enkore/typescript")
+	const {stripTypeScriptTypes} = getTargetDependency(session, "@enkore/babel")
 
 	return await jsBundler(
 		session.project.root, entryCode, {
@@ -24,12 +21,10 @@ export async function embedFileBundler(
 							return null
 						}
 
-						return stripTypes(
-							createSourceFileFromCode(code, {
-								filePath: id
-							}),
-							false
-						)
+						return stripTypeScriptTypes(code, {
+							rewriteImportExtensions: false,
+							filePath: id
+						})
 					}
 				}
 			}]
