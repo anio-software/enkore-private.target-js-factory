@@ -17,6 +17,12 @@ const impl: API["getDependenciesToInstall"] = async function(
 				version: "0.0.10",
 				importKind: "star"
 			}
+		),
+		"@enkore/babel": createEntity(
+			"EnkoreCoreTargetDependencyInstallSpecification", 0, 0, {
+				version: "0.0.1",
+				importKind: "star"
+			}
 		)
 	}
 }
