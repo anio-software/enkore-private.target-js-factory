@@ -35,7 +35,7 @@
     "@aniojs/random-ident": "^0.1.2",
     "@enkore-types/babel": "^0.0.4",
     "@enkore-types/rollup": "^0.0.3",
-    "@enkore-types/typescript": "^0.0.10",
+    "@enkore-types/typescript": "^0.0.11",
     "@enkore/common": "^0.0.81",
     "@enkore/spec": "^0.230.0",
     "@enkore/target-js-utils": "^0.0.4",
