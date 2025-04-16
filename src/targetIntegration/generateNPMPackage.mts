@@ -13,42 +13,7 @@ import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProje
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {randomIdentifierSync} from "@aniojs/random-ident"
-import type {RequestedEmbedsFromCodeResult} from "@enkore-types/babel"
-
-async function getRequestedEmbedsFromFile(
-	apiContext: APIContext,
-	session: EnkoreSessionAPI,
-	filePath: string
-): Promise<RequestedEmbedsFromCodeResult> {
-	const cache = getInternalData(session).requestedEmbedsFileCache
-
-	if (cache.has(filePath)) {
-		console.log("got ", filePath, "from cache ;)")
-		return cache.get(filePath)!
-	}
-
-	const enkoreProjectModuleSpecifiers = [
-		`@enkore-target/${apiContext.target}/project`
-	]
-
-	const enkoreProjectGetEmbedProperties = [
-		"getEmbedAsString",
-		"getEmbedAsUint8Array",
-		"getEmbedAsURL"
-	]
-
-	const babel = getTargetDependency(session, "@enkore/babel")
-
-	const result = await babel.getRequestedEmbedsFromCode(
-		enkoreProjectModuleSpecifiers,
-		enkoreProjectGetEmbedProperties,
-		await readFileString(filePath)
-	)
-
-	cache.set(filePath, result)
-
-	return result
-}
+import {getRequestedEmbedsFromFile} from "./getRequestedEmbedsFromFile.mts"
 
 async function createDistFiles(
 	apiContext: APIContext,
