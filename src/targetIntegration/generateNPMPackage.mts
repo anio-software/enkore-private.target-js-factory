@@ -30,6 +30,7 @@ async function createDistFiles(
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
 		let includeAllEmbedsReasons: string[] = []
+		const includedEmbeds: Map<string, {size: number}> = new Map()
 
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
 		const externalTypePackages: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
@@ -87,11 +88,17 @@ async function createDistFiles(
 								if (!includeEmbeds[1].has(key)) continue
 
 								newProjectEmbedFileMap[key] = newProjectContext.projectEmbedFileMap[key]
+
+								includedEmbeds.set(key, {size: newProjectEmbedFileMap[key].data.length})
 							}
 
 							newProjectContext.projectEmbedFileMap = newProjectEmbedFileMap
 						} else if (includeEmbeds[0] === "all") {
 							includeAllEmbedsReasons = includeEmbeds[1]
+
+							for (const key in newProjectContext.projectEmbedFileMap) {
+								includedEmbeds.set(key, {size: newProjectContext.projectEmbedFileMap[key].data.length})
+							}
 						}
 
 						return code.split(projectContextToken).join(
@@ -162,6 +169,16 @@ async function createDistFiles(
 				`entry point '${entryPointPath}' has ALL embeds included in it.` +
 				` Reason(s) why: ${includeAllEmbedsReasons.join(", ")}.`
 			)
+		}
+
+		if (includedEmbeds.size) {
+			for (const [key, value] of includedEmbeds.entries()) {
+				session.enkore.emitMessage(
+					"info",
+					"tbd",
+					`entry point '${entryPointPath}': embedded '${key}' (size = ${value.size} Byte(s)).`
+				)
+			}
 		}
 	}
 }
