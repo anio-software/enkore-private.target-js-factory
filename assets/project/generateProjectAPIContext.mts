@@ -9,8 +9,14 @@ import path from "node:path"
 import {importAPI} from "@enkore/spec"
 import {createNodeAPIOptions} from "@enkore/spec/factory"
 import {generateEmbedFileMap} from "./generateEmbedFileMap.mts"
-
+import crypto from "node:crypto"
 import type {ProjectAPIContext} from "./ProjectAPIContext.d.mts"
+
+function sha256Sync(str: string): string {
+	const hash = crypto.createHash("sha256")
+
+	return hash.update(str).digest("hex").toLowerCase()
+}
 
 export async function generateProjectAPIContext(
 	userProjectRoot: string | ["inferFromCLIArgs"],
@@ -64,8 +70,9 @@ export async function generateProjectAPIContext(
 	})
 
 	const projectEmbedFileMap = await generateEmbedFileMap(embedEntries)
-	// tbd
-	const projectId = ``
+	const projectId = sha256Sync(
+		`${projectPackageJSON.name}@${projectPackageJSON.version}`
+	)
 
 	return {
 		projectId,
