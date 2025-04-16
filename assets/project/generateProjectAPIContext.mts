@@ -63,8 +63,11 @@ export async function generateProjectAPIContext(
 	})
 
 	const projectEmbedFileMap = await generateEmbedFileMap(embedEntries)
+	// tbd
+	const projectId = ``
 
 	return {
+		projectId,
 		projectConfig,
 		projectPackageJSON,
 		projectEmbedFileMap
