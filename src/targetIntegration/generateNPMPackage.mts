@@ -24,7 +24,7 @@ async function createDistFiles(
 	const projectContext = await generateProjectAPIContext(session.project.root, false)
 
 	const utils = getTargetDependency(session, "@enkore/rollup")
-	const myTS = getTargetDependency(session, "@enkore/typescript")
+	const babel = getTargetDependency(session, "@enkore/babel")
 
 	const {entryPointMap} = getInternalData(session)
 
@@ -111,13 +111,14 @@ async function createDistFiles(
 						if (id === `\x00generateProjectAPIFromContext`) {
 							return getAsset("js-bundle://project/generateProjectAPIFromContext.mts") as string
 						} else if (id === `\x00enkore-project`) {
-							return myTS.stripTypes(
-								myTS.createSourceFileFromCode(
-									`import {generateProjectAPIFromContext} from "\x00generateProjectAPIFromContext"\n` +
-									`const projectContext = JSON.parse(${projectContextToken});\n` +
-									`const projectAPI = await generateProjectAPIFromContext(projectContext);\n` +
-									`${generateAPIExportGlueCode("API", "projectAPI", getProjectAPIMethodNames())}\n`
-								)
+							return babel.stripTypeScriptTypes(
+								`import {generateProjectAPIFromContext} from "\x00generateProjectAPIFromContext"\n` +
+								`const projectContext = JSON.parse(${projectContextToken});\n` +
+								`const projectAPI = await generateProjectAPIFromContext(projectContext);\n` +
+								`${generateAPIExportGlueCode("API", "projectAPI", getProjectAPIMethodNames())}\n`,
+								{
+									rewriteImportExtensions: false
+								}
 							)
 						}
 
