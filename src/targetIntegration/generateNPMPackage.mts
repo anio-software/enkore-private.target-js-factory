@@ -14,6 +14,8 @@ import {generateProjectAPIContext} from "#~assets/project/generateProjectAPICont
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {randomIdentifierSync} from "@aniojs/random-ident"
 import {getRequestedEmbedsFromFile} from "./getRequestedEmbedsFromFile.mts"
+import type {RequestedEmbedsFromCodeResult} from "@enkore-types/babel"
+import {combineRequestedEmbedsFromCodeResults} from "./combineRequestedEmbedsFromCodeResults.mts"
 
 async function createDistFiles(
 	apiContext: APIContext,
@@ -61,18 +63,35 @@ async function createDistFiles(
 							return entry.startsWith(session.project.root)
 						})
 
+						const tmp: RequestedEmbedsFromCodeResult[] = []
+
 						for (const entry of imports) {
-							const result = await getRequestedEmbedsFromFile(
+							tmp.push(await getRequestedEmbedsFromFile(
 								apiContext,
 								session,
 								entry
-							)
+							))
+						}
 
-							// todo: process result
+						const includeEmbeds = combineRequestedEmbedsFromCodeResults(tmp)
+						const newProjectContext = {...projectContext}
+
+						if (includeEmbeds === "none") {
+							newProjectContext.projectEmbedFileMap = {}
+						} else if (includeEmbeds !== "all") {
+							const newProjectEmbedFileMap: Record<string, any> = {}
+
+							for (const key in newProjectContext.projectEmbedFileMap) {
+								if (!includeEmbeds.has(key)) continue
+
+								newProjectEmbedFileMap[key] = newProjectContext.projectEmbedFileMap[key]
+							}
+
+							newProjectContext.projectEmbedFileMap = newProjectEmbedFileMap
 						}
 
 						return code.split(projectContextToken).join(
-							JSON.stringify(JSON.stringify(projectContext))
+							JSON.stringify(JSON.stringify(newProjectContext))
 						)
 					},
 
