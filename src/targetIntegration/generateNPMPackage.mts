@@ -16,6 +16,7 @@ import {randomIdentifierSync} from "@aniojs/random-ident"
 import {getRequestedEmbedsFromFileCached} from "./getRequestedEmbedsFromFileCached.mts"
 import type {RequestedEmbedsFromCodeResult} from "@enkore-types/babel"
 import {combineRequestedEmbedsFromCodeResults} from "./combineRequestedEmbedsFromCodeResults.mts"
+import {enkoreJSRuntimeProjectContextMarkerUUID} from "@enkore/spec/uuid"
 
 async function createDistFiles(
 	apiContext: APIContext,
@@ -27,6 +28,19 @@ async function createDistFiles(
 	const babel = getTargetDependency(session, "@enkore/babel")
 
 	const {entryPointMap} = getInternalData(session)
+
+	//
+	// this helps us identify project contexts in already bundled packages
+	// the first 36 characters are the UUID for the project context
+	// the next characters are always `;v0;projectId:` followed by the
+	// projectId which is always 64 characters (hex SHA256) long
+	// i.e. the prefix will always be 36 + 14 + 64 = 114 characters long
+	//
+	const projectContextStringPrefix = enkoreJSRuntimeProjectContextMarkerUUID + `;v0;projectId:` + projectContext.projectId
+
+	if (projectContextStringPrefix.length !== 114) {
+		throw new Error(`bug: projectContextStringPrefix is not 114 bytes long.`)
+	}
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
 		let includeAllEmbedsReasons: string[] = []
@@ -103,7 +117,9 @@ async function createDistFiles(
 						}
 
 						return code.split(projectContextToken).join(
-							JSON.stringify(JSON.stringify(newProjectContext))
+							JSON.stringify(
+								projectContextStringPrefix + JSON.stringify(newProjectContext)
+							)
 						)
 					},
 
@@ -113,7 +129,7 @@ async function createDistFiles(
 						} else if (id === `\x00enkore-project`) {
 							return babel.stripTypeScriptTypes(
 								`import {generateProjectAPIFromContext} from "\x00generateProjectAPIFromContext"\n` +
-								`const projectContext = JSON.parse(${projectContextToken});\n` +
+								`const projectContext = JSON.parse(${projectContextToken}.slice(${projectContextStringPrefix.length}));\n` +
 								`const projectAPI = await generateProjectAPIFromContext(projectContext);\n` +
 								`${generateAPIExportGlueCode("API", "projectAPI", getProjectAPIMethodNames())}\n`,
 								{
