@@ -1,7 +1,7 @@
-import type {ScandirEntry} from "@aniojs/node-fs"
 import type {ProjectEmbedFile} from "./ProjectAPIContext.mts"
 import path from "node:path"
 import fs from "node:fs/promises"
+import {scandir} from "@aniojs/node-fs"
 
 async function readFileBase64(path: string): Promise<string> {
 	const contents = await fs.readFile(path)
@@ -10,9 +10,15 @@ async function readFileBase64(path: string): Promise<string> {
 }
 
 export async function generateEmbedFileMap(
-	entries: ScandirEntry[]
+	projectRoot: string
 ): Promise<Record<string, ProjectEmbedFile>> {
 	const map: Map<string, ProjectEmbedFile> = new Map()
+	const entries = await scandir(path.join(projectRoot, "objects", "embeds"), {
+		allow_missing_dir: true,
+		filter(entry) {
+			return entry.type === "regularFile"
+		}
+	})
 
 	const baseEmbeds = entries.filter(e => {
 		return e.name.endsWith(".enkoreRawEmbedFile")
