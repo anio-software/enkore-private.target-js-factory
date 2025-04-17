@@ -37,7 +37,7 @@
     "@enkore-types/rollup": "^0.0.3",
     "@enkore-types/typescript": "^0.0.11",
     "@enkore/common": "^0.0.83",
-    "@enkore/spec": "^0.232.0",
+    "@enkore/spec": "^0.233.0",
     "@enkore/target-js-utils": "^0.0.4",
     "@fourtune/core": "^0.1101.0",
     "@fourtune/realm-js": "^1.0.5",
