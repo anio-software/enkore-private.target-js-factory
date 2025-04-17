@@ -4,7 +4,7 @@ import type {
 } from "@enkore-types/babel"
 
 type Ret = [
-	"specific", Map<string, true>
+	"specific", Map<string, string>
 ] | [
 	"all", RequestedEmbedsFromCodeReasonWhyUnknown[]
 ] | [
@@ -15,7 +15,7 @@ export function combineRequestedEmbedsFromCodeResults(
 	results: RequestedEmbedsFromCodeResult[]
 ): Ret {
 	// keep track of requested embeds
-	const requestedEmbeds: Map<string, true> = new Map()
+	const requestedEmbeds: Map<string, string> = new Map()
 	const reasonsWhyUnknown: Map<RequestedEmbedsFromCodeReasonWhyUnknown, true> = new Map()
 
 	for (const result of results) {
@@ -27,7 +27,7 @@ export function combineRequestedEmbedsFromCodeResults(
 		}
 
 		for (const embed of result.requestedEmbeds) {
-			requestedEmbeds.set(embed, true)
+			requestedEmbeds.set(embed.embedPath, embed.requestedByMethod)
 		}
 	}
 
