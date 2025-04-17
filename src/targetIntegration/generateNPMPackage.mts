@@ -107,7 +107,7 @@ async function createDistFiles(
 
 								newProjectEmbedFileMap[key] = newProjectContext.projectEmbedFileMap[key]
 
-								addEmbed(key, "unknown")
+								addEmbed(key, includeEmbeds[1].get(key)!)
 							}
 
 							newProjectContext.projectEmbedFileMap = newProjectEmbedFileMap
