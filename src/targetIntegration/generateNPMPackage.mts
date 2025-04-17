@@ -44,7 +44,10 @@ async function createDistFiles(
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
 		let includeAllEmbedsReasons: string[] = []
-		const includedEmbeds: Map<string, {size: number}> = new Map()
+		const includedEmbeds: Map<string, {
+			size: number
+			requestedByMethods: string[]
+		}> = new Map()
 
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
 		const externalTypePackages: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
@@ -104,7 +107,7 @@ async function createDistFiles(
 
 								newProjectEmbedFileMap[key] = newProjectContext.projectEmbedFileMap[key]
 
-								addEmbed(key)
+								addEmbed(key, "unknown")
 							}
 
 							newProjectContext.projectEmbedFileMap = newProjectEmbedFileMap
@@ -112,7 +115,7 @@ async function createDistFiles(
 							includeAllEmbedsReasons = includeEmbeds[1]
 
 							for (const key in newProjectContext.projectEmbedFileMap) {
-								addEmbed(key)
+								addEmbed(key, "unknown")
 							}
 						}
 
@@ -122,14 +125,21 @@ async function createDistFiles(
 							)
 						)
 
-						function addEmbed(embedPath: string) {
+						function addEmbed(embedPath: string, requestedByMethod: string) {
 							const embedFile = projectContext.projectEmbedFileMap[embedPath]
 
-							includedEmbeds.set(
-								embedPath, {
-									size: embedFile.data.length
-								}
-							)
+							if (!includedEmbeds.has(embedPath)) {
+								includedEmbeds.set(embedPath, {
+									size: embedFile.data.length,
+									requestedByMethods: []
+								})
+							}
+
+							const embed = includedEmbeds.get(embedPath)!
+
+							if (!embed.requestedByMethods.includes(requestedByMethod)) {
+								embed.requestedByMethods.push(requestedByMethod)
+							}
 						}
 					},
 
