@@ -8,6 +8,7 @@ import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
+import {rollupPluginFactory} from "./rollupPluginFactory.mts"
 
 async function createDistFiles(
 	apiContext: APIContext,
@@ -25,7 +26,8 @@ async function createDistFiles(
 		const jsBundlerOptions: JsBundlerOptions = {
 			treeshake: true,
 			externals: externalPackages,
-			onRollupLogFunction
+			onRollupLogFunction,
+			additionalPlugins: [await rollupPluginFactory(session, apiContext)]
 		}
 
 		const jsEntryCode = generateEntryPointCode(exportsMap, false)
