@@ -104,7 +104,7 @@ async function createDistFiles(
 
 								newProjectEmbedFileMap[key] = newProjectContext.projectEmbedFileMap[key]
 
-								includedEmbeds.set(key, {size: newProjectEmbedFileMap[key].data.length})
+								addEmbed(key)
 							}
 
 							newProjectContext.projectEmbedFileMap = newProjectEmbedFileMap
@@ -112,7 +112,7 @@ async function createDistFiles(
 							includeAllEmbedsReasons = includeEmbeds[1]
 
 							for (const key in newProjectContext.projectEmbedFileMap) {
-								includedEmbeds.set(key, {size: newProjectContext.projectEmbedFileMap[key].data.length})
+								addEmbed(key)
 							}
 						}
 
@@ -121,6 +121,16 @@ async function createDistFiles(
 								projectContextStringPrefix + JSON.stringify(newProjectContext)
 							)
 						)
+
+						function addEmbed(embedPath: string) {
+							const embedFile = projectContext.projectEmbedFileMap[embedPath]
+
+							includedEmbeds.set(
+								embedPath, {
+									size: embedFile.data.length
+								}
+							)
+						}
 					},
 
 					async load(id: string) {
