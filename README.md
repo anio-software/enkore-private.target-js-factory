@@ -36,3 +36,6 @@ The global embed identifier is a SHA256 hash hex string from the input: `${proje
 
 Where the `projectId` is also a SHA256 hash hex string of the package name + version.
 
+The translation from local path to global embed identifier is also embedded inside the final product.
+
+This allows the running environment to not have a SHA256 hashing algorithm (e.g. `window.crypto.sublte` is only available in secure contexts.)
