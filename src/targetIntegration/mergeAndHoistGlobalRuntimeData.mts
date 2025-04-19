@@ -1,4 +1,9 @@
-import type {EnkoreSessionAPI} from "@enkore/spec"
+import {
+	type EnkoreSessionAPI,
+	type EnkoreJSRuntimeGlobalEmbed,
+	isEntityOfKind,
+	createEntity
+} from "@enkore/spec"
 import {getTargetDependency} from "./getTargetDependency.mts"
 import {getGlobalRuntimeDataInitCode} from "./getGlobalRuntimeDataInitCode.mts"
 
@@ -7,22 +12,28 @@ export function mergeAndHoistGlobalRuntimeData(
 	code: string
 ): string {
 	const babel = getTargetDependency(session, "@enkore/babel")
-	let newMap: Record<string, unknown> = {}
+	let newGlobalEmbeds: Record<string, EnkoreJSRuntimeGlobalEmbed> = {}
 
 	const {
 		code: newCode,
-		globalProjectEmbedMaps
-	} = babel.getAndRemoveEnkoreJSRuntimeGlobalProjectEmbedMapsStringFromCode(
-		"@enkore/target-js/globalEmbedsMap",
-		"__initEnkoreJSRuntimeGlobalProjectEmbedMap",
+		globalData
+	} = babel.getAndRemoveEnkoreJSRuntimeGlobalDataStringFromCode(
 		code
 	)
 
-	for (const str of globalProjectEmbedMaps) {
-		const map = JSON.parse(str)
+	for (const entry of globalData) {
+		if (!isEntityOfKind(entry, "EnkoreJSRuntimeGlobalData")) {
+			continue
+		}
 
-		newMap = {...newMap, ...map}
+		for (const id in entry.embeds) {
+			newGlobalEmbeds[id] = entry.embeds[id]
+		}
 	}
 
-	return getGlobalRuntimeDataInitCode(session, newMap) + newCode
+	const newGlobalData = createEntity("EnkoreJSRuntimeGlobalData", 0, 0, {
+		embeds: newGlobalEmbeds
+	})
+
+	return getGlobalRuntimeDataInitCode(session, newGlobalData) + newCode
 }
