@@ -43,6 +43,7 @@ async function createDistFiles(
 			}
 		))
 
+		// don't do this, minify jsBundle code
 		const minifiedJsBundle = mergeAndHoistEmbeds(await utils.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
