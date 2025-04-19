@@ -33,7 +33,7 @@
   "devDependencies": {
     "@aniojs/node-fs": "^0.5.3",
     "@aniojs/random-ident": "^0.1.2",
-    "@enkore-types/babel": "^0.0.15",
+    "@enkore-types/babel": "^0.0.16",
     "@enkore-types/rollup": "^0.0.3",
     "@enkore-types/typescript": "^0.0.15",
     "@enkore/common": "^0.0.87",
