@@ -1,6 +1,5 @@
 import type {ProjectAPIContext, ProjectEmbedFile} from "./ProjectAPIContext.mts"
-
-type GlobalEmbedsMap = Record<string, ProjectEmbedFile>
+import type {EnkoreJSRuntimeGlobalData} from "@enkore/spec"
 
 export function getEmbedData(
 	context: ProjectAPIContext,
@@ -38,17 +37,21 @@ export function getEmbedData(
 			throw new Error(`globalThis[Symbol.for("@enkore/target-js-factory/globalData")] is not set. This is a bug.`)
 		}
 
-		const globalEmbedsMap = (
+		const globalData = (
 			(globalThis as any)[globalThisPropKey]
-		) as GlobalEmbedsMap
+		) as EnkoreJSRuntimeGlobalData[]
 
-		if (!(globalEmbedId in globalEmbedsMap)) {
+		if (globalData.length !== 1) {
+			throw new Error(`globalData.length is ${globalData.length}. This is a bug.`)
+		}
+
+		if (!(globalEmbedId in globalData[0].embeds)) {
 			throw new Error(
 				`Unable to locate '${globalEmbedId}' in the global embed map. This is a bug.`
 			)
 		}
 
-		embedData = globalEmbedsMap[globalEmbedId].data
+		embedData = globalData[0].embeds[globalEmbedId].data
 	}
 
 	// from https://web.dev/articles/base64-encoding
