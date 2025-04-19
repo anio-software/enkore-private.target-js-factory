@@ -6,7 +6,7 @@ import {
 import type {NodePackageJSON} from "@enkore/spec/primitives"
 import {readFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
-import {importAPI} from "@enkore/spec"
+import {importAPI, createEntity} from "@enkore/spec"
 import {createNodeAPIOptions} from "@enkore/spec/factory"
 import {generateEmbedFileMap} from "./generateEmbedFileMap.mts"
 import crypto from "node:crypto"
@@ -78,6 +78,11 @@ export async function generateProjectAPIContext(
 	}
 
 	return {
+		project: createEntity("EnkoreJSRuntimeProject", 0, 0, {
+			projectId: projectId,
+			enkoreConfiguration: JSON.parse(JSON.stringify(projectConfig)),
+			packageJSON: JSON.parse(JSON.stringify(projectPackageJSON))
+		}),
 		projectId,
 		projectConfig,
 		projectPackageJSON,
