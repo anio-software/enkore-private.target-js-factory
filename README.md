@@ -39,3 +39,8 @@ Where the `projectId` is also a SHA256 hash hex string of the package name + ver
 The translation from local path to global embed identifier is also embedded inside the final product.
 
 This allows the running environment to not have a SHA256 hashing algorithm (e.g. `window.crypto.sublte` is only available in secure contexts.)
+
+The hoisting of embeds has two runtime side-effects:
+
+1. A property on `globalThis` that stores all embeds, accessible via the global embed identifier.
+2. A function that "initializes" the global embed map; this is to make them read-only.
