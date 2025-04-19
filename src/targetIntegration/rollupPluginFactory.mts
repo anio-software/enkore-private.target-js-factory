@@ -86,7 +86,12 @@ export async function rollupPluginFactory(
 			}
 
 			const globalRuntimeData = createEntity("EnkoreJSRuntimeGlobalData", 0, 0, {
-				embeds
+				immutable: {
+					embeds
+				},
+				mutable: {
+					embedResourceURLs: {}
+				}
 			})
 
 			//
