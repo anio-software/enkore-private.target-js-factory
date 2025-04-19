@@ -67,10 +67,21 @@ export async function generateProjectAPIContext(
 		`${projectPackageJSON.name}@${projectPackageJSON.version}`
 	)
 
+	// provide translation between local and global embed URLs
+	// this is mainly to not have the user (end application) do SHA256..
+	const projectEmbedFileTranslationMap: Record<string, string> = {}
+
+	for (const [embedPath] of _projectEmbedFileMapRemoveMeInBundle.entries()) {
+		projectEmbedFileTranslationMap[embedPath] = sha256Sync(
+			`${projectId}/${embedPath}`
+		)
+	}
+
 	return {
 		projectId,
 		projectConfig,
 		projectPackageJSON,
+		projectEmbedFileTranslationMap,
 		_projectEmbedFileMapRemoveMeInBundle
 	}
 }

@@ -10,5 +10,6 @@ export type ProjectAPIContext = {
 	projectId: string
 	projectConfig: EnkoreConfig
 	projectPackageJSON: NodePackageJSON
+	projectEmbedFileTranslationMap: Record<string, string>
 	_projectEmbedFileMapRemoveMeInBundle: Map<string, ProjectEmbedFile>
 }
