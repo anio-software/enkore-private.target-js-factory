@@ -27,7 +27,9 @@ async function createDistFiles(
 			treeshake: true,
 			externals: externalPackages,
 			onRollupLogFunction,
-			additionalPlugins: [await rollupPluginFactory(session, apiContext)]
+			additionalPlugins: [
+				await rollupPluginFactory(session, apiContext)
+			]
 		}
 
 		const jsEntryCode = generateEntryPointCode(exportsMap, false)
