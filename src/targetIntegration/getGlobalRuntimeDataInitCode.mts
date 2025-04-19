@@ -1,4 +1,4 @@
-export function getGlobalEmbedInitCode(
+export function getGlobalRuntimeDataInitCode(
 	map: Record<string, unknown>
 ): string {
 	let code = ``

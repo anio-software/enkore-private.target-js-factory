@@ -1,6 +1,6 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
 import {getTargetDependency} from "./getTargetDependency.mts"
-import {getGlobalEmbedInitCode} from "./getGlobalEmbedInitCode.mts"
+import {getGlobalRuntimeDataInitCode} from "./getGlobalRuntimeDataInitCode.mts"
 
 export function mergeAndHoistGlobalRuntimeData(
 	session: EnkoreSessionAPI,
@@ -24,5 +24,5 @@ export function mergeAndHoistGlobalRuntimeData(
 		newMap = {...newMap, ...map}
 	}
 
-	return getGlobalEmbedInitCode(newMap) + newCode
+	return getGlobalRuntimeDataInitCode(newMap) + newCode
 }
