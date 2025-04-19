@@ -26,6 +26,7 @@ export async function rollupPluginFactory(
 			if (!requestedEmbeds.usedEmbeds.has(embedPath)) {
 				// should be safe as per https://stackoverflow.com/a/35943995 "ES6: Is it dangerous to delete elements from Set/Map during Set/Map iteration?"
 				projectContext._projectEmbedFileMapRemoveMeInBundle.delete(embedPath)
+				delete projectContext.projectEmbedFileTranslationMap[embedPath]
 			}
 		}
 	}
