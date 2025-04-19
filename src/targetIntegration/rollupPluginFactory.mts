@@ -62,8 +62,11 @@ export async function rollupPluginFactory(
 				const hashPath = projectContext.projectEmbedFileTranslationMap[embedPath]
 
 				embeds[hashPath] = createEntity("EnkoreJSRuntimeGlobalEmbed", 0, 0, {
+					projectId: projectContext.projectId,
+					sourceFilePath: value.sourceFilePath,
 					originalEmbedPath: embedPath,
-					data: value.data
+					data: value.data,
+					_projectIdentifier: `${session.project.packageJSON.name}@${session.project.packageJSON.version}`
 				})
 			}
 
