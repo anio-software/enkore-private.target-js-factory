@@ -1,4 +1,8 @@
-import type {EnkoreSessionAPI} from "@enkore/spec"
+import {
+	type EnkoreSessionAPI,
+	type EnkoreJSRuntimeGlobalEmbed,
+	createEntity
+} from "@enkore/spec"
 import type {JsBundlerOptions} from "@enkore-types/rollup"
 import type {APIContext} from "./APIContext.d.mts"
 import type {InternalData} from "./InternalData.d.mts"
@@ -52,18 +56,25 @@ export async function rollupPluginFactory(
 		name: "enkore-target-js-project-plugin",
 
 		intro() {
-			let embedMap: Record<string, unknown> = {}
+			const embeds: Record<string, EnkoreJSRuntimeGlobalEmbed> = {}
 
 			for (const [embedPath, value] of projectContext._projectEmbedFileMapRemoveMeInBundle.entries()) {
 				const hashPath = projectContext.projectEmbedFileTranslationMap[embedPath]
 
-				embedMap[hashPath] = value
+				embeds[hashPath] = createEntity("EnkoreJSRuntimeGlobalEmbed", 0, 0, {
+					originalEmbedPath: embedPath,
+					data: value.data
+				})
 			}
+
+			const globalRuntimeData = createEntity("EnkoreJSRuntimeGlobalData", 0, 0, {
+				embeds
+			})
 
 			//
 			// this will later be merged with other global embed maps
 			//
-			return getGlobalRuntimeDataInitCode(session, embedMap)
+			return getGlobalRuntimeDataInitCode(session, globalRuntimeData)
 		},
 
 		resolveId(id) {
