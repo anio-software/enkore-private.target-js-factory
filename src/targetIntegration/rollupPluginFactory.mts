@@ -36,6 +36,9 @@ export async function rollupPluginFactory(
 	}
 
 	// projectContext is now trimmed
+	const bundlerProjectContext = {...projectContext} as ProjectAPIContext
+
+	delete bundlerProjectContext._projectEmbedFileMapRemoveMeInBundle;
 
 	const plugin: Factory["plugin"] = {
 		name: "enkore-target-js-project-plugin",
