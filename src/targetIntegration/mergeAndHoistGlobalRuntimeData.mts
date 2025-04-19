@@ -2,7 +2,7 @@ import type {EnkoreSessionAPI} from "@enkore/spec"
 import {getTargetDependency} from "./getTargetDependency.mts"
 import {getGlobalEmbedInitCode} from "./getGlobalEmbedInitCode.mts"
 
-export function mergeAndHoistGlobalEmbedsMaps(
+export function mergeAndHoistGlobalRuntimeData(
 	session: EnkoreSessionAPI,
 	code: string
 ): string {
