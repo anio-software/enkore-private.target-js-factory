@@ -25,13 +25,18 @@ export function mergeAndHoistGlobalRuntimeData(
 			continue
 		}
 
-		for (const id in entry.embeds) {
-			newGlobalEmbeds[id] = entry.embeds[id]
+		for (const id in entry.immutable.embeds) {
+			newGlobalEmbeds[id] = entry.immutable.embeds[id]
 		}
 	}
 
 	const newGlobalData = createEntity("EnkoreJSRuntimeGlobalData", 0, 0, {
-		embeds: newGlobalEmbeds
+		immutable: {
+			embeds: newGlobalEmbeds
+		},
+		mutable: {
+			embedResourceURLs: {}
+		}
 	})
 
 	return babel.defineEnkoreJSRuntimeGlobalData(
