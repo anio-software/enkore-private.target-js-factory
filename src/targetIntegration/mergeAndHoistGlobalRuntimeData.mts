@@ -34,6 +34,7 @@ export function mergeAndHoistGlobalRuntimeData(
 		immutable: {
 			embeds: newGlobalEmbeds
 		},
+		// will be populated / used at runtime
 		mutable: {
 			embedResourceURLs: {}
 		}

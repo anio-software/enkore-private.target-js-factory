@@ -89,6 +89,7 @@ export async function rollupPluginFactory(
 				immutable: {
 					embeds
 				},
+				// will be populated / used at runtime
 				mutable: {
 					embedResourceURLs: {}
 				}
