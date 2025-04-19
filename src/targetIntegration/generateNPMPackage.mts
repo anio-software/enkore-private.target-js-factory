@@ -28,7 +28,7 @@ async function createDistFiles(
 			externals: externalPackages,
 			onRollupLogFunction,
 			additionalPlugins: [
-				await rollupPluginFactory(session, apiContext)
+				await rollupPluginFactory(session, apiContext, exportsMap)
 			]
 		}
 
