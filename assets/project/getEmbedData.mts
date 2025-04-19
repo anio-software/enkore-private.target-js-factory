@@ -45,13 +45,13 @@ export function getEmbedData(
 			throw new Error(`globalData.length is ${globalData.length}. This is a bug.`)
 		}
 
-		if (!(globalEmbedId in globalData[0].embeds)) {
+		if (!(globalEmbedId in globalData[0].immutable.embeds)) {
 			throw new Error(
 				`Unable to locate '${globalEmbedId}' in the global embed map. This is a bug.`
 			)
 		}
 
-		embedData = globalData[0].embeds[globalEmbedId].data
+		embedData = globalData[0].immutable.embeds[globalEmbedId].data
 	}
 
 	// from https://web.dev/articles/base64-encoding
