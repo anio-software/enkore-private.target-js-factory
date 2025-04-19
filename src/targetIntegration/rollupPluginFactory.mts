@@ -2,6 +2,7 @@ import type {EnkoreSessionAPI} from "@enkore/spec"
 import type {JsBundlerOptions} from "@enkore-types/rollup"
 import type {APIContext} from "./APIContext.d.mts"
 import type {InternalData} from "./InternalData.d.mts"
+import type {ProjectAPIContext} from "#~assets/project/ProjectAPIContext.mts"
 import {getRequestedEmbeds} from "./getRequestedEmbeds.mts"
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
 import {getGlobalEmbedInitCode} from "./getGlobalEmbedInitCode.mts"
@@ -14,7 +15,9 @@ export async function rollupPluginFactory(
 	apiContext: APIContext,
 	exportMap: MapValueType<InternalData["entryPointMap"]>
 ): Promise<Factory> {
-	const projectContext = await generateProjectAPIContext(session.project.root, false)
+	const projectContext = (
+		await generateProjectAPIContext(session.project.root, false)
+	) as Required<ProjectAPIContext>
 
 	//
 	// optimization: check which embeds can be trimmed/ommited
