@@ -16,7 +16,7 @@ export function generateNeededTypeDeclarations(
 	const typeTree = nodeMyTS.getRequiredTopLevelTypesForNode(implementation)
 
 	typeTree.depthFirstTraversal(node => {
-		typesNeeded.push(node.getType())
+		typesNeeded.push(node.getData())
 	})
 
 	typesNeeded.reverse()
