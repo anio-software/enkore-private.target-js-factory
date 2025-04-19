@@ -16,7 +16,7 @@ export function mergeAndHoistGlobalRuntimeData(
 	const {
 		code: newCode,
 		globalData
-	} = babel.getAndRemoveEnkoreJSRuntimeGlobalDataStringFromCode(
+	} = babel.removeEnkoreJSRuntimeArtifactsFromCode(
 		code
 	)
 
