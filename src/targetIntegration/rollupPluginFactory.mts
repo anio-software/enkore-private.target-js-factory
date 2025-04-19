@@ -9,7 +9,6 @@ import type {InternalData} from "./InternalData.d.mts"
 import type {ProjectAPIContext} from "#~assets/project/ProjectAPIContext.mts"
 import {getRequestedEmbeds} from "./getRequestedEmbeds.mts"
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
-import {getGlobalRuntimeDataInitCode} from "./getGlobalRuntimeDataInitCode.mts"
 import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"
 import {generateAPIExportGlueCode} from "#~src/export/generateAPIExportGlueCode.mts"
 import {getTargetDependency} from "./getTargetDependency.mts"
@@ -77,7 +76,7 @@ export async function rollupPluginFactory(
 			//
 			// this will later be merged with other global embed maps
 			//
-			return getGlobalRuntimeDataInitCode(session, globalRuntimeData)
+			return babel.defineEnkoreJSRuntimeGlobalData(globalRuntimeData)
 		},
 
 		resolveId(id) {

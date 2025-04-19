@@ -5,7 +5,6 @@ import {
 	createEntity
 } from "@enkore/spec"
 import {getTargetDependency} from "./getTargetDependency.mts"
-import {getGlobalRuntimeDataInitCode} from "./getGlobalRuntimeDataInitCode.mts"
 
 export function mergeAndHoistGlobalRuntimeData(
 	session: EnkoreSessionAPI,
@@ -35,5 +34,7 @@ export function mergeAndHoistGlobalRuntimeData(
 		embeds: newGlobalEmbeds
 	})
 
-	return getGlobalRuntimeDataInitCode(session, newGlobalData) + newCode
+	return babel.defineEnkoreJSRuntimeGlobalData(
+		newGlobalData
+	) + newCode
 }
