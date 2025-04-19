@@ -32,10 +32,10 @@ export function getEmbedData(
 		}
 
 		const globalEmbedId = context.projectEmbedFileTranslationMap[url]
-		const globalThisPropKey = Symbol.for("@enkore/target-js/globalEmbedsMap")
+		const globalThisPropKey = Symbol.for("@enkore/target-js-factory/globalData")
 
 		if (!(globalThisPropKey in globalThis)) {
-			throw new Error(`globalThis[Symbol.for("@enkore/target-js/globalEmbedsMap")] is not set. This is a bug.`)
+			throw new Error(`globalThis[Symbol.for("@enkore/target-js-factory/globalData")] is not set. This is a bug.`)
 		}
 
 		const globalEmbedsMap = (
