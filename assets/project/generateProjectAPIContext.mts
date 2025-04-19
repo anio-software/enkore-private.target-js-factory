@@ -62,7 +62,7 @@ export async function generateProjectAPIContext(
 	}
 
 	// we know objects/embeds is up-to-date at this point here
-	const projectEmbedFileMap = await generateEmbedFileMap(projectRoot)
+	const _projectEmbedFileMapRemoveMeInBundle = await generateEmbedFileMap(projectRoot)
 	const projectId = sha256Sync(
 		`${projectPackageJSON.name}@${projectPackageJSON.version}`
 	)
@@ -71,6 +71,6 @@ export async function generateProjectAPIContext(
 		projectId,
 		projectConfig,
 		projectPackageJSON,
-		projectEmbedFileMap
+		_projectEmbedFileMapRemoveMeInBundle
 	}
 }
