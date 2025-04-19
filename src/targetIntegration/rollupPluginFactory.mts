@@ -4,6 +4,7 @@ import type {APIContext} from "./APIContext.d.mts"
 import type {InternalData} from "./InternalData.d.mts"
 import {getRequestedEmbeds} from "./getRequestedEmbeds.mts"
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
+import {getGlobalEmbedInitCode} from "./getGlobalEmbedInitCode.mts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 type MapValueType<A> = A extends Map<any, infer V> ? V : never;
@@ -34,7 +35,22 @@ export async function rollupPluginFactory(
 	// projectContext is now trimmed
 
 	const plugin: Factory["plugin"] = {
-		name: "enkore-target-js-project-plugin"
+		name: "enkore-target-js-project-plugin",
+
+		intro() {
+			let embedMap: Record<string, unknown> = {}
+
+			for (const [embedPath, value] of projectContext._projectEmbedFileMapRemoveMeInBundle.entries()) {
+				const hashPath = projectContext.projectEmbedFileTranslationMap[embedPath]
+
+				embedMap[hashPath] = value
+			}
+
+			//
+			// this will later be merged with other global embed maps
+			//
+			return getGlobalEmbedInitCode(embedMap)
+		}
 	}
 
 	return {

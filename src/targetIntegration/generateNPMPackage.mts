@@ -9,6 +9,7 @@ import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 import {rollupPluginFactory} from "./rollupPluginFactory.mts"
+import {mergeAndHoistGlobalEmbedsMaps} from "./mergeAndHoistGlobalEmbedsMaps.mts"
 
 async function createDistFiles(
 	apiContext: APIContext,
@@ -35,19 +36,19 @@ async function createDistFiles(
 		const jsEntryCode = generateEntryPointCode(exportsMap, false)
 		const declarationsEntryCode = generateEntryPointCode(exportsMap, true)
 
-		const jsBundle = await utils.jsBundler(
+		const jsBundle = mergeAndHoistEmbeds(await utils.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
 				minify: false
 			}
-		)
+		))
 
-		const minifiedJsBundle = await utils.jsBundler(
+		const minifiedJsBundle = mergeAndHoistEmbeds(await utils.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
 				minify: true
 			}
-		)
+		))
 
 		const declarationBundle = await utils.tsDeclarationBundler(
 			session.project.root, declarationsEntryCode, {
@@ -67,6 +68,10 @@ async function createDistFiles(
 		await writeAtomicFile(
 			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
 		)
+
+		function mergeAndHoistEmbeds(code: string): string {
+			return mergeAndHoistGlobalEmbedsMaps(session, code)
+		}
 	}
 }
 
