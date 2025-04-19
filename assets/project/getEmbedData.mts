@@ -1,4 +1,4 @@
-import type {ProjectAPIContext, ProjectEmbedFile} from "./ProjectAPIContext.mts"
+import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
 import type {EnkoreJSRuntimeGlobalData} from "@enkore/spec"
 
 export function getEmbedData(
