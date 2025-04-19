@@ -11,7 +11,7 @@ async function readFileBase64(path: string): Promise<string> {
 
 export async function generateEmbedFileMap(
 	projectRoot: string
-): Promise<Record<string, ProjectEmbedFile>> {
+): Promise<Map<string, ProjectEmbedFile>> {
 	const map: Map<string, ProjectEmbedFile> = new Map()
 	const entries = await scandir(path.join(projectRoot, "objects", "embeds"), {
 		allow_missing_dir: true,
@@ -79,6 +79,5 @@ export async function generateEmbedFileMap(
 		}
 	}
 
-	// so we are able to easily JSON.stringify the map
-	return Object.fromEntries(map.entries())
+	return map
 }
