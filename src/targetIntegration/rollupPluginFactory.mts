@@ -63,7 +63,7 @@ export async function rollupPluginFactory(
 			//
 			// this will later be merged with other global embed maps
 			//
-			return getGlobalRuntimeDataInitCode(embedMap)
+			return getGlobalRuntimeDataInitCode(session, embedMap)
 		},
 
 		resolveId(id) {

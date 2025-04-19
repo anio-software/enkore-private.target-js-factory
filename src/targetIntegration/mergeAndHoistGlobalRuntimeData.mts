@@ -24,5 +24,5 @@ export function mergeAndHoistGlobalRuntimeData(
 		newMap = {...newMap, ...map}
 	}
 
-	return getGlobalRuntimeDataInitCode(newMap) + newCode
+	return getGlobalRuntimeDataInitCode(session, newMap) + newCode
 }

@@ -1,4 +1,8 @@
+import type {EnkoreSessionAPI} from "@enkore/spec"
+import {getTargetDependency} from "./getTargetDependency.mts"
+
 export function getGlobalRuntimeDataInitCode(
+	session: EnkoreSessionAPI,
 	map: Record<string, unknown>
 ): string {
 	let code = ``
