@@ -1,9 +1,10 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
 import {getTargetDependency} from "./getTargetDependency.mts"
+import type {EnkoreJSRuntimeGlobalData} from "@enkore/spec"
 
 export function getGlobalRuntimeDataInitCode(
 	session: EnkoreSessionAPI,
-	globalData: Record<string, unknown>
+	globalData: EnkoreJSRuntimeGlobalData
 ): string {
 	const babel = getTargetDependency(session, "@enkore/babel")
 
