@@ -6,6 +6,10 @@ import type {ProjectAPIContext} from "#~assets/project/ProjectAPIContext.mts"
 import {getRequestedEmbeds} from "./getRequestedEmbeds.mts"
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
 import {getGlobalEmbedInitCode} from "./getGlobalEmbedInitCode.mts"
+import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"
+import {generateAPIExportGlueCode} from "#~src/export/generateAPIExportGlueCode.mts"
+import {getTargetDependency} from "./getTargetDependency.mts"
+import {getAsset} from "@fourtune/realm-js/v0/assets"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 type MapValueType<A> = A extends Map<any, infer V> ? V : never;
@@ -15,6 +19,8 @@ export async function rollupPluginFactory(
 	apiContext: APIContext,
 	exportMap: MapValueType<InternalData["entryPointMap"]>
 ): Promise<Factory> {
+	const babel = getTargetDependency(session, "@enkore/babel")
+
 	const projectContext = (
 		await generateProjectAPIContext(session.project.root, false)
 	) as Required<ProjectAPIContext>
@@ -40,6 +46,8 @@ export async function rollupPluginFactory(
 
 	delete bundlerProjectContext._projectEmbedFileMapRemoveMeInBundle;
 
+	const bundlerProjectContextString = JSON.stringify(JSON.stringify(bundlerProjectContext))
+
 	const plugin: Factory["plugin"] = {
 		name: "enkore-target-js-project-plugin",
 
@@ -56,6 +64,44 @@ export async function rollupPluginFactory(
 			// this will later be merged with other global embed maps
 			//
 			return getGlobalEmbedInitCode(embedMap)
+		},
+
+		resolveId(id) {
+			if (id === `@enkore-target/${apiContext.target}/project`) {
+				return `\x00enkore:projectAPI`
+			} else if (id === `enkore:generateProjectAPIFromContext`) {
+				return `\x00enkore:generateProjectAPIFromContext`
+			}
+
+			return null
+		},
+
+		load(id) {
+			if (id === `\x00enkore:projectAPI`) {
+				let apiCode = ``
+
+				apiCode += `import {generateProjectAPIFromContext} from "enkore:generateProjectAPIFromContext"\n`
+
+				apiCode += `const __api = await generateProjectAPIFromContext(JSON.parse(${bundlerProjectContextString}));\n`
+
+				apiCode += generateAPIExportGlueCode(
+					"TypeDoesntMatterWillBeStrippedAnyway",
+					"__api",
+					getProjectAPIMethodNames()
+				)
+
+				return babel.stripTypeScriptTypes(
+					apiCode, {
+						rewriteImportExtensions: false
+					}
+				)
+			} else if (id === `\x00enkore:generateProjectAPIFromContext`) {
+				return getAsset(
+					"js-bundle://project/generateProjectAPIFromContext.mts"
+				) as string
+			}
+
+			return null
 		}
 	}
 
