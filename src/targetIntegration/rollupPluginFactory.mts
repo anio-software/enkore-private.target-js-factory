@@ -104,8 +104,8 @@ export async function rollupPluginFactory(
 		resolveId(id) {
 			if (id === `@enkore-target/${apiContext.target}/project`) {
 				return `\x00enkore:projectAPI`
-			} else if (id === `enkore:generateProjectAPIFromContext`) {
-				return `\x00enkore:generateProjectAPIFromContext`
+			} else if (id === `enkore:generateProjectAPIFromContextRollup`) {
+				return `\x00enkore:generateProjectAPIFromContextRollup`
 			}
 
 			return null
@@ -115,9 +115,9 @@ export async function rollupPluginFactory(
 			if (id === `\x00enkore:projectAPI`) {
 				let apiCode = ``
 
-				apiCode += `import {generateProjectAPIFromContext} from "enkore:generateProjectAPIFromContext"\n`
+				apiCode += `import {generateProjectAPIFromContextRollup} from "enkore:generateProjectAPIFromContextRollup"\n`
 
-				apiCode += `const __api = await generateProjectAPIFromContext(JSON.parse(${bundlerProjectContextString}));\n`
+				apiCode += `const __api = await generateProjectAPIFromContextRollup(JSON.parse(${bundlerProjectContextString}));\n`
 
 				apiCode += generateAPIExportGlueCode(
 					"TypeDoesntMatterWillBeStrippedAnyway",
@@ -130,9 +130,9 @@ export async function rollupPluginFactory(
 						rewriteImportExtensions: false
 					}
 				)
-			} else if (id === `\x00enkore:generateProjectAPIFromContext`) {
+			} else if (id === `\x00enkore:generateProjectAPIFromContextRollup`) {
 				return getAsset(
-					"js-bundle://project/generateProjectAPIFromContext.mts"
+					"js-bundle://project/generateProjectAPIFromContextRollup.mts"
 				) as string
 			}
 
