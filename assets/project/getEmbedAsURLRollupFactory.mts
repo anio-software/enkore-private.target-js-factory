@@ -1,0 +1,36 @@
+import type {ProjectAPI} from "./ProjectAPI.mts"
+import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
+import {_translateEmbedPath} from "./_translateEmbedPath.mts"
+import {_getGlobalRuntimeData} from "./_getGlobalRuntimeData.mts"
+
+const impl: ProjectAPI["getEmbedAsURL"] = function(
+	this: ProjectAPIContext, embedPath: string
+) {
+	// node runtime branch
+	if (this._projectEmbedFileMapRemoveMeInBundle) {
+		throw new Error(`We should never get here. This is a bug.`)
+	}
+
+	const globalEmbedId = _translateEmbedPath(this, embedPath)
+	const globalData = _getGlobalRuntimeData()
+
+	if (!(globalEmbedId in globalData.mutable.embedResourceURLs)) {
+		throw new Error(
+			`Embed with id '${globalEmbedId} is missing from globalData.mutable.embedResourceURLs. This is a bug.'`
+		)
+	}
+
+	const resourceURL = globalData.mutable.embedResourceURLs[globalEmbedId]
+
+	if (!resourceURL.length) {
+		throw new Error(
+			`Embed with id '${globalEmbedId}' doesn't have a resource associated with it. This is a bug.`
+		)
+	}
+
+	return resourceURL
+}
+
+export function getEmbedAsURLRollupFactory(context: ProjectAPIContext) {
+	return impl!.bind(context)
+}
