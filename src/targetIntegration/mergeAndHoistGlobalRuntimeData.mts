@@ -40,7 +40,27 @@ export function mergeAndHoistGlobalRuntimeData(
 		}
 	})
 
-	return babel.defineEnkoreJSRuntimeGlobalData(
+	let ret = ``
+
+	ret += babel.defineEnkoreJSRuntimeGlobalData(
 		newGlobalData
-	) + newCode
+	)
+
+	ret += babel.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `
+		for (const embedId in runtimeData.immutable.embeds) {
+			const embed = runtimeData.immutable.embeds[embedId]
+
+			if (embed._createResourceAtRuntimeInit !== true) continue
+			if (embedId in runtimeData.mutable.embedResourceURLs) {
+				continue
+			}
+
+			runtimeData.mutable.embedResourceURLs[embedId] = "something"
+		}
+`)
+	ret += babel.invokeEnkoreJSRuntimeGlobalInitFunction()
+
+	ret += newCode
+
+	return ret
 }
