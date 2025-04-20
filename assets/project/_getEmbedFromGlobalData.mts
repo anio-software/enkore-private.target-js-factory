@@ -1,4 +1,5 @@
 import type {ProjectAPIContext, ProjectEmbedFile} from "./ProjectAPIContext.mts"
+import {_translateEmbedPath} from "./_translateEmbedPath.mts"
 import {_getGlobalRuntimeData} from "./_getGlobalRuntimeData.mts"
 
 //
@@ -8,15 +9,7 @@ export function _getEmbedFromGlobalData(
 	context: ProjectAPIContext,
 	embedPath: string
 ): ProjectEmbedFile {
-	// get the global embed id
-	if (!(embedPath in context.projectEmbedFileTranslationMap)) {
-		throw new Error(
-			`Don't know how to translate local embed path '${embedPath}' to global identifier.`
-		)
-	}
-
-	const globalEmbedId = context.projectEmbedFileTranslationMap[embedPath]
-
+	const globalEmbedId = _translateEmbedPath(context, embedPath)
 	const globalData = _getGlobalRuntimeData()
 
 	if (!(globalEmbedId in globalData.immutable.embeds)) {
