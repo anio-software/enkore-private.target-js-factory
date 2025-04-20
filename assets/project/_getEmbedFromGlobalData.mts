@@ -1,5 +1,5 @@
 import type {ProjectAPIContext, ProjectEmbedFile} from "./ProjectAPIContext.mts"
-import {_translateEmbedPath} from "./_translateEmbedPath.mts"
+import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.mts"
 import {_getGlobalRuntimeData} from "./_getGlobalRuntimeData.mts"
 
 //
@@ -9,7 +9,7 @@ export function _getEmbedFromGlobalData(
 	context: ProjectAPIContext,
 	embedPath: string
 ): ProjectEmbedFile {
-	const globalEmbedId = _translateEmbedPath(context, embedPath)
+	const globalEmbedId = translateEmbedPathToGlobalEmbedID(context, embedPath)
 	const globalData = _getGlobalRuntimeData()
 
 	if (!(globalEmbedId in globalData.immutable.embeds)) {

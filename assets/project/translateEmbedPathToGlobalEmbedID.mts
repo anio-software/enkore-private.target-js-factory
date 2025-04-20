@@ -1,6 +1,6 @@
 import type {ProjectAPIContext} from "./ProjectAPIContext.mts";
 
-export function _translateEmbedPath(
+export function translateEmbedPathToGlobalEmbedID(
 	context: ProjectAPIContext,
 	embedPath: string
 ): string {
