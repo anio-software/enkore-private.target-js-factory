@@ -25,6 +25,9 @@ export function mergeAndHoistGlobalRuntimeData(
 			continue
 		}
 
+		// quick hack
+		if (!entry.immutable) continue
+
 		for (const id in entry.immutable.embeds) {
 			newGlobalEmbeds[id] = entry.immutable.embeds[id]
 		}
@@ -59,7 +62,6 @@ export function mergeAndHoistGlobalRuntimeData(
 		}
 `)
 	ret += babel.invokeEnkoreJSRuntimeGlobalInitFunction()
-
 	ret += newCode
 
 	return ret
