@@ -3,7 +3,7 @@ import type {EnkoreJSRuntimeGlobalData} from "@enkore/spec"
 //
 // this function should only be called within a bundle context
 //
-export function _getGlobalRuntimeData(): EnkoreJSRuntimeGlobalData {
+export function getGlobalRuntimeData(): EnkoreJSRuntimeGlobalData {
 	const globalThisPropKey = Symbol.for("@enkore/target-js-factory/globalData")
 
 	if (!(globalThisPropKey in globalThis)) {

@@ -1,7 +1,7 @@
 import type {ProjectAPI} from "./ProjectAPI.mts"
 import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
 import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.mts"
-import {_getGlobalRuntimeData} from "./_getGlobalRuntimeData.mts"
+import {getGlobalRuntimeData} from "./getGlobalRuntimeData.mts"
 
 const impl: ProjectAPI["getEmbedAsURL"] = function(
 	this: ProjectAPIContext, embedPath: string
@@ -12,7 +12,7 @@ const impl: ProjectAPI["getEmbedAsURL"] = function(
 	}
 
 	const globalEmbedId = translateEmbedPathToGlobalEmbedID(this, embedPath)
-	const globalData = _getGlobalRuntimeData()
+	const globalData = getGlobalRuntimeData()
 
 	if (!(globalEmbedId in globalData.mutable.embedResourceURLs)) {
 		throw new Error(
