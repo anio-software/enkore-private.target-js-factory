@@ -8,7 +8,7 @@ import {readFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
 import {importAPI, createEntity} from "@enkore/spec"
 import {createNodeAPIOptions} from "@enkore/spec/factory"
-import {generateEmbedFileMap} from "./generateEmbedFileMap.mts"
+import {_generateEmbedFileMap} from "./_generateEmbedFileMap.mts"
 import crypto from "node:crypto"
 import type {ProjectAPIContext} from "./ProjectAPIContext.d.mts"
 
@@ -62,7 +62,7 @@ export async function generateProjectAPIContext(
 	}
 
 	// we know objects/embeds is up-to-date at this point here
-	const _projectEmbedFileMapRemoveMeInBundle = await generateEmbedFileMap(projectRoot)
+	const _projectEmbedFileMapRemoveMeInBundle = await _generateEmbedFileMap(projectRoot)
 	const projectId = sha256Sync(
 		`${projectPackageJSON.name}@${projectPackageJSON.version}`
 	)

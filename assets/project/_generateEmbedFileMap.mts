@@ -9,7 +9,7 @@ async function readFileBase64(path: string): Promise<string> {
 	return contents.toString("base64")
 }
 
-export async function generateEmbedFileMap(
+export async function _generateEmbedFileMap(
 	projectRoot: string
 ): Promise<Map<string, ProjectEmbedFile>> {
 	const map: Map<string, ProjectEmbedFile> = new Map()
