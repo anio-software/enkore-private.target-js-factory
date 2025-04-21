@@ -1,8 +1,5 @@
 import type {EnkoreJSRuntimeGlobalDataRecord} from "@enkore/spec"
 
-//
-// this function should only be called within a bundle context
-//
 export function getGlobalRuntimeDataRecords(): EnkoreJSRuntimeGlobalDataRecord[] {
 	const globalThisPropKey = Symbol.for("@enkore/js-runtime/globalRecords")
 
