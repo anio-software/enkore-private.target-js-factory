@@ -13,6 +13,7 @@ import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProje
 import {generateAPIExportGlueCode} from "#~src/export/generateAPIExportGlueCode.mts"
 import {getTargetDependency} from "./getTargetDependency.mts"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
+import {getInternalData} from "./getInternalData.mts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 type MapValueType<A> = A extends Map<any, infer V> ? V : never;
@@ -87,6 +88,7 @@ export async function rollupPluginFactory(
 
 			const record = createEntity("EnkoreJSRuntimeGlobalDataRecord", 0, 0, {
 				immutable: {
+					projectId: getInternalData(session).projectId,
 					embeds
 				},
 				// will be populated / used at runtime
