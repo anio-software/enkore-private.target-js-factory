@@ -1,11 +1,12 @@
-import type {ProjectAPIContext, ProjectEmbedFile} from "./ProjectAPIContext.mts"
+import type {EnkoreJSRuntimeEmbeddedFile} from "@enkore/spec"
+import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
 import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.mts"
 import {getGlobalRuntimeDataRecords} from "./getGlobalRuntimeDataRecords.mts"
 
 export function getEmbedFromGlobalDataRecords(
 	context: ProjectAPIContext,
 	embedPath: string
-): ProjectEmbedFile {
+): EnkoreJSRuntimeEmbeddedFile {
 	const globalEmbedId = translateEmbedPathToGlobalEmbedID(context, embedPath)
 	const records = getGlobalRuntimeDataRecords()
 
