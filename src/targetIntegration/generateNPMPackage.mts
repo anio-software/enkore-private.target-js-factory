@@ -9,7 +9,7 @@ import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 import {rollupPluginFactory} from "./rollupPluginFactory.mts"
-import {mergeAndHoistGlobalRuntimeData} from "./mergeAndHoistGlobalRuntimeData.mts"
+import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.mts"
 
 async function createDistFiles(
 	apiContext: APIContext,
@@ -71,7 +71,7 @@ async function createDistFiles(
 		)
 
 		function mergeAndHoist(code: string): string {
-			return mergeAndHoistGlobalRuntimeData(session, code)
+			return mergeAndHoistGlobalRuntimeDataRecords(session, code)
 		}
 	}
 }

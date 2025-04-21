@@ -6,7 +6,7 @@ import {
 } from "@enkore/spec"
 import {getTargetDependency} from "./getTargetDependency.mts"
 
-export function mergeAndHoistGlobalRuntimeData(
+export function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
 	code: string
 ): string {
