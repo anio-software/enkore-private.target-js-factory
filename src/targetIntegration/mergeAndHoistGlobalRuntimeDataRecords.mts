@@ -1,6 +1,6 @@
 import {
 	type EnkoreSessionAPI,
-	type EnkoreJSRuntimeGlobalEmbed,
+	type EnkoreJSRuntimeEmbeddedFile,
 	isEntityOfKind,
 	createEntity
 } from "@enkore/spec"
@@ -11,29 +11,29 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 	code: string
 ): string {
 	const babel = getTargetDependency(session, "@enkore/babel")
-	let newGlobalEmbeds: Record<string, EnkoreJSRuntimeGlobalEmbed> = {}
+	let newGlobalEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
 	const {
 		code: newCode,
-		globalData
+		globalDataRecords
 	} = babel.removeEnkoreJSRuntimeArtifactsFromCode(
 		code
 	)
 
-	for (const entry of globalData) {
-		if (!isEntityOfKind(entry, "EnkoreJSRuntimeGlobalData")) {
+	for (const record of globalDataRecords) {
+		if (!isEntityOfKind(record, "EnkoreJSRuntimeGlobalDataRecord")) {
 			continue
 		}
 
 		// quick hack
-		if (!entry.immutable) continue
+		if (!record.immutable) continue
 
-		for (const id in entry.immutable.embeds) {
-			newGlobalEmbeds[id] = entry.immutable.embeds[id]
+		for (const id in record.immutable.embeds) {
+			newGlobalEmbeds[id] = record.immutable.embeds[id]
 		}
 	}
 
-	const newGlobalData = createEntity("EnkoreJSRuntimeGlobalData", 0, 0, {
+	const newRecord = createEntity("EnkoreJSRuntimeGlobalDataRecord", 0, 0, {
 		immutable: {
 			embeds: newGlobalEmbeds
 		},
@@ -45,9 +45,7 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 
 	let ret = ``
 
-	ret += babel.defineEnkoreJSRuntimeGlobalData(
-		newGlobalData
-	)
+	ret += babel.defineEnkoreJSRuntimeGlobalDataRecord(newRecord)
 
 	ret += babel.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `
 		for (const embedId in runtimeData.immutable.embeds) {

@@ -1,6 +1,6 @@
 import {
 	type EnkoreSessionAPI,
-	type EnkoreJSRuntimeGlobalEmbed,
+	type EnkoreJSRuntimeEmbeddedFile,
 	createEntity
 } from "@enkore/spec"
 import type {JsBundlerOptions} from "@enkore-types/rollup"
@@ -55,7 +55,7 @@ export async function rollupPluginFactory(
 		name: "enkore-target-js-project-plugin",
 
 		intro() {
-			const embeds: Record<string, EnkoreJSRuntimeGlobalEmbed> = {}
+			const embeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
 			for (const [embedPath, value] of projectContext._projectEmbedFileMapRemoveMeInBundle.entries()) {
 				const hashPath = projectContext.projectEmbedFileTranslationMap[embedPath]
@@ -75,7 +75,7 @@ export async function rollupPluginFactory(
 					return requestedByMethods.includes("getEmbedAsURL")
 				})()
 
-				embeds[hashPath] = createEntity("EnkoreJSRuntimeGlobalEmbed", 0, 0, {
+				embeds[hashPath] = createEntity("EnkoreJSRuntimeEmbeddedFile", 0, 0, {
 					_createResourceAtRuntimeInit,
 					projectId: projectContext.projectId,
 					sourceFilePath: value.sourceFilePath,
@@ -85,7 +85,7 @@ export async function rollupPluginFactory(
 				})
 			}
 
-			const globalRuntimeData = createEntity("EnkoreJSRuntimeGlobalData", 0, 0, {
+			const record = createEntity("EnkoreJSRuntimeGlobalDataRecord", 0, 0, {
 				immutable: {
 					embeds
 				},
@@ -98,7 +98,7 @@ export async function rollupPluginFactory(
 			//
 			// this will later be merged with other global embed maps
 			//
-			return babel.defineEnkoreJSRuntimeGlobalData(globalRuntimeData)
+			return babel.defineEnkoreJSRuntimeGlobalDataRecord(record)
 		},
 
 		resolveId(id) {
