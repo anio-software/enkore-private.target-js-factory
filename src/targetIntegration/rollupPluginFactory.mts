@@ -21,6 +21,7 @@ type MapValueType<A> = A extends Map<any, infer V> ? V : never;
 export async function rollupPluginFactory(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
+	entryPointPath: string,
 	exportMap: MapValueType<InternalData["entryPointMap"]>
 ): Promise<Factory> {
 	const babel = getTargetDependency(session, "@enkore/babel")
@@ -88,7 +89,7 @@ export async function rollupPluginFactory(
 
 			const record = createEntity("EnkoreJSRuntimeGlobalDataRecord", 0, 0, {
 				immutable: {
-					projectId: getInternalData(session).projectId,
+					globalDataRecordId: `${getInternalData(session).projectId}/${entryPointPath}`,
 					embeds
 				},
 				// will be populated / used at runtime

@@ -29,7 +29,7 @@ async function createDistFiles(
 			externals: externalPackages,
 			onRollupLogFunction,
 			additionalPlugins: [
-				await rollupPluginFactory(session, apiContext, exportsMap)
+				await rollupPluginFactory(session, apiContext, entryPointPath, exportsMap)
 			]
 		}
 
@@ -71,7 +71,7 @@ async function createDistFiles(
 		)
 
 		function mergeAndHoist(code: string): string {
-			return mergeAndHoistGlobalRuntimeDataRecords(session, code)
+			return mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
 		}
 	}
 }

@@ -9,6 +9,7 @@ import {getInternalData} from "./getInternalData.mts"
 
 export function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
+	entryPointPath: string,
 	code: string
 ): string {
 	const babel = getTargetDependency(session, "@enkore/babel")
@@ -36,7 +37,7 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 
 	const newRecord = createEntity("EnkoreJSRuntimeGlobalDataRecord", 0, 0, {
 		immutable: {
-			projectId: getInternalData(session).projectId,
+			globalDataRecordId: `${getInternalData(session).projectId}/${entryPointPath}`,
 			embeds: newEmbeds
 		},
 		// will be populated / used at runtime
