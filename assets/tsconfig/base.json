@@ -10,6 +10,7 @@
         "target": "esnext",
         "module": "nodenext",
         "moduleResolution": "nodenext",
-        "baseUrl": "../"
+        "baseUrl": "../",
+        "rootDir": "../"
     }
 }
