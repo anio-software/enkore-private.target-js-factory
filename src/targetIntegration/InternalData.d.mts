@@ -10,6 +10,7 @@ export type Export = {
 }
 
 export type InternalData = {
+	projectId: string
 	myTSProgram: MyTSProgram
 	entryPointMap: Map<string, Map<string, Export>>
 
