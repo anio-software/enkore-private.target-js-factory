@@ -11,7 +11,7 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 	code: string
 ): string {
 	const babel = getTargetDependency(session, "@enkore/babel")
-	let newGlobalEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
+	let newEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
 	const {
 		code: newCode,
@@ -29,13 +29,13 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 		if (!record.immutable) continue
 
 		for (const id in record.immutable.embeds) {
-			newGlobalEmbeds[id] = record.immutable.embeds[id]
+			newEmbeds[id] = record.immutable.embeds[id]
 		}
 	}
 
 	const newRecord = createEntity("EnkoreJSRuntimeGlobalDataRecord", 0, 0, {
 		immutable: {
-			embeds: newGlobalEmbeds
+			embeds: newEmbeds
 		},
 		// will be populated / used at runtime
 		mutable: {
