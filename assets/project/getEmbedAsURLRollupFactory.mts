@@ -1,7 +1,7 @@
 import type {ProjectAPI} from "./ProjectAPI.mts"
 import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
 import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.mts"
-import {getGlobalRuntimeData} from "./getGlobalRuntimeData.mts"
+import {getGlobalRuntimeDataRecords} from "./getGlobalRuntimeDataRecords.mts"
 
 const impl: ProjectAPI["getEmbedAsURL"] = function(
 	this: ProjectAPIContext, embedPath: string

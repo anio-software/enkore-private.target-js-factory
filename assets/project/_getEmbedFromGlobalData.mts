@@ -1,6 +1,6 @@
 import type {ProjectAPIContext, ProjectEmbedFile} from "./ProjectAPIContext.mts"
 import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.mts"
-import {getGlobalRuntimeData} from "./getGlobalRuntimeData.mts"
+import {getGlobalRuntimeDataRecords} from "./getGlobalRuntimeDataRecords.mts"
 
 //
 // this function should only be called within a bundle context
