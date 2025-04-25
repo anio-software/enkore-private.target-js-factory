@@ -7,7 +7,7 @@ import {targetBoilerplateFileMarkerUUID} from "@enkore/spec/uuid"
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session
 ) {
-	function defineFile(path: string, content: string, overwrite?: boolean) {
+	function defineFile(path: string, content: string, fullyManagedByEnkore?: boolean) {
 		const header = (() => {
 			let tmp = ``
 
@@ -18,10 +18,10 @@ const impl: API["getBoilerplateFiles"] = async function(
 		})()
 
 		return createEntity("EnkoreBoilerplateFile", 0, 0, {
-			scope: "target",
+			requestedBy: "target",
 			content: `${header}${content}`,
 			path,
-			overwrite
+			fullyManagedByEnkore
 		})
 	}
 
