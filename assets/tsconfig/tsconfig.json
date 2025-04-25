@@ -1,5 +1,6 @@
 {
     "references": [
+        {"path": "./tsconfig/enkore-config.json"},
         {"path": "./tsconfig/src.json"},
         {"path": "./tsconfig/embeds.json"}
     ]

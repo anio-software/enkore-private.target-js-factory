@@ -26,6 +26,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 	return [
 		defineFile("tsconfig.json", getAsset("text://tsconfig/tsconfig.json") as string, true),
 		defineFile("tsconfig/base.json", JSON.stringify(tsconfigBase, null, 4) + "\n", true),
+		defineFile("tsconfig/enkore-config.json", getAsset("text://tsconfig/enkore-config.json") as string, true),
 		defineFile("tsconfig/src.json", getAsset("text://tsconfig/src.json") as string, true),
 		defineFile("tsconfig/embeds.json", getAsset("text://tsconfig/embeds.json") as string, true)
 	]
