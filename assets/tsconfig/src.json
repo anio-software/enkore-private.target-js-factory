@@ -19,5 +19,8 @@
         "../project/export/**/*",
         "../build/src/**/*",
         "../build/export/**/*"
+    ],
+    "references": [
+        {"path": "./embeds.json"}
     ]
 }
