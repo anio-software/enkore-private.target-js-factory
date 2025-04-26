@@ -6,6 +6,7 @@ import {
 } from "@enkore/spec"
 import {getTargetDependency} from "./getTargetDependency.mts"
 import {getInternalData} from "./getInternalData.mts"
+import {log} from "@enkore/debug"
 
 export function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
@@ -30,8 +31,16 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 		// quick hack
 		if (!record.immutable) continue
 
+		log(
+			`Merging global data record with id '${record.immutable.globalDataRecordId}'`
+		)
+
 		for (const id in record.immutable.embeds) {
 			newEmbeds[id] = record.immutable.embeds[id]
+
+			log(
+				`Adding embed '${newEmbeds[id].originalEmbedPath}' from project '${newEmbeds[id]._projectIdentifier}'.`
+			)
 		}
 	}
 
