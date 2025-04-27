@@ -2,6 +2,7 @@ import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 import path from "node:path"
+import type {MyTSSourceFileTransformer} from "@enkore-types/typescript"
 
 const impl: API["preprocess"] = async function(
 	this: APIContext, session, file, sourceCode
@@ -30,9 +31,27 @@ const impl: API["preprocess"] = async function(
 		}
 	})() as Record<string, string>
 
+	const transformer: MyTSSourceFileTransformer[] = [
+		nodeMyTS.resolveImportAliases(undefined, aliases)
+	]
+
+	const expandStarExports = session.target.getOptions(
+		this.target
+	).preprocess?.expandStarExports === true
+
+	if (expandStarExports) {
+		const {compilerOptions} = nodeMyTS.readTSConfigFile(
+			session.project.root, "tsconfig/base.json"
+		)
+
+		transformer.push(
+			nodeMyTS.expandStarExports(undefined, compilerOptions)
+		)
+	}
+
 	return nodeMyTS.printSourceFile(
 		nodeMyTS.transformSourceFile(
-			src, nodeMyTS.resolveImportAliases(undefined, aliases)
+			src, transformer
 		)
 	)
 }
