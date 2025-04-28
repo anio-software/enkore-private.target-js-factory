@@ -12,7 +12,7 @@ export async function generateNPMTypesPackage(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
-	const utils = getTargetDependency(session, "@enkore/rollup")
+	const utils = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const {entryPointMap} = getInternalData(session)
 

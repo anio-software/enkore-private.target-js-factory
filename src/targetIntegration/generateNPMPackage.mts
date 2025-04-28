@@ -15,7 +15,7 @@ async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
-	const utils = getTargetDependency(session, "@enkore/rollup")
+	const utils = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const {entryPointMap} = getInternalData(session)
 

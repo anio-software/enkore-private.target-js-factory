@@ -4,7 +4,7 @@ import {getTargetDependency} from "./getTargetDependency.mts"
 export async function embedFileBundler(
 	session: EnkoreSessionAPI, entryCode: string
 ): Promise<string> {
-	const {jsBundler} = getTargetDependency(session, "@enkore/rollup")
+	const {jsBundler} = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const {stripTypeScriptTypes} = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	return await jsBundler(
