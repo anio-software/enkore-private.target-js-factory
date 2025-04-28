@@ -20,7 +20,7 @@ export function _getImplementation(
 	options: Options,
 	implementationFunctionName: string
 ): Ret {
-	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const dependencies: Dependency[] = []
 
 	const {program} = nodeMyTS.createProgram(

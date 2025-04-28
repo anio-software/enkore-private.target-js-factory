@@ -24,7 +24,7 @@ export function _generateFactoryCode(
 	exportName: string,
 	variant: Variant
 ) {
-	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const implementationFunctionName = (
 		variant === "syncVariant"

@@ -6,7 +6,7 @@ import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.m
 const impl: API["hook"]["preLint"] = async function(
 	this: APIContext, session
 ) {
-	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const myProgram = getInternalData(session).myTSProgram
 
 	const targetOptions = session.target.getOptions(this.target)

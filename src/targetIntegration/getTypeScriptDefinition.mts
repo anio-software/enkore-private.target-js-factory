@@ -5,7 +5,7 @@ import {getTargetDependency} from "./getTargetDependency.mts"
 export function getTypeScriptDefinition(
 	session: EnkoreSessionAPI, mod: MyTSModule
 ): string {
-	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const {declarations,diagnosticMessages} = nodeMyTS.generateDeclarationsForModule(
 		mod, (ctx) => {

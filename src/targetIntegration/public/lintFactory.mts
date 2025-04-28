@@ -11,7 +11,7 @@ const impl: API["lint"] = async function(
 	// myNewProgram.getModule check
 	if (file.wasFiltered) return [];
 
-	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const myNewProgram = getInternalData(session).myTSProgram
 
 	const mod = myNewProgram.getModule(`build/${file.relativePath}`)

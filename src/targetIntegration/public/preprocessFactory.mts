@@ -11,7 +11,7 @@ const impl: API["preprocess"] = async function(
 		return sourceCode
 	}
 
-	const nodeMyTS = getTargetDependency(session, "@enkore/typescript")
+	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const src = nodeMyTS.createSourceFile(file.absolutePath)
 
 	const dirLevel = path.dirname(file.relativePath).split("/").length
