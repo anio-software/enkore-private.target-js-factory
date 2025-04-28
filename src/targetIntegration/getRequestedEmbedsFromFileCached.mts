@@ -26,7 +26,7 @@ export async function getRequestedEmbedsFromFileCached(
 		"getEmbedAsURL"
 	]
 
-	const babel = getTargetDependency(session, "@enkore/babel")
+	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const result = await babel.getRequestedEmbedsFromCode(
 		enkoreProjectModuleSpecifiers,

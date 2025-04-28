@@ -39,7 +39,7 @@ const impl: API["compile"] = async function(
 		}
 	}
 
-	const babel = getTargetDependency(session, "@enkore/babel")
+	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (isTypeScriptFile) {

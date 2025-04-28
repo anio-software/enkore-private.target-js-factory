@@ -24,7 +24,7 @@ export async function rollupPluginFactory(
 	entryPointPath: string,
 	exportMap: MapValueType<InternalData["entryPointMap"]>
 ): Promise<Factory> {
-	const babel = getTargetDependency(session, "@enkore/babel")
+	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const projectContext = (
 		await generateProjectAPIContext(session.project.root, false)

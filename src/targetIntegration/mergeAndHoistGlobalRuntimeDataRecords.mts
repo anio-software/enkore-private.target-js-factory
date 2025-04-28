@@ -13,7 +13,7 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 	entryPointPath: string,
 	code: string
 ): string {
-	const babel = getTargetDependency(session, "@enkore/babel")
+	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
 	let newEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
 	const {

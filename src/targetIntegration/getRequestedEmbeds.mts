@@ -37,7 +37,7 @@ export async function getRequestedEmbeds(
 		return x.toLowerCase().includes("embed")
 	})
 
-	const babel = getTargetDependency(session, "@enkore/babel")
+	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const filesToAnalyze: Map<string, true> = new Map()
 
 	for (const [_, {relativePath}] of exportMap.entries()) {
