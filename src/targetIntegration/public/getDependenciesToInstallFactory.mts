@@ -6,6 +6,12 @@ const impl: API["getDependenciesToInstall"] = async function(
 	this: APIContext
 ) {
 	return {
+		"@enkore/target-js-toolchain": createEntity(
+			"EnkoreCoreTargetDependencyInstallSpecification", 0, 0, {
+				version: "0.0.2",
+				importKind: "star"
+			}
+		),
 		"@enkore/rollup": createEntity(
 			"EnkoreCoreTargetDependencyInstallSpecification", 0, 0, {
 				version: "0.0.3",
