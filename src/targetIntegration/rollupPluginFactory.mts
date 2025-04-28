@@ -3,7 +3,7 @@ import {
 	type EnkoreJSRuntimeEmbeddedFile,
 	createEntity
 } from "@enkore/spec"
-import type {JsBundlerOptions} from "@enkore-types/rollup"
+import type {JsBundlerOptions} from "@enkore-types/target-js-toolchain"
 import type {APIContext} from "./APIContext.d.mts"
 import type {InternalData} from "./InternalData.d.mts"
 import type {ProjectAPIContext} from "#~assets/project/ProjectAPIContext.mts"

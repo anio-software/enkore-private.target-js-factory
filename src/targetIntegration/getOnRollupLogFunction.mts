@@ -1,5 +1,5 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
-import type {JsBundlerOptions} from "@enkore-types/rollup"
+import type {JsBundlerOptions} from "@enkore-types/target-js-toolchain"
 
 export function getOnRollupLogFunction(
 	session: EnkoreSessionAPI
