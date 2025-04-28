@@ -1,5 +1,5 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
-import type {MyTSModule} from "@enkore-types/typescript"
+import type {MyTSModule} from "@enkore-types/target-js-toolchain"
 import {getTargetDependency} from "./getTargetDependency.mts"
 
 export function getTypeScriptDefinition(

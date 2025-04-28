@@ -1,4 +1,4 @@
-import type {MyTSProgram, MyTSExport} from "@enkore-types/typescript"
+import type {MyTSProgram, MyTSExport} from "@enkore-types/target-js-toolchain"
 import type {RequestedEmbedsFromCodeResult} from "@enkore-types/target-js-toolchain"
 
 export type Export = {
