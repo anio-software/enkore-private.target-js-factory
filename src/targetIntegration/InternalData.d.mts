@@ -1,5 +1,5 @@
 import type {MyTSProgram, MyTSExport} from "@enkore-types/typescript"
-import type {RequestedEmbedsFromCodeResult} from "@enkore-types/babel"
+import type {RequestedEmbedsFromCodeResult} from "@enkore-types/target-js-toolchain"
 
 export type Export = {
 	name: string

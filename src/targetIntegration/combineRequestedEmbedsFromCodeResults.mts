@@ -1,7 +1,7 @@
 import type {
 	RequestedEmbedsFromCodeResult,
 	RequestedEmbedsFromCodeReasonWhyUnknown
-} from "@enkore-types/babel"
+} from "@enkore-types/target-js-toolchain"
 
 type Ret = [
 	"specific", Map<string, string>

@@ -1,7 +1,7 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
 import type {APIContext} from "./APIContext.mts"
 import type {InternalData} from "./InternalData.d.mts"
-import type {RequestedEmbedsFromCodeReasonWhyUnknown} from "@enkore-types/babel"
+import type {RequestedEmbedsFromCodeReasonWhyUnknown} from "@enkore-types/target-js-toolchain"
 import {getInternalData} from "./getInternalData.mts"
 import {getModuleGuarded} from "./getModuleGuarded.mts"
 import {getTargetDependency} from "./getTargetDependency.mts"
