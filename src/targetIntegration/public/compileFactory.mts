@@ -39,12 +39,12 @@ const impl: API["compile"] = async function(
 		}
 	}
 
-	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (isTypeScriptFile) {
 		ret.push({
-			contents: babel.stripTypeScriptTypes(code, {
+			contents: toolchain.stripTypeScriptTypes(code, {
 				filePath: path.join(session.project.root, "build", sourceFilePath),
 				rewriteImportExtensions: true
 			}),
