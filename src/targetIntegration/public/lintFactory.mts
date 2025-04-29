@@ -11,7 +11,7 @@ const impl: API["lint"] = async function(
 	// myNewProgram.getModule check
 	if (file.wasFiltered) return [];
 
-	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const myNewProgram = getInternalData(session).myTSProgram
 
 	const mod = myNewProgram.getModule(`build/${file.relativePath}`)
@@ -31,7 +31,7 @@ const impl: API["lint"] = async function(
 
 	let messages: NodeAPIMessage[] = []
 
-	for (const moduleSpecifier of nodeMyTS.getModuleImportAndExportSpecifiers(mod)) {
+	for (const moduleSpecifier of toolchain.tsGetModuleImportAndExportSpecifiers(mod)) {
 		if (moduleSpecifier.endsWith(".mjs")) {
 			messages.push({
 				severity: "error",
@@ -47,7 +47,7 @@ const impl: API["lint"] = async function(
 		}
 	}
 
-	for (const msg of nodeMyTS.typeCheckModule(mod)) {
+	for (const msg of toolchain.tsTypeCheckModule(mod)) {
 		session.enkore.emitMessage(
 			"error", msg.message
 		)
