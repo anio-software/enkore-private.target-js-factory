@@ -8,7 +8,7 @@ const impl: API["getDependenciesToInstall"] = async function(
 	return {
 		"@enkore/target-js-toolchain": createEntity(
 			"EnkoreCoreTargetDependencyInstallSpecification", 0, 0, {
-				version: "0.0.3",
+				version: "0.0.9",
 				importKind: "star"
 			}
 		),
