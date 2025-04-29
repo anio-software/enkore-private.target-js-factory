@@ -15,7 +15,7 @@ async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
-	const utils = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const {entryPointMap} = getInternalData(session)
 
@@ -36,7 +36,7 @@ async function createDistFiles(
 		const jsEntryCode = generateEntryPointCode(exportsMap, false)
 		const declarationsEntryCode = generateEntryPointCode(exportsMap, true)
 
-		const jsBundle = mergeAndHoist(await utils.jsBundler(
+		const jsBundle = mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
 				minify: false
@@ -44,14 +44,14 @@ async function createDistFiles(
 		))
 
 		// don't do this, minify jsBundle code
-		const minifiedJsBundle = mergeAndHoist(await utils.jsBundler(
+		const minifiedJsBundle = mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
 				minify: true
 			}
 		))
 
-		const declarationBundle = await utils.tsDeclarationBundler(
+		const declarationBundle = await toolchain.tsDeclarationBundler(
 			session.project.root, declarationsEntryCode, {
 				externals: externalTypePackages,
 				onRollupLogFunction
