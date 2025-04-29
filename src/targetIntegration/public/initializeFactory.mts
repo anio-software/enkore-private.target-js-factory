@@ -55,10 +55,6 @@ const impl: API["initialize"] = async function(
 		}
 	}
 
-	const products = [{
-		name: "npmPackage"
-	}]
-
 	const targetOptions = session.target.getOptions(this.target)
 	const createTypesPackage = targetOptions.createTypesPackage !== undefined
 	const packageNames: string[] = (() => {
@@ -68,6 +64,10 @@ const impl: API["initialize"] = async function(
 
 		return targetOptions.publish.withPackageNames
 	})()
+
+	const products = [{
+		name: "npmPackage"
+	}]
 
 	if (createTypesPackage) {
 		products.push({
