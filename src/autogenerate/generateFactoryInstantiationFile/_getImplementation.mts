@@ -20,13 +20,13 @@ export function _getImplementation(
 	options: Options,
 	implementationFunctionName: string
 ): Ret {
-	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const dependencies: Dependency[] = []
 
-	const {program} = nodeMyTS.createProgram(
+	const {program} = toolchain.tsCreateProgram(
 		session.project.root, [
 			options.source
-		], nodeMyTS.readTSConfigFile(
+		], toolchain.tsReadTSConfigFile(
 			session.project.root, "tsconfig/base.json"
 		).compilerOptions
 	)
@@ -42,7 +42,7 @@ export function _getImplementation(
 	const deps = mod.getModuleExportByName("__EnkoreFunctionDependencies", true)
 
 	if (deps && deps.kind === "type") {
-		const members = nodeMyTS._getTypeAliasTypeQueryMembers(
+		const members = toolchain._tsGetTypeAliasTypeQueryMembers(
 			deps.declaration
 		)
 
