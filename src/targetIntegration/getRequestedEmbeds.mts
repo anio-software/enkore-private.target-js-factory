@@ -37,7 +37,7 @@ export async function getRequestedEmbeds(
 		return x.toLowerCase().includes("embed")
 	})
 
-	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const filesToAnalyze: Map<string, true> = new Map()
 
 	for (const [_, {relativePath}] of exportMap.entries()) {
@@ -58,11 +58,11 @@ export async function getRequestedEmbeds(
 			path.join(session.project.root, filePath)
 		)
 
-		const jsCode = babel.stripTypeScriptTypes(code, {
+		const jsCode = toolchain.stripTypeScriptTypes(code, {
 			rewriteImportExtensions: true
 		})
 
-		const requestedEmbedsResult = await babel.getRequestedEmbedsFromCode(
+		const requestedEmbedsResult = await toolchain.getRequestedEmbedsFromCode(
 			enkoreProjectModuleSpecifiers,
 			enkoreProjectModuleGetEmbedProperties,
 			jsCode
