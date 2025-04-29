@@ -65,14 +65,32 @@ const impl: API["initialize"] = async function(
 		return targetOptions.publish.withPackageNames
 	})()
 
-	const products = [{
-		name: "npmPackage"
-	}]
+	const products = []
+
+	if (!packageNames.length) {
+		products.push({
+			name: "npmPackage"
+		})
+	} else {
+		for (const [index] of packageNames.entries()) {
+			products.push({
+				name: `npmPackage_${index}`
+			})
+		}
+	}
 
 	if (createTypesPackage) {
-		products.push({
-			name: "npmTypesPackage"
-		})
+		if (!packageNames.length) {
+			products.push({
+				name: "npmTypesPackage"
+			})
+		} else {
+			for (const [index] of packageNames.entries()) {
+				products.push({
+					name: `npmTypesPackage_${index}`
+				})
+			}
+		}
 	}
 
 	return {
