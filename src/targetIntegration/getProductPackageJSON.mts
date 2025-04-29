@@ -86,9 +86,7 @@ export function getProductPackageJSON(
 		)
 	}
 
-	const {publishWithExactDependencyVersions} = targetOptions
-
-	if (publishWithExactDependencyVersions === true) {
+	if (targetOptions.publish?.withExactDependencyVersions === true) {
 		newPackageJSON.dependencies = exactDependencies(
 			newPackageJSON.dependencies
 		)
