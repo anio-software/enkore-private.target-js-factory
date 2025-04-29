@@ -10,7 +10,8 @@ import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,
-	session: EnkoreSessionAPI
+	session: EnkoreSessionAPI,
+	directory: string
 ) {
 	const utils = getTargetDependency(session, "@enkore/target-js-toolchain")
 
@@ -59,6 +60,7 @@ export async function generateNPMTypesPackage(
 			apiContext,
 			session,
 			packageName,
+			directory,
 			entryPointMap,
 			true
 		), {pretty: true}

@@ -50,6 +50,7 @@ export function getProductPackageJSON(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
 	packageName: string,
+	directory: string,
 	entryPointMap: EntryPointMap,
 	typeOnly: boolean
 ): NodePackageJSON {
@@ -100,7 +101,7 @@ export function getProductPackageJSON(
 		newPackageJSON.repository = {
 			type: repository.type,
 			url: repository.url,
-			directory: `products/${productName}`
+			directory
 		}
 	}
 

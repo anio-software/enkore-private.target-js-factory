@@ -7,9 +7,9 @@ const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
 	if (productName === "npmPackage") {
-		await generateNPMPackage(this, session)
+		await generateNPMPackage(this, session, `products/npmPackage`)
 	} else if (productName === "npmTypesPackage") {
-		await generateNPMTypesPackage(this, session)
+		await generateNPMTypesPackage(this, session, `products/npmTypesPackage`)
 	}
 }
 
