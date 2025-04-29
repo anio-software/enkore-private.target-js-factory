@@ -43,6 +43,58 @@ const impl: API["generateProduct"] = async function(
 	) {
 		throw new Error(`Invalid product name '${productName}'.`)
 	}
+
+	const productPackageType: "pkg" | "typePkg" = (() => {
+		if (productName.startsWith("npmPackage_")) {
+			return "pkg"
+		}
+
+		return "typePkg"
+	})()
+
+	const packageNameIndex: number = (() => {
+		if (productPackageType === "pkg") {
+			return parseInt(
+				productName.slice("npmPackage_".length), 10
+			)
+		}
+
+		return parseInt(
+			productName.slice("npmTypesPackage_".length), 10
+		)
+	})()
+
+	// todo: check index
+	const packageName = packageNames[packageNameIndex]
+
+	//
+	// if we are publishing the same package under different names
+	// only build it once and copy the result for the remaining packages,
+	// only adjusting the package.json's name and repository fields.
+	//
+	// products are generated in order, so npmXXXPackage_0 will always be built first
+	//
+	if (packageNameIndex === 0) {
+		if (productPackageType === "pkg") {
+			await generateNPMPackage(
+				this,
+				session,
+				`products/${productName}`,
+				packageName
+			)
+		} else {
+			await generateNPMTypesPackage(
+				this,
+				session,
+				`products/${productName}`,
+				packageName
+			)
+		}
+
+		return
+	}
+
+	// copy
 }
 
 export function generateProductFactory(context: APIContext) {
