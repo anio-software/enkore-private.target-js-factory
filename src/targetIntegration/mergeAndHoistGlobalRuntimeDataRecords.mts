@@ -13,13 +13,13 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 	entryPointPath: string,
 	code: string
 ): string {
-	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 	let newEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
 	const {
 		code: newCode,
 		globalDataRecords
-	} = babel.removeEnkoreJSRuntimeArtifactsFromCode(
+	} = toolchain.removeEnkoreJSRuntimeArtifactsFromCode(
 		code
 	)
 
@@ -57,9 +57,9 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 
 	let ret = ``
 
-	ret += babel.defineEnkoreJSRuntimeGlobalDataRecord(newRecord)
+	ret += toolchain.defineEnkoreJSRuntimeGlobalDataRecord(newRecord)
 
-	ret += babel.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `
+	ret += toolchain.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `
 		for (const embedId in runtimeData.immutable.embeds) {
 			const embed = runtimeData.immutable.embeds[embedId]
 
@@ -71,7 +71,7 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 			runtimeData.mutable.embedResourceURLs[embedId] = "something"
 		}
 `)
-	ret += babel.invokeEnkoreJSRuntimeGlobalInitFunction()
+	ret += toolchain.invokeEnkoreJSRuntimeGlobalInitFunction()
 	ret += newCode
 
 	return ret
