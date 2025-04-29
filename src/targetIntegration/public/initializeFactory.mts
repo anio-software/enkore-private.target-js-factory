@@ -24,15 +24,15 @@ const impl: API["initialize"] = async function(
 		return path.join("build", file.relativePath)
 	})
 
-	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
-	const {compilerOptions} = nodeMyTS.readTSConfigFile(
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const {compilerOptions} = toolchain.tsReadTSConfigFile(
 		session.project.root, "tsconfig/base.json"
 	)
 
 	const {
 		program,
 		diagnosticMessages
-	} = nodeMyTS.createProgram(
+	} = toolchain.tsCreateProgram(
 		session.project.root, typeScriptFiles, compilerOptions
 	)
 
