@@ -5,14 +5,14 @@ import {getTargetDependency} from "./getTargetDependency.mts"
 export function getTypeScriptDefinition(
 	session: EnkoreSessionAPI, mod: MyTSModule
 ): string {
-	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 
-	const {declarations,diagnosticMessages} = nodeMyTS.generateDeclarationsForModule(
+	const {declarations,diagnosticMessages} = toolchain.tsGenerateDeclarationsForModule(
 		mod, (ctx) => {
 			return [
-				nodeMyTS.expandModuleImportAndExportDeclarations(ctx),
+				toolchain.tsExpandModuleImportAndExportDeclarations(ctx),
 				// fix imports
-				nodeMyTS.remapModuleImportAndExportSpecifiers(ctx, (moduleSpecifier, decl) => {
+				toolchain.tsRemapModuleImportAndExportSpecifiers(ctx, (moduleSpecifier, decl) => {
 					if (moduleSpecifier.endsWith(".d.mts")) {
 						return undefined
 					}
