@@ -11,7 +11,8 @@ import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
-	directory: string
+	directory: string,
+	typePackageName: string
 ) {
 	const utils = getTargetDependency(session, "@enkore/target-js-toolchain")
 
@@ -46,11 +47,11 @@ export async function generateNPMTypesPackage(
 
 		if (orgName.startsWith("@")) orgName = orgName.slice(1)
 
-		if (!session.project.packageJSON.name.startsWith("@")) {
-			return `@${orgName}/${session.project.packageJSON.name}`
+		if (!typePackageName.startsWith("@")) {
+			return `@${orgName}/${typePackageName}`
 		}
 
-		const [_, packageName] = session.project.packageJSON.name.split("/")
+		const [_, packageName] = typePackageName.split("/")
 
 		return `@${orgName}/${packageName}`
 	})()

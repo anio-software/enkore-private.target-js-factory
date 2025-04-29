@@ -79,7 +79,8 @@ async function createDistFiles(
 export async function generateNPMPackage(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
-	directory: string
+	directory: string,
+	packageName: string
 ) {
 	const {entryPointMap} = getInternalData(session)
 
@@ -89,7 +90,7 @@ export async function generateNPMPackage(
 		`./package.json`, getProductPackageJSON(
 			apiContext,
 			session,
-			session.project.packageJSON.name,
+			packageName,
 			directory,
 			entryPointMap,
 			false
