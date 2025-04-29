@@ -6,7 +6,7 @@ import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.m
 const impl: API["hook"]["preLint"] = async function(
 	this: APIContext, session
 ) {
-	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const myProgram = getInternalData(session).myTSProgram
 
 	const targetOptions = session.target.getOptions(this.target)
@@ -47,17 +47,17 @@ const impl: API["hook"]["preLint"] = async function(
 
 			testCode += `}\n`
 
-			const vFile = nodeMyTS.defineVirtualProgramFile(
+			const vFile = toolchain.tsDefineVirtualProgramFile(
 				`project/src/testInterfaceCode.mts`, `${testCodeImports}\n${testCode}`
 			)
 
-			const {program: testProg} = nodeMyTS.createProgram(
+			const {program: testProg} = toolchain.tsCreateProgram(
 				session.project.root,
 				[vFile],
 				getInternalData(session).myTSProgram.compilerOptions
 			)
 
-			const diagnosticMessages = nodeMyTS.typeCheckModule(
+			const diagnosticMessages = toolchain.tsTypeCheckModule(
 				testProg.getModule(vFile.path)!, true
 			)
 
@@ -81,7 +81,7 @@ const impl: API["hook"]["preLint"] = async function(
 			"info", "doing complete typescript check (ci-only)"
 		)
 
-		const {diagnosticMessages} = nodeMyTS.typeCheckProgram(myProgram)
+		const {diagnosticMessages} = toolchain.tsTypeCheckProgram(myProgram)
 
 		for (const msg of diagnosticMessages) {
 			session.enkore.emitMessage(
