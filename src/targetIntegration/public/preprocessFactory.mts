@@ -11,8 +11,8 @@ const impl: API["preprocess"] = async function(
 		return sourceCode
 	}
 
-	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
-	const src = nodeMyTS.createSourceFile(file.absolutePath)
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const src = toolchain.tsCreateSourceFile(file.absolutePath)
 
 	const dirLevel = path.dirname(file.relativePath).split("/").length
 	const root = dirLevel === 0 ? "./" : "../".repeat(dirLevel)
@@ -32,7 +32,7 @@ const impl: API["preprocess"] = async function(
 	})() as Record<string, string>
 
 	const transformer: MyTSSourceFileTransformer[] = [
-		nodeMyTS.resolveImportAliases(undefined, aliases)
+		toolchain.tsResolveImportAliases(undefined, aliases)
 	]
 
 	const expandStarExports = session.target.getOptions(
@@ -40,17 +40,17 @@ const impl: API["preprocess"] = async function(
 	).preprocess?.expandStarExports === true
 
 	if (expandStarExports) {
-		const {compilerOptions} = nodeMyTS.readTSConfigFile(
+		const {compilerOptions} = toolchain.tsReadTSConfigFile(
 			session.project.root, "tsconfig/base.json"
 		)
 
 		transformer.push(
-			nodeMyTS.expandStarExports(undefined, compilerOptions)
+			toolchain.tsExpandStarExports(undefined, compilerOptions)
 		)
 	}
 
-	return nodeMyTS.printSourceFile(
-		nodeMyTS.transformSourceFile(
+	return toolchain.tsPrintSourceFile(
+		toolchain.tsTransformSourceFile(
 			src, transformer
 		)
 	)
