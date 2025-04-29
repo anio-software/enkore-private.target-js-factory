@@ -61,6 +61,13 @@ const impl: API["initialize"] = async function(
 
 	const targetOptions = session.target.getOptions(this.target)
 	const createTypesPackage = targetOptions.createTypesPackage !== undefined
+	const packageNames: string[] = (() => {
+		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
+			return []
+		}
+
+		return targetOptions.publish.withPackageNames
+	})()
 
 	if (createTypesPackage) {
 		products.push({
