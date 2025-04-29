@@ -24,7 +24,7 @@ export async function rollupPluginFactory(
 	entryPointPath: string,
 	exportMap: MapValueType<InternalData["entryPointMap"]>
 ): Promise<Factory> {
-	const babel = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const projectContext = (
 		await generateProjectAPIContext(session.project.root, false)
@@ -101,7 +101,7 @@ export async function rollupPluginFactory(
 			//
 			// this will later be merged with other global embed maps
 			//
-			return babel.defineEnkoreJSRuntimeGlobalDataRecord(record)
+			return toolchain.defineEnkoreJSRuntimeGlobalDataRecord(record)
 		},
 
 		resolveId(id) {
@@ -128,7 +128,7 @@ export async function rollupPluginFactory(
 					getProjectAPIMethodNames()
 				)
 
-				return babel.stripTypeScriptTypes(
+				return toolchain.stripTypeScriptTypes(
 					apiCode, {
 						rewriteImportExtensions: false
 					}
