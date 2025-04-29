@@ -9,11 +9,11 @@ export function generateNeededTypeDeclarations(
 	session: EnkoreSessionAPI,
 	implementation: MyTSFunctionDeclaration
 ): string {
-	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 	const typesNeeded: MyTSTopLevelTypeDescriptor[] = []
 	const typesPicked: Map<string, true> = new Map()
 
-	const typeTree = nodeMyTS.getRequiredTopLevelTypesForNode(implementation)
+	const typeTree = toolchain.tsGetRequiredTopLevelTypesForNode(implementation)
 
 	typeTree.depthFirstTraversal(node => {
 		typesNeeded.push(node.getData())
