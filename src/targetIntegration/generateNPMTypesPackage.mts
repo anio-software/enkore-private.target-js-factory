@@ -27,7 +27,7 @@ export function generateNPMTypesPackageName(
 		return `@${orgName}/${typePackageName}`
 	}
 
-	const [_, packageName] = typePackageName.split("/")
+	const [_, packageName] = typePackageName.split("/");
 
 	return `@${orgName}/${packageName}`
 }
