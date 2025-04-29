@@ -38,7 +38,7 @@ export async function generateNPMTypesPackage(
 	directory: string,
 	typePackageName: string
 ) {
-	const utils = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const {entryPointMap} = getInternalData(session)
 
@@ -48,7 +48,7 @@ export async function generateNPMTypesPackage(
 
 		const declarationsEntryCode = generateTypesPackageEntryCode(exportsMap)
 
-		const declarationBundle = await utils.tsDeclarationBundler(
+		const declarationBundle = await toolchain.tsDeclarationBundler(
 			session.project.root, declarationsEntryCode, {
 				externals,
 				onRollupLogFunction
