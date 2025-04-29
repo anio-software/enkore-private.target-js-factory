@@ -24,7 +24,7 @@ export function _generateFactoryCode(
 	exportName: string,
 	variant: Variant
 ) {
-	const nodeMyTS = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
 
 	const implementationFunctionName = (
 		variant === "syncVariant"
@@ -129,7 +129,7 @@ export function _generateFactoryCode(
 
 		tmp += decl.jsDoc
 		tmp += (decl.jsDoc.length ? "\n" : "")
-		tmp += nodeMyTS.convertMyTSFunctionDeclarationToString({
+		tmp += toolchain.tsConvertTSFunctionDeclarationToString({
 			...decl,
 			parameters: decl.parameters.slice(hasDependencies ? 2 : 1)
 		}, {
