@@ -37,6 +37,12 @@ const impl: API["generateProduct"] = async function(
 
 		return
 	}
+
+	if (!productName.startsWith("npmPackage_") &&
+		!productName.startsWith("npmTypesPackage_")
+	) {
+		throw new Error(`Invalid product name '${productName}'.`)
+	}
 }
 
 export function generateProductFactory(context: APIContext) {
