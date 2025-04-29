@@ -6,20 +6,36 @@ import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesP
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
-	if (productName === "npmPackage") {
-		await generateNPMPackage(
-			this,
-			session,
-			`products/npmPackage`,
-			session.project.packageJSON.name
-		)
-	} else if (productName === "npmTypesPackage") {
-		await generateNPMTypesPackage(
-			this,
-			session,
-			`products/npmTypesPackage`,
-			session.project.packageJSON.name
-		)
+	const packageNames: string[] = (() => {
+		const targetConfig = session.target.getOptions(this.target)
+
+		if (!Array.isArray(targetConfig.publish?.withPackageNames)) {
+			return []
+		}
+
+		return targetConfig.publish?.withPackageNames
+	})()
+
+	if (!packageNames.length) {
+		if (productName === "npmPackage") {
+			await generateNPMPackage(
+				this,
+				session,
+				`products/npmPackage`,
+				session.project.packageJSON.name
+			)
+		} else if (productName === "npmTypesPackage") {
+			await generateNPMTypesPackage(
+				this,
+				session,
+				`products/npmTypesPackage`,
+				session.project.packageJSON.name
+			)
+		} else {
+			throw new Error(`Invalid product name '${productName}'.`)
+		}
+
+		return
 	}
 }
 
