@@ -11,7 +11,6 @@ import {getRequestedEmbeds} from "./getRequestedEmbeds.mts"
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
 import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"
 import {generateAPIExportGlueCode} from "#~src/export/generateAPIExportGlueCode.mts"
-import {getTargetDependency} from "./getTargetDependency.mts"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {getInternalData} from "./getInternalData.mts"
 

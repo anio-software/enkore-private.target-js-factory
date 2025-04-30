@@ -3,7 +3,6 @@ import type {
 	MyTSFunctionDeclaration,
 	MyTSTopLevelTypeDescriptor
 } from "@enkore-types/target-js-toolchain"
-import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 
 export function generateNeededTypeDeclarations(
 	session: EnkoreSessionAPI,

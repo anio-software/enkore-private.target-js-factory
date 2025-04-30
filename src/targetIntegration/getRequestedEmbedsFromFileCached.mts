@@ -3,7 +3,6 @@ import type {EnkoreSessionAPI} from "@enkore/spec"
 import type {RequestedEmbedsFromCodeResult} from "@enkore-types/target-js-toolchain"
 import {readFileString} from "@aniojs/node-fs"
 import {getInternalData} from "./getInternalData.mts"
-import {getTargetDependency} from "./getTargetDependency.mts"
 
 export async function getRequestedEmbedsFromFileCached(
 	apiContext: APIContext,

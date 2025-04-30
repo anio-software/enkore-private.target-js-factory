@@ -5,7 +5,6 @@ import type {Variant} from "./Variant.mts"
 import type {MyTSFunctionDeclaration} from "@enkore-types/target-js-toolchain"
 import {_getImplementation} from "./_getImplementation.mts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.mts"
-import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 
 function convertPath(path: string) {
 	if (path.startsWith("project/src")) {

@@ -1,5 +1,4 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
-import {getTargetDependency} from "./getTargetDependency.mts"
 
 export async function embedFileBundler(
 	session: EnkoreSessionAPI, entryCode: string

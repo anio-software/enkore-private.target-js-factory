@@ -1,6 +1,5 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
 import type {APIContext} from "./APIContext.d.mts"
-import {getTargetDependency} from "./getTargetDependency.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {getExternals} from "./getExternals.mts"
 import type {JsBundlerOptions} from "@enkore-types/target-js-toolchain"

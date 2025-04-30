@@ -4,7 +4,6 @@ import {
 	isEntityOfKind,
 	createEntity
 } from "@enkore/spec"
-import {getTargetDependency} from "./getTargetDependency.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {log} from "@enkore/debug"
 

@@ -1,7 +1,6 @@
 import type {EnkoreSessionAPI} from "@enkore/spec"
 import type {MyTSFunctionDeclaration} from "@enkore-types/target-js-toolchain"
 import type {Options} from "./Options.mts"
-import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 
 type Dependency = {
 	key: string

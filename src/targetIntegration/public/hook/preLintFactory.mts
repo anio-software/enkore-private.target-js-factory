@@ -1,7 +1,6 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
-import {getTargetDependency} from "#~src/targetIntegration/getTargetDependency.mts"
 
 const impl: API["hook"]["preLint"] = async function(
 	this: APIContext, session
