@@ -78,7 +78,7 @@ export function getProductPackageJSON(
 	}
 
 	// todo: check dependencies of type only package
-	// by calling getTargetDependency(session, "@enkore/target-js-toolchain").getModuleImportAndExportSpecifiers()
+	// by calling session.target._getToolchain("@enkore/target-js-toolchain").getModuleImportAndExportSpecifiers()
 	// allow @types/ peerDependencies
 	if (typeOnly) {
 		newPackageJSON.dependencies = {}

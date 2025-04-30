@@ -8,7 +8,7 @@ export function generateNeededTypeDeclarations(
 	session: EnkoreSessionAPI,
 	implementation: MyTSFunctionDeclaration
 ): string {
-	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
 	const typesNeeded: MyTSTopLevelTypeDescriptor[] = []
 	const typesPicked: Map<string, true> = new Map()
 

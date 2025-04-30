@@ -23,7 +23,7 @@ export function _generateFactoryCode(
 	exportName: string,
 	variant: Variant
 ) {
-	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
 
 	const implementationFunctionName = (
 		variant === "syncVariant"

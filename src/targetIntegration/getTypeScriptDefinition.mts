@@ -4,7 +4,7 @@ import type {MyTSModule} from "@enkore-types/target-js-toolchain"
 export function getTypeScriptDefinition(
 	session: EnkoreSessionAPI, mod: MyTSModule
 ): string {
-	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
 
 	const {declarations,diagnosticMessages} = toolchain.tsGenerateDeclarationsForModule(
 		mod, (ctx) => {

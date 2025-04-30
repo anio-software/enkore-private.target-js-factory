@@ -19,7 +19,7 @@ export function _getImplementation(
 	options: Options,
 	implementationFunctionName: string
 ): Ret {
-	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
 	const dependencies: Dependency[] = []
 
 	const {program} = toolchain.tsCreateProgram(

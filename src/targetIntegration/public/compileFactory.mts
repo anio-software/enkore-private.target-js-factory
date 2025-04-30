@@ -38,7 +38,7 @@ const impl: API["compile"] = async function(
 		}
 	}
 
-	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (isTypeScriptFile) {

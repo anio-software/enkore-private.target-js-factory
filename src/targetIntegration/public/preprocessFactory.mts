@@ -10,7 +10,7 @@ const impl: API["preprocess"] = async function(
 		return sourceCode
 	}
 
-	const toolchain = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
 	const src = toolchain.tsCreateSourceFile(file.absolutePath)
 
 	const dirLevel = path.dirname(file.relativePath).split("/").length

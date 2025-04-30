@@ -3,8 +3,8 @@ import type {EnkoreSessionAPI} from "@enkore/spec"
 export async function embedFileBundler(
 	session: EnkoreSessionAPI, entryCode: string
 ): Promise<string> {
-	const {jsBundler} = getTargetDependency(session, "@enkore/target-js-toolchain")
-	const {stripTypeScriptTypes} = getTargetDependency(session, "@enkore/target-js-toolchain")
+	const {jsBundler} = session.target._getToolchain("@enkore/target-js-toolchain")
+	const {stripTypeScriptTypes} = session.target._getToolchain("@enkore/target-js-toolchain")
 
 	return await jsBundler(
 		session.project.root, entryCode, {
