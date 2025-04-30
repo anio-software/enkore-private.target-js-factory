@@ -3,7 +3,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import type {TargetJSIdentifier} from "#~src/TargetJSIdentifier.d.mts"
 
 import {getInitialInternalDataFactory} from "#~src/targetIntegration/public/getInitialInternalDataFactory.mts"
-import {getDependenciesToInstallFactory} from "#~src/targetIntegration/public/getDependenciesToInstallFactory.mts"
+import {getToolchainToInstallFactory} from "#~src/targetIntegration/public/getToolchainToInstallFactory.mts"
 import {initializeFactory} from "#~src/targetIntegration/public/initializeFactory.mts"
 import {preprocessFactory} from "#~src/targetIntegration/public/preprocessFactory.mts"
 import {lintFactory} from "#~src/targetIntegration/public/lintFactory.mts"
@@ -30,7 +30,7 @@ export async function generateTargetIntegrationAPI(target: TargetJSIdentifier): 
 		apiRevision: 0,
 
 		getInitialInternalData: getInitialInternalDataFactory(apiContext),
-		getDependenciesToInstall: getDependenciesToInstallFactory(apiContext),
+		getToolchainToInstall: getToolchainToInstallFactory(apiContext),
 		initialize: initializeFactory(apiContext),
 		preprocess: preprocessFactory(apiContext),
 		lint: lintFactory(apiContext),
