@@ -55,13 +55,19 @@ const impl: API["initialize"] = async function(
 	}
 
 	const targetOptions = session.target.getOptions(this.target)
-	const createTypesPackage = targetOptions.createTypesPackage !== undefined
 	const packageNames: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
 			return []
 		}
 
 		return targetOptions.publish.withPackageNames
+	})()
+	const typePackageNames: string[] = (() => {
+		if (!Array.isArray(targetOptions.publish?.typesPackage?.withPackageNames)) {
+			return []
+		}
+
+		return targetOptions.publish.typesPackage.withPackageNames
 	})()
 
 	const products = []
@@ -81,17 +87,11 @@ const impl: API["initialize"] = async function(
 		}
 	}
 
-	if (createTypesPackage) {
-		if (!packageNames.length) {
+	if (typePackageNames.length) {
+		for (const [index] of typePackageNames.entries()) {
 			products.push({
-				name: "npmTypesPackage"
+				name: `npmTypesPackage_${index}`
 			})
-		} else {
-			for (const [index] of packageNames.entries()) {
-				products.push({
-					name: `npmTypesPackage_${index}`
-				})
-			}
 		}
 	}
 
