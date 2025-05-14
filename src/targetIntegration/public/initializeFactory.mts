@@ -57,7 +57,7 @@ const impl: API["initialize"] = async function(
 	const targetOptions = session.target.getOptions(this.target)
 	const npmPackageNames: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
-			return []
+			return [session.project.packageJSON.name]
 		}
 
 		return targetOptions.publish.withPackageNames
