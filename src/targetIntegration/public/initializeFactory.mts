@@ -11,6 +11,28 @@ function sha256Sync(str: string): string {
 	return hash.update(str).digest("hex").toLowerCase()
 }
 
+function getPackageNameSubstitutes(projectPackageName: string) {
+	const tmp = projectPackageName.split("/")
+
+	if (tmp.length === 1) {
+		return {
+			"<FQPN>": projectPackageName,
+			"<FQPN_FLAT>": projectPackageName,
+			"<PN>": projectPackageName,
+			"<ORG>": ""
+		}
+	}
+
+	const flatProjectPackageName = `${tmp[0].slice(1)}__${tmp[1]}`
+
+	return {
+		"<FQPN>": projectPackageName,
+		"<FQPN_FLAT>": flatProjectPackageName,
+		"<PN>": tmp[1],
+		"<ORG>": tmp[0].slice(1)
+	}
+}
+
 const impl: API["initialize"] = async function(
 	this: APIContext,
 	session
@@ -55,19 +77,24 @@ const impl: API["initialize"] = async function(
 	}
 
 	const targetOptions = session.target.getOptions(this.target)
+	const substitutes = getPackageNameSubstitutes(session.project.packageJSON.name)
 	const npmPackageNames: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
 			return [session.project.packageJSON.name]
 		}
 
-		return targetOptions.publish.withPackageNames
+		return targetOptions.publish.withPackageNames.map(p => {
+			return searchAndReplace(p, substitutes)
+		})
 	})()
 	const npmTypesPackageNames: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.typesPackage?.withPackageNames)) {
 			return []
 		}
 
-		return targetOptions.publish.typesPackage.withPackageNames
+		return targetOptions.publish.typesPackage.withPackageNames.map(p => {
+			return searchAndReplace(p, substitutes)
+		})
 	})()
 
 	const products = []
@@ -96,6 +123,18 @@ const impl: API["initialize"] = async function(
 
 	return {
 		products
+	}
+
+	function searchAndReplace(str: string, map: Record<string, string>) {
+		let newStr = str
+
+		for (const key in map) {
+			const replaceWith = map[key]
+
+			newStr = newStr.split(key).join(replaceWith)
+		}
+
+		return newStr
 	}
 }
 
