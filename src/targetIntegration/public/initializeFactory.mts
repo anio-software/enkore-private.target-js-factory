@@ -75,11 +75,7 @@ const impl: API["initialize"] = async function(
 	// todo could add md5 sum of package name to
 	// ensure package name read back is the same as here
 
-	if (!npmPackageNames.length) {
-		products.push({
-			name: "npmPackage"
-		})
-	} else {
+	if (npmPackageNames.length) {
 		for (const [index] of npmPackageNames.entries()) {
 			products.push({
 				name: `npmPackage_${index}`
