@@ -55,14 +55,14 @@ const impl: API["initialize"] = async function(
 	}
 
 	const targetOptions = session.target.getOptions(this.target)
-	const packageNames: string[] = (() => {
+	const npmPackageNames: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
 			return []
 		}
 
 		return targetOptions.publish.withPackageNames
 	})()
-	const typePackageNames: string[] = (() => {
+	const npmTypesPackageNames: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.typesPackage?.withPackageNames)) {
 			return []
 		}
@@ -75,28 +75,28 @@ const impl: API["initialize"] = async function(
 	// todo could add md5 sum of package name to
 	// ensure package name read back is the same as here
 
-	if (!packageNames.length) {
+	if (!npmPackageNames.length) {
 		products.push({
 			name: "npmPackage"
 		})
 	} else {
-		for (const [index] of packageNames.entries()) {
+		for (const [index] of npmPackageNames.entries()) {
 			products.push({
 				name: `npmPackage_${index}`
 			})
 		}
 	}
 
-	if (typePackageNames.length) {
-		for (const [index] of typePackageNames.entries()) {
+	if (npmTypesPackageNames.length) {
+		for (const [index] of npmTypesPackageNames.entries()) {
 			products.push({
 				name: `npmTypesPackage_${index}`
 			})
 		}
 	}
 
-	getInternalData(session).npmPackageNames = packageNames
-	getInternalData(session).npmTypesPackageNames = typePackageNames
+	getInternalData(session).npmPackageNames = npmPackageNames
+	getInternalData(session).npmTypesPackageNames = npmTypesPackageNames
 
 	return {
 		products
