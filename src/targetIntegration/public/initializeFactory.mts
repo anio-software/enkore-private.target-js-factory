@@ -95,6 +95,9 @@ const impl: API["initialize"] = async function(
 		}
 	}
 
+	getInternalData(session).npmPackageNames = packageNames
+	getInternalData(session).npmTypesPackageNames = typePackageNames
+
 	return {
 		products
 	}

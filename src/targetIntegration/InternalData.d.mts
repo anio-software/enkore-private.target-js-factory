@@ -16,4 +16,7 @@ export type InternalData = {
 
 	// cache calls to getRequestedEmbedsFromCode()
 	requestedEmbedsFileCache: Map<string, RequestedEmbedsFromCodeResult>
+
+	npmPackageNames: string[]
+	npmTypesPackageNames: string[]
 }
