@@ -1,9 +1,8 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import type {NPMPackage} from "../InternalData.d.mts"
+import {_productNameToNPMPackage} from "../_productNameToNPMPackage.mts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.mts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.mts"
-import {getInternalData} from "../getInternalData.mts"
 import {copy, readFileJSON, writeAtomicFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
 
@@ -37,35 +36,14 @@ async function _copyNPMPackageProduct(
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
-	let packages: NPMPackage[] = []
-
-	if (productName.startsWith("npmPackage_")) {
-		packages = getInternalData(session).npmPackages
-	} else if (productName.startsWith("npmTypesPackage_")) {
-		packages = getInternalData(session).npmTypesPackages
-	} else {
-		throw new Error(`Invalid product name '${productName}'.`)
-	}
-
-	// we know productName contains an underscore because of the checks
-	// done above
-	const packageIndex = parseInt(productName.slice(
-		productName.indexOf("_") + 1
-	), 10)
-
-	if (packageIndex >= packages.length) {
-		session.enkore.emitMessage(
-			"warning", undefined, `unknown product '${productName}'`
-		)
-
-		return
-	}
-
-	const npmPackageName = packages[packageIndex].name
+	const [
+		packageIndex,
+		npmPackage
+	] = _productNameToNPMPackage(session, productName)
 	const isTypesPackage = productName.startsWith("npmTypesPackage_")
 
 	session.enkore.emitMessage(
-		"info", `building '${productName}' with npmPackageName='${npmPackageName}'`
+		"info", `building '${productName}' with npmPackageName='${npmPackage.name}'`
 	)
 
 	//
@@ -81,14 +59,14 @@ const impl: API["generateProduct"] = async function(
 				this,
 				session,
 				`products/${productName}`,
-				npmPackageName
+				npmPackage.name
 			)
 		} else {
 			await generateNPMPackage(
 				this,
 				session,
 				`products/${productName}`,
-				npmPackageName
+				npmPackage.name
 			)
 		}
 
@@ -99,7 +77,7 @@ const impl: API["generateProduct"] = async function(
 		session.project.root,
 		isTypesPackage ? "npmTypesPackage_0" : "npmPackage_0",
 		`products/${productName}`,
-		npmPackageName
+		npmPackage.name
 	)
 }
 
