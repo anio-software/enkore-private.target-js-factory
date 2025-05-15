@@ -85,7 +85,7 @@ const impl: API["initialize"] = async function(
 
 		return targetOptions.publish.withPackageNames.map(p => {
 			return searchAndReplace(p, substitutes)
-		})
+		}).filter(x => x.length)
 	})()
 	const npmTypesPackageNames: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.typesPackage?.withPackageNames)) {
@@ -94,7 +94,7 @@ const impl: API["initialize"] = async function(
 
 		return targetOptions.publish.typesPackage.withPackageNames.map(p => {
 			return searchAndReplace(p, substitutes)
-		})
+		}).filter(x => x.length)
 	})()
 
 	const products = []
