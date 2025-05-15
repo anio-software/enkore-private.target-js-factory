@@ -83,8 +83,12 @@ const impl: API["initialize"] = async function(
 			return [session.project.packageJSON.name]
 		}
 
-		return targetOptions.publish.withPackageNames.map(p => {
-			return searchAndReplace(p, substitutes)
+		return targetOptions.publish.withPackageNames.map(entry => {
+			if (typeof entry === "object" && "name" in entry) {
+				return searchAndReplace(entry.name, substitutes)
+			}
+
+			return searchAndReplace(entry, substitutes)
 		}).filter(x => x.length)
 	})()
 	const npmTypesPackageNames: string[] = (() => {
@@ -92,8 +96,12 @@ const impl: API["initialize"] = async function(
 			return []
 		}
 
-		return targetOptions.publish.typesPackage.withPackageNames.map(p => {
-			return searchAndReplace(p, substitutes)
+		return targetOptions.publish.typesPackage.withPackageNames.map(entry => {
+			if (typeof entry === "object" && "name" in entry) {
+				return searchAndReplace(entry.name, substitutes)
+			}
+
+			return searchAndReplace(entry, substitutes)
 		}).filter(x => x.length)
 	})()
 
