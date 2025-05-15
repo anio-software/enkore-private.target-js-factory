@@ -1,18 +1,32 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import {_productNameToNPMPackage} from "../_productNameToNPMPackage.mts"
 import {spawnSync} from "node:child_process"
 
 const impl: API["publishProduct"] = async function(
 	this: APIContext, session, productName
 ) {
-	session.enkore.emitMessage("info", `publishing '${productName}'`)
+	const [
+		_,
+		npmPackage
+	] = _productNameToNPMPackage(session, productName)
 
-	const child = spawnSync("npm", [
-		"publish",
-		"--provenance",
-		"--access",
-		"public"
-	], {
+	session.enkore.emitMessage("info", `publishing '${productName}' (${npmPackage.name})`)
+
+	const npmPublishArgs: string[] = [
+		"publish"
+	]
+
+	if (npmPackage.publishWithProvenance === true) {
+		npmPublishArgs.push("--provenance")
+	}
+
+	npmPublishArgs.push("--access")
+	npmPublishArgs.push("public")
+
+	console.log("npm publish args", npmPublishArgs)
+
+	const child = spawnSync("npm", npmPublishArgs, {
 		cwd: ".",
 		stdio: "pipe"
 	})
