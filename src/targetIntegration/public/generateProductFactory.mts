@@ -1,10 +1,8 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.mts"
-import {
-	generateNPMTypesPackage,
-	generateNPMTypesPackageName
-} from "#~src/targetIntegration/generateNPMTypesPackage.mts"
+import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.mts"
+import {getInternalData} from "../getInternalData.mts"
 import {copy, readFileJSON, writeAtomicFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
 
@@ -38,34 +36,32 @@ async function _copyNPMPackageProduct(
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
-	if (!productName.startsWith("npmPackage_") &&
-		!productName.startsWith("npmTypesPackage_")
-	) {
+	let packageNames: string[] = []
+
+	if (productName.startsWith("npmPackage_")) {
+		packageNames = getInternalData(session).npmPackageNames
+	} else if (productName.startsWith("npmTypesPackage_")) {
+		packageNames = getInternalData(session).npmTypesPackageNames
+	} else {
 		throw new Error(`Invalid product name '${productName}'.`)
 	}
 
-	const productPackageType: "pkg" | "typePkg" = (() => {
-		if (productName.startsWith("npmPackage_")) {
-			return "pkg"
-		}
+	// we know productName contains an underscore because of the checks
+	// done above
+	const packageNameIndex = parseInt(productName.slice(
+		productName.indexOf("_") + 1
+	), 10)
 
-		return "typePkg"
-	})()
-
-	const packageNameIndex: number = (() => {
-		if (productPackageType === "pkg") {
-			return parseInt(
-				productName.slice("npmPackage_".length), 10
-			)
-		}
-
-		return parseInt(
-			productName.slice("npmTypesPackage_".length), 10
+	if (packageNameIndex >= packageNames.length) {
+		session.enkore.emitMessage(
+			"warning", undefined, `unknown product '${productName}'`
 		)
-	})()
 
-	// todo: check index
-	const packageName = packageNames[packageNameIndex]
+		return
+	}
+
+	const npmPackageName = packageNames[packageNameIndex]
+	const isTypesPackage = productName.startsWith("npmTypesPackage_")
 
 	//
 	// if we are publishing the same package under different names
@@ -75,45 +71,30 @@ const impl: API["generateProduct"] = async function(
 	// products are generated in order, so npmXXXPackage_0 will always be built first
 	//
 	if (packageNameIndex === 0) {
-		if (productPackageType === "pkg") {
-			await generateNPMPackage(
-				this,
-				session,
-				`products/${productName}`,
-				packageName
-			)
-		} else {
+		if (isTypesPackage) {
 			await generateNPMTypesPackage(
 				this,
 				session,
 				`products/${productName}`,
-				packageName
+				npmPackageName
+			)
+		} else {
+			await generateNPMPackage(
+				this,
+				session,
+				`products/${productName}`,
+				npmPackageName
 			)
 		}
 
 		return
 	}
 
-	if (productPackageType === "typePkg") {
-		const typePackageName = generateNPMTypesPackageName(
-			this, session, packageName
-		)
-
-		await _copyNPMPackageProduct(
-			session.project.root,
-			"npmTypesPackage_0",
-			`products/${productName}`,
-			typePackageName
-		)
-
-		return
-	}
-
 	await _copyNPMPackageProduct(
 		session.project.root,
-		"npmPackage_0",
+		isTypesPackage ? "npmTypesPackage_0" : "npmPackage_0",
 		`products/${productName}`,
-		packageName
+		npmPackageName
 	)
 }
 
