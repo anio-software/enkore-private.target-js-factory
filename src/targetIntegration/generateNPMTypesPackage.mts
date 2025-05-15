@@ -7,35 +7,11 @@ import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.mts
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 
-export function generateNPMTypesPackageName(
-	apiContext: APIContext,
-	session: EnkoreSessionAPI,
-	typePackageName: string
-): string {
-	const targetOptions = session.target.getOptions(apiContext.target)
-
-	if (!targetOptions.createTypesPackage) {
-		throw new Error(`targetOptions.createTypesPackage must be set here!`)
-	}
-
-	let {orgName} = targetOptions.createTypesPackage
-
-	if (orgName.startsWith("@")) orgName = orgName.slice(1)
-
-	if (!typePackageName.startsWith("@")) {
-		return `@${orgName}/${typePackageName}`
-	}
-
-	const [_, packageName] = typePackageName.split("/");
-
-	return `@${orgName}/${packageName}`
-}
-
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
 	directory: string,
-	typePackageName: string
+	packageName: string
 ) {
 	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
 
@@ -58,18 +34,6 @@ export async function generateNPMTypesPackage(
 			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
 		)
 	}
-
-	const targetOptions = session.target.getOptions(apiContext.target)
-
-	if (typeof targetOptions.createTypesPackage === "undefined") {
-		throw new Error(`createTypesPackage is undefined`)
-	}
-
-	const packageName = generateNPMTypesPackageName(
-		apiContext,
-		session,
-		typePackageName
-	)
 
 	await writeAtomicFileJSON(
 		`./package.json`, getProductPackageJSON(
