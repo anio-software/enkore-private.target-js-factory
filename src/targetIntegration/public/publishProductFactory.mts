@@ -2,6 +2,8 @@ import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {_productNameToNPMPackage} from "../_productNameToNPMPackage.mts"
 import {spawnSync} from "node:child_process"
+import path from "node:path"
+import {resolvePathSync} from "@aniojs/node-fs"
 
 const impl: API["publishProduct"] = async function(
 	this: APIContext, session, productName
@@ -29,8 +31,21 @@ const impl: API["publishProduct"] = async function(
 	const npmBinaryPath = targetOptions.npm?.binaryPath ?? "npm"
 
 	if (targetOptions.npm?.configFilePath) {
+		const npmConfigFilePath = (() => {
+			const {configFilePath} = targetOptions.npm
+
+			if (path.isAbsolute(configFilePath)) {
+				return configFilePath
+			}
+
+			return resolvePathSync(
+				path.join(session.project.root, configFilePath),
+				"regularFile"
+			)
+		})()
+
 		npmPublishArgs.push("--userconfig")
-		npmPublishArgs.push(targetOptions.npm.configFilePath)
+		npmPublishArgs.push(npmConfigFilePath)
 	}
 
 	console.log("npm publish args", npmPublishArgs)
