@@ -63,6 +63,10 @@ const impl: API["generateProduct"] = async function(
 	const npmPackageName = packageNames[packageNameIndex]
 	const isTypesPackage = productName.startsWith("npmTypesPackage_")
 
+	session.enkore.emitMessage(
+		"info", `building '${productName}' with npmPackageName='${npmPackageName}'`
+	)
+
 	//
 	// if we are publishing the same package under different names
 	// only build it once and copy the result for the remaining packages,
