@@ -78,7 +78,7 @@ const impl: API["initialize"] = async function(
 
 	const targetOptions = session.target.getOptions(this.target)
 	const substitutes = getPackageNameSubstitutes(session.project.packageJSON.name)
-	const npmPackageNames: string[] = (() => {
+	const npmPackages: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
 			return [session.project.packageJSON.name]
 		}
@@ -91,7 +91,7 @@ const impl: API["initialize"] = async function(
 			return searchAndReplace(entry, substitutes)
 		}).filter(x => x.length)
 	})()
-	const npmTypesPackageNames: string[] = (() => {
+	const npmTypesPackages: string[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.typesPackage?.withPackageNames)) {
 			return []
 		}
@@ -110,24 +110,24 @@ const impl: API["initialize"] = async function(
 	// todo could add md5 sum of package name to
 	// ensure package name read back is the same as here
 
-	if (npmPackageNames.length) {
-		for (const [index] of npmPackageNames.entries()) {
+	if (npmPackages.length) {
+		for (const [index] of npmPackages.entries()) {
 			products.push({
 				name: `npmPackage_${index}`
 			})
 		}
 	}
 
-	if (npmTypesPackageNames.length) {
-		for (const [index] of npmTypesPackageNames.entries()) {
+	if (npmTypesPackages.length) {
+		for (const [index] of npmTypesPackages.entries()) {
 			products.push({
 				name: `npmTypesPackage_${index}`
 			})
 		}
 	}
 
-	getInternalData(session).npmPackageNames = npmPackageNames
-	getInternalData(session).npmTypesPackageNames = npmTypesPackageNames
+	getInternalData(session).npmPackages = npmPackages
+	getInternalData(session).npmTypesPackages = npmTypesPackages
 
 	return {
 		products

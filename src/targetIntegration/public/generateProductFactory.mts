@@ -36,23 +36,23 @@ async function _copyNPMPackageProduct(
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
-	let packageNames: string[] = []
+	let packages: string[] = []
 
 	if (productName.startsWith("npmPackage_")) {
-		packageNames = getInternalData(session).npmPackageNames
+		packages = getInternalData(session).npmPackages
 	} else if (productName.startsWith("npmTypesPackage_")) {
-		packageNames = getInternalData(session).npmTypesPackageNames
+		packages = getInternalData(session).npmTypesPackages
 	} else {
 		throw new Error(`Invalid product name '${productName}'.`)
 	}
 
 	// we know productName contains an underscore because of the checks
 	// done above
-	const packageNameIndex = parseInt(productName.slice(
+	const packageIndex = parseInt(productName.slice(
 		productName.indexOf("_") + 1
 	), 10)
 
-	if (packageNameIndex >= packageNames.length) {
+	if (packageIndex >= packages.length) {
 		session.enkore.emitMessage(
 			"warning", undefined, `unknown product '${productName}'`
 		)
@@ -60,7 +60,7 @@ const impl: API["generateProduct"] = async function(
 		return
 	}
 
-	const npmPackageName = packageNames[packageNameIndex]
+	const npmPackageName = packages[packageIndex]
 	const isTypesPackage = productName.startsWith("npmTypesPackage_")
 
 	session.enkore.emitMessage(
@@ -74,7 +74,7 @@ const impl: API["generateProduct"] = async function(
 	//
 	// products are generated in order, so npmXXXPackage_0 will always be built first
 	//
-	if (packageNameIndex === 0) {
+	if (packageIndex === 0) {
 		if (isTypesPackage) {
 			await generateNPMTypesPackage(
 				this,
