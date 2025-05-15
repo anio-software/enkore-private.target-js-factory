@@ -24,9 +24,18 @@ const impl: API["publishProduct"] = async function(
 	npmPublishArgs.push("--access")
 	npmPublishArgs.push("public")
 
+	const targetOptions = session.target.getOptions(this.target)
+
+	const npmBinaryPath = targetOptions.npm?.binaryPath ?? "npm"
+
+	if (targetOptions.npm?.configFilePath) {
+		npmPublishArgs.push("--userconfig")
+		npmPublishArgs.push(targetOptions.npm.configFilePath)
+	}
+
 	console.log("npm publish args", npmPublishArgs)
 
-	const child = spawnSync("npm", npmPublishArgs, {
+	const child = spawnSync(npmBinaryPath, npmPublishArgs, {
 		cwd: ".",
 		stdio: "pipe"
 	})
