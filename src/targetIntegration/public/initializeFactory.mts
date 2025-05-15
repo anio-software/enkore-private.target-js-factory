@@ -80,7 +80,7 @@ const impl: API["initialize"] = async function(
 	const targetOptions = session.target.getOptions(this.target)
 	const substitutes = getPackageNameSubstitutes(session.project.packageJSON.name)
 	const mapper: (entry: any) => NPMPackage = (entry) => {
-		if ("name" in entry) {
+		if (typeof entry === "object" && "name" in entry) {
 			return {
 				name: searchAndReplace(entry.name, substitutes),
 				publishWithProvenance: !!entry.publishWithProvenance
