@@ -9,6 +9,11 @@ export type Export = {
 	pathToDtsFile: string
 }
 
+export type NPMPackage = {
+	name: string
+	publishWithProvenance: boolean
+}
+
 export type InternalData = {
 	projectId: string
 	myTSProgram: MyTSProgram
@@ -17,6 +22,6 @@ export type InternalData = {
 	// cache calls to getRequestedEmbedsFromCode()
 	requestedEmbedsFileCache: Map<string, RequestedEmbedsFromCodeResult>
 
-	npmPackages: string[]
-	npmTypesPackages: string[]
+	npmPackages: NPMPackage[]
+	npmTypesPackages: NPMPackage[]
 }

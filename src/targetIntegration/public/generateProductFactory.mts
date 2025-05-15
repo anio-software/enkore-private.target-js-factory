@@ -1,5 +1,6 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import type {NPMPackage} from "../InternalData.d.mts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.mts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.mts"
 import {getInternalData} from "../getInternalData.mts"
@@ -36,7 +37,7 @@ async function _copyNPMPackageProduct(
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
-	let packages: string[] = []
+	let packages: NPMPackage[] = []
 
 	if (productName.startsWith("npmPackage_")) {
 		packages = getInternalData(session).npmPackages
@@ -60,7 +61,7 @@ const impl: API["generateProduct"] = async function(
 		return
 	}
 
-	const npmPackageName = packages[packageIndex]
+	const npmPackageName = packages[packageIndex].name
 	const isTypesPackage = productName.startsWith("npmTypesPackage_")
 
 	session.enkore.emitMessage(

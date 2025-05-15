@@ -1,5 +1,6 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import type {NPMPackage} from "../InternalData.d.mts"
 import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import {buildEntryPointMap} from "#~src/targetIntegration/buildEntryPointMap.mts"
@@ -78,31 +79,40 @@ const impl: API["initialize"] = async function(
 
 	const targetOptions = session.target.getOptions(this.target)
 	const substitutes = getPackageNameSubstitutes(session.project.packageJSON.name)
-	const npmPackages: string[] = (() => {
-		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
-			return [session.project.packageJSON.name]
+	const mapper: (entry: any) => NPMPackage = (entry) => {
+		if ("name" in entry) {
+			return {
+				name: searchAndReplace(entry.name, substitutes),
+				publishWithProvenance: !!entry.publishWithProvenance
+			}
 		}
 
-		return targetOptions.publish.withPackageNames.map(entry => {
-			if (typeof entry === "object" && "name" in entry) {
-				return searchAndReplace(entry.name, substitutes)
-			}
+		return {
+			name: searchAndReplace(entry, substitutes),
+			publishWithProvenance: false
+		}
+	}
 
-			return searchAndReplace(entry, substitutes)
-		}).filter(x => x.length)
+	const npmPackages: NPMPackage[] = (() => {
+		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
+			return [{
+				name: session.project.packageJSON.name,
+				publishWithProvenance: false
+			}]
+		}
+
+		const {withPackageNames} = targetOptions.publish
+
+		return withPackageNames.map(mapper).filter(x => x.name.length)
 	})()
-	const npmTypesPackages: string[] = (() => {
+	const npmTypesPackages: NPMPackage[] = (() => {
 		if (!Array.isArray(targetOptions.publish?.typesPackage?.withPackageNames)) {
 			return []
 		}
 
-		return targetOptions.publish.typesPackage.withPackageNames.map(entry => {
-			if (typeof entry === "object" && "name" in entry) {
-				return searchAndReplace(entry.name, substitutes)
-			}
+		const {withPackageNames} = targetOptions.publish.typesPackage
 
-			return searchAndReplace(entry, substitutes)
-		}).filter(x => x.length)
+		return withPackageNames.map(mapper).filter(x => x.name.length)
 	})()
 
 	const products = []
