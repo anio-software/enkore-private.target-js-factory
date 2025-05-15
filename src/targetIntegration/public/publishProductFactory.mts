@@ -17,9 +17,12 @@ const impl: API["publishProduct"] = async function(
 		stdio: "pipe"
 	})
 
-	console.log("cstatus", child.status)
+	console.log("child status", child.status)
 
 	if (child.status !== 0) {
+		console.log("child stdout", child.stdout.toString())
+		console.log("child stderr", child.stderr.toString())
+
 		session.enkore.emitMessage("error", "failed to publish package via npm.")
 	}
 }
