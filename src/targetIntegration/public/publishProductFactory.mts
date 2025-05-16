@@ -3,7 +3,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {_productNameToNPMPackage} from "../_productNameToNPMPackage.mts"
 import {_generateNPMConfig} from "../_generateNPMConfig.mts"
 import {spawnSync} from "node:child_process"
-import {tmpfileSync, writeAtomicFileSync} from "@aniojs/node-fs"
+import {tmpfileSync, writeAtomicFileSync, removeSync} from "@aniojs/node-fs"
 
 const impl: API["publishProduct"] = async function(
 	this: APIContext, session, productName
@@ -29,16 +29,20 @@ const impl: API["publishProduct"] = async function(
 	const targetOptions = session.target.getOptions(this.target)
 
 	const npmBinaryPath = targetOptions.npm?.binaryPath ?? "npm"
+	let tmpConfigFilePath: string|null = null
 
 	if (targetOptions.npm?.registry) {
-		const tmpConfigFilePath = tmpfileSync()
+		tmpConfigFilePath = tmpfileSync()
 
 		const npmConfig = _generateNPMConfig(
 			session.project.root,
 			targetOptions.npm.registry
 		)
 
-		writeAtomicFileSync(tmpConfigFilePath, npmConfig)
+		writeAtomicFileSync(tmpConfigFilePath, npmConfig, {
+			createParents: false,
+			mode: 0o600
+		})
 
 		npmPublishArgs.push("--userconfig")
 		npmPublishArgs.push(tmpConfigFilePath)
@@ -51,18 +55,25 @@ const impl: API["publishProduct"] = async function(
 
 	console.log("npm publish args", npmPublishArgs)
 
-	const child = spawnSync(npmBinaryPath, npmPublishArgs, {
-		cwd: ".",
-		stdio: "pipe"
-	})
+	try {
+		const child = spawnSync(npmBinaryPath, npmPublishArgs, {
+			cwd: ".",
+			stdio: "pipe"
+		})
 
-	console.log("child status", child.status)
+		console.log("child status", child.status)
 
-	if (child.status !== 0) {
-		console.log("child stdout", child.stdout.toString())
-		console.log("child stderr", child.stderr.toString())
+		if (child.status !== 0) {
+			console.log("child stdout", child.stdout.toString())
+			console.log("child stderr", child.stderr.toString())
 
-		session.enkore.emitMessage("error", "failed to publish package via npm.")
+			session.enkore.emitMessage("error", "failed to publish package via npm.")
+		}
+	} finally {
+		// config file can contain sensitive data such as the auth token
+		if (tmpConfigFilePath !== null) {
+			removeSync(tmpConfigFilePath)
+		}
 	}
 }
 
