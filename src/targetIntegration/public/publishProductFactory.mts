@@ -37,6 +37,7 @@ const impl: API["publishProduct"] = async function(
 		const npmConfig = _generateNPMConfig(
 			session.project.root,
 			targetOptions.npm.registry,
+			true,
 			true
 		)
 

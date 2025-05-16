@@ -12,7 +12,8 @@ type Options = EnkoreTargetJSNoneOptions | EnkoreTargetJSNodeOptions | EnkoreTar
 export function _generateNPMConfig(
 	projectRoot: string,
 	registry: NonNullable<Options["npm"]>["registry"],
-	includeSensitiveInformation?: boolean
+	includeSensitiveInformation?: boolean,
+	resolveRelativePaths?: boolean
 ): string {
 	if (registry === undefined) {
 		return ""
@@ -70,7 +71,7 @@ export function _generateNPMConfig(
 	}
 
 	function resolve(p: string) {
-		if (path.isAbsolute(p)) {
+		if (path.isAbsolute(p) || resolveRelativePaths !== true) {
 			return p
 		}
 
