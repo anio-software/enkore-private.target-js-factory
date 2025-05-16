@@ -1,6 +1,6 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import type {NodeAPIMessage} from "@enkore/spec/primitives"
+import type {NodeAPIMessage} from "@asint/enkore__spec/primitives"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 
 const impl: API["lint"] = async function(

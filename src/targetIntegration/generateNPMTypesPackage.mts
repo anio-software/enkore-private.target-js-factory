@@ -1,4 +1,4 @@
-import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {EnkoreSessionAPI} from "@asint/enkore__spec"
 import type {APIContext} from "./APIContext.d.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {getExternals} from "./getExternals.mts"

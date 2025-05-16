@@ -1,6 +1,6 @@
-import type {EnkoreConfig} from "@enkore/spec"
-import type {NodePackageJSON} from "@enkore/spec/primitives"
-import type {EnkoreJSRuntimeProject} from "@enkore/spec"
+import type {EnkoreConfig} from "@asint/enkore__spec"
+import type {NodePackageJSON} from "@asint/enkore__spec/primitives"
+import type {EnkoreJSRuntimeProject} from "@asint/enkore__spec"
 
 export type ProjectEmbedFile = {
 	sourceFilePath: string

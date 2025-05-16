@@ -2,7 +2,7 @@ import {
 	type EnkoreSessionAPI,
 	type EnkoreJSRuntimeEmbeddedFile,
 	createEntity
-} from "@enkore/spec"
+} from "@asint/enkore__spec"
 import type {JsBundlerOptions} from "@enkore-types/target-js-toolchain"
 import type {APIContext} from "./APIContext.d.mts"
 import type {InternalData} from "./InternalData.d.mts"

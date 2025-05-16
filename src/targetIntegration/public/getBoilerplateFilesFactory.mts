@@ -1,8 +1,8 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import {createEntity} from "@enkore/spec"
+import {createEntity} from "@asint/enkore__spec"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
-import {targetBoilerplateFileMarkerUUID} from "@enkore/spec/uuid"
+import {targetBoilerplateFileMarkerUUID} from "@asint/enkore__spec/uuid"
 import {_generateNPMConfig} from "../_generateNPMConfig.mts"
 
 const impl: API["getBoilerplateFiles"] = async function(

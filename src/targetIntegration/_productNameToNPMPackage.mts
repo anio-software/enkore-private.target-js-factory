@@ -1,4 +1,4 @@
-import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {EnkoreSessionAPI} from "@asint/enkore__spec"
 import type {NPMPackage} from "./InternalData.d.mts"
 import {getInternalData} from "./getInternalData.mts"
 

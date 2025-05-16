@@ -1,4 +1,4 @@
-import type {EnkoreJSRuntimeEmbeddedFile} from "@enkore/spec"
+import type {EnkoreJSRuntimeEmbeddedFile} from "@asint/enkore__spec"
 import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
 import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.mts"
 import {getGlobalRuntimeDataRecords} from "./getGlobalRuntimeDataRecords.mts"

@@ -1,4 +1,4 @@
-import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {EnkoreSessionAPI} from "@asint/enkore__spec"
 
 export async function embedFileBundler(
 	session: EnkoreSessionAPI, entryCode: string

@@ -4,7 +4,7 @@ import type {
 	EnkoreTargetJSNoneOptions,
 	EnkoreTargetJSNodeOptions,
 	EnkoreTargetJSWebOptions
-} from "@enkore/spec"
+} from "@asint/enkore__spec"
 
 // todo: a bit whacky but it's fine for now
 type Options = EnkoreTargetJSNoneOptions | EnkoreTargetJSNodeOptions | EnkoreTargetJSWebOptions

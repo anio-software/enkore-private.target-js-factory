@@ -1,4 +1,4 @@
-import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {EnkoreSessionAPI} from "@asint/enkore__spec"
 import type {InternalData} from "./InternalData.d.mts"
 
 export function getInternalData(session: EnkoreSessionAPI) {

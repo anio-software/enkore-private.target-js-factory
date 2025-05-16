@@ -1,5 +1,5 @@
 import type {APIContext} from "./APIContext.mts"
-import type {EnkoreSessionAPI} from "@enkore/spec"
+import type {EnkoreSessionAPI} from "@asint/enkore__spec"
 import type {RequestedEmbedsFromCodeResult} from "@enkore-types/target-js-toolchain"
 import {readFileString} from "@aniojs/node-fs"
 import {getInternalData} from "./getInternalData.mts"

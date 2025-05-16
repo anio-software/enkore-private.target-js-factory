@@ -1,6 +1,6 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import {createEntity} from "@enkore/spec"
+import {createEntity} from "@asint/enkore__spec"
 import {scandir} from "@aniojs/node-fs"
 import path from "node:path"
 import {

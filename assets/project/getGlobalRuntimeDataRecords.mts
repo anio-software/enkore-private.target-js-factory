@@ -1,4 +1,4 @@
-import type {EnkoreJSRuntimeGlobalDataRecord} from "@enkore/spec"
+import type {EnkoreJSRuntimeGlobalDataRecord} from "@asint/enkore__spec"
 
 export function getGlobalRuntimeDataRecords(): EnkoreJSRuntimeGlobalDataRecord[] {
 	const globalThisPropKey = Symbol.for("@enkore/js-runtime/globalRecords")

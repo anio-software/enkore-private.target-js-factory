@@ -1,4 +1,4 @@
-import {type EnkoreSessionAPI} from "@enkore/spec"
+import {type EnkoreSessionAPI} from "@asint/enkore__spec"
 import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.mts"
 import type {Options} from "./Options.mts"
 import type {Variant} from "./Variant.mts"
