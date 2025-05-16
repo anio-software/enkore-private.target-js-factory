@@ -2,7 +2,8 @@
     "extends": "./base.json",
     "compilerOptions": {
         "composite": true,
-        "paths": {}
+        "paths": {},
+        "types": ["@types/node"]
     },
     "include": [
         "../enkore.config.mts",
