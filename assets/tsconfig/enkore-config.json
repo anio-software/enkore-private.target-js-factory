@@ -6,6 +6,6 @@
     },
     "include": [
         "../enkore.config.mts",
-        "../*.mts"
+        "../config/enkore/**/*"
     ]
 }
