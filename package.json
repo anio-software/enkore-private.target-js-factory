@@ -33,6 +33,8 @@
   "devDependencies": {
     "@aniojs/node-fs": "^0.5.3",
     "@aniojs/random-ident": "^0.1.2",
+    "@asint/enkore__common": "^0.0.119",
+    "@asint/enkore__spec": "^0.269.0",
     "@enkore-types/target-js-toolchain": "^0.0.13",
     "@enkore/debug": "^0.0.2",
     "@enkore/target-js-utils": "^0.0.4",
