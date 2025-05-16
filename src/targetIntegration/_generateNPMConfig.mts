@@ -11,7 +11,8 @@ type Options = EnkoreTargetJSNoneOptions | EnkoreTargetJSNodeOptions | EnkoreTar
 
 export function _generateNPMConfig(
 	projectRoot: string,
-	registry: NonNullable<Options["npm"]>["registry"]
+	registry: NonNullable<Options["npm"]>["registry"],
+	includeSensitiveInformation?: boolean
 ): string {
 	if (registry === undefined) {
 		return ""
@@ -46,7 +47,7 @@ export function _generateNPMConfig(
 			)}\n`
 		}
 
-		if (reg.authTokenFilePath) {
+		if (reg.authTokenFilePath && includeSensitiveInformation === true) {
 			//          printf "%s\n" "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" >> ./.npmrc
 			npmConfig += `//${regBase}:_authToken=${JSON.stringify(
 				readFileStringSync(
