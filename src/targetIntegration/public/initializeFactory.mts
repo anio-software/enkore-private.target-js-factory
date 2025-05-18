@@ -1,6 +1,6 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import type {NPMPackage} from "../InternalData.d.mts"
+import type {NPMPackage, Registry} from "../InternalData.d.mts"
 import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import {buildEntryPointMap} from "#~src/targetIntegration/buildEntryPointMap.mts"
@@ -115,6 +115,23 @@ const impl: API["initialize"] = async function(
 	}
 
 	getInternalData(session).npmPackages = npmPackages
+
+	const registryMap: Map<string, Registry> = new Map()
+
+	if (targetOptions.registry) {
+		for (const registryId in targetOptions.registry) {
+			const registry = targetOptions.registry[registryId]
+
+			registryMap.set(registryId, registry)
+		}
+	} else {
+		registryMap.set("default", {
+			url: "https://registry.npmjs.org/"
+			// todo add authTokenFilePath
+		})
+	}
+
+	getInternalData(session).registryMap = registryMap
 
 	return {
 		products
