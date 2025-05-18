@@ -8,9 +8,7 @@ export type PublishConfig = Required<
 	ArrayType<NonNullable<TargetOptions["publish"]>>[number]
 >
 
-export type Registry = Required<
-	NonNullable<TargetOptions["registry"]>[string]
->
+export type Registry = NonNullable<TargetOptions["registry"]>[string]
 
 export type Export = {
 	name: string
