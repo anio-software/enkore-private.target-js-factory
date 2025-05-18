@@ -31,8 +31,8 @@
   },
   "type": "module",
   "devDependencies": {
-    "@anio-software/enkore.common": "^0.0.124",
-    "@anio-software/enkore.spec": "^0.273.0",
+    "@anio-software/enkore.common": "^0.0.125",
+    "@anio-software/enkore.spec": "^0.273.1",
     "@aniojs/node-fs": "^0.5.3",
     "@aniojs/random-ident": "^0.1.2",
     "@enkore-types/target-js-toolchain": "^0.0.13",
