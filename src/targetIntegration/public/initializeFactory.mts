@@ -95,7 +95,8 @@ const impl: API["initialize"] = async function(
 				publishConfig: {
 					publishWithProvenance: config.publishWithProvenance ?? false,
 					registry: config.registry ?? "default",
-					tag: config.tag ?? "latest"
+					tag: config.tag ?? "latest",
+					skip: config.skip === true
 				}
 			})
 		}

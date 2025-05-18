@@ -26,6 +26,15 @@ const impl: API["publishProduct"] = async function(
 
 		const {publishConfig} = npmPackage
 
+		if (publishConfig.skip === true) {
+			session.enkore.emitMessage(
+				"info",
+				`user requested to skip publish of package '${npmPackage.name}'.`
+			)
+
+			return
+		}
+
 		if (!registryMap.has(publishConfig.registry)) {
 			session.enkore.emitMessage(
 				"error", `referenced registry '${publishConfig.registry}' not configured.`
