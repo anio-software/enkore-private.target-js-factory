@@ -3,7 +3,6 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {createEntity} from "@asint/enkore__spec"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {targetBoilerplateFileMarkerUUID} from "@asint/enkore__spec/uuid"
-import {_generateNPMConfig} from "../_generateNPMConfig.mts"
 
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session
@@ -35,18 +34,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 		tsconfigBase.compilerOptions.types.push("web")
 	}
 
-	const targetOptions = session.target.getOptions(this.target)
-
 	let npmConfig = ""
-
-	if (targetOptions.npm?.registry) {
-		npmConfig = _generateNPMConfig(
-			session.project.root,
-			targetOptions.npm.registry,
-			false,
-			false
-		)
-	}
 
 	return [
 		defineFile("tsconfig.json", getAsset("text://tsconfig/tsconfig.json") as string, true),
