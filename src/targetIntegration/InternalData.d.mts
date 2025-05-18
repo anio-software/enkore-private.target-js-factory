@@ -22,7 +22,8 @@ export type Export = {
 
 export type NPMPackage = {
 	name: string
-	publishConfig: Omit<PublishConfig, "packageName">
+	packageContents: PublishConfig["packageContents"]
+	publishConfig: Omit<PublishConfig, "packageName" | "packageContents">
 }
 
 export type InternalData = {
@@ -35,5 +36,4 @@ export type InternalData = {
 
 	registryMap: Map<string, Registry>
 	npmPackages: NPMPackage[]
-	npmTypesPackages: NPMPackage[]
 }
