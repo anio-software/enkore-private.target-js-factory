@@ -79,46 +79,32 @@ const impl: API["initialize"] = async function(
 
 	const targetOptions = session.target.getOptions(this.target)
 	const substitutes = getPackageNameSubstitutes(session.project.packageJSON.name)
-	const mapper: (entry: any) => NPMPackage = (entry) => {
-		if (typeof entry === "object" && "name" in entry) {
-			return {
-				name: searchAndReplace(entry.name, substitutes),
-				publishWithProvenance: !!entry.publishWithProvenance
-			}
-		}
 
-		return {
-			name: searchAndReplace(entry, substitutes),
-			publishWithProvenance: false
+	const npmPackages: NPMPackage[] = []
+
+	if (targetOptions.publish) {
+		const publishConfig = Array.isArray(
+			targetOptions.publish
+		) ? targetOptions.publish : [targetOptions.publish]
+
+		for (const config of publishConfig) {
+			npmPackages.push({
+				name: searchAndReplace(config.packageName, substitutes),
+				packageContents: config.packageContents ?? "project",
+				publishConfig: {
+					publishWithProvenance: config.publishWithProvenance ?? false,
+					registry: config.registry ?? "default",
+					tag: config.tag ?? "latest"
+				}
+			})
 		}
 	}
 
-	const npmPackages: NPMPackage[] = (() => {
-		if (!Array.isArray(targetOptions.publish?.withPackageNames)) {
-			return [{
-				name: session.project.packageJSON.name,
-				publishWithProvenance: false
-			}]
-		}
-
-		const {withPackageNames} = targetOptions.publish
-
-		return withPackageNames.map(mapper).filter(x => x.name.length)
-	})()
-	const npmTypesPackages: NPMPackage[] = (() => {
-		if (!Array.isArray(targetOptions.publish?.typesPackage?.withPackageNames)) {
-			return []
-		}
-
-		const {withPackageNames} = targetOptions.publish.typesPackage
-
-		return withPackageNames.map(mapper).filter(x => x.name.length)
-	})()
-
-	const products = []
-
-	// todo could add md5 sum of package name to
-	// ensure package name read back is the same as here
+	const products = [{
+		name: "project"
+	}, {
+		name: "projectTypes"
+	}]
 
 	if (npmPackages.length) {
 		for (const [index] of npmPackages.entries()) {
@@ -128,16 +114,7 @@ const impl: API["initialize"] = async function(
 		}
 	}
 
-	if (npmTypesPackages.length) {
-		for (const [index] of npmTypesPackages.entries()) {
-			products.push({
-				name: `npmTypesPackage_${index}`
-			})
-		}
-	}
-
 	getInternalData(session).npmPackages = npmPackages
-	getInternalData(session).npmTypesPackages = npmTypesPackages
 
 	return {
 		products
