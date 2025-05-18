@@ -12,9 +12,7 @@ async function _copyNPMPackageProduct(
 	newDirectory: string,
 	newPackageName: string
 ) {
-	const base = path.join(
-		projectRoot, "products", srcProductName
-	)
+	const base = path.join(projectRoot, "products", srcProductName)
 
 	await copy(path.join(base, "dist"), "./dist")
 
