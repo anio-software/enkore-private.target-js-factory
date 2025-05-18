@@ -4,7 +4,9 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 const impl: API["getGitIgnoredFiles"] = async function(
 	this: APIContext
 ) {
-	return []
+	return [
+		"/.npmrc"
+	]
 }
 
 export function getGitIgnoredFilesFactory(context: APIContext) {
