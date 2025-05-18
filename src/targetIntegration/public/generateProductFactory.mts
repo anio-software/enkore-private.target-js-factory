@@ -36,49 +36,44 @@ async function _copyNPMPackageProduct(
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
-	const [
-		packageIndex,
-		npmPackage
-	] = _productNameToNPMPackage(session, productName)
-	const isTypesPackage = productName.startsWith("npmTypesPackage_")
-
-	session.enkore.emitMessage(
-		"info", `building '${productName}' with npmPackageName='${npmPackage.name}'`
-	)
+	session.enkore.emitMessage("info", `building '${productName}'`)
 
 	//
 	// if we are publishing the same package under different names
 	// only build it once and copy the result for the remaining packages,
 	// only adjusting the package.json's name and repository fields.
 	//
-	// products are generated in order, so npmXXXPackage_0 will always be built first
+	// products are generated in order, 'project' and 'projectTypes' will always be built first
 	//
-	if (packageIndex === 0) {
-		if (isTypesPackage) {
-			await generateNPMTypesPackage(
-				this,
-				session,
-				`products/${productName}`,
-				npmPackage.name
-			)
-		} else {
-			await generateNPMPackage(
-				this,
-				session,
-				`products/${productName}`,
-				npmPackage.name
-			)
-		}
+	if (productName === "project") {
+		await generateNPMPackage(
+			this,
+			session,
+			`products/${productName}`,
+			session.project.packageJSON.name
+		)
+	} else if (productName === "projectTypes") {
+		await generateNPMTypesPackage(
+			this,
+			session,
+			`products/${productName}`,
+			session.project.packageJSON.name
+		)
+	} else if (productName.startsWith("npmPackage_")) {
+		const [
+			packageIndex,
+			npmPackage
+		] = _productNameToNPMPackage(session, productName)
 
-		return
+		await _copyNPMPackageProduct(
+			session.project.root,
+			npmPackage.packageContents,
+			`products/npmPackage_${packageIndex}`,
+			npmPackage.name
+		)
+	} else {
+		throw new Error(`invalid product name '${productName}'`)
 	}
-
-	await _copyNPMPackageProduct(
-		session.project.root,
-		isTypesPackage ? "npmTypesPackage_0" : "npmPackage_0",
-		`products/${productName}`,
-		npmPackage.name
-	)
 }
 
 export function generateProductFactory(context: APIContext) {
