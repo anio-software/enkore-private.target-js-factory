@@ -3,6 +3,8 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {createEntity} from "@asint/enkore__spec"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {targetBoilerplateFileMarkerUUID} from "@asint/enkore__spec/uuid"
+import {_getRegistryMap} from "../_getRegistryMap.mts"
+import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.mts"
 
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session
@@ -34,7 +36,31 @@ const impl: API["getBoilerplateFiles"] = async function(
 		tsconfigBase.compilerOptions.types.push("web")
 	}
 
+	const targetOptions = session.target.getOptions(this.target)
+	const registryMap = _getRegistryMap(targetOptions)
+
 	let npmConfig = ""
+
+	if (targetOptions.packageSourceRegistryByScope) {
+		for (const scope in targetOptions.packageSourceRegistryByScope) {
+			const {registry} = targetOptions.packageSourceRegistryByScope[scope]
+
+			if (!registryMap.has(registry)) {
+				session.enkore.emitMessage(
+					"error", `referenced undefined registry '${registry}'`
+				)
+
+				return []
+			}
+
+			npmConfig += _npmRegistryToConfigString(
+				registryMap.get(registry)!, {
+					includeAuthToken: false,
+					scope
+				}
+			)
+		}
+	}
 
 	return [
 		defineFile("tsconfig.json", getAsset("text://tsconfig/tsconfig.json") as string, true),
