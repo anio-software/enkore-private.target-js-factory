@@ -6,18 +6,13 @@ export function _productNameToNPMPackage(
 	session: EnkoreSessionAPI,
 	productName: string
 ): [number, NPMPackage] {
-	let packages: NPMPackage[] = []
-
-	if (productName.startsWith("npmPackage_")) {
-		packages = getInternalData(session).npmPackages
-	} else if (productName.startsWith("npmTypesPackage_")) {
-		packages = getInternalData(session).npmTypesPackages
-	} else {
+	if (!productName.startsWith("npmPackage_")) {
 		throw new Error(`Invalid product name '${productName}'.`)
 	}
 
-	// we know productName contains an underscore because of the checks
-	// done above
+	const packages = getInternalData(session).npmPackages
+
+	// we know productName contains an underscore because of the check done above
 	const packageIndex = parseInt(productName.slice(
 		productName.indexOf("_") + 1
 	), 10)
