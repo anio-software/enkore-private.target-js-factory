@@ -2,6 +2,12 @@ import type {MyTSProgram, MyTSExport} from "@enkore-types/target-js-toolchain"
 import type {RequestedEmbedsFromCodeResult} from "@enkore-types/target-js-toolchain"
 import type {TargetOptions} from "./TargetOptions.d.mts"
 
+type ArrayType<T> = T extends any[] ? T : never
+
+export type PublishConfig = Required<
+	ArrayType<NonNullable<TargetOptions["publish"]>>[number]
+>
+
 export type Registry = Required<
 	NonNullable<TargetOptions["registry"]>[string]
 >
@@ -16,7 +22,7 @@ export type Export = {
 
 export type NPMPackage = {
 	name: string
-	publishWithProvenance: boolean
+	publishConfig: Omit<PublishConfig, "packageName">
 }
 
 export type InternalData = {
