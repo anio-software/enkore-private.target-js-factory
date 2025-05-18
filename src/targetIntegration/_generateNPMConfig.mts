@@ -1,17 +1,10 @@
 import path from "node:path"
 import {resolvePathSync, readFileStringSync} from "@aniojs/node-fs"
-import type {
-	EnkoreTargetJSNoneOptions,
-	EnkoreTargetJSNodeOptions,
-	EnkoreTargetJSWebOptions
-} from "@asint/enkore__spec"
-
-// todo: a bit whacky but it's fine for now
-type Options = EnkoreTargetJSNoneOptions | EnkoreTargetJSNodeOptions | EnkoreTargetJSWebOptions
+import type {TargetOptions} from "./TargetOptions.d.mts"
 
 export function _generateNPMConfig(
 	projectRoot: string,
-	registry: NonNullable<Options["npm"]>["registry"],
+	registry: NonNullable<TargetOptions["npm"]>["registry"],
 	includeSensitiveInformation?: boolean,
 	resolveRelativePaths?: boolean
 ): string {
