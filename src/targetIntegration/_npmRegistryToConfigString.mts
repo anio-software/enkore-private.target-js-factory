@@ -16,9 +16,9 @@ export function _npmRegistryToConfigString(
 	let config = ``
 
 	if (hasNoScope) {
-		config += `registry=${JSON.stringify(registry.url)}\n`
+		config += `registry=${JSON.stringify(`${registry.url}/`)}\n`
 	} else {
-		config += `${options.scope}:registry=${JSON.stringify(registry.url)}\n`
+		config += `${options.scope}:registry=${JSON.stringify(`${registry.url}/`)}\n`
 	}
 
 	if (registry.authTokenFilePath && options?.includeAuthToken === true) {
@@ -26,19 +26,19 @@ export function _npmRegistryToConfigString(
 			registry.authTokenFilePath
 		).trim()
 
-		config += `//${base}:_authToken=${JSON.stringify(authToken)}\n`
+		config += `//${base}/:_authToken=${JSON.stringify(authToken)}\n`
 	}
 
 	if (registry.clientPrivateKeyFilePath) {
 		const filePath = registry.clientPrivateKeyFilePath
 
-		config += `//${base}:keyfile=${JSON.stringify(filePath)}\n`
+		config += `//${base}/:keyfile=${JSON.stringify(filePath)}\n`
 	}
 
 	if (registry.clientCertificateFilePath) {
 		const filePath = registry.clientCertificateFilePath
 
-		config += `//${base}:certfile=${JSON.stringify(filePath)}\n`
+		config += `//${base}/:certfile=${JSON.stringify(filePath)}\n`
 	}
 
 	return config
