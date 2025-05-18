@@ -1,6 +1,18 @@
 import type {Registry} from "./InternalData.d.mts"
 import type {TargetOptions} from "./TargetOptions.d.mts"
 
+function normalizeRegistryURL(url: string) {
+	for (let i = 0; i < url.length; ++i) {
+		let index = url.length - 1 - i
+
+		if (url[index] !== "/") {
+			return url.slice(0, index + 1)
+		}
+	}
+
+	return url
+}
+
 export function _getRegistryMap(targetOptions: TargetOptions) {
 	const registryMap: Map<string, Registry> = new Map()
 
@@ -8,7 +20,10 @@ export function _getRegistryMap(targetOptions: TargetOptions) {
 		for (const registryId in targetOptions.registry) {
 			const registry = targetOptions.registry[registryId]
 
-			registryMap.set(registryId, registry)
+			registryMap.set(registryId, {
+				...registry,
+				url: normalizeRegistryURL(registry.url)
+			})
 		}
 	} else {
 		registryMap.set("default", {
