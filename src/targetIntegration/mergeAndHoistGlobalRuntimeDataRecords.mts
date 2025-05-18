@@ -3,7 +3,7 @@ import {
 	type EnkoreJSRuntimeEmbeddedFile,
 	isEntityOfKind,
 	createEntity
-} from "@asint/enkore__spec"
+} from "@anio-software/enkore.spec"
 import {getInternalData} from "./getInternalData.mts"
 import {log} from "@enkore/debug"
 

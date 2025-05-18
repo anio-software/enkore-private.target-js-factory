@@ -1,8 +1,8 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import {createEntity} from "@asint/enkore__spec"
+import {createEntity} from "@anio-software/enkore.spec"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
-import {targetBoilerplateFileMarkerUUID} from "@asint/enkore__spec/uuid"
+import {targetBoilerplateFileMarkerUUID} from "@anio-software/enkore.spec/uuid"
 import {_getRegistryMap} from "../_getRegistryMap.mts"
 import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.mts"
 

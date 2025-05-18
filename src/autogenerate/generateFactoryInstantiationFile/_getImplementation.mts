@@ -1,4 +1,4 @@
-import type {EnkoreSessionAPI} from "@asint/enkore__spec"
+import type {EnkoreSessionAPI} from "@anio-software/enkore.spec"
 import type {MyTSFunctionDeclaration} from "@enkore-types/target-js-toolchain"
 import type {Options} from "./Options.mts"
 

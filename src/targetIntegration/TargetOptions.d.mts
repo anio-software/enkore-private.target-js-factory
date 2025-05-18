@@ -2,7 +2,7 @@ import type {
 	EnkoreTargetJSNoneOptions,
 	EnkoreTargetJSNodeOptions,
 	EnkoreTargetJSWebOptions
-} from "@asint/enkore__spec"
+} from "@anio-software/enkore.spec"
 
 export type TargetOptions = EnkoreTargetJSNoneOptions |
                             EnkoreTargetJSNodeOptions |
