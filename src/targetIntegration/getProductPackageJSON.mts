@@ -96,8 +96,6 @@ export function getProductPackageJSON(
 	const {repository} = session.project.packageJSON
 
 	if (repository) {
-		const productName = typeOnly ? "npmTypesPackage" : "npmPackage"
-
 		newPackageJSON.repository = {
 			type: repository.type,
 			url: repository.url,
