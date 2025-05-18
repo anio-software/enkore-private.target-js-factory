@@ -41,6 +41,12 @@ const impl: API["getBoilerplateFiles"] = async function(
 
 	let npmConfig = ""
 
+	npmConfig += `\n`
+	npmConfig += `# DO NOT CHANGE THIS CONFIGURATION\n`
+	npmConfig += `# THIS CONFIG IS SOLELY FOR **INSTALLING** PACKAGES`
+	npmConfig += ` AND IS MANAGED AUTOMATICALLY\n`
+	npmConfig += `# TO CONFIGURE PUBLISHING USE /enkore.config.mts\n`
+
 	if (targetOptions.packageSourceRegistryByScope) {
 		for (const scope in targetOptions.packageSourceRegistryByScope) {
 			const {registry} = targetOptions.packageSourceRegistryByScope[scope]
