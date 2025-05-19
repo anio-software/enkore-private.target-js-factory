@@ -10,7 +10,8 @@ async function _copyNPMPackageProduct(
 	projectRoot: string,
 	srcProductName: string,
 	newDirectory: string,
-	newPackageName: string
+	newPackageName: string,
+	newPackageVersion: string
 ) {
 	const base = path.join(projectRoot, "products", srcProductName)
 
@@ -21,6 +22,8 @@ async function _copyNPMPackageProduct(
 	)
 
 	let newPackageJSON = {...packageJSON, name: newPackageName}
+
+	newPackageJSON.version = newPackageVersion
 
 	if ("repository" in newPackageJSON) {
 		newPackageJSON.repository.directory = newDirectory
@@ -67,7 +70,8 @@ const impl: API["generateProduct"] = async function(
 			session.project.root,
 			npmPackage.packageContents,
 			`products/npmPackage_${packageIndex}`,
-			npmPackage.name
+			npmPackage.name,
+			npmPackage.version
 		)
 	} else {
 		throw new Error(`invalid product name '${productName}'`)
