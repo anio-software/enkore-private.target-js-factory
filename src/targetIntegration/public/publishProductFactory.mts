@@ -99,6 +99,9 @@ const impl: API["publishProduct"] = async function(
 			npmPublishArgs.push("--provenance")
 		}
 
+		npmPublishArgs.push("--tag")
+		npmPublishArgs.push(publishConfig.tag)
+
 		npmPublishArgs.push("--access")
 		npmPublishArgs.push("public")
 
