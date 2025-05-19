@@ -89,7 +89,7 @@ const impl: API["publishProduct"] = async function(
 			`info`,
 			`npmPackage_${packageIndex}: publishing '${npmPackage.name}'` +
 			` at registry '${registry.url}'.` +
-			` version=${npmPackage.version} ` +
+			` version=${npmPackage.version}` +
 			` tag=${publishConfig.tag}` +
 			` provenance=${publishConfig.publishWithProvenance === true ? "yes" : "no"}`
 		)
