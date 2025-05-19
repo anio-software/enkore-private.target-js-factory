@@ -3,6 +3,7 @@ import {spawnSync} from "node:child_process"
 export function _getCurrentGitCommitHash(projectRoot: string): string|false {
 	const child = spawnSync("git", [
 		"rev-parse",
+		"--verify",
 		"HEAD"
 	], {
 		cwd: projectRoot
