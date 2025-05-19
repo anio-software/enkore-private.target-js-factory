@@ -91,13 +91,19 @@ const impl: API["initialize"] = async function(
 
 		const projectCommitHash = _getCurrentGitCommitHash(session.project.root)
 
-		if (session.enkore.getOptions().isCIEnvironment) {
-			if (!projectCommitHash) {
+		if (!projectCommitHash) {
+			const isCIEnvironment = session.enkore.getOptions().isCIEnvironment !== false
+
+			if (isCIEnvironment) {
 				session.enkore.emitMessage(
 					"error", `git commit hash cannot be retrieved. This is an error in CI environments.`
 				)
 
 				return {products: []}
+			} else {
+				session.enkore.emitMessage(
+					"warning", `git commit hash cannot be retrieved.`
+				)
 			}
 		}
 
