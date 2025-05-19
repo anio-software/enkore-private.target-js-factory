@@ -2,7 +2,7 @@ import type {Registry} from "./InternalData.d.mts"
 import {readFileStringSync} from "@aniojs/node-fs"
 
 type Options = {
-	scope?: string | undefined
+	scope?: string | undefined | false
 	includeAuthToken?: boolean
 }
 
@@ -15,10 +15,12 @@ export function _npmRegistryToConfigString(
 
 	let config = ``
 
-	if (hasNoScope) {
-		config += `registry=${JSON.stringify(`${registry.url}/`)}\n`
-	} else {
-		config += `${options.scope}:registry=${JSON.stringify(`${registry.url}/`)}\n`
+	if (options?.scope !== false) {
+		if (hasNoScope) {
+			config += `registry=${JSON.stringify(`${registry.url}/`)}\n`
+		} else {
+			config += `${options.scope}:registry=${JSON.stringify(`${registry.url}/`)}\n`
+		}
 	}
 
 	if (registry.authTokenFilePath && options?.includeAuthToken === true) {
