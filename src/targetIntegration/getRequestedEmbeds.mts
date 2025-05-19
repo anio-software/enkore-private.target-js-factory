@@ -36,7 +36,7 @@ export async function getRequestedEmbeds(
 		return x.toLowerCase().includes("embed")
 	})
 
-	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("js")
 	const filesToAnalyze: Map<string, true> = new Map()
 
 	for (const [_, {relativePath}] of exportMap.entries()) {

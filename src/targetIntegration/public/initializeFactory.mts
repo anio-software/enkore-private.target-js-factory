@@ -47,7 +47,7 @@ const impl: API["initialize"] = async function(
 		return path.join("build", file.relativePath)
 	})
 
-	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("js")
 	const {compilerOptions} = toolchain.tsReadTSConfigFile(
 		session.project.root, "tsconfig/base.json"
 	)

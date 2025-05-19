@@ -10,7 +10,7 @@ const impl: API["lint"] = async function(
 	// myNewProgram.getModule check
 	if (file.wasFiltered) return [];
 
-	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("js")
 	const myNewProgram = getInternalData(session).myTSProgram
 
 	const mod = myNewProgram.getModule(`build/${file.relativePath}`)

@@ -5,7 +5,7 @@ import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 const impl: API["hook"]["preLint"] = async function(
 	this: APIContext, session
 ) {
-	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("js")
 	const myProgram = getInternalData(session).myTSProgram
 
 	const targetOptions = session.target.getOptions(this.target)

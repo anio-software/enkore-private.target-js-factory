@@ -25,7 +25,7 @@ export async function getRequestedEmbedsFromFileCached(
 		"getEmbedAsURL"
 	]
 
-	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("js")
 
 	const result = await toolchain.getRequestedEmbedsFromCode(
 		enkoreProjectModuleSpecifiers,

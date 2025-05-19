@@ -14,7 +14,7 @@ async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
-	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("js")
 
 	const {entryPointMap} = getInternalData(session)
 

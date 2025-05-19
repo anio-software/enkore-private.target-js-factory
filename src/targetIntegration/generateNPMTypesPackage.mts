@@ -13,7 +13,7 @@ export async function generateNPMTypesPackage(
 	directory: string,
 	packageName: string
 ) {
-	const toolchain = session.target._getToolchain("@enkore/target-js-toolchain")
+	const toolchain = session.target._getToolchain("js")
 
 	const {entryPointMap} = getInternalData(session)
 

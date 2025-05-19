@@ -6,7 +6,7 @@ export async function embedFileBundler(
 	const {
 		jsBundler,
 		stripTypeScriptTypes
-	} = session.target._getToolchain("@enkore/target-js-toolchain")
+	} = session.target._getToolchain("js")
 
 	return await jsBundler(
 		session.project.root, entryCode, {
