@@ -1,6 +1,6 @@
 import type {APIContext} from "./APIContext.mts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore.spec"
-import type {RequestedEmbedsFromCodeResult} from "@enkore-types/target-js-toolchain"
+import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-types.target-js-toolchain"
 import {readFileString} from "@aniojs/node-fs"
 import {getInternalData} from "./getInternalData.mts"
 

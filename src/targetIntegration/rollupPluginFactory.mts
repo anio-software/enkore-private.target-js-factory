@@ -3,7 +3,7 @@ import {
 	type EnkoreJSRuntimeEmbeddedFile,
 	createEntity
 } from "@anio-software/enkore.spec"
-import type {JsBundlerOptions} from "@enkore-types/target-js-toolchain"
+import type {JsBundlerOptions} from "@anio-software/enkore-types.target-js-toolchain"
 import type {APIContext} from "./APIContext.d.mts"
 import type {InternalData} from "./InternalData.d.mts"
 import type {ProjectAPIContext} from "#~assets/project/ProjectAPIContext.mts"

@@ -1,5 +1,5 @@
-import type {MyTSProgram, MyTSExport} from "@enkore-types/target-js-toolchain"
-import type {RequestedEmbedsFromCodeResult} from "@enkore-types/target-js-toolchain"
+import type {MyTSProgram, MyTSExport} from "@anio-software/enkore-types.target-js-toolchain"
+import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-types.target-js-toolchain"
 import type {TargetOptions} from "./TargetOptions.d.mts"
 
 type ArrayType<T> = T extends any[] ? T : never
