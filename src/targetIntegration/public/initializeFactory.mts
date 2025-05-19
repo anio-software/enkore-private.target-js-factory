@@ -5,6 +5,7 @@ import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import {buildEntryPointMap} from "#~src/targetIntegration/buildEntryPointMap.mts"
 import {_getRegistryMap} from "../_getRegistryMap.mts"
+import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.mts"
 import crypto from "node:crypto"
 
 function sha256Sync(str: string): string {
@@ -88,10 +89,24 @@ const impl: API["initialize"] = async function(
 			targetOptions.publish
 		) ? targetOptions.publish : [targetOptions.publish]
 
+		const projectCommitHash = _getCurrentGitCommitHash(session.project.root)
+
 		for (const config of publishConfig) {
+			let packageVersion = session.project.packageJSON.version
+
+			if (projectCommitHash) {
+				const shortCommitHash = projectCommitHash.slice(0, 8) + "-" + projectCommitHash.slice(-8)
+
+				if (config.tag === "experimental") {
+					packageVersion = `0.0.0-experimental-${shortCommitHash}`
+				} else if (config.tag === "canary") {
+					packageVersion += `-canary-${shortCommitHash}`
+				}
+			}
+
 			npmPackages.push({
 				name: searchAndReplace(config.packageName, substitutes),
-				version: session.project.packageJSON.version,
+				version: packageVersion,
 				packageContents: config.packageContents ?? "project",
 				publishConfig: {
 					publishWithProvenance: config.publishWithProvenance ?? false,
