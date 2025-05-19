@@ -91,6 +91,14 @@ const impl: API["initialize"] = async function(
 
 		const projectCommitHash = _getCurrentGitCommitHash(session.project.root)
 
+		if (session.enkore.getOptions().isCIEnvironment) {
+			if (!projectCommitHash) {
+				throw new Error(
+					`git commit hash cannot be retrieved. This is an error in CI environments.`
+				)
+			}
+		}
+
 		for (const config of publishConfig) {
 			let packageVersion = session.project.packageJSON.version
 
