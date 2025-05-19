@@ -5,6 +5,7 @@ import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {targetBoilerplateFileMarkerUUID} from "@anio-software/enkore.spec/uuid"
 import {_getRegistryMap} from "../_getRegistryMap.mts"
 import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.mts"
+import type {Registry} from "../InternalData.d.mts"
 
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session
@@ -48,6 +49,12 @@ const impl: API["getBoilerplateFiles"] = async function(
 	npmConfig += `# TO CONFIGURE PUBLISHING USE /enkore.config.mts\n`
 
 	if (targetOptions.packageSourceRegistryByScope) {
+		const definedScopes: {
+			scope: string
+			registryId: string
+			registry: Registry
+		}[] = []
+
 		for (const scope in targetOptions.packageSourceRegistryByScope) {
 			const {registry} = targetOptions.packageSourceRegistryByScope[scope]
 
@@ -59,12 +66,38 @@ const impl: API["getBoilerplateFiles"] = async function(
 				return []
 			}
 
-			npmConfig += _npmRegistryToConfigString(
-				registryMap.get(registry)!, {
-					includeAuthToken: false,
-					scope
-				}
-			)
+			definedScopes.push({
+				scope,
+				registryId: registry,
+				registry: registryMap.get(registry)!
+			})
+		}
+
+		// sort for stable output
+		definedScopes.sort((a, b) => {
+			return a.scope.localeCompare(b.scope, "en")
+		})
+
+		const configuredRegistries: Map<string, true> = new Map()
+
+		// configure registries first and only do it once per registry
+		for (const {registryId, registry} of definedScopes) {
+			if (configuredRegistries.has(registryId)) {
+				continue
+			}
+
+			npmConfig += _npmRegistryToConfigString(registry, {
+				includeAuthToken: false,
+				scope: false
+			})
+
+			configuredRegistries.set(registryId, true)
+		}
+
+		for (const {scope, registry} of definedScopes) {
+			npmConfig += _npmRegistryToConfigString({
+				url: registry.url
+			}, {scope, includeAuthToken: false})
 		}
 	}
 
