@@ -91,6 +91,7 @@ const impl: API["initialize"] = async function(
 		for (const config of publishConfig) {
 			npmPackages.push({
 				name: searchAndReplace(config.packageName, substitutes),
+				version: session.project.packageJSON.version,
 				packageContents: config.packageContents ?? "project",
 				publishConfig: {
 					publishWithProvenance: config.publishWithProvenance ?? false,

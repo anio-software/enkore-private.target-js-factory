@@ -20,6 +20,7 @@ export type Export = {
 
 export type NPMPackage = {
 	name: string
+	version: string
 	packageContents: PublishConfig["packageContents"]
 	publishConfig: Omit<PublishConfig, "packageName" | "packageContents">
 }

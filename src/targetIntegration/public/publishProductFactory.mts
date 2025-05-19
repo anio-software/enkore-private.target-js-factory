@@ -67,17 +67,15 @@ const impl: API["publishProduct"] = async function(
 			npmPackage.name
 		)
 
-		const packageVersion = session.project.packageJSON.version
-
 		if (publishedVersions) {
 			session.enkore.emitMessage(
 				"info", `latest package versions: ${publishedVersions.slice(-10).join(", ")}`
 			)
 
-			if (publishedVersions.includes(packageVersion)) {
+			if (publishedVersions.includes(npmPackage.version)) {
 				session.enkore.emitMessage(
 					"info",
-					`package '${npmPackage.name}@${packageVersion}' already published in registry` +
+					`package '${npmPackage.name}@${npmPackage.version}' already published in registry` +
 					` '${registry.url}'. exiting early.`
 				)
 
@@ -89,6 +87,7 @@ const impl: API["publishProduct"] = async function(
 			`info`,
 			`npmPackage_${packageIndex}: publishing '${npmPackage.name}'` +
 			` at registry '${registry.url}'.` +
+			` version=${npmPackage.version} ` +
 			` tag=${publishConfig.tag}` +
 			` provenance=${publishConfig.publishWithProvenance === true ? "yes" : "no"}`
 		)
@@ -132,7 +131,7 @@ const impl: API["publishProduct"] = async function(
 
 		session.enkore.emitMessage(
 			"info",
-			`successfully published '${npmPackage.name}@${packageVersion}'` +
+			`successfully published '${npmPackage.name}@${npmPackage.version}'` +
 			` at registry '${registry.url}'`
 		)
 	} else {
