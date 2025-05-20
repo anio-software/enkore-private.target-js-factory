@@ -2,7 +2,7 @@ import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {
 	MyTSFunctionDeclaration,
 	MyTSTopLevelTypeDescriptor
-} from "@anio-software/enkore-types.target-js-toolchain"
+} from "@anio-software/enkore-private.target-js-toolchain_types"
 
 export function generateNeededTypeDeclarations(
 	session: EnkoreSessionAPI,

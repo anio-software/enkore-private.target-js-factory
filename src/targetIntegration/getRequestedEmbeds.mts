@@ -1,7 +1,7 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.mts"
 import type {InternalData} from "./InternalData.d.mts"
-import type {RequestedEmbedsFromCodeReasonWhyUnknown} from "@anio-software/enkore-types.target-js-toolchain"
+import type {RequestedEmbedsFromCodeReasonWhyUnknown} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getInternalData} from "./getInternalData.mts"
 import {getModuleGuarded} from "./getModuleGuarded.mts"
 import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"

@@ -2,7 +2,7 @@ import {type EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.mts"
 import type {Options} from "./Options.mts"
 import type {Variant} from "./Variant.mts"
-import type {MyTSFunctionDeclaration} from "@anio-software/enkore-types.target-js-toolchain"
+import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {_getImplementation} from "./_getImplementation.mts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.mts"
 

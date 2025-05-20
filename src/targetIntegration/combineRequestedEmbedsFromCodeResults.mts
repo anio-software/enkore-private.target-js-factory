@@ -1,7 +1,7 @@
 import type {
 	RequestedEmbedsFromCodeResult,
 	RequestedEmbedsFromCodeReasonWhyUnknown
-} from "@anio-software/enkore-types.target-js-toolchain"
+} from "@anio-software/enkore-private.target-js-toolchain_types"
 
 type Ret = [
 	"specific", Map<string, string>

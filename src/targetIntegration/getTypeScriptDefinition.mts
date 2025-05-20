@@ -1,5 +1,5 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
-import type {MyTSModule} from "@anio-software/enkore-types.target-js-toolchain"
+import type {MyTSModule} from "@anio-software/enkore-private.target-js-toolchain_types"
 
 export function getTypeScriptDefinition(
 	session: EnkoreSessionAPI, mod: MyTSModule

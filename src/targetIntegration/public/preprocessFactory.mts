@@ -1,7 +1,7 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import path from "node:path"
-import type {MyTSSourceFileTransformer} from "@anio-software/enkore-types.target-js-toolchain"
+import type {MyTSSourceFileTransformer} from "@anio-software/enkore-private.target-js-toolchain_types"
 
 const impl: API["preprocess"] = async function(
 	this: APIContext, session, file, sourceCode

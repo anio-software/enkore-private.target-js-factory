@@ -1,7 +1,7 @@
 import type {
 	MyTSProgram,
 	MyTSModule
-} from "@anio-software/enkore-types.target-js-toolchain"
+} from "@anio-software/enkore-private.target-js-toolchain_types"
 
 export function getModuleGuarded(prog: MyTSProgram, filePath: string): MyTSModule {
 	const mod = prog.getModule(filePath)
