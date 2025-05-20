@@ -110,7 +110,7 @@ const impl: API["initialize"] = async function(
 		for (const config of publishConfig) {
 			let packageVersion = session.project.packageJSON.version
 
-			if (projectCommitHash) {
+			if (projectCommitHash && config.verbatimVersion !== true) {
 				const shortCommitHash = projectCommitHash.slice(0, 8) + "-" + projectCommitHash.slice(-8)
 
 				if (config.tag === "experimental") {
