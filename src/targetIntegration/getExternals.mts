@@ -1,4 +1,4 @@
-import type {EnkoreSessionAPI} from "@anio-software/enkore.spec"
+import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.d.mts"
 
 export function getExternals(

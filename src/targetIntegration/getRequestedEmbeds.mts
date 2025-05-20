@@ -1,4 +1,4 @@
-import type {EnkoreSessionAPI} from "@anio-software/enkore.spec"
+import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.mts"
 import type {InternalData} from "./InternalData.d.mts"
 import type {RequestedEmbedsFromCodeReasonWhyUnknown} from "@anio-software/enkore-types.target-js-toolchain"

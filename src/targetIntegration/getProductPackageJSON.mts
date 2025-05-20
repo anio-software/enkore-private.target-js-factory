@@ -1,6 +1,6 @@
-import type {EnkoreSessionAPI} from "@anio-software/enkore.spec"
+import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.d.mts"
-import type {NodePackageJSON} from "@anio-software/enkore.spec/primitives"
+import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {InternalData} from "./InternalData.d.mts"
 
 type EntryPointMap = InternalData["entryPointMap"]

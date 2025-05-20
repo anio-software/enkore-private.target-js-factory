@@ -1,4 +1,4 @@
-import type {EnkoreJSRuntimeEmbeddedFile} from "@anio-software/enkore.spec"
+import type {EnkoreJSRuntimeEmbeddedFile} from "@anio-software/enkore-private.spec"
 import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
 import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.mts"
 import {getGlobalRuntimeDataRecords} from "./getGlobalRuntimeDataRecords.mts"

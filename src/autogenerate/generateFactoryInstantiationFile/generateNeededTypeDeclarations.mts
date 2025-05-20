@@ -1,4 +1,4 @@
-import type {EnkoreSessionAPI} from "@anio-software/enkore.spec"
+import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {
 	MyTSFunctionDeclaration,
 	MyTSTopLevelTypeDescriptor

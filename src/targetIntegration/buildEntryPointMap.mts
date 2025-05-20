@@ -1,6 +1,6 @@
 import type {
 	EnkoreSessionAPI
-} from "@anio-software/enkore.spec"
+} from "@anio-software/enkore-private.spec"
 import path from "node:path"
 import type {InternalData} from "./InternalData.d.mts"
 import {getInternalData} from "./getInternalData.mts"

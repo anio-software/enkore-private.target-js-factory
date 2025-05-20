@@ -2,12 +2,12 @@ import {
 	readEnkoreConfigFile,
 	getProjectRootFromArgumentAndValidate,
 	resolveImportSpecifierFromProjectRoot
-} from "@anio-software/enkore.common"
-import type {NodePackageJSON} from "@anio-software/enkore.spec/primitives"
+} from "@anio-software/enkore-private.common"
+import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import {readFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
-import {importAPI, createEntity} from "@anio-software/enkore.spec"
-import {createNodeAPIOptions} from "@anio-software/enkore.spec/factory"
+import {importAPI, createEntity} from "@anio-software/enkore-private.spec"
+import {createNodeAPIOptions} from "@anio-software/enkore-private.spec/factory"
 import {_generateEmbedFileMap} from "./_generateEmbedFileMap.mts"
 import crypto from "node:crypto"
 import type {ProjectAPIContext} from "./ProjectAPIContext.d.mts"
