@@ -121,14 +121,21 @@ const impl: API["initialize"] = async function(
 			}
 
 			npmPackages.push({
-				name: searchAndReplace(config.packageName, substitutes),
+				name: searchAndReplace(
+					// a bit unclean since we don't want to substitute what's
+					// inside package.json, but the substitutes aren't valid
+					// in a package name anyway so...
+					config.packageName ?? session.project.packageJSON.name,
+					substitutes
+				),
 				version: packageVersion,
 				packageContents: config.packageContents ?? "project",
 				publishConfig: {
 					publishWithProvenance: config.publishWithProvenance ?? false,
 					registry: config.registry ?? "default",
 					tag: config.tag ?? "latest",
-					skip: config.skip === true
+					skip: config.skip === true,
+					verbatimVersion: config.verbatimVersion === true
 				}
 			})
 		}
