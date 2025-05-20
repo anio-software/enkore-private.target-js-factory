@@ -4,7 +4,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 const impl: API["getToolchainToInstall"] = async function(
 	this: APIContext, projectRoot, projectConfig
 ) {
-	return ["js", 35]
+	return ["js", 36]
 }
 
 export function getToolchainToInstallFactory(context: APIContext) {
