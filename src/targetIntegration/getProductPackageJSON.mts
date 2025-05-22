@@ -69,7 +69,7 @@ export function getProductPackageJSON(
 		files: ["./dist"]
 	}
 
-	if (apiContext.target === "js-node") {
+	if (targetOptions.environment.includes("node")) {
 		// todo: add @types/node peer dep?
 
 		newPackageJSON["engines"] = {
