@@ -30,6 +30,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 	}
 
 	const tsconfigBase = JSON.parse(getAsset("text://tsconfig/base.json") as string)
+	const targetOptions = session.target.getOptions("js")
 
 	if (this.target === "js-node") {
 		tsconfigBase.compilerOptions.types.push("node")
@@ -37,7 +38,6 @@ const impl: API["getBoilerplateFiles"] = async function(
 		tsconfigBase.compilerOptions.types.push("web")
 	}
 
-	const targetOptions = session.target.getOptions("js")
 	const registryMap = _getRegistryMap(targetOptions)
 
 	let npmConfig = ""
