@@ -33,9 +33,9 @@ const impl: API["getBoilerplateFiles"] = async function(
 	const targetOptions = session.target.getOptions("js")
 
 	if (this.target === "js-node") {
-		tsconfigBase.compilerOptions.types.push("node")
+		tsconfigBase.compilerOptions.types.push("@types/node")
 	} else if (this.target === "js-web") {
-		tsconfigBase.compilerOptions.types.push("web")
+		tsconfigBase.compilerOptions.types.push("@types/web")
 	}
 
 	const registryMap = _getRegistryMap(targetOptions)
