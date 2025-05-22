@@ -54,7 +54,7 @@ export function getProductPackageJSON(
 	entryPointMap: EntryPointMap,
 	typeOnly: boolean
 ): NodePackageJSON {
-	const targetOptions = session.target.getOptions(apiContext.target)
+	const targetOptions = session.target.getOptions("js")
 
 	let newPackageJSON: NodePackageJSON = {
 		name: packageName,

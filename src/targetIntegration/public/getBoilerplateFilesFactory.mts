@@ -37,7 +37,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 		tsconfigBase.compilerOptions.types.push("web")
 	}
 
-	const targetOptions = session.target.getOptions(this.target)
+	const targetOptions = session.target.getOptions("js")
 	const registryMap = _getRegistryMap(targetOptions)
 
 	let npmConfig = ""

@@ -8,7 +8,7 @@ const impl: API["hook"]["preLint"] = async function(
 	const toolchain = session.target._getToolchain("js")
 	const myProgram = getInternalData(session).myTSProgram
 
-	const targetOptions = session.target.getOptions(this.target)
+	const targetOptions = session.target.getOptions("js")
 	const {entryPointMap} = getInternalData(session)
 
 	if (targetOptions.exports) {
