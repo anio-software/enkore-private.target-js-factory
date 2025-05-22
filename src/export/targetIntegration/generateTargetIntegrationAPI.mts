@@ -1,6 +1,5 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import type {TargetJSIdentifier} from "#~src/TargetJSIdentifier.d.mts"
 
 import {getInitialInternalDataFactory} from "#~src/targetIntegration/public/getInitialInternalDataFactory.mts"
 import {getToolchainToInstallFactory} from "#~src/targetIntegration/public/getToolchainToInstallFactory.mts"
@@ -19,10 +18,8 @@ import {preInitializeFactory} from "#~src/targetIntegration/public/hook/preIniti
 import {preLintFactory} from "#~src/targetIntegration/public/hook/preLintFactory.mts"
 import {preCompileFactory} from "#~src/targetIntegration/public/hook/preCompileFactory.mts"
 
-export async function generateTargetIntegrationAPI(target: TargetJSIdentifier): Promise<API> {
-	const apiContext: APIContext = {
-		target
-	}
+export async function generateTargetIntegrationAPI(): Promise<API> {
+	const apiContext: APIContext = {}
 
 	return {
 		apiID: "EnkoreTargetIntegrationAPI",
