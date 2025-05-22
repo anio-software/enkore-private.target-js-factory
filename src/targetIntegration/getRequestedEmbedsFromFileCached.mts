@@ -16,7 +16,7 @@ export async function getRequestedEmbedsFromFileCached(
 	}
 
 	const enkoreProjectModuleSpecifiers = [
-		`@enkore-target/${apiContext.target}/project`
+		`@anio-software/enkore.target-js/project`
 	]
 
 	const enkoreProjectGetEmbedProperties = [

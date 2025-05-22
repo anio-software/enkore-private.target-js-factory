@@ -42,7 +42,7 @@ export function _generateFactoryCode(
 	code += `import {\n`
 	code += `\ttype EnkoreJSRuntimeContext\n`
 	code += `} from "@enkore/js-runtime/v0"\n`
-	code += `import {getProject as enkoreGetProject} from "@enkore-target/${apiContext.target}/project"\n`
+	code += `import {getProject as enkoreGetProject} from "@anio-software/enkore.target-js/project"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
 	code += generateNeededTypeDeclarations(session, implementation)

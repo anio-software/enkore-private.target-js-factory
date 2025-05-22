@@ -104,7 +104,7 @@ export async function rollupPluginFactory(
 		},
 
 		resolveId(id) {
-			if (id === `@enkore-target/${apiContext.target}/project`) {
+			if (id === `@anio-software/enkore.target-js/project`) {
 				return `\x00enkore:projectAPI`
 			} else if (id === `enkore:generateProjectAPIFromContextRollup`) {
 				return `\x00enkore:generateProjectAPIFromContextRollup`

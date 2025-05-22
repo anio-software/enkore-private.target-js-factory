@@ -29,7 +29,7 @@ export async function getRequestedEmbeds(
 	const usedEmbeds: Map<string, {requestedByMethods: string[]}> = new Map()
 
 	const enkoreProjectModuleSpecifiers = [
-		`@enkore-target/${apiContext.target}/project`
+		`@anio-software/enkore.target-js/project`
 	]
 
 	const enkoreProjectModuleGetEmbedProperties = getProjectAPIMethodNames().filter(x => {
