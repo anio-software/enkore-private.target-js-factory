@@ -34,8 +34,6 @@ const impl: API["getBoilerplateFiles"] = async function(
 
 	if (targetOptions.environment.includes("node")) {
 		tsconfigBase.compilerOptions.types.push("@types/node")
-
-		tsconfigBase.compilerOptions.lib.push("esnext")
 	}
 
 	if (targetOptions.environment.includes("web")) {
