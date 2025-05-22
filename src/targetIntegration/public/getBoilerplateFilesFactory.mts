@@ -32,9 +32,11 @@ const impl: API["getBoilerplateFiles"] = async function(
 	const tsconfigBase = JSON.parse(getAsset("text://tsconfig/base.json") as string)
 	const targetOptions = session.target.getOptions("js")
 
-	if (this.target === "js-node") {
+	if (targetOptions.environment.includes("node")) {
 		tsconfigBase.compilerOptions.types.push("@types/node")
-	} else if (this.target === "js-web") {
+	}
+
+	if (targetOptions.environment.includes("node")) {
 		tsconfigBase.compilerOptions.types.push("@types/web")
 	}
 
