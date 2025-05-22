@@ -3,6 +3,7 @@ import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {readFileString} from "@aniojs/node-fs"
 import {getInternalData} from "./getInternalData.mts"
+import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
 
 export async function getRequestedEmbedsFromFileCached(
 	apiContext: APIContext,
@@ -16,7 +17,7 @@ export async function getRequestedEmbedsFromFileCached(
 	}
 
 	const enkoreProjectModuleSpecifiers = [
-		`@anio-software/enkore.target-js/project`
+		`${baseModuleSpecifier}/project`
 	]
 
 	const enkoreProjectGetEmbedProperties = [

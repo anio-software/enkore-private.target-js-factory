@@ -13,6 +13,7 @@ import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProje
 import {generateAPIExportGlueCode} from "#~src/export/generateAPIExportGlueCode.mts"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {getInternalData} from "./getInternalData.mts"
+import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 type MapValueType<A> = A extends Map<any, infer V> ? V : never;
@@ -104,7 +105,7 @@ export async function rollupPluginFactory(
 		},
 
 		resolveId(id) {
-			if (id === `@anio-software/enkore.target-js/project`) {
+			if (id === `${baseModuleSpecifier}/project`) {
 				return `\x00enkore:projectAPI`
 			} else if (id === `enkore:generateProjectAPIFromContextRollup`) {
 				return `\x00enkore:generateProjectAPIFromContextRollup`

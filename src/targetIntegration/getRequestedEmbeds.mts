@@ -6,6 +6,7 @@ import {getInternalData} from "./getInternalData.mts"
 import {getModuleGuarded} from "./getModuleGuarded.mts"
 import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"
 import {readFileString} from "@aniojs/node-fs"
+import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
 import path from "node:path"
 
 type MapValueType<A> = A extends Map<any, infer V> ? V : never;
@@ -29,7 +30,7 @@ export async function getRequestedEmbeds(
 	const usedEmbeds: Map<string, {requestedByMethods: string[]}> = new Map()
 
 	const enkoreProjectModuleSpecifiers = [
-		`@anio-software/enkore.target-js/project`
+		`${baseModuleSpecifier}/project`
 	]
 
 	const enkoreProjectModuleGetEmbedProperties = getProjectAPIMethodNames().filter(x => {

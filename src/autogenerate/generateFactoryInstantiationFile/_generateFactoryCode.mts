@@ -5,6 +5,7 @@ import type {Variant} from "./Variant.mts"
 import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {_getImplementation} from "./_getImplementation.mts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.mts"
+import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
 
 function convertPath(path: string) {
 	if (path.startsWith("project/src")) {
@@ -42,7 +43,7 @@ export function _generateFactoryCode(
 	code += `import {\n`
 	code += `\ttype EnkoreJSRuntimeContext\n`
 	code += `} from "@enkore/js-runtime/v0"\n`
-	code += `import {getProject as enkoreGetProject} from "@anio-software/enkore.target-js/project"\n`
+	code += `import {getProject as enkoreGetProject} from "${baseModuleSpecifier}/project"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
 	code += generateNeededTypeDeclarations(session, implementation)
