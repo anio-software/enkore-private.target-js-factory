@@ -35,7 +35,7 @@ const impl: API["preprocess"] = async function(
 	]
 
 	const expandStarExports = session.target.getOptions(
-		this.target
+		"js"
 	).preprocess?.expandStarExports === true
 
 	if (expandStarExports) {
