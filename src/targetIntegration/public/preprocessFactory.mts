@@ -6,11 +6,12 @@ import type {MyTSSourceFileTransformer} from "@anio-software/enkore-private.targ
 const impl: API["preprocess"] = async function(
 	this: APIContext, session, file, sourceCode
 ) {
+	const toolchain = session.target._getToolchain("js")
+
 	if (!file.fileName.endsWith(".mts")) {
 		return sourceCode
 	}
 
-	const toolchain = session.target._getToolchain("js")
 	const src = toolchain.tsCreateSourceFile(file.absolutePath)
 
 	const dirLevel = path.dirname(file.relativePath).split("/").length
