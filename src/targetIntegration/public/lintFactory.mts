@@ -10,6 +10,8 @@ const impl: API["lint"] = async function(
 	if (file.entityKind === "EnkoreVirtualProjectFile") return [];
 	// ignore filtered files
 	if (file.wasFiltered) return [];
+	// ignore .css files
+	if (file.fileName.endsWith(".css")) return [];
 
 	const toolchain = session.target._getToolchain("js")
 	const myNewProgram = getInternalData(session).myTSProgram
