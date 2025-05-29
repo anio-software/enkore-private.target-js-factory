@@ -8,6 +8,10 @@ const impl: API["projectSourceFileFilter"] = async function(
 		return false
 	}
 
+	if (file.fileName.endsWith(".css")) {
+		return true
+	}
+
 	return file.fileName.endsWith(".mts")
 }
 
