@@ -6,6 +6,9 @@ import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 const impl: API["lint"] = async function(
 	this: APIContext, session, file
 ) {
+	// don't lint virtual project files
+	if (file.entityKind === "EnkoreVirtualProjectFile") return [];
+
 	// can do better?:
 	// myNewProgram.getModule check
 	if (file.wasFiltered) return [];
