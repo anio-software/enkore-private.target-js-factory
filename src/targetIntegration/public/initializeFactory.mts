@@ -46,6 +46,8 @@ const impl: API["initialize"] = async function(
 		session.enkore.getOptions()._partialBuild === true ? "embeds" : undefined
 	).map(file => {
 		return path.join("build", file.relativePath)
+	}).filter(file => {
+		return !file.endsWith(".css")
 	})
 
 	const toolchain = session.target._getToolchain("js")
