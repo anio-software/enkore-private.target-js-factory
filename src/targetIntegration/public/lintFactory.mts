@@ -8,9 +8,7 @@ const impl: API["lint"] = async function(
 ) {
 	// don't lint virtual project files
 	if (file.entityKind === "EnkoreVirtualProjectFile") return [];
-
-	// can do better?:
-	// myNewProgram.getModule check
+	// ignore filtered files
 	if (file.wasFiltered) return [];
 
 	const toolchain = session.target._getToolchain("js")
