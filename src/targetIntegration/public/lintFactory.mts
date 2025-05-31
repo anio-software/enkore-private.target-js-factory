@@ -6,8 +6,8 @@ import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 const impl: API["lint"] = async function(
 	this: APIContext, session, file
 ) {
-	// don't lint virtual project files
-	if (file.entityKind === "EnkoreVirtualProjectFile") return [];
+	// don't lint build files
+	if (file.entityKind === "EnkoreBuildFile") return [];
 	// ignore filtered files
 	if (file.wasFiltered) return [];
 	// ignore .css files
