@@ -6,13 +6,6 @@ import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import {buildEntryPointMap} from "#~src/targetIntegration/buildEntryPointMap.mts"
 import {_getRegistryMap} from "../_getRegistryMap.mts"
 import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.mts"
-import crypto from "node:crypto"
-
-function sha256Sync(str: string): string {
-	const hash = crypto.createHash("sha256")
-
-	return hash.update(str).digest("hex").toLowerCase()
-}
 
 function getPackageNameSubstitutes(projectPackageName: string) {
 	const tmp = projectPackageName.split("/")
@@ -71,9 +64,6 @@ const impl: API["initialize"] = async function(
 	getInternalData(session).myTSProgram = program
 	getInternalData(session).entryPointMap = buildEntryPointMap(session)
 	getInternalData(session).requestedEmbedsFileCache = new Map()
-	getInternalData(session).projectId = sha256Sync(
-		`${session.project.packageJSON.name}@${session.project.packageJSON.version}`
-	)
 
 	if (session.enkore.getOptions()._partialBuild === true) {
 		return {
