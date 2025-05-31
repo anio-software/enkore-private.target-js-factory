@@ -12,6 +12,9 @@ type ObjectFile = OnlyArray<Awaited<ReturnType<API["compile"]>>>[number]
 const impl: API["compile"] = async function(
 	this: APIContext, session, file, code
 ) {
+	// don't compile build files (for now)
+	if (file.entityKind === "EnkoreBuildFile") return [];
+
 	const ret: ObjectFile[] = []
 
 	const sourceFilePath = file.relativePath
