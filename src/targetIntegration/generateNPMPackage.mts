@@ -9,6 +9,7 @@ import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 import {rollupPluginFactory} from "./rollupPluginFactory.mts"
 import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.mts"
+import path from "node:path"
 
 async function createDistFiles(
 	apiContext: APIContext,
@@ -16,7 +17,7 @@ async function createDistFiles(
 ) {
 	const toolchain = session.target._getToolchain("js")
 
-	const {entryPointMap} = getInternalData(session)
+	const {entryPointMap, cssFiles, externalCSSFiles} = getInternalData(session)
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
@@ -73,6 +74,26 @@ async function createDistFiles(
 			return mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
 		}
 	}
+
+	let cssEntryCode = ``
+
+	for (const cssFile of cssFiles) {
+		cssEntryCode += `@import "./build/${cssFile}";\n`
+	}
+
+	for (const cssFile of externalCSSFiles) {
+		cssEntryCode += `@import "${cssFile}";\n`
+	}
+
+	const cssBundle = await toolchain.cssBundle(
+		session.project.root, cssEntryCode, {
+			fileName: path.join(
+				session.project.root, "package.css"
+			)
+		}
+	)
+
+	await writeAtomicFile(`./dist/style.css`, cssBundle)
 }
 
 export async function generateNPMPackage(

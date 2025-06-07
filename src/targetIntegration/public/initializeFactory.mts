@@ -6,6 +6,7 @@ import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
 import {buildEntryPointMap} from "#~src/targetIntegration/buildEntryPointMap.mts"
 import {_getRegistryMap} from "../_getRegistryMap.mts"
 import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.mts"
+import {collectCSSFiles} from "../collectCSSFiles.mts"
 
 function getPackageNameSubstitutes(projectPackageName: string) {
 	const tmp = projectPackageName.split("/")
@@ -63,6 +64,7 @@ const impl: API["initialize"] = async function(
 
 	getInternalData(session).myTSProgram = program
 	getInternalData(session).entryPointMap = buildEntryPointMap(session)
+	getInternalData(session).cssFiles = collectCSSFiles(session)
 	getInternalData(session).requestedEmbedsFileCache = new Map()
 
 	if (session.enkore.getOptions()._partialBuild === true) {

@@ -17,7 +17,9 @@ const impl: API["getInitialInternalData"] = async function(
 
 	return {
 		entryPointMap: new Map(),
-		projectId
+		projectId,
+		// this is needed in preprocess
+		externalCSSFiles: []
 	}
 }
 
