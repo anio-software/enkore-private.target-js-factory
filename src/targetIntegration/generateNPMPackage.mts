@@ -93,7 +93,7 @@ async function createDistFiles(
 		}
 	)
 
-	await writeAtomicFile(`./dist/style.css`, cssBundle)
+	await writeAtomicFile(`./dist/style.css`, cssBundle, {createParents: true})
 }
 
 export async function generateNPMPackage(
