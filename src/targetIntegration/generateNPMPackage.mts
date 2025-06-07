@@ -42,7 +42,7 @@ async function createDistFiles(
 			}
 		))
 
-		// don't do this, minify jsBundle code
+		// todo: don't do this, minify jsBundle code
 		const minifiedJsBundle = mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
