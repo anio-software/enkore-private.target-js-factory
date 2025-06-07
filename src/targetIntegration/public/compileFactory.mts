@@ -12,8 +12,20 @@ type ObjectFile = OnlyArray<Awaited<ReturnType<API["compile"]>>>[number]
 const impl: API["compile"] = async function(
 	this: APIContext, session, file, code
 ) {
-	// don't compile build files (for now)
-	if (file.entityKind === "EnkoreBuildFile") return [];
+	if (file.entityKind === "EnkoreBuildFile") {
+		//
+		// we don't have to strip types of ".css.mts" files because
+		// they don't contain any type information that needs to be stripped
+		//
+		if (file.fileName.endsWith(".css.mts")) {
+			return {
+				name: file.fileName.slice(0, -4) + ".mjs",
+				contents: code
+			}
+		}
+
+		return [];
+	}
 
 	const ret: ObjectFile[] = []
 
