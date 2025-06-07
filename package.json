@@ -33,7 +33,7 @@
   "devDependencies": {
     "@anio-software/enkore-private.common": "^0.0.139",
     "@anio-software/enkore-private.spec": "^0.289.0",
-    "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.41",
+    "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.42",
     "@aniojs/node-fs": "^0.5.3",
     "@aniojs/random-ident": "^0.1.2",
     "@enkore/debug": "^0.0.2",
