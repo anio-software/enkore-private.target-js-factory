@@ -2,7 +2,7 @@ import {
 	readEnkoreConfigFile,
 	getProjectRootFromArgumentAndValidate,
 	resolveImportSpecifierFromProjectRoot
-} from "@anio-software/enkore-private.common"
+} from "@anio-software/enkore-private.spec/utils"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import {readFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
