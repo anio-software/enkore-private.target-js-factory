@@ -33,6 +33,7 @@ const impl: API["compile"] = async function(
 	const fileName = path.basename(sourceFilePath)
 	const isEmbedFile = sourceFilePath.startsWith("embeds/")
 	const isTypeScriptFile = fileName.endsWith(".mts")
+	const isTSXFile = fileName.endsWith(".tsx")
 	const partialBuild = session.enkore.getOptions()._partialBuild === true
 
 	session.enkore.emitMessage("info", "called compile " + sourceFilePath)
@@ -56,11 +57,19 @@ const impl: API["compile"] = async function(
 	const toolchain = session.target._getToolchain("js")
 	const myProgram = getInternalData(session).myTSProgram
 
-	if (isTypeScriptFile) {
+	if (isTypeScriptFile || isTSXFile) {
 		const {jsCode, jsFileName, dtsFileName} = (() => {
 			const options = {
 				filePath: path.join(session.project.root, "build", sourceFilePath),
 				rewriteImportExtensions: true
+			}
+
+			if (isTSXFile) {
+				return {
+					jsFileName: fileName.slice(0, -4) + ".js",
+					dtsFileName: fileName.slice(0, -4) + ".d.ts",
+					jsCode: toolchain.transformTSX(code, options)
+				}
 			}
 
 			return {
