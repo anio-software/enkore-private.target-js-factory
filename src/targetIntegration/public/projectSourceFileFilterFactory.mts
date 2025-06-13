@@ -12,6 +12,8 @@ const impl: API["projectSourceFileFilter"] = async function(
 		return true
 	} else if (fileName.endsWith(".mts")) {
 		return true
+	} else if (fileName.endsWith(".tsx")) {
+		return true
 	}
 
 	return false
