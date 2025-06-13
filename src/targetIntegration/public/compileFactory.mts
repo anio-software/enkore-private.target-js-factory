@@ -57,7 +57,7 @@ const impl: API["compile"] = async function(
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (isTypeScriptFile) {
-		const {jsCode, jsFileName} = (() => {
+		const {jsCode, jsFileName, dtsFileName} = (() => {
 			const options = {
 				filePath: path.join(session.project.root, "build", sourceFilePath),
 				rewriteImportExtensions: true
@@ -65,6 +65,7 @@ const impl: API["compile"] = async function(
 
 			return {
 				jsFileName: fileName.slice(0, -4) + ".mjs",
+				dtsFileName: fileName.slice(0, -4) + ".d.mts",
 				jsCode: toolchain.stripTypeScriptTypes(code, options)
 			}
 		})()
@@ -78,7 +79,7 @@ const impl: API["compile"] = async function(
 
 		ret.push({
 			contents: getTypeScriptDefinition(session, myTSModule),
-			name: fileName.slice(0, -4) + ".d.mts"
+			name: dtsFileName
 		})
 	}
 
