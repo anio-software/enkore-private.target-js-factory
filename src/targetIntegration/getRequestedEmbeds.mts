@@ -54,13 +54,22 @@ export async function getRequestedEmbeds(
 	}
 
 	for (const [filePath] of filesToAnalyze.entries()) {
-		const code = await readFileString(
-			path.join(session.project.root, filePath)
-		)
-
-		const jsCode = toolchain.stripTypeScriptTypes(code, {
-			rewriteImportExtensions: true
+		const jsObjectFiles = session.enkore.getCreatedObjectFilesForRelativeSourcePath(
+			filePath.slice("build/".length)
+		).filter(path => {
+			return path.endsWith(".mjs") || path.endsWith(".js")
 		})
+
+		if (jsObjectFiles.length !== 1) {
+			// todo: emit warning / error
+			continue
+		}
+
+		const jsCode = await readFileString(
+			path.join(
+				session.project.root, "objects", jsObjectFiles[0]
+			)
+		)
 
 		const requestedEmbedsResult = await toolchain.getRequestedEmbedsFromCode(
 			enkoreProjectModuleSpecifiers,
