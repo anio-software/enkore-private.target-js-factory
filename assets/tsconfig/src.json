@@ -12,8 +12,7 @@
             "#~embeds/*": [
                 "./project/embeds/*"
             ]
-        },
-        "jsx": "react-jsx"
+        }
     },
     "include": [
         "../project/src/**/*",

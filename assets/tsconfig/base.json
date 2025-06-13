@@ -16,6 +16,7 @@
         "rootDir": "../",
         "plugins": [{
             "name": "css-modules-ts-plugin"
-        }]
+        }],
+        "jsx": "react-jsx"
     }
 }
