@@ -58,12 +58,14 @@ const impl: API["compile"] = async function(
 
 	if (isTypeScriptFile) {
 		const {jsCode, jsFileName} = (() => {
+			const options = {
+				filePath: path.join(session.project.root, "build", sourceFilePath),
+				rewriteImportExtensions: true
+			}
+
 			return {
 				jsFileName: fileName.slice(0, -4) + ".mjs",
-				jsCode: toolchain.stripTypeScriptTypes(code, {
-					filePath: path.join(session.project.root, "build", sourceFilePath),
-					rewriteImportExtensions: true
-				})
+				jsCode: toolchain.stripTypeScriptTypes(code, options)
 			}
 		})()
 
