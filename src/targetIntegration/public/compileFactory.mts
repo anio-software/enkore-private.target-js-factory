@@ -57,14 +57,19 @@ const impl: API["compile"] = async function(
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (isTypeScriptFile) {
-		const jsCode = toolchain.stripTypeScriptTypes(code, {
-			filePath: path.join(session.project.root, "build", sourceFilePath),
-			rewriteImportExtensions: true
-		})
+		const {jsCode, jsFileName} = (() => {
+			return {
+				jsFileName: fileName.slice(0, -4) + ".mjs",
+				jsCode: toolchain.stripTypeScriptTypes(code, {
+					filePath: path.join(session.project.root, "build", sourceFilePath),
+					rewriteImportExtensions: true
+				})
+			}
+		})()
 
 		ret.push({
 			contents: jsCode,
-			name: fileName.slice(0, -4) + ".mjs"
+			name: jsFileName
 		})
 
 		const myTSModule = getModuleGuarded(myProgram, `build/${sourceFilePath}`)
