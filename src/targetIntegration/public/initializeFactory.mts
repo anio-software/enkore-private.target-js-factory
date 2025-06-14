@@ -41,7 +41,7 @@ const impl: API["initialize"] = async function(
 	).map(file => {
 		return path.join("build", file.relativePath)
 	}).filter(file => {
-		return !file.endsWith(".css")
+		return file.endsWith(".mts") || file.endsWith(".tsx")
 	})
 
 	const toolchain = session.target._getToolchain("js")
