@@ -14,12 +14,12 @@ const impl: API["compile"] = async function(
 ) {
 	if (file.entityKind === "EnkoreBuildFile") {
 		//
-		// we don't have to strip types of ".css.mts" files because
+		// we don't have to strip types of ".css.ts" files because
 		// they don't contain any type information that needs to be stripped
 		//
-		if (file.fileName.endsWith(".css.mts")) {
+		if (file.fileName.endsWith(".css.ts")) {
 			return {
-				name: file.fileName.slice(0, -4) + ".mjs",
+				name: file.fileName.slice(0, -3) + ".js",
 				contents: code
 			}
 		}
@@ -32,7 +32,7 @@ const impl: API["compile"] = async function(
 	const sourceFilePath = file.relativePath
 	const fileName = path.basename(sourceFilePath)
 	const isEmbedFile = sourceFilePath.startsWith("embeds/")
-	const isTypeScriptFile = fileName.endsWith(".mts")
+	const isTypeScriptFile = fileName.endsWith(".ts")
 	const isTSXFile = fileName.endsWith(".tsx")
 	const partialBuild = session.enkore.getOptions()._partialBuild === true
 
@@ -73,8 +73,8 @@ const impl: API["compile"] = async function(
 			}
 
 			return {
-				jsFileName: fileName.slice(0, -4) + ".mjs",
-				dtsFileName: fileName.slice(0, -4) + ".d.mts",
+				jsFileName: fileName.slice(0, -3) + ".js",
+				dtsFileName: fileName.slice(0, -3) + ".d.ts",
 				jsCode: toolchain.stripTypeScriptTypes(code, options)
 			}
 		})()
@@ -96,9 +96,9 @@ const impl: API["compile"] = async function(
 	// generate files necessary for embeds API:
 	//
 	//    'text://' -> <path>.enkoreRawEmbedFile
-	//    'js://' -> <path.slice(0, -4)>.mjs (.mts files only, generated earlier)
-	//    'dts://' -> <path.slice(0, -4)>.d.mts (.mts files only, generated earlier)
-	//    'js-bundle://' -> <path>.enkoreJsBundleFile (.mts files only)
+	//    'js://' -> <path.slice(0, -4)>.js (.ts files only, generated earlier)
+	//    'dts://' -> <path.slice(0, -4)>.d.ts (.ts files only, generated earlier)
+	//    'js-bundle://' -> <path>.enkoreJsBundleFile (.ts files only)
 	//
 	if (isEmbedFile) {
 		ret.push({

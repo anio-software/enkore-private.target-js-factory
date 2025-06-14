@@ -36,12 +36,14 @@ const impl: API["preprocess"] = async function(
 			name: file.fileName,
 			contents: result.code
 		}, {
-			name: file.fileName.slice(0, -4) + ".css.mts",
+			name: file.fileName.slice(0, -4) + ".css.ts",
 			contents: cssTSFileContents
 		}]
 	}
 
-	if (!file.fileName.endsWith(".mts")) {
+	if (
+		!file.fileName.endsWith(".ts") &&
+		!file.fileName.endsWith(".tsx")) {
 		return sourceCode
 	}
 
@@ -69,7 +71,7 @@ const impl: API["preprocess"] = async function(
 		toolchain.tsRemapModuleImportAndExportSpecifiers(undefined, (specifier, decl, remove) => {
 			if (specifier.endsWith(".css")) {
 				if (specifier.startsWith("./") || specifier.startsWith("../")) {
-					return `${specifier}.mts`
+					return `${specifier}.ts`
 				}
 
 				const resolved = resolveImportSpecifierFromProjectRoot(

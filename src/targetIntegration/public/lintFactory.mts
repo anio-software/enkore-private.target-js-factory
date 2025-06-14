@@ -34,16 +34,16 @@ const impl: API["lint"] = async function(
 	let messages: NodeAPIMessage[] = []
 
 	for (const moduleSpecifier of toolchain.tsGetModuleImportAndExportSpecifiers(mod)) {
-		if (moduleSpecifier.endsWith(".mjs")) {
+		if (moduleSpecifier.endsWith(".js")) {
 			messages.push({
 				severity: "error",
-				message: "moduleSpecifier ends with '.mjs'",
+				message: "moduleSpecifier ends with '.js'",
 				id: "impreciseModuleSpecifier"
 			})
-		} else if (moduleSpecifier.endsWith(".d.mts")) {
+		} else if (moduleSpecifier.endsWith(".d.ts")) {
 			messages.push({
 				severity: "error",
-				message: "moduleSpecifier ends with '.d.mts'",
+				message: "moduleSpecifier ends with '.d.ts'",
 				id: "impreciseModuleSpecifier"
 			})
 		}

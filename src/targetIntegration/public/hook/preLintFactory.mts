@@ -47,7 +47,7 @@ const impl: API["hook"]["preLint"] = async function(
 			testCode += `}\n`
 
 			const vFile = toolchain.tsDefineVirtualProgramFile(
-				`project/src/testInterfaceCode.mts`, `${testCodeImports}\n${testCode}`
+				`project/src/testInterfaceCode.ts`, `${testCodeImports}\n${testCode}`
 			)
 
 			const {program: testProg} = toolchain.tsCreateProgram(

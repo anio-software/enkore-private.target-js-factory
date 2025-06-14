@@ -6,11 +6,11 @@ const impl: API["projectSourceFileFilter"] = async function(
 ) {
 	const {fileName} = file
 
-	if (fileName.endsWith(".d.mts")) {
+	if (fileName.endsWith(".d.ts")) {
 		return false
 	} else if (fileName.endsWith(".css")) {
 		return true
-	} else if (fileName.endsWith(".mts")) {
+	} else if (fileName.endsWith(".ts")) {
 		return true
 	} else if (fileName.endsWith(".tsx")) {
 		return true

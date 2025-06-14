@@ -39,7 +39,7 @@ export function buildEntryPointMap(
 	const {myTSProgram} = getInternalData(session)
 
 	for (const file of exportProjectFiles) {
-		if (!file.fileName.endsWith(".mts")) continue
+		if (!file.fileName.endsWith(".ts")) continue
 
 		const paths = path.dirname(file.relativePath).split("/").slice(1)
 		const exportPath = paths.length ? paths.join("/") : "default"
@@ -61,12 +61,12 @@ export function buildEntryPointMap(
 		//
 		// handle special case "__aggregatedExports"
 		//
-		if (file.fileName === "__aggregatedExports.mts") {
+		if (file.fileName === "__aggregatedExports.ts") {
 			for (const exportName of mod.getModuleExportNames()) {
 				addExport(exportName)
 			}
 		} else {
-			addExport(file.fileName.slice(0, -4))
+			addExport(file.fileName.slice(0, -3))
 
 			if (mod.getModuleExportNames().length > 1) {
 				session.enkore.emitMessage(
@@ -98,15 +98,15 @@ export function buildEntryPointMap(
 				return
 			}
 
-			// we know file ends with ".mts"
-			const extensionlessSource = file.relativePath.slice(0, -4)
+			// we know file ends with ".ts"
+			const extensionlessSource = file.relativePath.slice(0, -3)
 
 			exportMap.set(exportName, {
 				name: exportName,
 				descriptor: exportDescriptor,
 				relativePath: file.relativePath,
-				pathToJsFile: `objects/${extensionlessSource}.mjs`,
-				pathToDtsFile: `objects/${extensionlessSource}.d.mts`
+				pathToJsFile: `objects/${extensionlessSource}.js`,
+				pathToDtsFile: `objects/${extensionlessSource}.d.ts`
 			})
 		}
 	}

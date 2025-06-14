@@ -18,7 +18,7 @@ export async function embedFileBundler(
 				plugin: {
 					name: "enkore-strip-types",
 					async transform(code, id) {
-						if (!id.endsWith(".mts")) {
+						if (!id.endsWith(".ts")) {
 							return null
 						}
 

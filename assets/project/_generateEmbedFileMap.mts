@@ -47,7 +47,7 @@ export async function _generateEmbedFileMap(
 			}
 		)
 
-		if (embed.filePath.endsWith(".mts")) {
+		if (embed.filePath.endsWith(".ts")) {
 			map.set(
 				`js-bundle://${embed.filePath}`, {
 					sourceFilePath: embed.filePath,
@@ -62,7 +62,7 @@ export async function _generateEmbedFileMap(
 				`dts://${embed.filePath}`, {
 					sourceFilePath: embed.filePath,
 					data: await readFileBase64(
-						`${embed.origin.slice(0, -4)}.d.mts`
+						`${embed.origin.slice(0, -3)}.d.ts`
 					)
 				}
 			)
@@ -72,7 +72,7 @@ export async function _generateEmbedFileMap(
 				`js://${embed.filePath}`, {
 					sourceFilePath: embed.filePath,
 					data: await readFileBase64(
-						`${embed.origin.slice(0, -4)}.mjs`
+						`${embed.origin.slice(0, -3)}.js`
 					)
 				}
 			)

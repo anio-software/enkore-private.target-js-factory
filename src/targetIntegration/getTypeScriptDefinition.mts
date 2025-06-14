@@ -12,15 +12,15 @@ export function getTypeScriptDefinition(
 				toolchain.tsExpandModuleImportAndExportDeclarations(ctx),
 				// fix imports
 				toolchain.tsRemapModuleImportAndExportSpecifiers(ctx, (moduleSpecifier, decl) => {
-					if (moduleSpecifier.endsWith(".d.mts")) {
+					if (moduleSpecifier.endsWith(".d.ts")) {
 						return undefined
 					}
 
-					if (moduleSpecifier.endsWith(".mts")) {
+					if (moduleSpecifier.endsWith(".ts")) {
 						if (decl.isTypeOnly) {
-							return moduleSpecifier.slice(0, -4) + ".d.mts"
+							return moduleSpecifier.slice(0, -3) + ".d.ts"
 						} else {
-							return moduleSpecifier.slice(0, -4) + ".mjs"
+							return moduleSpecifier.slice(0, -3) + ".js"
 						}
 					}
 
