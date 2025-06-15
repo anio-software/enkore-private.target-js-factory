@@ -61,10 +61,10 @@ const impl: API["hook"]["preLint"] = async function(
 				testProg.getModule(vFile.path)!, true
 			)
 
-			for (const message of diagnosticMessages) {
+			for (const {code, message} of diagnosticMessages) {
 				session.enkore.emitMessage(
 					"error",
-					`checkAgainstInterface: ts(${message.code}) ${message.message}`
+					`checkAgainstInterface: ts(${code}) ${message}`
 				)
 			}
 
