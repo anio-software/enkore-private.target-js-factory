@@ -18,7 +18,7 @@ async function createDistFiles(
 ) {
 	const toolchain = session.target._getToolchain("js")
 
-	const {entryPointMap, externalCSSFiles} = getInternalData(session)
+	const {entryPointMap} = getInternalData(session)
 
 	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
@@ -78,10 +78,6 @@ async function createDistFiles(
 	}
 
 	let cssEntryCode = ``
-
-	for (const [cssFile] of externalCSSFiles.entries()) {
-		cssEntryCode += `@import "${cssFile}";\n`
-	}
 
 	const cssBundle = await toolchain.cssBundle(
 		session.project.root, cssEntryCode, {
