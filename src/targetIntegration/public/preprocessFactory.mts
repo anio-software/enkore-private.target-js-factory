@@ -6,7 +6,7 @@ import {getInternalData} from "../getInternalData.mts"
 import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
 
 const impl: API["preprocess"] = async function(
-	this: APIContext, session, file, sourceCode
+	this: APIContext, session, file, sourceCode, emitFileMessage
 ) {
 	const toolchain = session.target._getToolchain("js")
 
@@ -48,6 +48,23 @@ const impl: API["preprocess"] = async function(
 	}
 
 	const src = toolchain.tsCreateSourceFile(file.absolutePath)
+
+	//
+	// NB: don't attempt to transform code that has syntax errors.
+	// They will not get picked up on, since the type checking is done
+	// on the output of the pre-processing stage!
+	//
+	const syntaxErrors = toolchain.tsIdentifySyntaxErrors(src)
+
+	if (syntaxErrors.length) {
+		for (const {message} of syntaxErrors) {
+			emitFileMessage(
+				"error", `Syntax error: ${message}`
+			)
+		}
+
+		return sourceCode
+	}
 
 	const dirLevel = path.dirname(file.relativePath).split("/").length
 	const root = dirLevel === 0 ? "./" : "../".repeat(dirLevel)
