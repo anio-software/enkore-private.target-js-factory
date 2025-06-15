@@ -49,10 +49,12 @@ const impl: API["lint"] = async function(
 		}
 	}
 
-	for (const msg of toolchain.tsTypeCheckModule(mod)) {
-		session.enkore.emitMessage(
-			"error", msg.message
-		)
+	for (const {message} of toolchain.tsTypeCheckModule(mod)) {
+		messages.push({
+			severity: "error",
+			message,
+			id: undefined
+		})
 	}
 
 	return messages
