@@ -117,7 +117,8 @@ export function buildEntryPointMap(
 				descriptor: exportDescriptor,
 				relativePath: file.relativePath,
 				pathToJsFile: `objects/${extensionlessSource}.js`,
-				pathToDtsFile: `objects/${extensionlessSource}.d.ts`
+				pathToDtsFile: `objects/${extensionlessSource}.d.ts`,
+				isTSXComponent: isTSXFile
 			})
 		}
 	}

@@ -16,6 +16,7 @@ export type Export = {
 	relativePath: string
 	pathToJsFile: string
 	pathToDtsFile: string
+	isTSXComponent: boolean
 }
 
 export type NPMPackage = {
