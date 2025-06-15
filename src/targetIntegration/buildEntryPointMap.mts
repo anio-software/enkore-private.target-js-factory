@@ -39,7 +39,9 @@ export function buildEntryPointMap(
 	const {myTSProgram} = getInternalData(session)
 
 	for (const file of exportProjectFiles) {
-		if (!file.fileName.endsWith(".ts")) continue
+		const isTypeScriptFile = file.fileName.endsWith(".ts")
+
+		if (!isTypeScriptFile) continue
 
 		const paths = path.dirname(file.relativePath).split("/").slice(1)
 		const exportPath = paths.length ? paths.join("/") : "default"
