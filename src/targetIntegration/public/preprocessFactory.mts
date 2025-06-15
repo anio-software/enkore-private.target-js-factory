@@ -3,7 +3,6 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import path from "node:path"
 import type {MyTSSourceFileTransformer} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getInternalData} from "../getInternalData.mts"
-import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
 import {isNumber} from "@anio-software/pkg.is"
 
 const impl: API["preprocess"] = async function(
@@ -92,16 +91,6 @@ const impl: API["preprocess"] = async function(
 			if (specifier.endsWith(".css")) {
 				if (specifier.startsWith("./") || specifier.startsWith("../")) {
 					return `${specifier}.ts`
-				}
-
-				const resolved = resolveImportSpecifierFromProjectRoot(
-					session.project.root, specifier
-				)
-
-				if (resolved) {
-					getInternalData(session).externalCSSFiles.set(resolved, 0)
-
-					return remove()
 				}
 			}
 
