@@ -29,6 +29,15 @@ export function getExternals(
 		}
 	}
 
+	const bundleReact = targetOptions.bundleJSXRuntimePackages === true
+
+	if (!bundleReact) {
+		externals.set(`react`, 1)
+		externals.set(`react/jsx-runtime`, 1)
+		externals.set(`react-dom/client`, 1)
+		externals.set(`react-dom/server`, 1)
+	}
+
 	return [...externals.entries()].map(([key]) => {
 		return key
 	})
