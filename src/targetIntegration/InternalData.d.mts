@@ -31,7 +31,7 @@ export type InternalData = {
 	projectId: string
 	myTSProgram: MyTSProgram
 	entryPointMap: Map<string, Map<string, Export>>
-	externalCSSFiles: string[]
+	externalCSSFiles: Map<string, 0>
 
 	// cache calls to getRequestedEmbedsFromCode()
 	requestedEmbedsFileCache: Map<string, RequestedEmbedsFromCodeResult>

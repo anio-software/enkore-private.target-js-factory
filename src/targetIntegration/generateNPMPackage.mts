@@ -77,7 +77,7 @@ async function createDistFiles(
 
 	let cssEntryCode = ``
 
-	for (const cssFile of externalCSSFiles) {
+	for (const [cssFile] of externalCSSFiles.entries()) {
 		cssEntryCode += `@import "${cssFile}";\n`
 	}
 

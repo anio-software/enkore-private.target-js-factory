@@ -99,7 +99,7 @@ const impl: API["preprocess"] = async function(
 				)
 
 				if (resolved) {
-					getInternalData(session).externalCSSFiles.push(resolved)
+					getInternalData(session).externalCSSFiles.set(resolved, 0)
 
 					return remove()
 				}
