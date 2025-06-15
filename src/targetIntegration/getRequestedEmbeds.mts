@@ -47,6 +47,8 @@ export async function getRequestedEmbeds(
 		)
 
 		for (const file of mod.moduleFileDependencyTree.convertToArray()) {
+			if (file.startsWith("external:")) continue
+
 			filesToAnalyze.set(file, true)
 		}
 
