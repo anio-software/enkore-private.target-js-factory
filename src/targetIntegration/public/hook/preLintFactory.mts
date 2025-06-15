@@ -1,6 +1,7 @@
 import type {API} from "#~src/targetIntegration/API.d.mts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
+import {isString, isNumber} from "@anio-software/pkg.is"
 
 const impl: API["hook"]["preLint"] = async function(
 	this: APIContext, session
@@ -82,10 +83,18 @@ const impl: API["hook"]["preLint"] = async function(
 
 		const {diagnosticMessages} = toolchain.tsTypeCheckProgram(myProgram)
 
-		for (const msg of diagnosticMessages) {
-			session.enkore.emitMessage(
-				"error", msg.message
-			)
+		for (const {origin, message} of diagnosticMessages) {
+			if (isString(origin.filePath) && isNumber(origin.line)) {
+				let {filePath} = origin
+
+				if (filePath.startsWith(session.project.root)) {
+					filePath = filePath.slice(session.project.root.length)
+				}
+
+				session.enkore.emitMessage("error", `Type error in file '${filePath}' on line ${origin.line}: ${message}`)
+			} else {
+				session.enkore.emitMessage("error", `Type error: ${message}`)
+			}
 		}
 	}
 }
