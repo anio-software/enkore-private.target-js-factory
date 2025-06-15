@@ -44,7 +44,7 @@ export function buildEntryPointMap(
 
 		if (!isTypeScriptFile && !isTSXFile) continue
 
-		const importedCSSFiles: string[] = []
+		const cssImportMap: Map<string, 0> = new Map()
 		const extensionOffset = isTSXFile ? -4 : -3
 
 		const paths = path.dirname(file.relativePath).split("/").slice(1)
@@ -69,8 +69,8 @@ export function buildEntryPointMap(
 
 			if (moduleSpecifier.endsWith(".css.ts")) {
 				// specifiers should always start with build/ here
-				importedCSSFiles.push(
-					moduleSpecifier.slice("build/".length, -3)
+				cssImportMap.set(
+					moduleSpecifier.slice("build/".length, -3), 0
 				)
 			}
 		})
@@ -131,7 +131,7 @@ export function buildEntryPointMap(
 				pathToJsFile: `objects/${extensionlessSource}.js`,
 				pathToDtsFile: `objects/${extensionlessSource}.d.ts`,
 				isTSXComponent: isTSXFile,
-				importedCSSFiles
+				cssImportMap
 			})
 		}
 	}
