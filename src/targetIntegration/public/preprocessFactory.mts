@@ -4,6 +4,7 @@ import path from "node:path"
 import type {MyTSSourceFileTransformer} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getInternalData} from "../getInternalData.mts"
 import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
+import {isNumber} from "@anio-software/pkg.is"
 
 const impl: API["preprocess"] = async function(
 	this: APIContext, session, file, sourceCode, emitFileMessage
@@ -57,10 +58,12 @@ const impl: API["preprocess"] = async function(
 	const syntaxErrors = toolchain.tsIdentifySyntaxErrors(src)
 
 	if (syntaxErrors.length) {
-		for (const {message} of syntaxErrors) {
-			emitFileMessage(
-				"error", `Syntax error: ${message}`
-			)
+		for (const {origin, message} of syntaxErrors) {
+			if (isNumber(origin.line)) {
+				emitFileMessage("error", `Syntax error on line ${origin.line}: ${message}`)
+			} else {
+				emitFileMessage("error", `Syntax error: ${message}`)
+			}
 		}
 
 		return sourceCode
