@@ -35,8 +35,8 @@ async function createDistFiles(
 			]
 		}
 
-		const jsEntryCode = generateEntryPointCode(exportsMap, false)
-		const declarationsEntryCode = generateEntryPointCode(exportsMap, true)
+		const jsEntryCode = generateEntryPointCode(exportsMap, "js")
+		const declarationsEntryCode = generateEntryPointCode(exportsMap, "dts")
 
 		const jsBundle = mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {

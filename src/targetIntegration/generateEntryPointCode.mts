@@ -7,17 +7,23 @@ type EntryPoint = MapValueType<EntryPointMap>
 
 export function generateEntryPointCode(
 	entryPoint: EntryPoint,
-	declarationOnly: boolean
+	kind: "js" | "dts"
 ): string {
 	let code = ``
 
-	for (const [exportName, meta] of entryPoint.entries()) {
-		if (!declarationOnly && meta.descriptor.kind === "type") continue
+	if (kind === "js") {
+		for (const [exportName, meta] of entryPoint.entries()) {
+			if (meta.descriptor.kind === "type") continue
 
-		if (meta.descriptor.kind === "type") {
-			code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
-		} else {
 			code += `export {${exportName}} from "./${meta.pathToJsFile}"\n`
+		}
+	} else if (kind === "dts") {
+		for (const [exportName, meta] of entryPoint.entries()) {
+			if (meta.descriptor.kind === "type") {
+				code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
+			} else {
+				code += `export {${exportName}} from "./${meta.pathToJsFile}"\n`
+			}
 		}
 	}
 
