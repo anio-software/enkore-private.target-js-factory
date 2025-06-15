@@ -13,6 +13,8 @@ export function generateTypesPackageEntryCode(
 	code += `export type __ModuleExport = {\n`
 
 	for (const [exportName, meta] of entryPoint.entries()) {
+		if (meta.isTSXComponent) continue
+
 		importCode += `import {${exportName}} from "./${meta.pathToJsFile}"\n`
 
 		if (meta.descriptor.kind !== "type") {
@@ -23,6 +25,7 @@ export function generateTypesPackageEntryCode(
 	code += `}\n`
 
 	for (const [exportName, meta] of entryPoint.entries()) {
+		if (meta.isTSXComponent) continue
 		if (meta.descriptor.kind !== "type") continue
 
 		code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
