@@ -7,6 +7,7 @@ import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateEntryPointCode} from "./generateEntryPointCode.mts"
 import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
+import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.mts"
 import {rollupPluginFactory} from "./rollupPluginFactory.mts"
 import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.mts"
 import path from "node:path"
@@ -29,6 +30,7 @@ async function createDistFiles(
 			externals: externalPackages,
 			onRollupLogFunction,
 			additionalPlugins: [
+				rollupCSSStubPluginFactory(session),
 				await rollupPluginFactory(session, apiContext, entryPointPath, exportsMap)
 			]
 		}
