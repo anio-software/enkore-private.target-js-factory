@@ -17,6 +17,7 @@ export type Export = {
 	pathToJsFile: string
 	pathToDtsFile: string
 	isTSXComponent: boolean
+	importedCSSFiles: string[]
 }
 
 export type NPMPackage = {
