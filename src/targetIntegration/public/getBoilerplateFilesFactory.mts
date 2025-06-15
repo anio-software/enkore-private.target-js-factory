@@ -39,9 +39,6 @@ const impl: API["getBoilerplateFiles"] = async function(
 	if (targetOptions.environment.includes("web")) {
 		tsconfigBase.compilerOptions.types.push("@types/web")
 		tsconfigBase.compilerOptions.types.push("@types/react")
-
-		tsconfigBase.compilerOptions.lib.push("dom")
-		tsconfigBase.compilerOptions.lib.push("dom.iterable")
 	}
 
 	const registryMap = _getRegistryMap(targetOptions)
