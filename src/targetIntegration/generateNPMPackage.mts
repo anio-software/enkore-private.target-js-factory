@@ -37,6 +37,7 @@ async function createDistFiles(
 
 		const jsEntryCode = generateEntryPointCode(exportsMap, "js")
 		const declarationsEntryCode = generateEntryPointCode(exportsMap, "dts")
+		const cssEntryCode = generateEntryPointCode(exportsMap, "css")
 
 		const jsBundle = mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
@@ -60,6 +61,14 @@ async function createDistFiles(
 			}
 		)
 
+		const cssBundle = await toolchain.cssBundle(
+			session.project.root, cssEntryCode, {
+				fileName: path.join(
+					session.project.root, "package.css"
+				)
+			}
+		)
+
 		await writeAtomicFile(
 			`./dist/${entryPointPath}/index.mjs`, jsBundle, {createParents: true}
 		)
@@ -72,22 +81,14 @@ async function createDistFiles(
 			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
 		)
 
+		await writeAtomicFile(
+			`./dist/${entryPointPath}/style.css`, cssBundle, {createParents: true}
+		)
+
 		function mergeAndHoist(code: string): string {
 			return mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
 		}
 	}
-
-	let cssEntryCode = ``
-
-	const cssBundle = await toolchain.cssBundle(
-		session.project.root, cssEntryCode, {
-			fileName: path.join(
-				session.project.root, "package.css"
-			)
-		}
-	)
-
-	await writeAtomicFile(`./dist/style.css`, cssBundle, {createParents: true})
 }
 
 export async function generateNPMPackage(

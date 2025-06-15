@@ -7,7 +7,7 @@ type EntryPoint = MapValueType<EntryPointMap>
 
 export function generateEntryPointCode(
 	entryPoint: EntryPoint,
-	kind: "js" | "dts"
+	kind: "js" | "dts" | "css"
 ): string {
 	let code = ``
 
@@ -23,6 +23,16 @@ export function generateEntryPointCode(
 				code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
 			} else {
 				code += `export {${exportName}} from "./${meta.pathToJsFile}"\n`
+			}
+		}
+	} else if (kind === "css") {
+		for (const [exportName, meta] of entryPoint.entries()) {
+			for (const [cssFilePath] of meta.cssImportMap.entries()) {
+				if (cssFilePath.startsWith("/")) {
+					code += `@import ${JSON.stringify(cssFilePath)};\n`
+				} else {
+					code += `@import ${JSON.stringify(`./build/${cssFilePath}`)};\n`
+				}
 			}
 		}
 	}

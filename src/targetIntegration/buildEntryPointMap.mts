@@ -5,6 +5,7 @@ import path from "node:path"
 import type {InternalData} from "./InternalData.d.mts"
 import {getInternalData} from "./getInternalData.mts"
 import {getModuleGuarded} from "./getModuleGuarded.mts"
+import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
 
 function stripLeadingUnderscores(str: string) {
 	for (let i = 0; i < str.length; ++i) {
@@ -72,6 +73,15 @@ export function buildEntryPointMap(
 				cssImportMap.set(
 					moduleSpecifier.slice("build/".length, -3), 0
 				)
+			} else if (moduleSpecifier.startsWith("external:")) {
+				const rawModuleSpecifier = moduleSpecifier.slice("external:".length)
+				const resolved = resolveImportSpecifierFromProjectRoot(
+					session.project.root, rawModuleSpecifier
+				)
+
+				if (resolved !== false) {
+					cssImportMap.set(resolved, 0)
+				}
 			}
 		})
 
