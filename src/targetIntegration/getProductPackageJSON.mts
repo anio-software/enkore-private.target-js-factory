@@ -114,12 +114,6 @@ export function getProductPackageJSON(
 			//}
 		}
 
-		if (!typeOnly) {
-			ret["./style.css"] = {
-				"default": "./dist/style.css"
-			}
-		}
-
 		for (const [entryPointPath] of entryPointMap.entries()) {
 			const exp: Record<string, string> = {
 				"types": `./dist/${entryPointPath}/index.d.mts`
@@ -133,6 +127,17 @@ export function getProductPackageJSON(
 				ret["."] = exp
 			} else {
 				ret[`./${entryPointPath}`] = exp
+			}
+		}
+
+		// we are doing this here to keep the order in the resulting package.json clean
+		if (!typeOnly) {
+			for (const [entryPointPath] of entryPointMap.entries()) {
+				if (entryPointPath === "default") {
+					ret["./style.css"] = `./dist/default/style.css`
+				} else {
+					ret[`./${entryPointPath}/style.css`] = `./dist/${entryPointPath}/style.css`
+				}
 			}
 		}
 
