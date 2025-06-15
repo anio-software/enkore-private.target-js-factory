@@ -40,10 +40,11 @@ export function buildEntryPointMap(
 
 	for (const file of exportProjectFiles) {
 		const isTypeScriptFile = file.fileName.endsWith(".ts")
+		const isTSXFile = file.fileName.endsWith(".tsx")
 
-		if (!isTypeScriptFile) continue
+		if (!isTypeScriptFile && !isTSXFile) continue
 
-		const extensionOffset = -3
+		const extensionOffset = isTSXFile ? -4 : -3
 
 		const paths = path.dirname(file.relativePath).split("/").slice(1)
 		const exportPath = paths.length ? paths.join("/") : "default"
@@ -82,9 +83,16 @@ export function buildEntryPointMap(
 		}
 
 		function addExport(exportName: string) {
-			const exportIndicatesTypeExport = startsWithUpperCaseLetter(
-				stripLeadingUnderscores(exportName)
-			)
+			const exportIndicatesTypeExport: boolean = (() => {
+				//
+				// .tsx files are always value based and never a type
+				//
+				if (isTSXFile) {
+					return false
+				}
+
+				return startsWithUpperCaseLetter(stripLeadingUnderscores(exportName))
+			})()
 
 			const exportDescriptor = mod.getModuleExportByName(
 				exportName, exportIndicatesTypeExport
@@ -102,7 +110,6 @@ export function buildEntryPointMap(
 				return
 			}
 
-			// we know file ends with ".ts"
 			const extensionlessSource = file.relativePath.slice(0, extensionOffset)
 
 			exportMap.set(exportName, {
