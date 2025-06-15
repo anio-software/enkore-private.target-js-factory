@@ -43,6 +43,8 @@ export function buildEntryPointMap(
 
 		if (!isTypeScriptFile) continue
 
+		const extensionOffset = -3
+
 		const paths = path.dirname(file.relativePath).split("/").slice(1)
 		const exportPath = paths.length ? paths.join("/") : "default"
 
@@ -68,7 +70,7 @@ export function buildEntryPointMap(
 				addExport(exportName)
 			}
 		} else {
-			addExport(file.fileName.slice(0, -3))
+			addExport(file.fileName.slice(0, extensionOffset))
 
 			if (mod.getModuleExportNames().length > 1) {
 				session.enkore.emitMessage(
@@ -101,7 +103,7 @@ export function buildEntryPointMap(
 			}
 
 			// we know file ends with ".ts"
-			const extensionlessSource = file.relativePath.slice(0, -3)
+			const extensionlessSource = file.relativePath.slice(0, extensionOffset)
 
 			exportMap.set(exportName, {
 				name: exportName,
