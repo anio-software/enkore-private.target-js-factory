@@ -131,6 +131,7 @@ export function getProductPackageJSON(
 		}
 
 		// we are doing this here to keep the order in the resulting package.json clean
+		// todo: only provide .css export if styles were being used
 		if (!typeOnly) {
 			for (const [entryPointPath] of entryPointMap.entries()) {
 				if (entryPointPath === "default") {
