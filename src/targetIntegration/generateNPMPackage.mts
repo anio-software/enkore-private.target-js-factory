@@ -25,7 +25,7 @@ async function createDistFiles(
 
 	const {entryPoints} = getInternalData(session)
 
-	for (const [entryPointPath, exportsMap] of entryPoints.entries()) {
+	for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
 		const externalTypePackages: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
 		const onRollupLogFunction = getOnRollupLogFunction(session)
@@ -36,12 +36,12 @@ async function createDistFiles(
 			onRollupLogFunction,
 			additionalPlugins: [
 				rollupCSSStubPluginFactory(session),
-				await rollupPluginFactory(session, apiContext, entryPointPath, exportsMap)
+				await rollupPluginFactory(session, apiContext, entryPointPath, entryPoint)
 			]
 		}
 
-		const jsEntryCode = generateEntryPointCode(exportsMap, "js")
-		const declarationsEntryCode = generateEntryPointCode(exportsMap, "dts")
+		const jsEntryCode = generateEntryPointCode(entryPoint, "js")
+		const declarationsEntryCode = generateEntryPointCode(entryPoint, "dts")
 
 		const jsBundle = mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
@@ -69,8 +69,8 @@ async function createDistFiles(
 		await writeDistFile(`${entryPointPath}/index.min.mjs`, minifiedJsBundle)
 		await writeDistFile(`${entryPointPath}/index.d.mts`, declarationBundle)
 
-		if (exportsMap.hasCSSImports) {
-			const cssEntryCode = generateEntryPointCode(exportsMap, "css")
+		if (entryPoint.hasCSSImports) {
+			const cssEntryCode = generateEntryPointCode(entryPoint, "css")
 
 			const cssBundle = await toolchain.cssBundle(
 				session.project.root, cssEntryCode, {
