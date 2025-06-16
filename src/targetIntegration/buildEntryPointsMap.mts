@@ -23,7 +23,7 @@ function startsWithUpperCaseLetter(str: string) {
 
 type EntryPoints = InternalData["entryPoints"]
 
-export function buildEntryPointMap(
+export function buildEntryPointsMap(
 	session: EnkoreSessionAPI
 ): EntryPoints {
 	// don't create map if we are building embeds only

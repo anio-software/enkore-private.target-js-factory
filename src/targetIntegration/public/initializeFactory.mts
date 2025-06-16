@@ -3,7 +3,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import type {NPMPackage} from "../InternalData.d.mts"
 import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
-import {buildEntryPointMap} from "#~src/targetIntegration/buildEntryPointMap.mts"
+import {buildEntryPointsMap} from "#~src/targetIntegration/buildEntryPointsMap.mts"
 import {_getRegistryMap} from "../_getRegistryMap.mts"
 import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.mts"
 
@@ -62,7 +62,7 @@ const impl: API["initialize"] = async function(
 	}
 
 	getInternalData(session).myTSProgram = program
-	getInternalData(session).entryPoints = buildEntryPointMap(session)
+	getInternalData(session).entryPoints = buildEntryPointsMap(session)
 	getInternalData(session).requestedEmbedsFileCache = new Map()
 
 	if (session.enkore.getOptions()._partialBuild === true) {
