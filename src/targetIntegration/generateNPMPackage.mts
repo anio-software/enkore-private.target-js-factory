@@ -115,6 +115,8 @@ export async function generateNPMPackage(
 	)
 
 	await writeAtomicFileJSON(
-		`./package.json`, packageJSON, {pretty: true}
+		`./package.json`,
+		packageJSON,
+		{pretty: true}
 	)
 }
