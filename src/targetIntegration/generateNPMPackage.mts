@@ -24,9 +24,9 @@ async function createDistFiles(
 ) {
 	const toolchain = session.target._getToolchain("js")
 
-	const {entryPointMap} = getInternalData(session)
+	const {entryPoints} = getInternalData(session)
 
-	for (const [entryPointPath, exportsMap] of entryPointMap.entries()) {
+	for (const [entryPointPath, exportsMap] of entryPoints.entries()) {
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
 		const externalTypePackages: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
 		const onRollupLogFunction = getOnRollupLogFunction(session)
@@ -109,7 +109,7 @@ export async function generateNPMPackage(
 	directory: string,
 	packageName: string
 ) {
-	const {entryPointMap} = getInternalData(session)
+	const {entryPoints} = getInternalData(session)
 
 	await createDistFiles(apiContext, session)
 
@@ -118,7 +118,7 @@ export async function generateNPMPackage(
 		session,
 		packageName,
 		directory,
-		entryPointMap,
+		entryPoints,
 		false
 	)
 

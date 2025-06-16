@@ -62,7 +62,7 @@ const impl: API["initialize"] = async function(
 	}
 
 	getInternalData(session).myTSProgram = program
-	getInternalData(session).entryPointMap = buildEntryPointMap(session)
+	getInternalData(session).entryPoints = buildEntryPointMap(session)
 	getInternalData(session).requestedEmbedsFileCache = new Map()
 
 	if (session.enkore.getOptions()._partialBuild === true) {

@@ -21,11 +21,11 @@ function startsWithUpperCaseLetter(str: string) {
 	return str.toUpperCase().slice(0, 1) === str.slice(0, 1)
 }
 
-type EntryPointMap = InternalData["entryPointMap"]
+type EntryPoints = InternalData["entryPoints"]
 
 export function buildEntryPointMap(
 	session: EnkoreSessionAPI
-): EntryPointMap {
+): EntryPoints {
 	// don't create map if we are building embeds only
 	if (session.enkore.getOptions()._partialBuild === true) {
 		session.enkore.emitMessage(
@@ -36,7 +36,7 @@ export function buildEntryPointMap(
 	}
 
 	const exportProjectFiles = session.enkore.getProjectFiles("export")
-	const map: InternalData["entryPointMap"] = new Map()
+	const map: InternalData["entryPoints"] = new Map()
 	const {myTSProgram} = getInternalData(session)
 
 	for (const file of exportProjectFiles) {

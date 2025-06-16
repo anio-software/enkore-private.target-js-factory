@@ -16,7 +16,7 @@ const impl: API["getInitialInternalData"] = async function(
 	)
 
 	return {
-		entryPointMap: new Map(),
+		entryPoints: new Map(),
 		projectId
 	}
 }

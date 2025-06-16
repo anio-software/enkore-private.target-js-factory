@@ -22,7 +22,7 @@ export async function rollupPluginFactory(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
 	entryPointPath: string,
-	exportMap: MapValueType<InternalData["entryPointMap"]>
+	entryPoint: MapValueType<InternalData["entryPoints"]>
 ): Promise<Factory> {
 	const toolchain = session.target._getToolchain("js")
 
@@ -34,7 +34,7 @@ export async function rollupPluginFactory(
 	// optimization: check which embeds can be trimmed/ommited
 	// from the project context in order to save space
 	//
-	const requestedEmbeds = await getRequestedEmbeds(session, apiContext, exportMap)
+	const requestedEmbeds = await getRequestedEmbeds(session, apiContext, entryPoint)
 
 	if (requestedEmbeds.result === "specific") {
 		for (const [embedPath] of projectContext._projectEmbedFileMapRemoveMeInBundle.entries()) {

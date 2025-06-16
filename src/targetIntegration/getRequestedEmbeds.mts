@@ -24,7 +24,7 @@ type RequestedEmbeds = {
 export async function getRequestedEmbeds(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
-	exportMap: MapValueType<InternalData["entryPointMap"]>
+	entryPoints: MapValueType<InternalData["entryPoints"]>
 ): Promise<RequestedEmbeds> {
 	const reasonsWhy: RequestedEmbedsFromCodeReasonWhyUnknown[] = []
 	const usedEmbeds: Map<string, {requestedByMethods: string[]}> = new Map()
@@ -40,7 +40,7 @@ export async function getRequestedEmbeds(
 	const toolchain = session.target._getToolchain("js")
 	const filesToAnalyze: Map<string, true> = new Map()
 
-	for (const [_, {relativePath}] of exportMap.entries()) {
+	for (const [_, {relativePath}] of entryPoints.entries()) {
 		const mod = getModuleGuarded(
 			getInternalData(session).myTSProgram,
 			`build/${relativePath}`
