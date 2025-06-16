@@ -67,7 +67,7 @@ export function getProductPackageJSON(
 		peerDependencies: session.project.packageJSON.peerDependencies,
 		dependencies: session.project.packageJSON.dependencies,
 
-		files: ["./dist"]
+		files: ["./dist", "./_source"]
 	}
 
 	if (targetOptions.environment.includes("node")) {
