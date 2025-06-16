@@ -105,7 +105,7 @@ async function createDistFiles(
 export async function generateNPMPackage(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
-	directory: string,
+	gitRepositoryDirectory: string,
 	packageName: string
 ) {
 	const {entryPoints} = getInternalData(session)
@@ -117,7 +117,7 @@ export async function generateNPMPackage(
 		entryPoints,
 		{
 			packageName,
-			gitRepositoryDirectory: directory,
+			gitRepositoryDirectory,
 			typeOnly: false
 		}
 	)

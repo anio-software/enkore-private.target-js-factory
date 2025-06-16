@@ -11,7 +11,7 @@ import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.m
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
-	directory: string,
+	gitRepositoryDirectory: string,
 	packageName: string
 ) {
 	const toolchain = session.target._getToolchain("js")
@@ -41,7 +41,7 @@ export async function generateNPMTypesPackage(
 		entryPoints,
 		{
 			packageName,
-			gitRepositoryDirectory: directory,
+			gitRepositoryDirectory,
 			typeOnly: true
 		}
 	)
