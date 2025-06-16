@@ -58,7 +58,7 @@ export function mergeAndHoistGlobalRuntimeDataRecords(
 
 	ret += toolchain.defineEnkoreJSRuntimeGlobalDataRecord(newRecord)
 
-	ret += toolchain.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `
+	ret += toolchain.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `nodeRequire`, `
 		for (const embedId in runtimeData.immutable.embeds) {
 			const embed = runtimeData.immutable.embeds[embedId]
 
