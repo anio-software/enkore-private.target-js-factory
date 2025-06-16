@@ -3,14 +3,6 @@ import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitive
 
 type PackageJSONExportsObject = NonNullable<NodePackageJSON["exports"]>
 
-function mjsFileExport(path: string) {
-	return {
-		// ".mjs" is 4 letters long
-		types: path.slice(0, -4) + ".d.mts",
-		default: path
-	}
-}
-
 export function getPackageJSONExportsObject(
 	entryPoints: InternalData["entryPoints"]
 ): PackageJSONExportsObject {
@@ -37,4 +29,12 @@ export function getPackageJSONExportsObject(
 	}
 
 	return ret
+
+	function mjsFileExport(path: string) {
+		return {
+			// ".mjs" is 4 letters long
+			types: path.slice(0, -4) + ".d.mts",
+			default: path
+		}
+	}
 }
