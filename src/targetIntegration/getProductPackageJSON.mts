@@ -50,7 +50,7 @@ function removeNonTypeDependencies(
 export function getProductPackageJSON(
 	session: EnkoreSessionAPI,
 	packageName: string,
-	directory: string,
+	gitRepositoryDirectory: string,
 	entryPoints: EntryPoints,
 	typeOnly: boolean
 ): NodePackageJSON {
@@ -99,7 +99,7 @@ export function getProductPackageJSON(
 		newPackageJSON.repository = {
 			type: repository.type,
 			url: repository.url,
-			directory
+			directory: gitRepositoryDirectory
 		}
 	}
 
