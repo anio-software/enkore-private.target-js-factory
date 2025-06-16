@@ -13,6 +13,10 @@ import {entryPointHasCSSExports} from "./entryPointHasCSSExports.mts"
 import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.mts"
 import path from "node:path"
 
+function src(code: string) {
+	return `export default ${JSON.stringify(code)};\n`
+}
+
 async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
@@ -84,7 +88,16 @@ async function createDistFiles(
 		}
 
 		async function writeDistFile(path: string, code: string) {
+			const srcDecl = `declare const defaultExport: string;\nexport default defaultExport;\n`
 			await writeAtomicFile(`./dist/${path}`, code, {createParents: true})
+
+			if (path.endsWith(".mjs")) {
+				await writeAtomicFile(`./_source/${path}`, src(code), {createParents: true})
+				await writeAtomicFile(`./_source/${path.slice(0, -4)}.d.mts`, srcDecl)
+			} else if (path.endsWith(".css")) {
+				await writeAtomicFile(`./_source/${path}.mjs`, src(code), {createParents: true})
+				await writeAtomicFile(`./_source/${path}.d.mts`, srcDecl)
+			}
 		}
 	}
 }
