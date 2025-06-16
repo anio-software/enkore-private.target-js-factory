@@ -61,17 +61,9 @@ async function createDistFiles(
 			}
 		)
 
-		await writeAtomicFile(
-			`./dist/${entryPointPath}/index.mjs`, jsBundle, {createParents: true}
-		)
-
-		await writeAtomicFile(
-			`./dist/${entryPointPath}/index.min.mjs`, minifiedJsBundle, {createParents: true}
-		)
-
-		await writeAtomicFile(
-			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
-		)
+		await writeDistFile(`${entryPointPath}/index.mjs`, jsBundle)
+		await writeDistFile(`${entryPointPath}/index.min.mjs`, minifiedJsBundle)
+		await writeDistFile(`${entryPointPath}/index.d.mts`, declarationBundle)
 
 		if (entryPointHasCSSExports(exportsMap)) {
 			const cssEntryCode = generateEntryPointCode(exportsMap, "css")
@@ -84,13 +76,15 @@ async function createDistFiles(
 				}
 			)
 
-			await writeAtomicFile(
-				`./dist/${entryPointPath}/style.css`, cssBundle, {createParents: true}
-			)
+			await writeDistFile(`${entryPointPath}/style.css`, cssBundle)
 		}
 
 		function mergeAndHoist(code: string): string {
 			return mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
+		}
+
+		async function writeDistFile(path: string, code: string) {
+			await writeAtomicFile(`./dist/${path}`, code, {createParents: true})
 		}
 	}
 }
