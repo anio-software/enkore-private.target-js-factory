@@ -9,6 +9,7 @@ import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.mts"
 import {rollupPluginFactory} from "./rollupPluginFactory.mts"
+import {entryPointHasCSSExports} from "./entryPointHasCSSExports.mts"
 import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.mts"
 import path from "node:path"
 
@@ -81,9 +82,11 @@ async function createDistFiles(
 			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
 		)
 
-		await writeAtomicFile(
-			`./dist/${entryPointPath}/style.css`, cssBundle, {createParents: true}
-		)
+		if (entryPointHasCSSExports(exportsMap)) {
+			await writeAtomicFile(
+				`./dist/${entryPointPath}/style.css`, cssBundle, {createParents: true}
+			)
+		}
 
 		function mergeAndHoist(code: string): string {
 			return mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
