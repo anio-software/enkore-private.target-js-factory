@@ -31,7 +31,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "@anio-software/enkore-private.spec": "^0.300.0",
+    "@anio-software/enkore-private.spec": "^0.301.0",
     "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.48",
     "@anio-software/pkg.is": "^0.0.2",
     "@aniojs/node-fs": "^0.5.3",
