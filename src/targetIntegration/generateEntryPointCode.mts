@@ -26,6 +26,8 @@ export function generateEntryPointCode(
 			}
 		}
 	} else if (kind === "css") {
+		const includedCSSFilePaths: Map<string, 0> = new Map()
+
 		for (const [exportName, meta] of entryPoint.entries()) {
 			for (const [cssFilePath] of meta.cssImportMap.entries()) {
 				const normalizedPath: string = (() => {
@@ -36,7 +38,11 @@ export function generateEntryPointCode(
 					return `./build/${cssFilePath}`
 				})()
 
-				code += `@import ${JSON.stringify(normalizedPath)};\n`
+				if (!includedCSSFilePaths.has(normalizedPath)) {
+					code += `@import ${JSON.stringify(normalizedPath)};\n`
+				}
+
+				includedCSSFilePaths.set(normalizedPath, 0)
 			}
 		}
 	}
