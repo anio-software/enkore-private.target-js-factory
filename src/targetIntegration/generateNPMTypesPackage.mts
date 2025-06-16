@@ -4,8 +4,9 @@ import {getInternalData} from "./getInternalData.mts"
 import {getExternals} from "./getExternals.mts"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
 import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.mts"
-import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
+import {writeAtomicFile} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
+import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.mts"
 
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,
@@ -35,14 +36,16 @@ export async function generateNPMTypesPackage(
 		)
 	}
 
-	await writeAtomicFileJSON(
-		`./package.json`, getProductPackageJSON(
-			apiContext,
-			session,
-			packageName,
-			directory,
-			entryPoints,
-			true
-		), {pretty: true}
+	const packageJSON = getProductPackageJSON(
+		apiContext,
+		session,
+		packageName,
+		directory,
+		entryPoints,
+		true
+	)
+
+	await writeAtomicFile(
+		`./package.json`, _prettyPrintPackageJSONExports(packageJSON)
 	)
 }
