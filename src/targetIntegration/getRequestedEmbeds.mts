@@ -40,7 +40,7 @@ export async function getRequestedEmbeds(
 	const toolchain = session.target._getToolchain("js")
 	const filesToAnalyze: Map<string, true> = new Map()
 
-	for (const [_, {relativePath}] of entryPoints.entries()) {
+	for (const [_, {relativePath}] of entryPoints.exports.entries()) {
 		const mod = getModuleGuarded(
 			getInternalData(session).myTSProgram,
 			`build/${relativePath}`

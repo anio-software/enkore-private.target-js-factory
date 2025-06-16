@@ -52,10 +52,12 @@ export function buildEntryPointsMap(
 		const exportPath = paths.length ? paths.join("/") : "default"
 
 		if (!map.has(exportPath)) {
-			map.set(exportPath, new Map())
+			map.set(exportPath, {
+				exports: new Map()
+			})
 		}
 
-		const exportMap = map.get(exportPath)!
+		const entryPoint = map.get(exportPath)!
 
 		//
 		// NB: don't use the files inside project/* folder but the files
@@ -134,7 +136,7 @@ export function buildEntryPointsMap(
 
 			const extensionlessSource = file.relativePath.slice(0, extensionOffset)
 
-			exportMap.set(exportName, {
+			entryPoint.exports.set(exportName, {
 				name: exportName,
 				descriptor: exportDescriptor,
 				relativePath: file.relativePath,

@@ -30,14 +30,14 @@ const impl: API["hook"]["preLint"] = async function(
 				continue
 			}
 
-			const modules = entryPoints.get(exportPath)!
+			const entryPoint = entryPoints.get(exportPath)!
 
 			let testCodeImports = ``, testCode = ``
 
 			testCodeImports += `import type {${interfaceName} as __InterfaceToTestAgainst} from "${interfaceSource}"\n`
 			testCode += `const exportObject: __InterfaceToTestAgainst = {\n`
 
-			for (const [exportName, meta] of modules) {
+			for (const [exportName, meta] of entryPoint.exports) {
 				if (meta.descriptor.kind === "type") continue
 
 				testCodeImports += `import {${exportName}} from "../${meta.relativePath}"\n`

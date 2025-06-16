@@ -4,7 +4,7 @@ type MapValueType<A> = A extends Map<any, infer V> ? V : never;
 type EntryPoint = MapValueType<InternalData["entryPoints"]>
 
 export function entryPointHasCSSExports(entryPoint: EntryPoint) {
-	for (const [exportName, meta] of entryPoint.entries()) {
+	for (const [exportName, meta] of entryPoint.exports.entries()) {
 		if (meta.cssImportMap.size) {
 			return true
 		}

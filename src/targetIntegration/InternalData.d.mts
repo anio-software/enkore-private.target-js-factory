@@ -30,7 +30,9 @@ export type NPMPackage = {
 export type InternalData = {
 	projectId: string
 	myTSProgram: MyTSProgram
-	entryPoints: Map<string, Map<string, Export>>
+	entryPoints: Map<string, {
+		exports: Map<string, Export>
+	}>
 
 	// cache calls to getRequestedEmbedsFromCode()
 	requestedEmbedsFileCache: Map<string, RequestedEmbedsFromCodeResult>

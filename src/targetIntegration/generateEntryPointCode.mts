@@ -12,13 +12,13 @@ export function generateEntryPointCode(
 	let code = ``
 
 	if (kind === "js") {
-		for (const [exportName, meta] of entryPoint.entries()) {
+		for (const [exportName, meta] of entryPoint.exports.entries()) {
 			if (meta.descriptor.kind === "type") continue
 
 			code += `export {${exportName}} from "./${meta.pathToJsFile}"\n`
 		}
 	} else if (kind === "dts") {
-		for (const [exportName, meta] of entryPoint.entries()) {
+		for (const [exportName, meta] of entryPoint.exports.entries()) {
 			if (meta.descriptor.kind === "type") {
 				code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
 			} else {
@@ -28,7 +28,7 @@ export function generateEntryPointCode(
 	} else if (kind === "css") {
 		const includedCSSFilePaths: Map<string, 0> = new Map()
 
-		for (const [exportName, meta] of entryPoint.entries()) {
+		for (const [exportName, meta] of entryPoint.exports.entries()) {
 			for (const [cssFilePath] of meta.cssImportMap.entries()) {
 				const normalizedPath: string = (() => {
 					if (cssFilePath.startsWith("/")) {
