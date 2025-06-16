@@ -105,14 +105,16 @@ export async function generateNPMPackage(
 
 	await createDistFiles(apiContext, session)
 
+	const packageJSON = getProductPackageJSON(
+		apiContext,
+		session,
+		packageName,
+		directory,
+		entryPointMap,
+		false
+	)
+
 	await writeAtomicFileJSON(
-		`./package.json`, getProductPackageJSON(
-			apiContext,
-			session,
-			packageName,
-			directory,
-			entryPointMap,
-			false
-		), {pretty: true}
+		`./package.json`, packageJSON, {pretty: true}
 	)
 }
