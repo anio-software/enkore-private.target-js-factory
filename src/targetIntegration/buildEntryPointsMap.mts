@@ -53,6 +53,7 @@ export function buildEntryPointsMap(
 
 		if (!map.has(exportPath)) {
 			map.set(exportPath, {
+				hasCSSImports: false,
 				exports: new Map()
 			})
 		}
@@ -135,6 +136,10 @@ export function buildEntryPointsMap(
 			}
 
 			const extensionlessSource = file.relativePath.slice(0, extensionOffset)
+
+			if (cssImportMap.size) {
+				entryPoint.hasCSSImports = true
+			}
 
 			entryPoint.exports.set(exportName, {
 				name: exportName,

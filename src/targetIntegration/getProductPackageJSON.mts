@@ -2,7 +2,6 @@ import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.d.mts"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {InternalData} from "./InternalData.d.mts"
-import {entryPointHasCSSExports} from "./entryPointHasCSSExports.mts"
 
 type EntryPoints = InternalData["entryPoints"]
 
@@ -133,7 +132,7 @@ export function getProductPackageJSON(
 		// todo: only provide .css export if styles were being used
 		if (!typeOnly) {
 			for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
-				if (!entryPointHasCSSExports(entryPoint)) {
+				if (!entryPoint.hasCSSImports) {
 					session.enkore.emitMessage(`info`, `omitting style.css for entry point '${entryPointPath}'.`)
 
 					continue

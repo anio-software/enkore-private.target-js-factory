@@ -28,6 +28,7 @@ export type NPMPackage = {
 }
 
 export type EntryPoint = {
+	hasCSSImports: boolean
 	exports: Map<string, Export>
 }
 

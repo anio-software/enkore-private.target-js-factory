@@ -9,7 +9,6 @@ import {writeAtomicFile, writeAtomicFileJSON} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.mts"
 import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.mts"
 import {rollupPluginFactory} from "./rollupPluginFactory.mts"
-import {entryPointHasCSSExports} from "./entryPointHasCSSExports.mts"
 import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.mts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.mts"
 import path from "node:path"
@@ -70,7 +69,7 @@ async function createDistFiles(
 		await writeDistFile(`${entryPointPath}/index.min.mjs`, minifiedJsBundle)
 		await writeDistFile(`${entryPointPath}/index.d.mts`, declarationBundle)
 
-		if (entryPointHasCSSExports(exportsMap)) {
+		if (exportsMap.hasCSSImports) {
 			const cssEntryCode = generateEntryPointCode(exportsMap, "css")
 
 			const cssBundle = await toolchain.cssBundle(
