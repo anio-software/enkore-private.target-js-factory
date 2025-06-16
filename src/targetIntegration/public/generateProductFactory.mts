@@ -3,7 +3,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
 import {_productNameToNPMPackage} from "../_productNameToNPMPackage.mts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.mts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.mts"
-import {copy, readFileJSON, writeAtomicFileJSON} from "@aniojs/node-fs"
+import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@aniojs/node-fs"
 import path from "node:path"
 
 async function _copyNPMPackageProduct(
@@ -16,6 +16,10 @@ async function _copyNPMPackageProduct(
 	const base = path.join(projectRoot, "products", srcProductName)
 
 	await copy(path.join(base, "dist"), "./dist")
+
+	if (isDirectorySync(path.join(base, "_source"))) {
+		await copy(path.join(base, "_source"), "./_source")
+	}
 
 	const packageJSON: any = await readFileJSON(
 		path.join(base, "package.json")
