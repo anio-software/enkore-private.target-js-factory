@@ -47,17 +47,21 @@ function removeNonTypeDependencies(
 	return typeOnlyPeerDependencies
 }
 
+type Options = {
+	packageName: string
+	gitRepositoryDirectory: string
+	typeOnly: boolean
+}
+
 export function getProductPackageJSON(
 	session: EnkoreSessionAPI,
-	packageName: string,
-	gitRepositoryDirectory: string,
 	entryPoints: EntryPoints,
-	typeOnly: boolean
+	options: Options
 ): NodePackageJSON {
 	const targetOptions = session.target.getOptions("js")
 
 	let newPackageJSON: NodePackageJSON = {
-		name: packageName,
+		name: options.packageName,
 		type: "module",
 		version: session.project.packageJSON.version,
 		author: session.project.packageJSON.author,
@@ -80,7 +84,7 @@ export function getProductPackageJSON(
 	// todo: check dependencies of type only package
 	// by calling session.target._getToolchain("js").getModuleImportAndExportSpecifiers()
 	// allow @types/ peerDependencies
-	if (typeOnly) {
+	if (options.typeOnly) {
 		newPackageJSON.dependencies = {}
 		newPackageJSON.peerDependencies = removeNonTypeDependencies(
 			newPackageJSON.peerDependencies
@@ -99,11 +103,11 @@ export function getProductPackageJSON(
 		newPackageJSON.repository = {
 			type: repository.type,
 			url: repository.url,
-			directory: gitRepositoryDirectory
+			directory: options.gitRepositoryDirectory
 		}
 	}
 
-	newPackageJSON.exports = getPackageJSONExportsObject(entryPoints, typeOnly)
+	newPackageJSON.exports = getPackageJSONExportsObject(entryPoints, options.typeOnly)
 
 	return newPackageJSON
 }
