@@ -106,9 +106,7 @@ export function getProductPackageJSON(
 
 	newPackageJSON.exports = (() => {
 		const ret: Record<string, any> = {
-			"./package.json": {
-				"default": "./package.json"
-			}
+			"./package.json": "./package.json"
 			//"./__enkoreBuildInfo": {
 			//	"types": "./__enkoreBuildInfo/index.d.mts",
 			//	"default": "./__enkoreBuildInfo/index.mjs"
