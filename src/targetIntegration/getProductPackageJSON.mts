@@ -48,7 +48,6 @@ function removeNonTypeDependencies(
 }
 
 export function getProductPackageJSON(
-	apiContext: APIContext,
 	session: EnkoreSessionAPI,
 	packageName: string,
 	directory: string,
