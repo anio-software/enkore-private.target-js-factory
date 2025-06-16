@@ -11,6 +11,7 @@ import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.mts"
 import {rollupPluginFactory} from "./rollupPluginFactory.mts"
 import {entryPointHasCSSExports} from "./entryPointHasCSSExports.mts"
 import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.mts"
+import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.mts"
 import path from "node:path"
 
 function src(code: string) {
@@ -121,9 +122,7 @@ export async function generateNPMPackage(
 		false
 	)
 
-	await writeAtomicFileJSON(
-		`./package.json`,
-		packageJSON,
-		{pretty: true}
+	await writeAtomicFile(
+		`./package.json`, _prettyPrintPackageJSONExports(packageJSON)
 	)
 }
