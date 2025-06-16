@@ -28,11 +28,15 @@ export function generateEntryPointCode(
 	} else if (kind === "css") {
 		for (const [exportName, meta] of entryPoint.entries()) {
 			for (const [cssFilePath] of meta.cssImportMap.entries()) {
-				if (cssFilePath.startsWith("/")) {
-					code += `@import ${JSON.stringify(cssFilePath)};\n`
-				} else {
-					code += `@import ${JSON.stringify(`./build/${cssFilePath}`)};\n`
-				}
+				const normalizedPath: string = (() => {
+					if (cssFilePath.startsWith("/")) {
+						return cssFilePath
+					}
+
+					return `./build/${cssFilePath}`
+				})()
+
+				code += `@import ${JSON.stringify(normalizedPath)};\n`
 			}
 		}
 	}
