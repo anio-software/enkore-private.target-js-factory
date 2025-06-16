@@ -27,12 +27,14 @@ export type NPMPackage = {
 	publishConfig: Omit<PublishConfig, "packageName" | "packageContents">
 }
 
+export type EntryPoint = {
+	exports: Map<string, Export>
+}
+
 export type InternalData = {
 	projectId: string
 	myTSProgram: MyTSProgram
-	entryPoints: Map<string, {
-		exports: Map<string, Export>
-	}>
+	entryPoints: Map<string, EntryPoint>
 
 	// cache calls to getRequestedEmbedsFromCode()
 	requestedEmbedsFileCache: Map<string, RequestedEmbedsFromCodeResult>

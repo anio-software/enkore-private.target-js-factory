@@ -1,9 +1,4 @@
-import type {InternalData} from "./InternalData.d.mts"
-
-type EntryPoints = InternalData["entryPoints"]
-// thanks to josephjnk https://www.reddit.com/r/typescript/comments/hf5g3a/comment/fvvn0ez/
-type MapValueType<A> = A extends Map<any, infer V> ? V : never;
-type EntryPoint = MapValueType<EntryPoints>
+import type {EntryPoint} from "./InternalData.d.mts"
 
 export function generateEntryPointCode(
 	entryPoint: EntryPoint,

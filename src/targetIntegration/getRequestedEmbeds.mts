@@ -1,6 +1,6 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.mts"
-import type {InternalData} from "./InternalData.d.mts"
+import type {EntryPoint} from "./InternalData.d.mts"
 import type {RequestedEmbedsFromCodeReasonWhyUnknown} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getInternalData} from "./getInternalData.mts"
 import {getModuleGuarded} from "./getModuleGuarded.mts"
@@ -8,8 +8,6 @@ import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProje
 import {readFileString} from "@aniojs/node-fs"
 import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
 import path from "node:path"
-
-type MapValueType<A> = A extends Map<any, infer V> ? V : never;
 
 type RequestedEmbeds = {
 	result: "all"
@@ -24,7 +22,7 @@ type RequestedEmbeds = {
 export async function getRequestedEmbeds(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
-	entryPoints: MapValueType<InternalData["entryPoints"]>
+	entryPoints: EntryPoint
 ): Promise<RequestedEmbeds> {
 	const reasonsWhy: RequestedEmbedsFromCodeReasonWhyUnknown[] = []
 	const usedEmbeds: Map<string, {requestedByMethods: string[]}> = new Map()

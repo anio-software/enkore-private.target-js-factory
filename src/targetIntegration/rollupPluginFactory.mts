@@ -5,7 +5,7 @@ import {
 } from "@anio-software/enkore-private.spec"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.d.mts"
-import type {InternalData} from "./InternalData.d.mts"
+import type {InternalData, EntryPoint} from "./InternalData.d.mts"
 import type {ProjectAPIContext} from "#~assets/project/ProjectAPIContext.mts"
 import {getRequestedEmbeds} from "./getRequestedEmbeds.mts"
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
@@ -16,13 +16,12 @@ import {getInternalData} from "./getInternalData.mts"
 import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
-type MapValueType<A> = A extends Map<any, infer V> ? V : never;
 
 export async function rollupPluginFactory(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
 	entryPointPath: string,
-	entryPoint: MapValueType<InternalData["entryPoints"]>
+	entryPoint: EntryPoint
 ): Promise<Factory> {
 	const toolchain = session.target._getToolchain("js")
 
