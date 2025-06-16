@@ -5,7 +5,7 @@ import {
 } from "@anio-software/enkore-private.spec"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.d.mts"
-import type {InternalData, EntryPoint} from "./InternalData.d.mts"
+import type {EntryPoint} from "./InternalData.d.mts"
 import type {ProjectAPIContext} from "#~assets/project/ProjectAPIContext.mts"
 import {getRequestedEmbeds} from "./getRequestedEmbeds.mts"
 import {generateProjectAPIContext} from "#~assets/project/generateProjectAPIContext.mts"
