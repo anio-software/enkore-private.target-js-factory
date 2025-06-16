@@ -73,7 +73,7 @@ export function buildEntryPointMap(
 				cssImportMap.set(
 					moduleSpecifier.slice("build/".length, -3), 0
 				)
-			} else if (moduleSpecifier.startsWith("external:")) {
+			} else if (moduleSpecifier.startsWith("external:") && moduleSpecifier.endsWith(".css")) {
 				const rawModuleSpecifier = moduleSpecifier.slice("external:".length)
 				const resolved = resolveImportSpecifierFromProjectRoot(
 					session.project.root, rawModuleSpecifier
