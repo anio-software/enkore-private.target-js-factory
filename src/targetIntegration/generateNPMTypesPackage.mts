@@ -17,11 +17,11 @@ export async function generateNPMTypesPackage(
 
 	const {entryPoints} = getInternalData(session)
 
-	for (const [entryPointPath, exportsMap] of entryPoints.entries()) {
+	for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
 		const externals: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
 		const onRollupLogFunction = getOnRollupLogFunction(session)
 
-		const declarationsEntryCode = generateTypesPackageEntryCode(exportsMap)
+		const declarationsEntryCode = generateTypesPackageEntryCode(entryPoint)
 
 		const declarationBundle = await toolchain.tsDeclarationBundler(
 			session.project.root, declarationsEntryCode, {
