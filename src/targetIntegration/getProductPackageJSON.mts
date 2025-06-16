@@ -2,6 +2,7 @@ import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.d.mts"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {InternalData} from "./InternalData.d.mts"
+import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.mts"
 
 type EntryPoints = InternalData["entryPoints"]
 
@@ -103,51 +104,7 @@ export function getProductPackageJSON(
 		}
 	}
 
-	newPackageJSON.exports = (() => {
-		const ret: Record<string, any> = {
-			"./package.json": "./package.json"
-			//"./__enkoreBuildInfo": {
-			//	"types": "./__enkoreBuildInfo/index.d.mts",
-			//	"default": "./__enkoreBuildInfo/index.mjs"
-			//}
-		}
-
-		for (const [entryPointPath] of entryPoints.entries()) {
-			const exp: Record<string, string> = {
-				"types": `./dist/${entryPointPath}/index.d.mts`
-			}
-
-			if (!typeOnly) {
-				exp["default"] = `./dist/${entryPointPath}/index.mjs`
-			}
-
-			if (entryPointPath === "default") {
-				ret["."] = exp
-			} else {
-				ret[`./${entryPointPath}`] = exp
-			}
-		}
-
-		// we are doing this here to keep the order in the resulting package.json clean
-		// todo: only provide .css export if styles were being used
-		if (!typeOnly) {
-			for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
-				if (!entryPoint.hasCSSImports) {
-					session.enkore.emitMessage(`info`, `omitting style.css for entry point '${entryPointPath}'.`)
-
-					continue
-				}
-
-				if (entryPointPath === "default") {
-					ret["./style.css"] = `./dist/default/style.css`
-				} else {
-					ret[`./${entryPointPath}/style.css`] = `./dist/${entryPointPath}/style.css`
-				}
-			}
-		}
-
-		return ret
-	})()
+	newPackageJSON.exports = getPackageJSONExportsObject(entryPoints, typeOnly)
 
 	return newPackageJSON
 }
