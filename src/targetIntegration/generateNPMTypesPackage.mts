@@ -38,10 +38,12 @@ export async function generateNPMTypesPackage(
 
 	const packageJSON = getProductPackageJSON(
 		session,
-		packageName,
-		directory,
 		entryPoints,
-		true
+		{
+			packageName,
+			gitRepositoryDirectory: directory,
+			typeOnly: true
+		}
 	)
 
 	await writeAtomicFile(
