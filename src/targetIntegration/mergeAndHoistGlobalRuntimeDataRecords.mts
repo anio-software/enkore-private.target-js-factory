@@ -6,6 +6,7 @@ import {
 } from "@anio-software/enkore-private.spec"
 import {getInternalData} from "./getInternalData.mts"
 import {log} from "@enkore/debug"
+import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 
 export async function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
@@ -54,22 +55,63 @@ export async function mergeAndHoistGlobalRuntimeDataRecords(
 		}
 	})
 
+	const runtimeInitCode = `
+import {createTemporaryResourceFromStringSyncFactory} from "temporary-resource-factory"
+
+const createTemporaryResourceFromStringSync = createTemporaryResourceFromStringSyncFactory(
+	nodeRequire
+)
+
+for (const embedId in runtimeData.immutable.embeds) {
+	const embed = runtimeData.immutable.embeds[embedId]
+
+	if (embed._createResourceAtRuntimeInit !== true) continue
+	if (embedId in runtimeData.mutable.embedResourceURLs) {
+		continue
+	}
+
+	// from https://web.dev/articles/base64-encoding
+	const binString = globalThis.atob(embed.data)
+	const buffer = Uint8Array.from(binString, (m) => m.codePointAt(0))
+
+	runtimeData.mutable.embedResourceURLs[embedId] = createTemporaryResourceFromStringSync(
+		(new TextDecoder).decode(buffer)
+	).resourceURL
+}
+`
+
+	const bundledRuntimeInitCode = await toolchain.jsBundler(
+		session.project.root, runtimeInitCode, {
+			outputFormat: "iife",
+			additionalPlugins: [{
+				when: "pre",
+				plugin: {
+					name: "anio-software-temporary-resource-factory-resolver",
+					resolveId(id) {
+						if (id === `temporary-resource-factory`) {
+							return `@anio-software/pkg.temporary-resource-factory`
+						}
+
+						return null
+					},
+
+					load(id) {
+						if (id === `@anio-software/pkg.temporary-resource-factory`) {
+							return temporaryResourceFactory
+						}
+
+						return null
+					}
+				}
+			}]
+		}
+	)
+
 	let ret = ``
 
 	ret += toolchain.defineEnkoreJSRuntimeGlobalDataRecord(newRecord)
 
-	ret += toolchain.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `nodeRequire`, `
-		for (const embedId in runtimeData.immutable.embeds) {
-			const embed = runtimeData.immutable.embeds[embedId]
-
-			if (embed._createResourceAtRuntimeInit !== true) continue
-			if (embedId in runtimeData.mutable.embedResourceURLs) {
-				continue
-			}
-
-			runtimeData.mutable.embedResourceURLs[embedId] = "something"
-		}
-`)
+	ret += toolchain.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `nodeRequire`, bundledRuntimeInitCode)
 	ret += toolchain.invokeEnkoreJSRuntimeGlobalInitFunction()
 	ret += newCode
 
