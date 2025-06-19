@@ -7,11 +7,11 @@ import {
 import {getInternalData} from "./getInternalData.mts"
 import {log} from "@enkore/debug"
 
-export function mergeAndHoistGlobalRuntimeDataRecords(
+export async function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
 	entryPointPath: string,
 	code: string
-): string {
+): Promise<string> {
 	const toolchain = session.target._getToolchain("js")
 	let newEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 

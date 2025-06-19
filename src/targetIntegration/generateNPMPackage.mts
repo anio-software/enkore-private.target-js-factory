@@ -43,7 +43,7 @@ async function createDistFiles(
 		const jsEntryCode = generateEntryPointCode(entryPoint, "js")
 		const declarationsEntryCode = generateEntryPointCode(entryPoint, "dts")
 
-		const jsBundle = mergeAndHoist(await toolchain.jsBundler(
+		const jsBundle = await mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
 				minify: false
@@ -51,7 +51,7 @@ async function createDistFiles(
 		))
 
 		// todo: don't do this, minify jsBundle code
-		const minifiedJsBundle = mergeAndHoist(await toolchain.jsBundler(
+		const minifiedJsBundle = await mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
 				minify: true
@@ -83,8 +83,8 @@ async function createDistFiles(
 			await writeDistFile(`${entryPointPath}/style.css`, cssBundle)
 		}
 
-		function mergeAndHoist(code: string): string {
-			return mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
+		async function mergeAndHoist(code: string): Promise<string> {
+			return await mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
 		}
 
 		async function writeDistFile(path: string, code: string) {
