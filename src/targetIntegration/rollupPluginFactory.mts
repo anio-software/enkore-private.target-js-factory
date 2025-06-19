@@ -56,6 +56,10 @@ export async function rollupPluginFactory(
 		name: "enkore-target-js-project-plugin",
 
 		intro() {
+			if (session.target.getOptions("js")._disableRuntimeCodeInjection === true) {
+				return ""
+			}
+
 			const embeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
 			for (const [embedPath, value] of projectContext._projectEmbedFileMapRemoveMeInBundle.entries()) {
