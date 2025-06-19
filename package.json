@@ -34,6 +34,7 @@
     "@anio-software/enkore-private.spec": "^0.303.0",
     "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.51",
     "@anio-software/pkg.is": "^0.0.2",
+    "@anio-software/pkg.temporary-resource-factory": "^0.0.1",
     "@aniojs/node-fs": "^0.5.3",
     "@aniojs/random-ident": "^0.1.2",
     "@enkore/debug": "^0.0.2",
