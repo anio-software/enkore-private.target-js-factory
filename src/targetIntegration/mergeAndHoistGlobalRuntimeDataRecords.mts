@@ -111,7 +111,9 @@ for (const embedId in runtimeData.immutable.embeds) {
 
 	ret += toolchain.defineEnkoreJSRuntimeGlobalDataRecord(newRecord)
 
-	ret += toolchain.defineEnkoreJSRuntimeGlobalInitFunction(`runtimeData`, `nodeRequire`, bundledRuntimeInitCode)
+	ret += toolchain.defineEnkoreJSRuntimeGlobalInitFunction(
+		[`runtimeData`, `nodeRequire`], bundledRuntimeInitCode
+	)
 	ret += toolchain.invokeEnkoreJSRuntimeGlobalInitFunction()
 	ret += newCode
 
