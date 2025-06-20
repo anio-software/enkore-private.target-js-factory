@@ -4,27 +4,6 @@
   "author": "Anio Software <info@anio.software>",
   "description": "Target 'js' API factory. Formerly known as @fourtune/realm-js.",
   "license": "MIT",
-  "exports": {
-    ".": {
-      "types": "./dist/default/index.d.mts",
-      "default": "./dist/default/index.mjs"
-    },
-    "./targetIntegration": {
-      "types": "./dist/targetIntegration/index.d.mts",
-      "default": "./dist/targetIntegration/index.mjs"
-    },
-    "./project": {
-      "types": "./dist/project/index.d.mts",
-      "default": "./dist/project/index.mjs"
-    },
-    "./autogenerate": {
-      "types": "./dist/autogenerate/index.d.mts",
-      "default": "./dist/autogenerate/index.mjs"
-    },
-    "./package.json": {
-      "default": "./package.json"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/enkore-org/target-js-factory.git"
