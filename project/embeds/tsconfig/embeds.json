@@ -1,0 +1,15 @@
+{
+    "extends": "./base.json",
+    "compilerOptions": {
+        "composite": true,
+        "paths": {
+            "#~embeds/*": [
+                "./project/embeds/*"
+            ]
+        }
+    },
+    "include": [
+        "../project/embeds/**/*",
+        "../build/embeds/**/*"
+    ]
+}

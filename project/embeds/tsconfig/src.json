@@ -1,0 +1,26 @@
+{
+    "extends": "./base.json",
+    "compilerOptions": {
+        "composite": true,
+        "paths": {
+            "#~src/*": [
+                "./project/src/*"
+            ],
+            "#~export/*": [
+                "./project/export/*"
+            ],
+            "#~embeds/*": [
+                "./project/embeds/*"
+            ]
+        }
+    },
+    "include": [
+        "../project/src/**/*",
+        "../project/export/**/*",
+        "../build/src/**/*",
+        "../build/export/**/*"
+    ],
+    "references": [
+        {"path": "./embeds.json"}
+    ]
+}
