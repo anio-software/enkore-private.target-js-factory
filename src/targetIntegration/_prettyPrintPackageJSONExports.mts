@@ -60,7 +60,7 @@ export function _prettyPrintPackageJSONExports(
 		}
 	}
 
-	ret += `},\n`
+	ret += `,\n`
 	ret += `  "exports": {\n`
 
 	for (let i = 0; i < entries.length; ++i) {
