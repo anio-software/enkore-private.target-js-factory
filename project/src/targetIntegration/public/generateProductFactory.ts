@@ -1,8 +1,8 @@
-import type {API} from "#~src/targetIntegration/API.d.mts"
-import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import {_productNameToNPMPackage} from "../_productNameToNPMPackage.mts"
-import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.mts"
-import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.mts"
+import type {API} from "#~src/targetIntegration/API.ts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
+import {_productNameToNPMPackage} from "../_productNameToNPMPackage.ts"
+import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.ts"
+import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.ts"
 import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@aniojs/node-fs"
 import path from "node:path"
 

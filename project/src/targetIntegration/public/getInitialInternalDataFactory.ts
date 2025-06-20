@@ -1,5 +1,5 @@
-import type {API} from "#~src/targetIntegration/API.d.mts"
-import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import type {API} from "#~src/targetIntegration/API.ts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import crypto from "node:crypto"
 
 function sha256Sync(str: string): string {

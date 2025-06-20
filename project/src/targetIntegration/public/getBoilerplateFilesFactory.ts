@@ -1,11 +1,11 @@
-import type {API} from "#~src/targetIntegration/API.d.mts"
-import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import type {API} from "#~src/targetIntegration/API.ts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {createEntity} from "@anio-software/enkore-private.spec"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
 import {targetBoilerplateFileMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
-import {_getRegistryMap} from "../_getRegistryMap.mts"
-import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.mts"
-import type {Registry} from "../InternalData.d.mts"
+import {_getRegistryMap} from "../_getRegistryMap.ts"
+import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.ts"
+import type {Registry} from "../InternalData.ts"
 
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session

@@ -1,7 +1,7 @@
-import type {API} from "#~src/targetIntegration/API.d.mts"
-import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import type {API} from "#~src/targetIntegration/API.ts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import type {NodeAPIMessage} from "@anio-software/enkore-private.spec/primitives"
-import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
+import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
 
 const impl: API["lint"] = async function(
 	this: APIContext, session, file

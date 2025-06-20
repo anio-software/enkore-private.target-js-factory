@@ -1,8 +1,8 @@
-import type {API} from "#~src/targetIntegration/API.d.mts"
-import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import type {API} from "#~src/targetIntegration/API.ts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import path from "node:path"
 import type {MyTSSourceFileTransformer} from "@anio-software/enkore-private.target-js-toolchain_types"
-import {getInternalData} from "../getInternalData.mts"
+import {getInternalData} from "../getInternalData.ts"
 import {isNumber} from "@anio-software/pkg.is"
 
 const impl: API["preprocess"] = async function(

@@ -1,6 +1,6 @@
-import type {API} from "#~src/targetIntegration/API.d.mts"
-import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
+import type {API} from "#~src/targetIntegration/API.ts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
+import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
 import {isString, isNumber} from "@anio-software/pkg.is"
 
 const impl: API["hook"]["preLint"] = async function(

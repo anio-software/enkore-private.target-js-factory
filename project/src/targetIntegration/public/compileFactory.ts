@@ -1,10 +1,10 @@
-import type {API} from "#~src/targetIntegration/API.d.mts"
-import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
+import type {API} from "#~src/targetIntegration/API.ts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import path from "node:path"
-import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
-import {getTypeScriptDefinition} from "#~src/targetIntegration/getTypeScriptDefinition.mts"
-import {getModuleGuarded} from "#~src/targetIntegration/getModuleGuarded.mts"
-import {embedFileBundler} from "#~src/targetIntegration/embedFileBundler.mts"
+import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
+import {getTypeScriptDefinition} from "#~src/targetIntegration/getTypeScriptDefinition.ts"
+import {getModuleGuarded} from "#~src/targetIntegration/getModuleGuarded.ts"
+import {embedFileBundler} from "#~src/targetIntegration/embedFileBundler.ts"
 
 type OnlyArray<T> = T extends object[] ? T : never
 type ObjectFile = OnlyArray<Awaited<ReturnType<API["compile"]>>>[number]

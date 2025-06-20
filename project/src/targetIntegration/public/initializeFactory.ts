@@ -1,11 +1,11 @@
-import type {API} from "#~src/targetIntegration/API.d.mts"
-import type {APIContext} from "#~src/targetIntegration/APIContext.d.mts"
-import type {NPMPackage} from "../InternalData.d.mts"
+import type {API} from "#~src/targetIntegration/API.ts"
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
+import type {NPMPackage} from "../InternalData.ts"
 import path from "node:path"
-import {getInternalData} from "#~src/targetIntegration/getInternalData.mts"
-import {buildEntryPointsMap} from "#~src/targetIntegration/buildEntryPointsMap.mts"
-import {_getRegistryMap} from "../_getRegistryMap.mts"
-import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.mts"
+import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
+import {buildEntryPointsMap} from "#~src/targetIntegration/buildEntryPointsMap.ts"
+import {_getRegistryMap} from "../_getRegistryMap.ts"
+import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.ts"
 
 function getPackageNameSubstitutes(projectPackageName: string) {
 	const tmp = projectPackageName.split("/")
