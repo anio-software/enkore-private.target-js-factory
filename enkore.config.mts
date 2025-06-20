@@ -7,7 +7,7 @@ export const config: unknown = defineConfig({
 		options: defineTargetJSConfig({
 			_disableRuntimeCodeInjection: true,
 
-			environment: [],
+			environment: ["node"],
 
 			registry: {
 				"anioSoftware": {
