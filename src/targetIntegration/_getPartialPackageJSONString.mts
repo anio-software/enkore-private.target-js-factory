@@ -1,19 +1,32 @@
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 
+function indent(str: string): string {
+	const lines = str.split("\n")
+
+	return lines.map((line, index) => {
+		if (index === 0) return line;
+
+		return `  ${line}`;
+	}).join("\n")
+}
+
 export function _getPartialPackageJSONString(packageJSON: NodePackageJSON): string {
-	const clonedPackageJSON = globalThis.structuredClone(packageJSON)
+	let ret = `{\n`
 
-	delete clonedPackageJSON.exports
+	const keys = Object.keys(packageJSON)
 
-	let ret = JSON.stringify(clonedPackageJSON, null, 2)
+	for (let i = 0; i < keys.length; ++i) {
+		const key = keys[i]
 
-	const c1 = ret.lastIndexOf("}")
-	if (c1 === -1) throw new Error(`unable to find first curly bracket`)
-	ret = ret.slice(0, c1)
+		if (key === "exports") continue
 
-	const c2 = ret.lastIndexOf("}")
-	if (c2 === -1) throw new Error(`unable to find second curly bracket`)
-	ret = ret.slice(0, c2)
+		const value = packageJSON[key]
+		const hasNextKey = keys.length > (i + 1)
+
+		ret += `  ${JSON.stringify(key)}: ${indent(JSON.stringify(value, null , 2))}`
+
+		ret += hasNextKey ? `,\n` : `\n`
+	}
 
 	return ret
 }
