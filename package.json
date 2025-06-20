@@ -11,9 +11,12 @@
   },
   "type": "module",
   "devDependencies": {
+    "@anio-software/enkore": "^0.0.74",
     "@anio-software/enkore-private.debug": "^0.0.7",
     "@anio-software/enkore-private.spec": "^0.304.1",
     "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.52",
+    "@anio-software/enkore.core": "^0.11.2",
+    "@anio-software/enkore.target-js": "^0.0.19-canary-48064aaf-d88d3f60",
     "@anio-software/pkg.is": "^0.0.3",
     "@anio-software/pkg.temporary-resource-factory": "^0.0.1",
     "@aniojs/node-fs": "^0.5.3",
