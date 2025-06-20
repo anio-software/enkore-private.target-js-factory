@@ -5,7 +5,7 @@ import {
 	createEntity
 } from "@anio-software/enkore-private.spec"
 import {getInternalData} from "./getInternalData.mts"
-import {log} from "@enkore/debug"
+import {log} from "@anio-software/enkore-private.debug"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 
 export async function mergeAndHoistGlobalRuntimeDataRecords(
