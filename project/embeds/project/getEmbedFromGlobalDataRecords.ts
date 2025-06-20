@@ -1,7 +1,7 @@
 import type {EnkoreJSRuntimeEmbeddedFile} from "@anio-software/enkore-private.spec"
-import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
-import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.mts"
-import {getGlobalRuntimeDataRecords} from "./getGlobalRuntimeDataRecords.mts"
+import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
+import {translateEmbedPathToGlobalEmbedID} from "./translateEmbedPathToGlobalEmbedID.ts"
+import {getGlobalRuntimeDataRecords} from "./getGlobalRuntimeDataRecords.ts"
 
 export function getEmbedFromGlobalDataRecords(
 	context: ProjectAPIContext,

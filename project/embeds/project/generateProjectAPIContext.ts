@@ -8,9 +8,9 @@ import {readFileJSON} from "@aniojs/node-fs"
 import path from "node:path"
 import {importAPI, createEntity} from "@anio-software/enkore-private.spec"
 import {createNodeAPIOptions} from "@anio-software/enkore-private.spec/factory"
-import {_generateEmbedFileMap} from "./_generateEmbedFileMap.mts"
+import {_generateEmbedFileMap} from "./_generateEmbedFileMap.ts"
 import crypto from "node:crypto"
-import type {ProjectAPIContext} from "./ProjectAPIContext.d.mts"
+import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
 
 function sha256Sync(str: string): string {
 	const hash = crypto.createHash("sha256")

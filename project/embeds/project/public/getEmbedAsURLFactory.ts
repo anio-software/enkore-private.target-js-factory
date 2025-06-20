@@ -1,5 +1,5 @@
-import type {ProjectAPI} from "../ProjectAPI.mts"
-import type {ProjectAPIContext} from "../ProjectAPIContext.mts"
+import type {ProjectAPI} from "../ProjectAPI.ts"
+import type {ProjectAPIContext} from "../ProjectAPIContext.ts"
 
 const impl: ProjectAPI["getEmbedAsURL"] = function(
 	this: ProjectAPIContext, embedPath: string

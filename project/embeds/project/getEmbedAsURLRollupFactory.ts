@@ -1,6 +1,6 @@
-import type {ProjectAPI} from "./ProjectAPI.mts"
-import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
-import {getEmbedResourceURLFromGlobalDataRecords} from "./getEmbedResourceURLFromGlobalDataRecords.mts"
+import type {ProjectAPI} from "./ProjectAPI.ts"
+import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
+import {getEmbedResourceURLFromGlobalDataRecords} from "./getEmbedResourceURLFromGlobalDataRecords.ts"
 
 const impl: ProjectAPI["getEmbedAsURL"] = function(
 	this: ProjectAPIContext, embedPath: string

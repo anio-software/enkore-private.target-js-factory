@@ -1,11 +1,11 @@
-import type {ProjectAPIContext} from "./ProjectAPIContext.d.mts"
-import type {ProjectAPI} from "./ProjectAPI.mts"
-import {getEmbedAsStringFactory} from "./public/getEmbedAsStringFactory.mts"
-import {getEmbedAsUint8ArrayFactory} from "./public/getEmbedAsUint8ArrayFactory.mts"
-import {getEnkoreConfigurationFactory} from "./public/getEnkoreConfigurationFactory.mts"
-import {getProjectIdFactory} from "./public/getProjectIdFactory.mts"
-import {getProjectFactory} from "./public/getProjectFactory.mts"
-import {getProjectPackageJSONFactory} from "./public/getProjectPackageJSONFactory.mts"
+import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
+import type {ProjectAPI} from "./ProjectAPI.ts"
+import {getEmbedAsStringFactory} from "./public/getEmbedAsStringFactory.ts"
+import {getEmbedAsUint8ArrayFactory} from "./public/getEmbedAsUint8ArrayFactory.ts"
+import {getEnkoreConfigurationFactory} from "./public/getEnkoreConfigurationFactory.ts"
+import {getProjectIdFactory} from "./public/getProjectIdFactory.ts"
+import {getProjectFactory} from "./public/getProjectFactory.ts"
+import {getProjectPackageJSONFactory} from "./public/getProjectPackageJSONFactory.ts"
 
 export async function _generateProjectAPIFromContextPartial(
 	context: ProjectAPIContext

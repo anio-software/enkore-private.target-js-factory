@@ -1,7 +1,7 @@
-import type {ProjectAPIContext} from "./ProjectAPIContext.d.mts"
-import type {ProjectAPI} from "./ProjectAPI.mts"
-import {_generateProjectAPIFromContextPartial} from "./_generateProjectAPIFromContextPartial.mts"
-import {getEmbedAsURLRollupFactory} from "./getEmbedAsURLRollupFactory.mts"
+import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
+import type {ProjectAPI} from "./ProjectAPI.ts"
+import {_generateProjectAPIFromContextPartial} from "./_generateProjectAPIFromContextPartial.ts"
+import {getEmbedAsURLRollupFactory} from "./getEmbedAsURLRollupFactory.ts"
 
 export async function generateProjectAPIFromContextRollup(
 	context: ProjectAPIContext

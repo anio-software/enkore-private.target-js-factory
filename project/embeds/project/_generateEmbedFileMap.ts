@@ -1,4 +1,4 @@
-import type {ProjectEmbedFile} from "./ProjectAPIContext.mts"
+import type {ProjectEmbedFile} from "./ProjectAPIContext.ts"
 import path from "node:path"
 import fs from "node:fs/promises"
 import {scandir} from "@aniojs/node-fs"

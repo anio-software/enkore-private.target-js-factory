@@ -1,5 +1,5 @@
-import type {ProjectAPIContext} from "./ProjectAPIContext.mts"
-import {getEmbedFromGlobalDataRecords} from "./getEmbedFromGlobalDataRecords.mts"
+import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
+import {getEmbedFromGlobalDataRecords} from "./getEmbedFromGlobalDataRecords.ts"
 
 export function getEmbedData(
 	context: ProjectAPIContext,

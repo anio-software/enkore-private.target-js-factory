@@ -1,4 +1,4 @@
-import type {ProjectAPIContext} from "./ProjectAPIContext.mts";
+import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
 
 export function translateEmbedPathToGlobalEmbedID(
 	context: ProjectAPIContext,
