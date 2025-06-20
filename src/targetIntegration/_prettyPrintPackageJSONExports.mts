@@ -17,7 +17,7 @@ export function _prettyPrintPackageJSONExports(
 
 	const hasPackageJSONExport = "./package.json" in packageJSON.exports
 	const packageExports = _packageJSONExportsToSortedArray(packageJSON.exports)
-	let ret = _getPartialPackageJSONString(packageJSON)
+	let ret = _getPartialPackageJSONString(packageJSON).trimEnd()
 
 	const distExports = packageExports.filter(({path}) => {
 		if (path === "./package.json") return false
