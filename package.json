@@ -1,15 +1,15 @@
 {
   "private": true,
+  "type": "module",
   "name": "@anio-software/enkore-private.target-js-factory",
   "version": "0.0.112",
-  "author": "Anio Software <info@anio.software>",
   "description": "Target 'js' API factory. Formerly known as @fourtune/realm-js.",
-  "license": "MIT",
+  "author": "Anio Software <info@anio.software>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/enkore-org/target-js-factory.git"
   },
-  "type": "module",
+  "license": "MIT",
   "devDependencies": {
     "@anio-software/enkore": "^0.0.74",
     "@anio-software/enkore-private.debug": "^0.0.7",
