@@ -1,5 +1,5 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
-import type {APIContext} from "./APIContext.d.mts"
+import type {APIContext} from "./APIContext.ts"
 
 // todo: externals should be per package, not per module specifier
 export function getExternals(

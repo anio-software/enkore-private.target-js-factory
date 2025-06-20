@@ -1,4 +1,4 @@
-import type {Registry} from "./InternalData.d.mts"
+import type {Registry} from "./InternalData.ts"
 import type {EnkoreTargetJSOptions} from "@anio-software/enkore-private.spec"
 
 function normalizeRegistryURL(url: string) {

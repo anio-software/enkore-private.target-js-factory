@@ -2,9 +2,9 @@ import type {
 	EnkoreSessionAPI
 } from "@anio-software/enkore-private.spec"
 import path from "node:path"
-import type {InternalData} from "./InternalData.d.mts"
-import {getInternalData} from "./getInternalData.mts"
-import {getModuleGuarded} from "./getModuleGuarded.mts"
+import type {InternalData} from "./InternalData.ts"
+import {getInternalData} from "./getInternalData.ts"
+import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
 
 function stripLeadingUnderscores(str: string) {

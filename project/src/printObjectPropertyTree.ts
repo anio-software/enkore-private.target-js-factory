@@ -1,4 +1,4 @@
-import type {ObjectPropertyTree} from "./ObjectPropertyTree.d.mts"
+import type {ObjectPropertyTree} from "./ObjectPropertyTree.ts"
 
 export function printObjectPropertyTree(
 	apiVariable: string,

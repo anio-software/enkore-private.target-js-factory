@@ -4,7 +4,7 @@ import {
 	isEntityOfKind,
 	createEntity
 } from "@anio-software/enkore-private.spec"
-import {getInternalData} from "./getInternalData.mts"
+import {getInternalData} from "./getInternalData.ts"
 import {log} from "@anio-software/enkore-private.debug"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 

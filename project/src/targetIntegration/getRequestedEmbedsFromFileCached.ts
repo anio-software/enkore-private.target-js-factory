@@ -1,9 +1,9 @@
-import type {APIContext} from "./APIContext.mts"
+import type {APIContext} from "./APIContext.ts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {readFileString} from "@aniojs/node-fs"
-import {getInternalData} from "./getInternalData.mts"
-import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
+import {getInternalData} from "./getInternalData.ts"
+import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.ts"
 
 export async function getRequestedEmbedsFromFileCached(
 	apiContext: APIContext,

@@ -4,16 +4,16 @@ import {
 	createEntity
 } from "@anio-software/enkore-private.spec"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
-import type {APIContext} from "./APIContext.d.mts"
-import type {EntryPoint} from "./InternalData.d.mts"
-import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.mts"
-import {getRequestedEmbeds} from "./getRequestedEmbeds.mts"
-import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.mts"
+import type {APIContext} from "./APIContext.ts"
+import type {EntryPoint} from "./InternalData.ts"
+import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
+import {getRequestedEmbeds} from "./getRequestedEmbeds.ts"
+import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
 import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"
 import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
 import {getAsset} from "@fourtune/realm-js/v0/assets"
-import {getInternalData} from "./getInternalData.mts"
-import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
+import {getInternalData} from "./getInternalData.ts"
+import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.ts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 

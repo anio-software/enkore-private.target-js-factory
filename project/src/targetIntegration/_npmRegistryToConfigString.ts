@@ -1,4 +1,4 @@
-import type {Registry} from "./InternalData.d.mts"
+import type {Registry} from "./InternalData.ts"
 import {readFileStringSync} from "@aniojs/node-fs"
 
 type Options = {

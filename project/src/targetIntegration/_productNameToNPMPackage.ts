@@ -1,6 +1,6 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
-import type {NPMPackage} from "./InternalData.d.mts"
-import {getInternalData} from "./getInternalData.mts"
+import type {NPMPackage} from "./InternalData.ts"
+import {getInternalData} from "./getInternalData.ts"
 
 export function _productNameToNPMPackage(
 	session: EnkoreSessionAPI,

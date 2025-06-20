@@ -1,4 +1,4 @@
-import type {EntryPoint} from "./InternalData.d.mts"
+import type {EntryPoint} from "./InternalData.ts"
 
 export function generateEntryPointCode(
 	entryPoint: EntryPoint,

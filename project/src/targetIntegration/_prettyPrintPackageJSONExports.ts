@@ -1,10 +1,10 @@
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import {isObject} from "@anio-software/pkg.is"
-import {_getPartialPackageJSONString} from "./_getPartialPackageJSONString.mts"
+import {_getPartialPackageJSONString} from "./_getPartialPackageJSONString.ts"
 import {
 	_packageJSONExportsToSortedArray,
 	type PackageJSONExport
-} from "./_packageJSONExportsToSortedArray.mts"
+} from "./_packageJSONExportsToSortedArray.ts"
 
 type Entry = PackageJSONExport | "spacer"
 

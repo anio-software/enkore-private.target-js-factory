@@ -1,7 +1,7 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
-import type {InternalData} from "./InternalData.d.mts"
-import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.mts"
+import type {InternalData} from "./InternalData.ts"
+import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.ts"
 
 type EntryPoints = InternalData["entryPoints"]
 

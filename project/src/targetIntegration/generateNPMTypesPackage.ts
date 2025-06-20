@@ -1,12 +1,12 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
-import type {APIContext} from "./APIContext.d.mts"
-import {getInternalData} from "./getInternalData.mts"
-import {getExternals} from "./getExternals.mts"
-import {getOnRollupLogFunction} from "./getOnRollupLogFunction.mts"
-import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.mts"
+import type {APIContext} from "./APIContext.ts"
+import {getInternalData} from "./getInternalData.ts"
+import {getExternals} from "./getExternals.ts"
+import {getOnRollupLogFunction} from "./getOnRollupLogFunction.ts"
+import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.ts"
 import {writeAtomicFile} from "@aniojs/node-fs"
-import {getProductPackageJSON} from "./getProductPackageJSON.mts"
-import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.mts"
+import {getProductPackageJSON} from "./getProductPackageJSON.ts"
+import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
 
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,

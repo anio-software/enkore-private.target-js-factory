@@ -1,6 +1,6 @@
-import type {Registry} from "./InternalData.d.mts"
-import {_npmRegistryToConfigString} from "./_npmRegistryToConfigString.mts"
-import {_executeNPMWithConfig} from "./_executeNPMWithConfig.mts"
+import type {Registry} from "./InternalData.ts"
+import {_npmRegistryToConfigString} from "./_npmRegistryToConfigString.ts"
+import {_executeNPMWithConfig} from "./_executeNPMWithConfig.ts"
 
 export function _getPublishedVersionsOfPackage(
 	registry: Registry,

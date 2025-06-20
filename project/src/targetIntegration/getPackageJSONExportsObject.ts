@@ -1,4 +1,4 @@
-import type {InternalData} from "./InternalData.d.mts"
+import type {InternalData} from "./InternalData.ts"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 
 type PackageJSONExportsObject = NonNullable<NodePackageJSON["exports"]>

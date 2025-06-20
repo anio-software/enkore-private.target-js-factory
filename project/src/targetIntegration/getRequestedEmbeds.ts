@@ -1,12 +1,12 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
-import type {APIContext} from "./APIContext.mts"
-import type {EntryPoint} from "./InternalData.d.mts"
+import type {APIContext} from "./APIContext.ts"
+import type {EntryPoint} from "./InternalData.ts"
 import type {RequestedEmbedsFromCodeReasonWhyUnknown} from "@anio-software/enkore-private.target-js-toolchain_types"
-import {getInternalData} from "./getInternalData.mts"
-import {getModuleGuarded} from "./getModuleGuarded.mts"
+import {getInternalData} from "./getInternalData.ts"
+import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {getProjectAPIMethodNames} from "#~synthetic/user/export/project/getProjectAPIMethodNames.mts"
 import {readFileString} from "@aniojs/node-fs"
-import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
+import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.ts"
 import path from "node:path"
 
 type RequestedEmbeds = {
