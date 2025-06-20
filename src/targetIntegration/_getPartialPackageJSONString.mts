@@ -13,7 +13,10 @@ function indent(str: string): string {
 export function _getPartialPackageJSONString(packageJSON: NodePackageJSON): string {
 	let ret = `{\n`
 
-	const keys = Object.keys(packageJSON)
+	// filter out keys that have an undefined value and the "exports" key
+	const keys = Object.keys(packageJSON).filter(key => {
+		return typeof packageJSON[key] !== "undefined" && key !== "exports"
+	})
 
 	for (let i = 0; i < keys.length; ++i) {
 		const key = keys[i]
