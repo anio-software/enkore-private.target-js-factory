@@ -1,5 +1,5 @@
-import {methodNamesToTree} from "#~src/methodNamesToTree.mts"
-import {printObjectPropertyTree} from "#~src/printObjectPropertyTree.mts"
+import {methodNamesToTree} from "#~src/methodNamesToTree.ts"
+import {printObjectPropertyTree} from "#~src/printObjectPropertyTree.ts"
 
 export function generateAPIExportGlueCode(
 	apiType: string,
