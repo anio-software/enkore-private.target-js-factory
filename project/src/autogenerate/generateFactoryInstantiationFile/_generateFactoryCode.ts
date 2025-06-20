@@ -1,11 +1,11 @@
 import {type EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
-import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.mts"
-import type {Options} from "./Options.mts"
-import type {Variant} from "./Variant.mts"
+import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.ts"
+import type {Options} from "./Options.ts"
+import type {Variant} from "./Variant.ts"
 import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target-js-toolchain_types"
-import {_getImplementation} from "./_getImplementation.mts"
-import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.mts"
-import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.mts"
+import {_getImplementation} from "./_getImplementation.ts"
+import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.ts"
+import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.ts"
 
 function convertPath(path: string) {
 	if (path.startsWith("project/src")) {

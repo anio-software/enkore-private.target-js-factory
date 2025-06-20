@@ -1,10 +1,10 @@
-import type {AutogenerateAPI} from "#~src/autogenerate/AutogenerateAPI.mts"
-import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.mts"
-import type {Variant} from "#~src/autogenerate/generateFactoryInstantiationFile/Variant.mts"
+import type {AutogenerateAPI} from "#~src/autogenerate/AutogenerateAPI.ts"
+import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.ts"
+import type {Variant} from "#~src/autogenerate/generateFactoryInstantiationFile/Variant.ts"
 import {isAsyncSyncExpandableFilePath,} from "@enkore/target-js-utils"
-import {checkOptions} from "#~src/autogenerate/generateFactoryInstantiationFile/checkOptions.mts"
-import {expand} from "#~src/autogenerate/generateFactoryInstantiationFile/expand.mts"
-import {_generateFactoryFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateFactoryFile.mts"
+import {checkOptions} from "#~src/autogenerate/generateFactoryInstantiationFile/checkOptions.ts"
+import {expand} from "#~src/autogenerate/generateFactoryInstantiationFile/expand.ts"
+import {_generateFactoryFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateFactoryFile.ts"
 
 const impl: AutogenerateAPI["generateFactoryFile"] = function(
 	this: AutogenerateAPIContext,

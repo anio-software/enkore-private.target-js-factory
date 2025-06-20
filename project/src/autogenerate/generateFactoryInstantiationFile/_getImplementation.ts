@@ -1,6 +1,6 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target-js-toolchain_types"
-import type {Options} from "./Options.mts"
+import type {Options} from "./Options.ts"
 
 type Dependency = {
 	key: string

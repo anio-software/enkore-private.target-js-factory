@@ -1,7 +1,7 @@
-import type {Options} from "./Options.mts"
+import type {Options} from "./Options.ts"
 import {
 	destinationPathToFunctionName
-} from "./destinationPathToFunctionName.mts"
+} from "./destinationPathToFunctionName.ts"
 
 export function checkOptions(options: Options) {
 	if (!options.source.startsWith("project/")) {
