@@ -1,6 +1,6 @@
 {
   "name": "@anio-software/enkore-private.target-js-factory",
-  "version": "0.0.111",
+  "version": "0.0.112",
   "author": "Anio Software <info@anio.software>",
   "description": "Target 'js' API factory. Formerly known as @fourtune/realm-js.",
   "license": "MIT",
