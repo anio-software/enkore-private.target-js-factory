@@ -19,11 +19,5 @@
     "@aniojs/node-fs": "^0.5.3",
     "@aniojs/random-ident": "^0.1.2",
     "@enkore/target-js-utils": "^0.0.4"
-  },
-  "scripts": {
-    "prepare": "./node_modules/.bin/fourtune ."
-  },
-  "files": [
-    "./dist/"
-  ]
+  }
 }
