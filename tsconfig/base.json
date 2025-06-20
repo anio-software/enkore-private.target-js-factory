@@ -9,7 +9,9 @@
         "verbatimModuleSyntax": true,
         "strict": true,
         "skipLibCheck": false,
-        "types": [],
+        "types": [
+            "@types/node"
+        ],
         "lib": [
             "esnext"
         ],
