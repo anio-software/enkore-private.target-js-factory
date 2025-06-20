@@ -1,5 +1,4 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
-import type {APIContext} from "./APIContext.d.mts"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {InternalData} from "./InternalData.d.mts"
 import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.mts"
