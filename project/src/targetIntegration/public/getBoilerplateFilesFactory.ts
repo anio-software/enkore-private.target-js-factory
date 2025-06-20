@@ -1,7 +1,7 @@
 import type {API} from "#~src/targetIntegration/API.ts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {createEntity} from "@anio-software/enkore-private.spec"
-import {getAsset} from "@fourtune/realm-js/v0/assets"
+import {getEmbedAsString} from "@anio-software/enkore.target-js/project"
 import {targetBoilerplateFileMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import {_getRegistryMap} from "../_getRegistryMap.ts"
 import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.ts"
@@ -29,7 +29,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 		})
 	}
 
-	const tsconfigBase = JSON.parse(getAsset("text://tsconfig/base.json") as string)
+	const tsconfigBase = JSON.parse(getEmbedAsString("text://tsconfig/base.json") as string)
 	const targetOptions = session.target.getOptions("js")
 
 	if (targetOptions.environment.includes("node")) {
@@ -105,11 +105,11 @@ const impl: API["getBoilerplateFiles"] = async function(
 	}
 
 	return [
-		defineFile("tsconfig.json", getAsset("text://tsconfig/tsconfig.json") as string, true),
+		defineFile("tsconfig.json", getEmbedAsString("text://tsconfig/tsconfig.json") as string, true),
 		defineFile("tsconfig/base.json", JSON.stringify(tsconfigBase, null, 4) + "\n", true),
-		defineFile("tsconfig/enkore-config.json", getAsset("text://tsconfig/enkore-config.json") as string, true),
-		defineFile("tsconfig/src.json", getAsset("text://tsconfig/src.json") as string, true),
-		defineFile("tsconfig/embeds.json", getAsset("text://tsconfig/embeds.json") as string, true),
+		defineFile("tsconfig/enkore-config.json", getEmbedAsString("text://tsconfig/enkore-config.json") as string, true),
+		defineFile("tsconfig/src.json", getEmbedAsString("text://tsconfig/src.json") as string, true),
+		defineFile("tsconfig/embeds.json", getEmbedAsString("text://tsconfig/embeds.json") as string, true),
 		defineFile(
 			".npmrc",
 			npmConfig,

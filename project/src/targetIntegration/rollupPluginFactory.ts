@@ -11,7 +11,7 @@ import {getRequestedEmbeds} from "./getRequestedEmbeds.ts"
 import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
 import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
 import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
-import {getAsset} from "@fourtune/realm-js/v0/assets"
+import {getEmbedAsString} from "@anio-software/enkore.target-js/project"
 import {getInternalData} from "./getInternalData.ts"
 import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.ts"
 
@@ -137,7 +137,7 @@ export async function rollupPluginFactory(
 					}
 				)
 			} else if (id === `\x00enkore:generateProjectAPIFromContextRollup`) {
-				return getAsset(
+				return getEmbedAsString(
 					"js-bundle://project/generateProjectAPIFromContextRollup.mts"
 				) as string
 			}
