@@ -7,7 +7,9 @@
         "verbatimModuleSyntax": true,
         "strict": true,
         "skipLibCheck": false,
-        "types": [],
+        "types": [
+            "@types/react-dom"
+        ],
         "lib": ["esnext"],
         "target": "esnext",
         "module": "nodenext",
