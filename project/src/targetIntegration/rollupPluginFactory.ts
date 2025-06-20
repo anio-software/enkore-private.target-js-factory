@@ -138,7 +138,7 @@ export async function rollupPluginFactory(
 				)
 			} else if (id === `\x00enkore:generateProjectAPIFromContextRollup`) {
 				return getEmbedAsString(
-					"js-bundle://project/generateProjectAPIFromContextRollup.mts"
+					"js-bundle://project/generateProjectAPIFromContextRollup.ts"
 				) as string
 			}
 
