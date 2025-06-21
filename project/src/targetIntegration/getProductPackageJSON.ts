@@ -59,7 +59,7 @@ export function getProductPackageJSON(
 	entryPoints: EntryPoints,
 	options: Options
 ): NodePackageJSON {
-	const targetOptions = session.target.getOptions("js")
+	const targetOptions = session.target.getOptions(apiContext.target)
 
 	let newPackageJSON: NodePackageJSON = {
 		name: options.packageName,
