@@ -6,6 +6,11 @@ import {targetBoilerplateFileMarkerUUID} from "@anio-software/enkore-private.spe
 import {_getRegistryMap} from "../_getRegistryMap.ts"
 import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.ts"
 import type {Registry} from "../InternalData.ts"
+import {
+	isNodeTarget,
+	isReactTarget,
+	isWebTarget
+} from "@enkore/target-js-utils"
 
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session
@@ -32,17 +37,11 @@ const impl: API["getBoilerplateFiles"] = async function(
 	const tsconfigBase = JSON.parse(getEmbedAsString("text://tsconfig/base.json") as string)
 	const targetOptions = session.target.getOptions(this.target)
 
-	if (this.target === "js-node"    ||
-	    this.target === "jsx-node"   ||
-	    this.target === "js-hybrid"  ||
-	    this.target === "jsx-hybrid"   ) {
+	if (isNodeTarget(this.target)) {
 		tsconfigBase.compilerOptions.types.push("@types/node")
 	}
 
-	if (this.target === "js-web"     ||
-	    this.target === "jsx-web"    ||
-	    this.target === "js-hybrid"  ||
-	    this.target === "jsx-hybrid"   ) {
+	if (isWebTarget(this.target)) {
 		tsconfigBase.compilerOptions.types.push("@types/web")
 
 		tsconfigBase.compilerOptions.plugins = [{
@@ -50,10 +49,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 		}]
 	}
 
-	if (this.target === "jsx-none"   ||
-	    this.target === "jsx-web"    ||
-	    this.target === "jsx-node"   ||
-	    this.target === "jsx-hybrid"   ) {
+	if (isReactTarget(this.target)) {
 		tsconfigBase.compilerOptions.types.push("@types/react")
 		tsconfigBase.compilerOptions.types.push("@types/react-dom")
 		tsconfigBase.compilerOptions.jsx = "react-jsx"
