@@ -30,7 +30,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 	}
 
 	const tsconfigBase = JSON.parse(getEmbedAsString("text://tsconfig/base.json") as string)
-	const targetOptions = session.target.getOptions("js")
+	const targetOptions = session.target.getOptions(this.target)
 
 	if (targetOptions.environment.includes("node")) {
 		tsconfigBase.compilerOptions.types.push("@types/node")

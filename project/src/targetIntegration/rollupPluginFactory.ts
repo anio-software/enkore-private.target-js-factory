@@ -56,7 +56,7 @@ export async function rollupPluginFactory(
 		name: "enkore-target-js-project-plugin",
 
 		intro() {
-			if (session.target.getOptions("js")._disableRuntimeCodeInjection === true) {
+			if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
 				return ""
 			}
 

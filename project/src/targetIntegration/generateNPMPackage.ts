@@ -78,7 +78,7 @@ async function createDistFiles(
 		}
 
 		async function mergeAndHoist(code: string): Promise<string> {
-			if (session.target.getOptions("js")._disableRuntimeCodeInjection === true) {
+			if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
 				return code
 			}
 

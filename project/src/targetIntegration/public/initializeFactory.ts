@@ -71,7 +71,7 @@ const impl: API["initialize"] = async function(
 		}
 	}
 
-	const targetOptions = session.target.getOptions("js")
+	const targetOptions = session.target.getOptions(this.target)
 	const substitutes = getPackageNameSubstitutes(session.project.packageJSON.name)
 
 	const npmPackages: NPMPackage[] = []

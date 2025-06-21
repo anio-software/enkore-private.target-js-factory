@@ -12,7 +12,7 @@ export function getExternals(
 
 	const externals: Map<string, number> = new Map()
 
-	const targetOptions = session.target.getOptions("js")
+	const targetOptions = session.target.getOptions(apiContext.target)
 
 	if (targetOptions[configKey]) {
 		for (const pkg of targetOptions[configKey]) {
