@@ -111,6 +111,7 @@ export async function generateNPMPackage(
 	await createDistFiles(apiContext, session)
 
 	const packageJSON = getProductPackageJSON(
+		apiContext,
 		session,
 		entryPoints,
 		{

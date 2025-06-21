@@ -37,6 +37,7 @@ export async function generateNPMTypesPackage(
 	}
 
 	const packageJSON = getProductPackageJSON(
+		apiContext,
 		session,
 		entryPoints,
 		{
