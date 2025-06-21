@@ -5,7 +5,7 @@ import {
 import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.ts"
 import type {Options} from "./Options.ts"
 import {destinationPathToFunctionName} from "./destinationPathToFunctionName.ts"
-import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.ts"
+import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import path from "node:path"
 
 export function _generateInstantiationFile(
@@ -27,7 +27,7 @@ export function _generateInstantiationFile(
 			// we assume/know that the factory file is right beside
 			// the instantiation file
 			return `
-import {getProject as enkoreGetProject} from "${baseModuleSpecifier}/project"
+import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"
 import {createContext as enkoreCreateContext} from "@enkore/js-runtime/v0"
 import {${exportName}Factory as factory} from "./${exportName}Factory.mts"
 

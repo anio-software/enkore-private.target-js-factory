@@ -13,7 +13,7 @@ import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodName
 import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js/project"
 import {getInternalData} from "./getInternalData.ts"
-import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.ts"
+import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 
@@ -108,7 +108,7 @@ export async function rollupPluginFactory(
 		},
 
 		resolveId(id) {
-			if (id === `${baseModuleSpecifier}/project`) {
+			if (id === `${getBaseModuleSpecifier(apiContext.target)}/project`) {
 				return `\x00enkore:projectAPI`
 			} else if (id === `enkore:generateProjectAPIFromContextRollup`) {
 				return `\x00enkore:generateProjectAPIFromContextRollup`

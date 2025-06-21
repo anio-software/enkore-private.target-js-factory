@@ -6,7 +6,7 @@ import {getInternalData} from "./getInternalData.ts"
 import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
 import {readFileString} from "@aniojs/node-fs"
-import {baseModuleSpecifier} from "#~src/baseModuleSpecifier.ts"
+import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import path from "node:path"
 
 type RequestedEmbeds = {
@@ -28,7 +28,7 @@ export async function getRequestedEmbeds(
 	const usedEmbeds: Map<string, {requestedByMethods: string[]}> = new Map()
 
 	const enkoreProjectModuleSpecifiers = [
-		`${baseModuleSpecifier}/project`
+		`${getBaseModuleSpecifier(apiContext.target)}/project`
 	]
 
 	const enkoreProjectModuleGetEmbedProperties = getProjectAPIMethodNames().filter(x => {
