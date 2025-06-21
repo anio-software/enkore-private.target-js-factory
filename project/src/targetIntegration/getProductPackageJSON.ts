@@ -1,3 +1,4 @@
+import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {InternalData} from "./InternalData.ts"
@@ -53,6 +54,7 @@ type Options = {
 }
 
 export function getProductPackageJSON(
+	apiContext: APIContext,
 	session: EnkoreSessionAPI,
 	entryPoints: EntryPoints,
 	options: Options
