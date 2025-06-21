@@ -1,14 +1,14 @@
 import type {MyTSProgram, MyTSExport} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
-import type {EnkoreTargetJSOptions} from "@anio-software/enkore-private.spec"
+import type {CommonTargetJSOptions} from "@anio-software/enkore-private.spec"
 
 type ArrayType<T> = T extends any[] ? T : never
 
 export type PublishConfig = Required<
-	ArrayType<NonNullable<EnkoreTargetJSOptions["publish"]>>[number]
+	ArrayType<NonNullable<CommonTargetJSOptions["publish"]>>[number]
 >
 
-export type Registry = NonNullable<EnkoreTargetJSOptions["registry"]>[string]
+export type Registry = NonNullable<CommonTargetJSOptions["registry"]>[string]
 
 export type Export = {
 	name: string

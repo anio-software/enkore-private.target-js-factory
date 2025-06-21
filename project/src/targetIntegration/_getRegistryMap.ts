@@ -1,5 +1,5 @@
 import type {Registry} from "./InternalData.ts"
-import type {EnkoreTargetJSOptions} from "@anio-software/enkore-private.spec"
+import type {CommonTargetJSOptions} from "@anio-software/enkore-private.spec"
 
 function normalizeRegistryURL(url: string) {
 	for (let i = 0; i < url.length; ++i) {
@@ -13,7 +13,7 @@ function normalizeRegistryURL(url: string) {
 	return url
 }
 
-export function _getRegistryMap(targetOptions: EnkoreTargetJSOptions) {
+export function _getRegistryMap(targetOptions: CommonTargetJSOptions) {
 	const registryMap: Map<string, Registry> = new Map()
 
 	if (targetOptions.registry) {
