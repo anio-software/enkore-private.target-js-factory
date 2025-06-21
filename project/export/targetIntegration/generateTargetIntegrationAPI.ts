@@ -1,5 +1,6 @@
 import type {API} from "#~src/targetIntegration/API.ts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
+import type {TargetJSIdentifier} from "#~src/TargetJSIdentifier.ts"
 
 import {getInitialInternalDataFactory} from "#~src/targetIntegration/public/getInitialInternalDataFactory.ts"
 import {getToolchainToInstallFactory} from "#~src/targetIntegration/public/getToolchainToInstallFactory.ts"
@@ -18,8 +19,10 @@ import {preInitializeFactory} from "#~src/targetIntegration/public/hook/preIniti
 import {preLintFactory} from "#~src/targetIntegration/public/hook/preLintFactory.ts"
 import {preCompileFactory} from "#~src/targetIntegration/public/hook/preCompileFactory.ts"
 
-export async function generateTargetIntegrationAPI(): Promise<API> {
-	const apiContext: APIContext = {}
+export async function generateTargetIntegrationAPI(target: TargetJSIdentifier): Promise<API> {
+	const apiContext: APIContext = {
+		target
+	}
 
 	return {
 		apiID: "EnkoreTargetIntegrationAPI",
