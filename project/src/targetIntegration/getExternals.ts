@@ -30,7 +30,17 @@ export function getExternals(
 		}
 	}
 
-	const bundleReact = targetOptions.bundleJSXRuntimePackages === true
+	const bundleReact: boolean = (() => {
+		if (apiContext.target === "jsx-web") {
+			return true
+		} else if (apiContext.target === "jsx-node") {
+			return true
+		} else if (apiContext.target === "jsx-hybrid") {
+			return true
+		}
+
+		return false
+	})()
 
 	if (!bundleReact) {
 		externals.set(`react`, 1)
