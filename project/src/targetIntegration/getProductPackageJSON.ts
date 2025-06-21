@@ -74,7 +74,21 @@ export function getProductPackageJSON(
 		files: ["./dist", "./_source"]
 	}
 
-	if (targetOptions.environment.includes("node")) {
+	const targetsNode: boolean = (() => {
+		if (apiContext.target === "js-node") {
+			return true
+		} else if (apiContext.target === "js-hybrid") {
+			return true
+		} else if (apiContext.target === "jsx-node") {
+			return true
+		} else if (apiContext.target === "jsx-hybrid") {
+			return true
+		}
+
+		return false
+	})()
+
+	if (targetsNode) {
 		// todo: add @types/node peer dep?
 
 		newPackageJSON["engines"] = {
