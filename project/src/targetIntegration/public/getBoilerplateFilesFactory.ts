@@ -32,13 +32,31 @@ const impl: API["getBoilerplateFiles"] = async function(
 	const tsconfigBase = JSON.parse(getEmbedAsString("text://tsconfig/base.json") as string)
 	const targetOptions = session.target.getOptions(this.target)
 
-	if (targetOptions.environment.includes("node")) {
+	if (this.target === "js-node"    ||
+	    this.target === "jsx-node"   ||
+	    this.target === "js-hybrid"  ||
+	    this.target === "jsx-hybrid"   ) {
 		tsconfigBase.compilerOptions.types.push("@types/node")
 	}
 
-	if (targetOptions.environment.includes("web")) {
+	if (this.target === "js-web"     ||
+	    this.target === "jsx-web"    ||
+	    this.target === "js-hybrid"  ||
+	    this.target === "jsx-hybrid"   ) {
 		tsconfigBase.compilerOptions.types.push("@types/web")
+
+		tsconfigBase.compilerOptions.plugins = [{
+			name: "css-modules-ts-plugin"
+		}]
+	}
+
+	if (this.target === "jsx-none"   ||
+	    this.target === "jsx-web"    ||
+	    this.target === "jsx-node"   ||
+	    this.target === "jsx-hybrid"   ) {
 		tsconfigBase.compilerOptions.types.push("@types/react")
+		tsconfigBase.compilerOptions.types.push("@types/react-dom")
+		tsconfigBase.compilerOptions.jsx = "react-jsx"
 	}
 
 	const registryMap = _getRegistryMap(targetOptions)
