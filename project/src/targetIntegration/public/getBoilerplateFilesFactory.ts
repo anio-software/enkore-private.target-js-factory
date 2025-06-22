@@ -10,7 +10,7 @@ import {
 	isNodeTarget,
 	isReactTarget,
 	isWebTarget
-} from "@enkore/target-js-utils"
+} from "@anio-software/enkore-private.target-js-utils"
 
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session

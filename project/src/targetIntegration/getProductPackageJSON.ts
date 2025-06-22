@@ -3,7 +3,7 @@ import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {InternalData} from "./InternalData.ts"
 import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.ts"
-import {isNodeTarget} from "@enkore/target-js-utils"
+import {isNodeTarget} from "@anio-software/enkore-private.target-js-utils"
 import {isObject} from "@anio-software/pkg.is"
 import {
 	getRequiredPeerDependencyPackages

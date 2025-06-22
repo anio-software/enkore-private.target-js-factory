@@ -7,7 +7,7 @@ import {
 	isAsyncSyncExpandableFilePath,
 	expandAsyncSyncVariantFilePath,
 	expandAsyncSyncVariantSourceFile
-} from "@enkore/target-js-utils"
+} from "@anio-software/enkore-private.target-js-utils"
 
 const impl: API["hook"]["preInitialize"] = async function(
 	this: APIContext, session

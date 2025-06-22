@@ -5,7 +5,7 @@ import type {Generator} from "./Generator.ts"
 import {
 	isAsyncSyncExpandableFilePath,
 	expandAsyncSyncVariantFilePath
-} from "@enkore/target-js-utils"
+} from "@anio-software/enkore-private.target-js-utils"
 
 export function expand(
 	apiContext: AutogenerateAPIContext,
