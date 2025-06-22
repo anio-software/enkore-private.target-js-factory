@@ -85,13 +85,15 @@ export function getProductPackageJSON(
 		}
 	}
 
+	const requiredPeerDependencies = getRequiredPeerDependencyPackageVersionRanges(
+		apiContext.target
+	)
+
 	if (!isObject(newPackageJSON.peerDependencies)) {
-		newPackageJSON.peerDependencies = getRequiredPeerDependencyPackageVersionRanges(
-			apiContext.target
-		)
+		newPackageJSON.peerDependencies = requiredPeerDependencies
 	} else {
 		newPackageJSON.peerDependencies = {
-			...getRequiredPeerDependencyPackageVersionRanges(apiContext.target),
+			...requiredPeerDependencies,
 			...newPackageJSON.peerDependencies
 		}
 	}
