@@ -33,8 +33,6 @@ export function getExternals(
 	const bundleReact: boolean = (() => {
 		if (apiContext.target === "jsx-web") {
 			return true
-		} else if (apiContext.target === "jsx-node") {
-			return true
 		} else if (apiContext.target === "jsx-hybrid") {
 			return true
 		}
