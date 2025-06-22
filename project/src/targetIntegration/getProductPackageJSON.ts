@@ -18,6 +18,8 @@ function peerDependenciesMapToObject(
 	let ret: Record<any, any> = Object.create(null)
 
 	for (const [key, value] of map.entries()) {
+		if (value.forDevelopmentOnly) continue
+
 		ret[key] = value.packageVersionRange
 	}
 
