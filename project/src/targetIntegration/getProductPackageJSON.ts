@@ -8,14 +8,17 @@ import {isObject} from "@anio-software/pkg.is"
 import {
 	getRequiredPeerDependencyPackages
 } from "#~export/getRequiredPeerDependencyPackages.ts"
+import type {PeerDependency} from "#~export/PeerDependency.ts"
 
 type EntryPoints = InternalData["entryPoints"]
 
-function mapToObject(map: Map<any, any>): Record<any, any> {
+function peerDependenciesMapToObject(
+	map: Map<string, PeerDependency>
+): Record<string, string> {
 	let ret: Record<any, any> = Object.create(null)
 
 	for (const [key, value] of map.entries()) {
-		ret[key] = value
+		ret[key] = value.packageVersionRange
 	}
 
 	return ret
@@ -95,9 +98,9 @@ export function getProductPackageJSON(
 		}
 	}
 
-	const requiredPeerDependencies = mapToObject(getRequiredPeerDependencyPackages(
-		apiContext.target
-	))
+	const requiredPeerDependencies = peerDependenciesMapToObject(
+		getRequiredPeerDependencyPackages(apiContext.target)
+	)
 
 	if (!isObject(newPackageJSON.peerDependencies)) {
 		newPackageJSON.peerDependencies = requiredPeerDependencies
