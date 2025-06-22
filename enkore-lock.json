@@ -12,6 +12,9 @@
         },
         "project/export/autogenerate/getAutogenerateAPIMethodNames.ts": {
             "hash": "b3a868ace1292fd07b7a23579b4eea5ca27221f2a986125876ae5f7739375b4d"
+        },
+        "project/export/getUsedEnkoreSpecPackageVersion.ts": {
+            "hash": "56cd876b30254564ec781410f4d797c5c6878917d5d5775eaefb3f6f799ded05"
         }
     },
     "toolchain": [

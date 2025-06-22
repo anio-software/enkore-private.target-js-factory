@@ -3,3 +3,4 @@
 /export/targetIntegration/getTargetIntegrationAPIMethodNames.ts
 /export/project/getProjectAPIMethodNames.ts
 /export/autogenerate/getAutogenerateAPIMethodNames.ts
+/export/getUsedEnkoreSpecPackageVersion.ts
