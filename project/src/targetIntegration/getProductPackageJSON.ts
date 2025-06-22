@@ -3,6 +3,7 @@ import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {InternalData} from "./InternalData.ts"
 import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.ts"
+import {isNodeTarget} from "@enkore/target-js-utils"
 
 type EntryPoints = InternalData["entryPoints"]
 
@@ -74,21 +75,7 @@ export function getProductPackageJSON(
 		files: ["./dist", "./_source"]
 	}
 
-	const targetsNode: boolean = (() => {
-		if (apiContext.target === "js-node") {
-			return true
-		} else if (apiContext.target === "js-hybrid") {
-			return true
-		} else if (apiContext.target === "jsx-node") {
-			return true
-		} else if (apiContext.target === "jsx-hybrid") {
-			return true
-		}
-
-		return false
-	})()
-
-	if (targetsNode) {
+	if (isNodeTarget(apiContext.target)) {
 		// todo: add @types/node peer dep?
 
 		newPackageJSON["engines"] = {
