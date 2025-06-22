@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/enkore-org/target-js-factory.git"
+    "url": "git+https://github.com/anio-software/enkore-private.target-js-factory.git"
   },
   "type": "module",
   "devDependencies": {
