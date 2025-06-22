@@ -1,23 +1,53 @@
 import type {TargetIdentifier} from "@anio-software/enkore-private.spec/primitives"
-import {isWebTarget, isReactTarget} from "@enkore/target-js-utils"
+import type {PeerDependency} from "./PeerDependency.ts"
+import {isWebTarget, isReactTarget, isNodeTarget} from "@enkore/target-js-utils"
+
+const packageVersionRanges: Record<string, string> = {
+	"@types/web": ">=0.0.235",
+	"@types/node": ">=22.7.x",
+
+	"@types/react": ">=19.1.x",
+	"@types/react-dom": ">=19.1.x",
+	"react": ">=19.1.x",
+	"react-dom": ">=19.1.x",
+
+	"css-modules-ts-plugin": ">=0.0.8"
+}
 
 export function getRequiredPeerDependencyPackages(
 	targetIdentifier: TargetIdentifier
-): string[] {
-	const packages: string[] = ["@types/node"]
+): Map<string, PeerDependency> {
+	const dependencies: Map<string, PeerDependency> = new Map()
+
+	//
+	// @types/node is always needed for development purposes (enkore.config.mts)
+	//
+	addDependency("@types/node", true)
 
 	if (isWebTarget(targetIdentifier)) {
-		packages.push("@types/web")
-		packages.push("css-modules-ts-plugin")
+		addDependency("@types/web", true)
+		addDependency("css-modules-ts-plugin", true)
 	}
 
 	if (isReactTarget(targetIdentifier)) {
-		packages.push("@types/react")
-		packages.push("@types/react-dom")
+		addDependency("@types/react", true)
+		addDependency("@types/react-dom", true)
 
-		packages.push("react")
-		packages.push("react-dom")
+		addDependency("react", false)
+		addDependency("react-dom", false)
 	}
 
-	return packages
+	function addDependency(packageName: string, devOnly: boolean) {
+		if (!(packageName in packageVersionRanges)) {
+			throw new Error(`Unknown package '${packageName}'.`)
+		}
+
+		dependencies.set(packageName, {
+			packageName,
+			packageVersionRange: packageVersionRanges[packageName],
+			forDevelopmentOnly: devOnly === true
+		})
+	}
+
+	return dependencies
 }
