@@ -6,10 +6,20 @@ import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.ts"
 import {isNodeTarget} from "@enkore/target-js-utils"
 import {isObject} from "@anio-software/pkg.is"
 import {
-	getRequiredPeerDependencyPackageVersionRanges
-} from "#~export/getRequiredPeerDependencyPackageVersionRanges.ts"
+	getRequiredPeerDependencyPackages
+} from "#~export/getRequiredPeerDependencyPackages.ts"
 
 type EntryPoints = InternalData["entryPoints"]
+
+function mapToObject(map: Map<any, any>): Record<any, any> {
+	let ret: Record<any, any> = Object.create(null)
+
+	for (const [key, value] of map.entries()) {
+		ret[key] = value
+	}
+
+	return ret
+}
 
 function exactDependencies(
 	dependencies: Record<string, string>|undefined
@@ -85,9 +95,9 @@ export function getProductPackageJSON(
 		}
 	}
 
-	const requiredPeerDependencies = getRequiredPeerDependencyPackageVersionRanges(
+	const requiredPeerDependencies = mapToObject(getRequiredPeerDependencyPackages(
 		apiContext.target
-	)
+	))
 
 	if (!isObject(newPackageJSON.peerDependencies)) {
 		newPackageJSON.peerDependencies = requiredPeerDependencies
