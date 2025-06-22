@@ -4,6 +4,10 @@ import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitive
 import type {InternalData} from "./InternalData.ts"
 import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.ts"
 import {isNodeTarget} from "@enkore/target-js-utils"
+import {isObject} from "@anio-software/pkg.is"
+import {
+	getRequiredPeerDependencyPackageVersionRanges
+} from "#~export/getRequiredPeerDependencyPackageVersionRanges.ts"
 
 type EntryPoints = InternalData["entryPoints"]
 
@@ -76,10 +80,19 @@ export function getProductPackageJSON(
 	}
 
 	if (isNodeTarget(apiContext.target)) {
-		// todo: add @types/node peer dep?
-
 		newPackageJSON["engines"] = {
 			"node": ">=23.6.x"
+		}
+	}
+
+	if (!isObject(newPackageJSON.peerDependencies)) {
+		newPackageJSON.peerDependencies = getRequiredPeerDependencyPackageVersionRanges(
+			apiContext.target
+		)
+	} else {
+		newPackageJSON.peerDependencies = {
+			...getRequiredPeerDependencyPackageVersionRanges(apiContext.target),
+			...newPackageJSON.peerDependencies
 		}
 	}
 
