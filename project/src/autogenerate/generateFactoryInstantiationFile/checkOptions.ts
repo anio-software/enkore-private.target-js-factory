@@ -13,6 +13,6 @@ export function checkOptions(options: Options) {
 	const exportName = destinationPathToFunctionName(options.destination)
 
 	if (!exportName.endsWith("Factory")) {
-		throw new Error(`destination must end with 'Factory.mts' or 'Factory.as.mts'.`)
+		throw new Error(`destination must end with 'Factory.ts' or 'Factory.as.ts'.`)
 	}
 }
