@@ -46,7 +46,7 @@ export function _generateFactoryCode(
 	code += `import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
-	code += generateNeededTypeDeclarations(session, implementation)
+	code += generateNeededTypeDeclarations(apiContext, session, implementation)
 	code += `// ^^^--- types needed for implementation\n`
 	code += `\n`
 
