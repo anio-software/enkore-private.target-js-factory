@@ -88,8 +88,8 @@ export function _getImplementation(
 		throw new Error(`implementation must take at least one parameter.`)
 	}
 
-	if (implementation.parameters[0].type !== "EnkoreJSRuntimeContext") {
-		throw new Error(`first parameter must be of literal type 'EnkoreJSRuntimeContext'.`)
+	if (implementation.parameters[0].type !== "EnkoreJSRuntimeContextOptions") {
+		throw new Error(`first parameter must be of literal type 'EnkoreJSRuntimeContextOptions'.`)
 	}
 
 	// todo: cross check overloads?
