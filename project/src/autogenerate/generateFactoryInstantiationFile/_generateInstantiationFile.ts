@@ -29,11 +29,13 @@ export function _generateInstantiationFile(
 			// the instantiation file
 			return `
 import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"
-import {createContext as enkoreCreateContext} from "${getRuntimeImportSpecifier(apiContext)}"
+import {defineContextOptions as enkoreDefineContextOptions} from "${getRuntimeImportSpecifier(apiContext)}"
 import {${exportName}Factory as factory} from "./${exportName}Factory.ts"
 
 export const ${exportName} = factory(
-	enkoreCreateContext(enkoreGetProject(), undefined)
+	enkoreDefineContextOptions({
+		project: enkoreGetProject()
+	})
 )
 `.slice(1)
 		}
