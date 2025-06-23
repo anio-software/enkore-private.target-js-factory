@@ -42,7 +42,7 @@ export function _generateFactoryCode(
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
 	code += `import {\n`
-	code += `\ttype EnkoreJSRuntimeContext\n`
+	code += `\ttype EnkoreJSRuntimeContextOptions\n`
 	code += `} from "${getRuntimeImportSpecifier(apiContext)}"\n`
 	code += `import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
 	code += `\n`
@@ -72,7 +72,7 @@ export function _generateFactoryCode(
 
 	code += `\n`
 	code += `export function ${exportName}Factory(\n`
-	code += `\tcontext: EnkoreJSRuntimeContext\n`
+	code += `\tcontextOptions: EnkoreJSRuntimeContextOptions\n`
 	code += `): typeof __enkoreUserFunction {\n`
 
 	if (hasDependencies) {
@@ -96,26 +96,26 @@ export function _generateFactoryCode(
 	}
 
 	code += `\n`
-	code += `\tconst localContext: EnkoreJSRuntimeContext = {...context}\n`
+	code += `\tconst localContextOptions: EnkoreJSRuntimeContextOptions = {...contextOptions}\n`
 	code += `\n`
 
-	code += `\tif (localContext.entityMajorVersion === 0) {\n`
+	code += `\tif (localContextOptions.entityMajorVersion === 0) {\n`
 	//code += `\tif (localContext.entityMajorVersion === 0\n`
 	//code += `\t    localContext.entityMajorVersion === 1) {\n`
 	code += `\t\tconst currentPackageJSON = enkoreGetProject().packageJSON;\n`
-	code += `\t\tconst originatingPackage: typeof context.originatingPackage = {\n`
+	code += `\t\tconst originatingPackage = {\n`
 	code += `\t\t\tname: currentPackageJSON.name,\n`
 	code += `\t\t\tversion: currentPackageJSON.version,\n`
 	code += `\t\t\tauthor: currentPackageJSON.author,\n`
 	code += `\t\t\tlicense: currentPackageJSON.license\n`
 	code += `\t\t}\n`
-	code += `\t\tlocalContext.originatingPackage = originatingPackage;\n`
+	code += `\t\tlocalContextOptions.__internalDoNotUse = {originatingPackage};\n`
 	code += `\t}\n`
 	code += `\n`
 
 	code += `\tconst fn: any = ${asyncStr("async ")}function ${exportName}(...args: any[]) {\n`
 	code += `\t\t// @ts-ignore:next-line\n`
-	code += `\t\treturn ${asyncStr("await ")}${implementation.name}(localContext, ${hasDependencies ? "dependencies, " : ""}...args);\n`
+	code += `\t\treturn ${asyncStr("await ")}${implementation.name}(localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
 	code += `\t}\n`
 
 	code += `\n`
