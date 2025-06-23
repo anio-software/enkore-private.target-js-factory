@@ -1,7 +1,7 @@
 import type {API} from "#~src/targetIntegration/API.ts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {createEntity} from "@anio-software/enkore-private.spec"
-import {getEmbedAsString} from "@anio-software/enkore.target-js/project"
+import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {targetBoilerplateFileMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import {_getRegistryMap} from "../_getRegistryMap.ts"
 import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.ts"

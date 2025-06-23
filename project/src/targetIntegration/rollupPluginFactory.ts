@@ -11,7 +11,7 @@ import {getRequestedEmbeds} from "./getRequestedEmbeds.ts"
 import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
 import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
 import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
-import {getEmbedAsString} from "@anio-software/enkore.target-js/project"
+import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {getInternalData} from "./getInternalData.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 
