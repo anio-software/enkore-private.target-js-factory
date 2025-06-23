@@ -11,7 +11,9 @@ const packageVersionRanges: Record<string, string> = {
 	"react": ">=19.1.x",
 	"react-dom": ">=19.1.x",
 
-	"css-modules-ts-plugin": ">=0.0.8"
+	"css-modules-ts-plugin": ">=0.0.8",
+
+	"@anio-software/enkore.js-runtime": ">=0.0.3"
 }
 
 export function getRequiredPeerDependencyPackages(
@@ -36,6 +38,8 @@ export function getRequiredPeerDependencyPackages(
 		addDependency("react", false)
 		addDependency("react-dom", false)
 	}
+
+	addDependency("@anio-software/enkore.js-runtime", false)
 
 	function addDependency(packageName: string, devOnly: boolean) {
 		if (!(packageName in packageVersionRanges)) {
