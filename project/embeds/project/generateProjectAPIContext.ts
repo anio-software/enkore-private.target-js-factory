@@ -37,11 +37,11 @@ export async function generateProjectAPIContext(
 	//
 	if (invokeEnkore) {
 		const enkorePath = resolveImportSpecifierFromProjectRoot(
-			projectRoot, "enkore"
+			projectRoot, "@anio-software/enkore"
 		)
 
 		if (!enkorePath) {
-			throw new Error(`Unable to resolve "enkore" from the project root.`)
+			throw new Error(`Unable to resolve "@anio-software/enkore" from the project root.`)
 		}
 
 		const {enkore} = await importAPI(enkorePath, "EnkoreNodeAPI", 0)
