@@ -3,8 +3,10 @@ import type {
 	MyTSFunctionDeclaration,
 	MyTSTopLevelTypeDescriptor
 } from "@anio-software/enkore-private.target-js-toolchain_types"
+import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.ts"
 
 export function generateNeededTypeDeclarations(
+	apiContext: AutogenerateAPIContext,
 	session: EnkoreSessionAPI,
 	implementation: MyTSFunctionDeclaration
 ): string {
