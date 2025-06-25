@@ -81,7 +81,7 @@ export function _generateFactoryCode(
 			let tmp = `{\n`
 
 			for (const [i, dependency] of dependencies.entries()) {
-				tmp += `\t\t${dependency.key}: __enkoreDep${i}(context),\n`
+				tmp += `\t\t${dependency.key}: __enkoreDep${i}(contextOptions),\n`
 			}
 
 			tmp = tmp.slice(0, -2)
