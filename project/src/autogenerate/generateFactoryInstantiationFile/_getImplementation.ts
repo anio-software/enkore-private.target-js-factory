@@ -24,6 +24,9 @@ export function _getImplementation(
 
 	// we've established that options.source **must** start with project/
 	// see checkOptions.ts
+
+	// we need to use the pre-processed version of the input source file
+	// this is why "generateAfterPreprocessing" is set to 'true'
 	const buildPath = `build/${options.source.slice("project/".length)}`
 
 	const {program} = toolchain.tsCreateProgram(
