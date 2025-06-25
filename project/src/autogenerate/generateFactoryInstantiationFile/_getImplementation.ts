@@ -26,7 +26,9 @@ export function _getImplementation(
 	// see checkOptions.ts
 
 	// we need to use the pre-processed version of the input source file
-	// this is why "generateAfterPreprocessing" is set to 'true'
+	// this is because tsCreateProgram() isn't configured to resolve
+	// the import aliases #~src, #~export etc.
+	// this is also why "generateAfterPreprocessing" is set to 'true'
 	const buildPath = `build/${options.source.slice("project/".length)}`
 
 	const {program} = toolchain.tsCreateProgram(
