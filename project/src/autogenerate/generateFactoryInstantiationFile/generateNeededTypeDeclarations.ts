@@ -4,7 +4,6 @@ import type {
 	MyTSTopLevelTypeDescriptor
 } from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.ts"
-import {getRuntimeImportSpecifier} from "#~src/autogenerate/getRuntimeImportSpecifier.ts"
 
 export function generateNeededTypeDeclarations(
 	apiContext: AutogenerateAPIContext,
@@ -28,12 +27,6 @@ export function generateNeededTypeDeclarations(
 	for (const type of typesNeeded) {
 		if (type.name === "node()") continue
 		if (typesPicked.has(type.name)) continue
-
-		if (type.source === "import") {
-			if (type.importDeclaration.moduleSpecifier === getRuntimeImportSpecifier(apiContext)) {
-				continue
-			}
-		}
 
 		code += type.declaration.trimEnd()
 		code += `\n`

@@ -41,9 +41,6 @@ export function _generateFactoryCode(
 
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
-	code += `import {\n`
-	code += `\ttype EnkoreJSRuntimeContextOptions\n`
-	code += `} from "${getRuntimeImportSpecifier(apiContext)}"\n`
 	code += `import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
