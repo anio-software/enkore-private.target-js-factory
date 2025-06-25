@@ -61,7 +61,10 @@ export async function getRequestedEmbeds(
 		})
 
 		if (jsObjectFiles.length !== 1) {
-			// todo: emit warning / error
+			session.enkore.emitMessage(
+				"error", `found more than one object file for path '${filePath}'`
+			)
+
 			continue
 		}
 
