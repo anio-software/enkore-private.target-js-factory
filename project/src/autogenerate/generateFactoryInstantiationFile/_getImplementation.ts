@@ -22,15 +22,19 @@ export function _getImplementation(
 	const toolchain = session.target._getToolchain("js")
 	const dependencies: Dependency[] = []
 
+	// we've established that options.source **must** start with project/
+	// see checkOptions.ts
+	const buildPath = `build/${options.source.slice("project/".length)}`
+
 	const {program} = toolchain.tsCreateProgram(
 		session.project.root, [
-			options.source
+			buildPath
 		], toolchain.tsReadTSConfigFile(
 			session.project.root, "tsconfig/base.json"
 		).compilerOptions
 	)
 
-	const mod = program.getModule(options.source)!
+	const mod = program.getModule(buildPath)!
 
 	if (!mod.moduleExports.has(implementationFunctionName)) {
 		throw new Error(
