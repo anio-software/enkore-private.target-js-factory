@@ -77,7 +77,7 @@ export function _getImplementation(
 			})()
 
 			if (!originModule) continue
-			if (!originModule.moduleImports.get(member.expression)) continue
+			if (!originModule.moduleImports.has(member.expression)) continue
 
 			const importDecl = originModule.moduleImports.get(member.expression)!
 
