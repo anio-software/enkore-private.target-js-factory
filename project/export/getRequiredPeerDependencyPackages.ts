@@ -39,7 +39,7 @@ export function getRequiredPeerDependencyPackages(
 		addDependency("react-dom", false)
 	}
 
-	addDependency("@anio-software/enkore.js-runtime", false)
+	addDependency("@anio-software/enkore.js-runtime", true)
 
 	function addDependency(packageName: string, devOnly: boolean) {
 		if (!(packageName in packageVersionRanges)) {
