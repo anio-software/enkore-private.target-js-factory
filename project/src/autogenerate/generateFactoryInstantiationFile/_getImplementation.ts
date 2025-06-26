@@ -63,9 +63,22 @@ export function _getImplementation(
 		)
 
 		for (const member of members) {
-			if (!mod.moduleImports.has(member.expression)) continue
+			// todo: add log statements
+			if (!member.origin) continue
+			if (!member.origin.startsWith(`${session.project.root}/`)) continue
 
-			const importDecl = mod.moduleImports.get(member.expression)!
+			const relativeOrigin = member.origin.slice(`${session.project.root}/`.length)
+			const originModule = (() => {
+				if (relativeOrigin === buildPath) {
+					return mod
+				}
+
+				return getMyTSModuleFromFilePath(session, relativeOrigin)
+			})()
+
+			if (!originModule) continue
+
+			const importDecl = originModule.moduleImports.get(member.expression)!
 
 			if (importDecl.kind !== "named") continue
 
