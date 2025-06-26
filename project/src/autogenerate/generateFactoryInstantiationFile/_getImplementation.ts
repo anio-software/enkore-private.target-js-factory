@@ -14,6 +14,23 @@ type Ret = {
 	dependencies: Dependency[]
 }
 
+function getMyTSModuleFromFilePath(
+	session: EnkoreSessionAPI,
+	filePath: string
+) {
+	const toolchain = session.target._getToolchain("js")
+
+	const {program} = toolchain.tsCreateProgram(
+		session.project.root, [
+			filePath
+		], toolchain.tsReadTSConfigFile(
+			session.project.root, "tsconfig/base.json"
+		).compilerOptions
+	)
+
+	return program.getModule(filePath)
+}
+
 export function _getImplementation(
 	session: EnkoreSessionAPI,
 	options: Options,
@@ -30,16 +47,7 @@ export function _getImplementation(
 	// the import aliases #~src, #~export etc.
 	// this is also why "generateAfterPreprocessing" is set to 'true'
 	const buildPath = `build/${options.source.slice("project/".length)}`
-
-	const {program} = toolchain.tsCreateProgram(
-		session.project.root, [
-			buildPath
-		], toolchain.tsReadTSConfigFile(
-			session.project.root, "tsconfig/base.json"
-		).compilerOptions
-	)
-
-	const mod = program.getModule(buildPath)!
+	const mod = getMyTSModuleFromFilePath(session, buildPath)!
 
 	if (!mod.moduleExports.has(implementationFunctionName)) {
 		throw new Error(
