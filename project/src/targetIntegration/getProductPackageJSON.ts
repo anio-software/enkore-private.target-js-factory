@@ -92,7 +92,7 @@ export function getProductPackageJSON(
 		peerDependencies: session.project.packageJSON.peerDependencies,
 		dependencies: session.project.packageJSON.dependencies,
 
-		files: ["./dist", "./_source"]
+		files: ["./dist", "./_source", "./bin"]
 	}
 
 	if (isNodeTarget(apiContext.target)) {
