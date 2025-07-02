@@ -21,6 +21,10 @@ async function _copyNPMPackageProduct(
 		await copy(path.join(base, "_source"), "./_source")
 	}
 
+	if (isDirectorySync(path.join(base, "bin"))) {
+		await copy(path.join(base, "bin"), "./bin")
+	}
+
 	const packageJSON: any = await readFileJSON(
 		path.join(base, "package.json")
 	)
