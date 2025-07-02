@@ -44,10 +44,10 @@ export async function getRequestedEmbeds(
 			`build/${relativePath}`
 		)
 
-		for (const file of mod.moduleFileDependencyTree.convertToArray()) {
-			if (file.startsWith("external:")) continue
+		for (const moduleSpecifier of mod.referencedModuleSpecifiers) {
+			if (moduleSpecifier.startsWith("external:")) continue
 
-			filesToAnalyze.set(file, true)
+			filesToAnalyze.set(moduleSpecifier, true)
 		}
 
 		filesToAnalyze.set(mod.filePath, true)

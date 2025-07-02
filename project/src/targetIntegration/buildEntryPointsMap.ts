@@ -68,9 +68,7 @@ export function buildEntryPointsMap(
 			session.project.root, "build", file.relativePath
 		))
 
-		mod.moduleFileDependencyTree.depthFirstTraversal(node => {
-			const moduleSpecifier = node.getData()
-
+		for (const moduleSpecifier of mod.referencedModuleSpecifiers) {
 			if (moduleSpecifier.endsWith(".css.ts")) {
 				// specifiers should always start with build/ here
 				cssImportMap.set(
@@ -86,7 +84,7 @@ export function buildEntryPointsMap(
 					cssImportMap.set(resolved, 0)
 				}
 			}
-		})
+		}
 
 		//
 		// handle special case "__aggregatedExports"
