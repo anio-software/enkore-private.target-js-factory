@@ -42,6 +42,10 @@ const autogenerateApiMethods = (await scandir(
 	}
 )).map(mapEntry)
 
+const isPublicRelease = (
+	process.env?.RELEASE_VERSION ?? ""
+).startsWith("vp")
+
 export const config: unknown = defineConfig({
 	target: {
 		name: "js-node",
@@ -62,7 +66,8 @@ export const config: unknown = defineConfig({
 			},
 
 			publish: [{
-				registry: "anioSoftware"
+				registry: "anioSoftware",
+				tag: isPublicRelease ? "latest" : "canary"
 			}]
 		})
 	},
