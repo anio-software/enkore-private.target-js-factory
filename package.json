@@ -1,52 +1,25 @@
 {
+  "private": true,
+  "type": "module",
   "name": "@anio-software/enkore-private.target-js-factory",
-  "version": "0.0.112",
-  "author": "Anio Software <info@anio.software>",
+  "version": "0.0.275",
   "description": "Target 'js' API factory. Formerly known as @fourtune/realm-js.",
-  "license": "MIT",
-  "exports": {
-    ".": {
-      "types": "./dist/default/index.d.mts",
-      "default": "./dist/default/index.mjs"
-    },
-    "./targetIntegration": {
-      "types": "./dist/targetIntegration/index.d.mts",
-      "default": "./dist/targetIntegration/index.mjs"
-    },
-    "./project": {
-      "types": "./dist/project/index.d.mts",
-      "default": "./dist/project/index.mjs"
-    },
-    "./autogenerate": {
-      "types": "./dist/autogenerate/index.d.mts",
-      "default": "./dist/autogenerate/index.mjs"
-    },
-    "./package.json": {
-      "default": "./package.json"
-    }
-  },
+  "author": "Anio Software <info@anio.software>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anio-software/enkore-private.target-js-factory.git"
   },
-  "type": "module",
+  "license": "MIT",
   "devDependencies": {
+    "@anio-software/enkore": "^0.0.91",
     "@anio-software/enkore-private.debug": "^0.0.7",
-    "@anio-software/enkore-private.spec": "^0.304.1",
-    "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.52",
+    "@anio-software/enkore-private.spec": "^0.342.0",
+    "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.65",
+    "@anio-software/enkore-private.target-js-utils": "^0.0.12",
+    "@anio-software/enkore.core": "^0.11.2",
+    "@anio-software/enkore.target-js-node": "^0.0.234-canary-22850f2c-c343c317",
     "@anio-software/pkg.is": "^0.0.3",
     "@anio-software/pkg.temporary-resource-factory": "^0.0.1",
-    "@aniojs/node-fs": "^0.5.3",
-    "@aniojs/random-ident": "^0.1.2",
-    "@enkore/target-js-utils": "^0.0.4",
-    "@fourtune/core": "^0.1101.0",
-    "@fourtune/realm-js": "^1.0.5",
-    "fourtune": "^0.30000.1"
-  },
-  "scripts": {
-    "prepare": "./node_modules/.bin/fourtune ."
-  },
-  "files": [
-    "./dist/"
-  ]
+    "@aniojs/node-fs": "^0.5.3"
+  }
 }

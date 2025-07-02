@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "allowImportingTsExtensions": true,
+        "allowSyntheticDefaultImports": true,
+        "allowArbitraryExtensions": true,
+        "isolatedModules": true,
+        "verbatimModuleSyntax": true,
+        "strict": true,
+        "skipLibCheck": false,
+        "types": [],
+        "lib": ["esnext"],
+        "target": "esnext",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "baseUrl": "../",
+        "rootDir": "../"
+    }
+}

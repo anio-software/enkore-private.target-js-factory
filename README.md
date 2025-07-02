@@ -1,4 +1,4 @@
-# @enkore/target-js-factory
+# @anio-software/enkore-private.target-js-factory
 
 
 
@@ -8,7 +8,7 @@ Embeds are files that (as the name suggests) embedded in the final product.
 
 Embeds can be "viewed" through different protocols.
 
-For example, a `.mts` file might be retrived _as is_ (`text://`) or with its types stripped (`js://`).
+For example, a `.ts` file might be retrived _as is_ (`text://`) or with its types stripped (`js://`).
 
 List of supported protocols:
 
@@ -16,9 +16,9 @@ List of supported protocols:
 |Protocol|Description|Supported Extensions|
 |:---|:---|---:|
 |`text://`|Retrieve file as is.|All|
-|`js://`|Retrieve file as javascript code.|`.mts`|
-|`dts://`|Retrieve file as typescript declaration code.|`.mts`|
-|`js-bundle://`|Retrieve file as javascript bundle.|`.mts`|
+|`js://`|Retrieve file as javascript code.|`.ts`|
+|`dts://`|Retrieve file as typescript declaration code.|`.ts`|
+|`js-bundle://`|Retrieve file as javascript bundle.|`.ts`|
 
 Embeds can also be requested as an "URL" instead of a value.
 
