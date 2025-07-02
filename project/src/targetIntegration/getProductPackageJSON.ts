@@ -71,6 +71,7 @@ type Options = {
 	packageName: string
 	gitRepositoryDirectory: string
 	typeOnly: boolean
+	binScripts?: string[]
 }
 
 export function getProductPackageJSON(
@@ -121,6 +122,14 @@ export function getProductPackageJSON(
 		newPackageJSON.peerDependencies = removeNonTypeDependencies(
 			newPackageJSON.peerDependencies
 		)
+	}
+
+	if (!options.typeOnly && Array.isArray(options.binScripts)) {
+		newPackageJSON.bin = {}
+
+		for (const binScript of options.binScripts) {
+			(newPackageJSON.bin as any)[binScript] = `./bin/${binScript}.mjs`
+		}
 	}
 
 	if (targetOptions.publishWithExactDependencyVersions === true) {

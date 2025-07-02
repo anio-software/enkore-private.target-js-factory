@@ -6,6 +6,7 @@ import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
 import {buildEntryPointsMap} from "#~src/targetIntegration/buildEntryPointsMap.ts"
 import {_getRegistryMap} from "../_getRegistryMap.ts"
 import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.ts"
+import {collectBinScripts} from "#~src/targetIntegration/collectBinScripts.ts"
 
 function getPackageNameSubstitutes(projectPackageName: string) {
 	const tmp = projectPackageName.split("/")
@@ -64,6 +65,7 @@ const impl: API["initialize"] = async function(
 	getInternalData(session).myTSProgram = program
 	getInternalData(session).entryPoints = buildEntryPointsMap(session)
 	getInternalData(session).requestedEmbedsFileCache = new Map()
+	getInternalData(session).binScripts = collectBinScripts(session)
 
 	if (session.enkore.getOptions()._partialBuild === true) {
 		return {

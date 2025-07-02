@@ -5,7 +5,7 @@ import {getExternals} from "./getExternals.ts"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.ts"
 import {generateEntryPointCode} from "./generateEntryPointCode.ts"
-import {writeAtomicFile} from "@aniojs/node-fs"
+import {writeAtomicFile, readFileString} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.ts"
 import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.ts"
 import {rollupPluginFactory} from "./rollupPluginFactory.ts"
@@ -106,7 +106,7 @@ export async function generateNPMPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
-	const {entryPoints} = getInternalData(session)
+	const {entryPoints, binScripts} = getInternalData(session)
 
 	await createDistFiles(apiContext, session)
 
@@ -117,9 +117,40 @@ export async function generateNPMPackage(
 		{
 			packageName,
 			gitRepositoryDirectory,
-			typeOnly: false
+			typeOnly: false,
+			binScripts
 		}
 	)
+
+	//
+	// scripts (project/bin) are **never** bundled but copied as is (with types removed)
+	//
+	const {stripTypeScriptTypes} = session.target._getToolchain("js")
+
+	for (const binScript of binScripts) {
+		const script = await readFileString(
+			path.join(session.project.root, "build", "bin", `${binScript}.ts`)
+		)
+
+		const jsCode = stripTypeScriptTypes(script, {
+			rewriteImportExtensions: true
+		})
+
+		const defaultShebang = `#!/usr/bin/env node`
+
+		const scriptCode: string = (() => {
+			if (jsCode.startsWith("#!")) {
+				return jsCode
+			}
+
+			return `${defaultShebang}\n${jsCode}\n`
+		})()
+
+		await writeAtomicFile(`./bin/${binScript}.mjs`, scriptCode, {
+			createParents: true,
+			mode: 0o755
+		})
+	}
 
 	await writeAtomicFile(
 		`./package.json`, _prettyPrintPackageJSONExports(packageJSON)

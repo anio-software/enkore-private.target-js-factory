@@ -17,7 +17,8 @@ const impl: API["getInitialInternalData"] = async function(
 
 	return {
 		entryPoints: new Map(),
-		projectId
+		projectId,
+		binScripts: []
 	}
 }
 

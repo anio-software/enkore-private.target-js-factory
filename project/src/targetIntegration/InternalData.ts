@@ -36,6 +36,7 @@ export type InternalData = {
 	projectId: string
 	myTSProgram: MyTSProgram
 	entryPoints: Map<string, EntryPoint>
+	binScripts: string[]
 
 	// cache calls to getRequestedEmbedsFromCode()
 	requestedEmbedsFileCache: Map<string, RequestedEmbedsFromCodeResult>

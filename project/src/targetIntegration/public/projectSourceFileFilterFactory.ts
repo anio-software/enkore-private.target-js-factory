@@ -6,6 +6,15 @@ const impl: API["projectSourceFileFilter"] = async function(
 ) {
 	const {fileName} = file
 
+	//
+	// this prevents the inclusion of files that are inside project/bin
+	// project/bin files are copied as is (with their types removed)
+	//
+	if (!file.relativePath.startsWith("src/") &&
+	    !file.relativePath.startsWith("export/")) {
+		return false
+	}
+
 	if (fileName.endsWith(".d.ts")) {
 		return false
 	} else if (fileName.endsWith(".css")) {
