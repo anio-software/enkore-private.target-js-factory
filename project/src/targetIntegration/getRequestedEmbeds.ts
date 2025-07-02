@@ -36,7 +36,7 @@ export async function getRequestedEmbeds(
 	})
 
 	const toolchain = session.target._getToolchain("js")
-	const filesToAnalyze: Map<string, true> = new Map()
+	const filesToAnalyze: Set<string> = new Set()
 
 	for (const [_, {relativePath}] of entryPoint.exports.entries()) {
 		const mod = getModuleGuarded(
@@ -47,10 +47,10 @@ export async function getRequestedEmbeds(
 		for (const moduleSpecifier of mod.referencedModuleSpecifiers) {
 			if (moduleSpecifier.startsWith("external:")) continue
 
-			filesToAnalyze.set(moduleSpecifier, true)
+			filesToAnalyze.add(moduleSpecifier)
 		}
 
-		filesToAnalyze.set(mod.filePath, true)
+		filesToAnalyze.add(mod.filePath)
 	}
 
 	for (const [filePath] of filesToAnalyze.entries()) {
