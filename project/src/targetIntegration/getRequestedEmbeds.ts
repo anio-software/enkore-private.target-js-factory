@@ -60,10 +60,12 @@ export async function getRequestedEmbeds(
 			return path.endsWith(".mjs") || path.endsWith(".js")
 		})
 
-		if (jsObjectFiles.length !== 1) {
-			session.enkore.emitMessage(
-				"error", `found more than one object file for path '${filePath}'`
-			)
+		if (jsObjectFiles.length > 1) {
+			session.enkore.emitMessage("error", `found more than one object file for path '${filePath}'`)
+
+			continue
+		} else if (!jsObjectFiles.length) {
+			session.enkore.emitMessage("error", `unable to find object file for path '${filePath}'`)
 
 			continue
 		}
