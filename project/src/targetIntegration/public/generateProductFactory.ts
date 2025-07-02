@@ -3,8 +3,9 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {_productNameToNPMPackage} from "../_productNameToNPMPackage.ts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.ts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.ts"
-import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@aniojs/node-fs"
+import {scandirCallback, copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@aniojs/node-fs"
 import path from "node:path"
+import fs from "node:fs/promises"
 
 async function _copyNPMPackageProduct(
 	projectRoot: string,
@@ -23,6 +24,17 @@ async function _copyNPMPackageProduct(
 
 	if (isDirectorySync(path.join(base, "bin"))) {
 		await copy(path.join(base, "bin"), "./bin")
+
+		// fix permissions, can be removed when copy from @anio-software/pkg.node-fs is used
+		await scandirCallback(
+			"./bin", {
+				async callback(entry) {
+					if (entry.type !== "regularFile") return
+
+					await fs.chmod(entry.absolute_path, 0o755)
+				}
+			}
+		)
 	}
 
 	const packageJSON: any = await readFileJSON(
