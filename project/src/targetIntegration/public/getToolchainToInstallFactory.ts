@@ -1,10 +1,11 @@
 import type {API} from "#~src/targetIntegration/API.ts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
+import {__getToolchainVersionToInstall} from "#~src/__getToolchainVersionToInstall.ts"
 
 const impl: API["getToolchainToInstall"] = async function(
 	this: APIContext, earlySession
 ) {
-	return ["js", 65]
+	return ["js", __getToolchainVersionToInstall()]
 }
 
 export function getToolchainToInstallFactory(context: APIContext) {

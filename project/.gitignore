@@ -4,3 +4,4 @@
 /export/project/getProjectAPIMethodNames.ts
 /export/autogenerate/getAutogenerateAPIMethodNames.ts
 /export/getUsedEnkoreSpecPackageVersion.ts
+/src/__getToolchainVersionToInstall.ts
