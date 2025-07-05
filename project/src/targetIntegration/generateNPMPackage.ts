@@ -18,6 +18,10 @@ function src(code: string) {
 	return `export default ${JSON.stringify(code)};\n`
 }
 
+type MergeAndHoistReturnType = Awaited<
+	ReturnType<typeof mergeAndHoistGlobalRuntimeDataRecords>
+>
+
 async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
@@ -44,7 +48,10 @@ async function createDistFiles(
 		const jsEntryCode = generateEntryPointCode(entryPoint, "js")
 		const declarationsEntryCode = generateEntryPointCode(entryPoint, "dts")
 
-		const jsBundle = await mergeAndHoist(await toolchain.jsBundler(
+		const {
+			runtimeInitCode,
+			codeWithArtifactsRemoved: jsBundle
+		} = await mergeAndHoist(await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
 				minify: false
@@ -60,8 +67,10 @@ async function createDistFiles(
 			}
 		)
 
-		await writeDistFile(`${entryPointPath}/index.mjs`, jsBundle)
-		await writeDistFile(`${entryPointPath}/index.min.mjs`, minifiedJsBundle)
+		const separator = `\n/** end of runtime init code **/\n`
+
+		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCode + separator + jsBundle)
+		await writeDistFile(`${entryPointPath}/index.min.mjs`, runtimeInitCode + separator + minifiedJsBundle)
 		await writeDistFile(`${entryPointPath}/index.d.mts`, declarationBundle)
 
 		if (entryPoint.hasCSSImports) {
@@ -78,9 +87,12 @@ async function createDistFiles(
 			await writeDistFile(`${entryPointPath}/style.css`, cssBundle)
 		}
 
-		async function mergeAndHoist(code: string): Promise<string> {
+		async function mergeAndHoist(code: string): Promise<MergeAndHoistReturnType> {
 			if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
-				return code
+				return {
+					runtimeInitCode: "",
+					codeWithArtifactsRemoved: code
+				}
 			}
 
 			return await mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
