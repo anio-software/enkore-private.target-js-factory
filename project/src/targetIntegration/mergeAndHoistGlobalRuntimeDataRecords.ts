@@ -7,13 +7,14 @@ import {
 import {getInternalData} from "./getInternalData.ts"
 import {log} from "@anio-software/enkore-private.debug"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 export async function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
 	entryPointPath: string,
 	code: string
 ): Promise<string> {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 	let newEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
 	const {

@@ -115,7 +115,7 @@ export function getProductPackageJSON(
 	}
 
 	// todo: check dependencies of type only package
-	// by calling session.target._getToolchain("js").getModuleImportAndExportSpecifiers()
+	// by calling getToolchain(session).getModuleImportAndExportSpecifiers()
 	// allow @types/ peerDependencies
 	if (options.typeOnly) {
 		newPackageJSON.dependencies = {}

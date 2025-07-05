@@ -11,6 +11,7 @@ import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.ts"
 import {rollupPluginFactory} from "./rollupPluginFactory.ts"
 import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.ts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 import path from "node:path"
 
 function src(code: string) {
@@ -21,7 +22,7 @@ async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 
 	const {entryPoints} = getInternalData(session)
 
@@ -125,7 +126,7 @@ export async function generateNPMPackage(
 	//
 	// scripts (project/bin) are **never** bundled but copied as is (with types removed)
 	//
-	const {stripTypeScriptTypes} = session.target._getToolchain("js")
+	const {stripTypeScriptTypes} = getToolchain(session)
 
 	for (const binScript of binScripts) {
 		const script = await readFileString(

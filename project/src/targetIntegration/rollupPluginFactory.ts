@@ -14,6 +14,7 @@ import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {getInternalData} from "./getInternalData.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 
@@ -23,7 +24,7 @@ export async function rollupPluginFactory(
 	entryPointPath: string,
 	entryPoint: EntryPoint
 ): Promise<Factory> {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 
 	const projectContext = (
 		await generateProjectAPIContext(session.project.root, false)

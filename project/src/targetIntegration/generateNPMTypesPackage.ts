@@ -7,6 +7,7 @@ import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.ts"
 import {writeAtomicFile} from "@aniojs/node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.ts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,
@@ -14,7 +15,7 @@ export async function generateNPMTypesPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 
 	const {entryPoints} = getInternalData(session)
 

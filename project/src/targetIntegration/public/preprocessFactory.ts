@@ -4,11 +4,12 @@ import path from "node:path"
 import type {MyTSSourceFileTransformer} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getInternalData} from "../getInternalData.ts"
 import {isNumber} from "@anio-software/pkg.is"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 const impl: API["preprocess"] = async function(
 	this: APIContext, session, file, sourceCode, emitFileMessage
 ) {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 
 	if (file.fileName.endsWith(".css")) {
 		const {projectId} = getInternalData(session)

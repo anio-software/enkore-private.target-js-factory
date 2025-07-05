@@ -2,11 +2,12 @@ import type {API} from "#~src/targetIntegration/API.ts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
 import {isString, isNumber} from "@anio-software/pkg.is"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 const impl: API["hook"]["preLint"] = async function(
 	this: APIContext, session
 ) {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 	const myProgram = getInternalData(session).myTSProgram
 
 	const targetOptions = session.target.getOptions(this.target)

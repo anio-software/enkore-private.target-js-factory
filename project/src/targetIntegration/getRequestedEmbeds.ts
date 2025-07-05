@@ -7,6 +7,7 @@ import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
 import {readFileString} from "@aniojs/node-fs"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 import path from "node:path"
 
 type RequestedEmbeds = {
@@ -35,7 +36,7 @@ export async function getRequestedEmbeds(
 		return x.toLowerCase().includes("embed")
 	})
 
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 	const filesToAnalyze: Set<string> = new Set()
 
 	for (const [_, {relativePath}] of entryPoint.exports.entries()) {

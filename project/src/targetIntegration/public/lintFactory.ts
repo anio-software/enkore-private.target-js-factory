@@ -2,6 +2,7 @@ import type {API} from "#~src/targetIntegration/API.ts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import type {NodeAPIMessage} from "@anio-software/enkore-private.spec/primitives"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 const impl: API["lint"] = async function(
 	this: APIContext, session, file
@@ -13,7 +14,7 @@ const impl: API["lint"] = async function(
 	// ignore .css files
 	if (file.fileName.endsWith(".css")) return [];
 
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 	const myNewProgram = getInternalData(session).myTSProgram
 
 	const mod = myNewProgram.getModule(`build/${file.relativePath}`)

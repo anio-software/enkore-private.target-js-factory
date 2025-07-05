@@ -1,4 +1,5 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 export async function embedFileBundler(
 	session: EnkoreSessionAPI, entryCode: string
@@ -6,7 +7,7 @@ export async function embedFileBundler(
 	const {
 		jsBundler,
 		stripTypeScriptTypes
-	} = session.target._getToolchain("js")
+	} = getToolchain(session)
 
 	return await jsBundler(
 		session.project.root, entryCode, {

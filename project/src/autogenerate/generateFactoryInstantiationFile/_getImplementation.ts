@@ -1,6 +1,7 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {Options} from "./Options.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 type Dependency = {
 	key: string
@@ -18,7 +19,7 @@ function getMyTSModuleFromFilePath(
 	session: EnkoreSessionAPI,
 	filePath: string
 ) {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 
 	const {program} = toolchain.tsCreateProgram(
 		session.project.root, [
@@ -36,7 +37,7 @@ export function _getImplementation(
 	options: Options,
 	implementationFunctionName: string
 ): Ret {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 	const dependencies: Dependency[] = []
 
 	// we've established that options.source **must** start with project/

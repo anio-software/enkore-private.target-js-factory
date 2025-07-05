@@ -5,6 +5,7 @@ import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
 import {getTypeScriptDefinition} from "#~src/targetIntegration/getTypeScriptDefinition.ts"
 import {getModuleGuarded} from "#~src/targetIntegration/getModuleGuarded.ts"
 import {embedFileBundler} from "#~src/targetIntegration/embedFileBundler.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 type OnlyArray<T> = T extends object[] ? T : never
 type ObjectFile = OnlyArray<Awaited<ReturnType<API["compile"]>>>[number]
@@ -54,7 +55,7 @@ const impl: API["compile"] = async function(
 		}
 	}
 
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 	const myProgram = getInternalData(session).myTSProgram
 
 	if (isTypeScriptFile || isTSXFile) {

@@ -4,13 +4,14 @@ import type {
 	MyTSTopLevelTypeDescriptor
 } from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 export function generateNeededTypeDeclarations(
 	apiContext: AutogenerateAPIContext,
 	session: EnkoreSessionAPI,
 	implementation: MyTSFunctionDeclaration
 ): string {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 	const typesNeeded: MyTSTopLevelTypeDescriptor[] = []
 	const typesPicked: Map<string, true> = new Map()
 

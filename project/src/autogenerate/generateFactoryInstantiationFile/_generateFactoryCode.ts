@@ -7,6 +7,7 @@ import {_getImplementation} from "./_getImplementation.ts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import {getRuntimeImportSpecifier} from "#~src/autogenerate/getRuntimeImportSpecifier.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 function convertPath(path: string) {
 	if (path.startsWith("project/src")) {
@@ -25,7 +26,7 @@ export function _generateFactoryCode(
 	exportName: string,
 	variant: Variant
 ) {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 
 	const implementationFunctionName = (
 		variant === "syncVariant"

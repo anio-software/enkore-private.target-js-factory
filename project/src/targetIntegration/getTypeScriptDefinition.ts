@@ -1,10 +1,11 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {MyTSModule} from "@anio-software/enkore-private.target-js-toolchain_types"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 export function getTypeScriptDefinition(
 	session: EnkoreSessionAPI, mod: MyTSModule
 ): string {
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 
 	const {declarations,diagnosticMessages} = toolchain.tsGenerateDeclarationsForModule(
 		mod, (ctx) => {

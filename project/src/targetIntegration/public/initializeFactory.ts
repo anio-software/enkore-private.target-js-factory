@@ -7,6 +7,7 @@ import {buildEntryPointsMap} from "#~src/targetIntegration/buildEntryPointsMap.t
 import {_getRegistryMap} from "../_getRegistryMap.ts"
 import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.ts"
 import {collectBinScripts} from "#~src/targetIntegration/collectBinScripts.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 function getPackageNameSubstitutes(projectPackageName: string) {
 	const tmp = projectPackageName.split("/")
@@ -44,7 +45,7 @@ const impl: API["initialize"] = async function(
 		return file.endsWith(".ts") || file.endsWith(".tsx")
 	})
 
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 	const {compilerOptions} = toolchain.tsReadTSConfigFile(
 		session.project.root, "tsconfig/base.json"
 	)

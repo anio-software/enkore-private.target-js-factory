@@ -4,6 +4,7 @@ import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.
 import {readFileString} from "@aniojs/node-fs"
 import {getInternalData} from "./getInternalData.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
+import {getToolchain} from "#~src/getToolchain.ts"
 
 export async function getRequestedEmbedsFromFileCached(
 	apiContext: APIContext,
@@ -26,7 +27,7 @@ export async function getRequestedEmbedsFromFileCached(
 		"getEmbedAsURL"
 	]
 
-	const toolchain = session.target._getToolchain("js")
+	const toolchain = getToolchain(session)
 
 	const result = await toolchain.getRequestedEmbedsFromCode(
 		enkoreProjectModuleSpecifiers,
