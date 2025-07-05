@@ -13,12 +13,15 @@ export async function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
 	entryPointPath: string,
 	code: string
-): Promise<string> {
+): Promise<{
+	runtimeInitCode: string
+	codeWithArtifactsRemoved: string
+}> {
 	const toolchain = getToolchain(session)
 	let newEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
 	const {
-		code: newCode,
+		code: codeWithArtifactsRemoved,
 		globalDataRecords
 	} = toolchain.removeEnkoreJSRuntimeArtifactsFromCode(
 		code
@@ -116,7 +119,9 @@ for (const embedId in runtimeData.immutable.embeds) {
 		[`runtimeData`, `nodeRequire`], bundledRuntimeInitCode
 	)
 	ret += toolchain.invokeEnkoreJSRuntimeGlobalInitFunction()
-	ret += newCode
 
-	return ret
+	return {
+		runtimeInitCode: ret,
+		codeWithArtifactsRemoved
+	}
 }
