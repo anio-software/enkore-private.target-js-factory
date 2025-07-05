@@ -129,7 +129,11 @@ export function getProductPackageJSON(
 		)
 	}
 
-	if (!options.typeOnly && Array.isArray(options.binScripts)) {
+	if (
+	    !options.typeOnly &&
+	    Array.isArray(options.binScripts) &&
+	    options.binScripts.length
+	    ) {
 		newPackageJSON.bin = {}
 
 		for (const binScript of options.binScripts) {
