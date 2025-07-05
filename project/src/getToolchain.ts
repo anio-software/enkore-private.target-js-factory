@@ -9,5 +9,5 @@ export function getToolchain(session: EnkoreSessionAPI) {
 		return (session.target as any)._getToolchain("js") as __ModuleExport
 	}
 
-	return session.target.__getCurrentlyInstalledToolchain() as __ModuleExport
+	return session.target.__getCurrentlyInstalledToolchain() as unknown as __ModuleExport
 }
