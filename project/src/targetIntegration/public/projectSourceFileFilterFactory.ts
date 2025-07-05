@@ -11,7 +11,8 @@ const impl: API["projectSourceFileFilter"] = async function(
 	// project/bin files are copied as is (with their types removed)
 	//
 	if (!file.relativePath.startsWith("src/") &&
-	    !file.relativePath.startsWith("export/")) {
+	    !file.relativePath.startsWith("export/") &&
+	    !file.relativePath.startsWith("embeds/")) {
 		return false
 	}
 
