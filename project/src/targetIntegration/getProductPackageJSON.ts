@@ -97,7 +97,7 @@ export function getProductPackageJSON(
 
 	if (!options.typeOnly) {
 		newPackageJSON.files!.push("./_source")
-		newPackageJSON.files!.push("./_bin")
+		newPackageJSON.files!.push("./bin")
 	}
 
 	if (isNodeTarget(apiContext.target)) {
