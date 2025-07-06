@@ -44,9 +44,12 @@ const impl: API["getBoilerplateFiles"] = async function(
 	if (isWebTarget(this.target)) {
 		tsconfigBase.compilerOptions.types.push("@types/web")
 
-		tsconfigBase.compilerOptions.plugins = [{
-			name: "css-modules-ts-plugin"
-		}]
+		// js-hybrid-lite doesn't contain CSS support
+		if (this.target !== "js-hybrid-lite") {
+			tsconfigBase.compilerOptions.plugins = [{
+				name: "css-modules-ts-plugin"
+			}]
+		}
 	}
 
 	if (isReactTarget(this.target)) {

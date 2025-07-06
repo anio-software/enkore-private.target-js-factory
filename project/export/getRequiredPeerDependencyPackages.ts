@@ -28,7 +28,11 @@ export function getRequiredPeerDependencyPackages(
 
 	if (isWebTarget(targetIdentifier)) {
 		addDependency("@types/web", true)
-		addDependency("css-modules-ts-plugin", true)
+
+		// js-hybrid-lite doesn't contain CSS support
+		if (targetIdentifier !== "js-hybrid-lite") {
+			addDependency("css-modules-ts-plugin", true)
+		}
 	}
 
 	if (isReactTarget(targetIdentifier)) {
