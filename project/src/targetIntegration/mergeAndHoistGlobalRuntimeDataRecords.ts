@@ -9,6 +9,13 @@ import {log} from "@anio-software/enkore-private.debug"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 import {getToolchain} from "#~src/getToolchain.ts"
 
+const embedProtocolTypeMap = {
+	"text"     : {mimeType: "text/plain"     , fileExtension: ".txt"},
+	"js-bundle": {mimeType: "text/javascript", fileExtension: ".mjs"},
+	"js"       : {mimeType: "text/javascript", fileExtension: ".mjs"},
+	"dts"      : {mimeType: "text/plain"     , fileExtension: ".d.mts"}
+}
+
 export async function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
 	entryPointPath: string,
@@ -62,6 +69,27 @@ export async function mergeAndHoistGlobalRuntimeDataRecords(
 	const runtimeInitCode = `
 import {createTemporaryResourceFromStringSyncFactory} from "temporary-resource-factory"
 
+function getCreationOptionsForEmbed(embedURL) {
+	if (embedURL.startsWith("js-bundle://")) {
+		return makeRetObject(${JSON.stringify(embedProtocolTypeMap["js-bundle"])})
+	} else if (embedURL.startsWith("js://")) {
+		return makeRetObject(${JSON.stringify(embedProtocolTypeMap["js"])})
+	} else if (embedURL.startsWith("dts://")) {
+		return makeRetObject(${JSON.stringify(embedProtocolTypeMap["dts"])})
+	}
+
+	return makeRetObject(${JSON.stringify(embedProtocolTypeMap["text"])})
+
+	function makeRetObject({mimeType, fileExtension}) {
+		return {
+			web: {mimeType},
+			node: {fileExtension},
+			autoCleanup: true,
+			createAsReadonly: true
+		}
+	}
+}
+
 const createTemporaryResourceFromStringSync = createTemporaryResourceFromStringSyncFactory(
 	nodeRequire
 )
@@ -79,7 +107,7 @@ for (const embedId in runtimeData.immutable.embeds) {
 	const buffer = Uint8Array.from(binString, (m) => m.codePointAt(0))
 
 	runtimeData.mutable.embedResourceURLs[embedId] = createTemporaryResourceFromStringSync(
-		(new TextDecoder).decode(buffer)
+		(new TextDecoder).decode(buffer), getCreationOptionsForEmbed(embed.originalEmbedPath)
 	).resourceURL
 }
 `
