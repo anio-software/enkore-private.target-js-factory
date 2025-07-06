@@ -19,6 +19,7 @@
     "@anio-software/enkore.core": "^0.11.22-canary-5564f69f-71984fdf",
     "@anio-software/enkore.target-js-node": "^0.0.289-canary-48021cb2-290298cb",
     "@anio-software/pkg.is": "^0.0.3",
+    "@anio-software/pkg.node-fs": "^0.0.2",
     "@anio-software/pkg.temporary-resource-factory": "^0.0.1"
   }
 }
