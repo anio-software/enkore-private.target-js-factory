@@ -80,8 +80,10 @@ export function _generateFactoryCode(
 
 			let tmp = `{\n`
 
+			const castToAny = options.__forceCompatibility === true ? " as any" : ""
+
 			for (const [i, dependency] of dependencies.entries()) {
-				tmp += `\t\t${dependency.key}: __enkoreDep${i}(contextOptions),\n`
+				tmp += `\t\t${dependency.key}: __enkoreDep${i}(contextOptions${castToAny}),\n`
 			}
 
 			tmp = tmp.slice(0, -2)
