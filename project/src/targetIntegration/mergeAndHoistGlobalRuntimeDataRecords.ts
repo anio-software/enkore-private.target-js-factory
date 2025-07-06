@@ -8,13 +8,7 @@ import {getInternalData} from "./getInternalData.ts"
 import {log} from "@anio-software/enkore-private.debug"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 import {getToolchain} from "#~src/getToolchain.ts"
-
-const embedProtocolTypeMap = {
-	"text"     : {mimeType: "text/plain"     , fileExtension: ".txt"},
-	"js-bundle": {mimeType: "text/javascript", fileExtension: ".mjs"},
-	"js"       : {mimeType: "text/javascript", fileExtension: ".mjs"},
-	"dts"      : {mimeType: "text/plain"     , fileExtension: ".d.mts"}
-}
+import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 
 export async function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
@@ -68,27 +62,7 @@ export async function mergeAndHoistGlobalRuntimeDataRecords(
 
 	const runtimeInitCode = `
 import {createTemporaryResourceFromStringSyncFactory} from "temporary-resource-factory"
-
-function getCreationOptionsForEmbed(embedURL) {
-	if (embedURL.startsWith("js-bundle://")) {
-		return makeRetObject(${JSON.stringify(embedProtocolTypeMap["js-bundle"])})
-	} else if (embedURL.startsWith("js://")) {
-		return makeRetObject(${JSON.stringify(embedProtocolTypeMap["js"])})
-	} else if (embedURL.startsWith("dts://")) {
-		return makeRetObject(${JSON.stringify(embedProtocolTypeMap["dts"])})
-	}
-
-	return makeRetObject(${JSON.stringify(embedProtocolTypeMap["text"])})
-
-	function makeRetObject({mimeType, fileExtension}) {
-		return {
-			web: {mimeType},
-			node: {fileExtension},
-			autoCleanup: true,
-			createAsReadonly: true
-		}
-	}
-}
+import {_getCreationOptionsForEmbed} from "enkore-internal-api"
 
 const createTemporaryResourceFromStringSync = createTemporaryResourceFromStringSyncFactory(
 	nodeRequire
@@ -107,7 +81,7 @@ for (const embedId in runtimeData.immutable.embeds) {
 	const buffer = Uint8Array.from(binString, (m) => m.codePointAt(0))
 
 	runtimeData.mutable.embedResourceURLs[embedId] = createTemporaryResourceFromStringSync(
-		(new TextDecoder).decode(buffer), getCreationOptionsForEmbed(embed.originalEmbedPath)
+		(new TextDecoder).decode(buffer), _getCreationOptionsForEmbed(embed.originalEmbedPath)
 	).resourceURL
 }
 `
@@ -122,6 +96,8 @@ for (const embedId in runtimeData.immutable.embeds) {
 					resolveId(id) {
 						if (id === `temporary-resource-factory`) {
 							return `@anio-software/pkg.temporary-resource-factory`
+						} else if (id === `enkore-internal-api`) {
+							return `enkore-internal-api`
 						}
 
 						return null
@@ -130,6 +106,8 @@ for (const embedId in runtimeData.immutable.embeds) {
 					load(id) {
 						if (id === `@anio-software/pkg.temporary-resource-factory`) {
 							return temporaryResourceFactory
+						} else if (id === "enkore-internal-api") {
+							return getEmbedAsString(`js://project/_getCreationOptionsForEmbed.ts`)
 						}
 
 						return null
