@@ -4,7 +4,7 @@ import {
 	resolveImportSpecifierFromProjectRoot
 } from "@anio-software/enkore-private.spec/utils"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
-import {readFileJSON} from "@aniojs/node-fs"
+import {readFileJSON} from "@anio-software/pkg.node-fs"
 import path from "node:path"
 import {importAPI, createEntity} from "@anio-software/enkore-private.spec"
 import {createNodeAPIOptions} from "@anio-software/enkore-private.spec/factory"

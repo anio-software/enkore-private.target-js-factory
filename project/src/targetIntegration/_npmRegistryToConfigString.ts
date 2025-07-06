@@ -1,5 +1,5 @@
 import type {Registry} from "./InternalData.ts"
-import {readFileStringSync} from "@aniojs/node-fs"
+import {readFileStringSync} from "@anio-software/pkg.node-fs"
 
 type Options = {
 	scope?: string | undefined | false

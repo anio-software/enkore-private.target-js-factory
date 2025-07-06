@@ -1,7 +1,7 @@
 import type {API} from "#~src/targetIntegration/API.ts"
 import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {createEntity} from "@anio-software/enkore-private.spec"
-import {scandir} from "@aniojs/node-fs"
+import {scandir} from "@anio-software/pkg.node-fs"
 import path from "node:path"
 import {
 	isAsyncSyncExpandableFilePath,
@@ -60,12 +60,12 @@ const impl: API["hook"]["preInitialize"] = async function(
 			await scandir(path.join(
 				session.project.root, "project", dir
 			), {
-				allow_missing_dir: true
+				allowMissingDir: true
 			})
 		).map(entry => {
 			return {
-				absolutePath: entry.absolute_path,
-				source: path.join("project", dir, entry.relative_path)
+				absolutePath: entry.absolutePath,
+				source: path.join("project", dir, entry.relativePath)
 			}
 		})
 	}

@@ -1,7 +1,7 @@
 import type {APIContext} from "./APIContext.ts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
-import {readFileString} from "@aniojs/node-fs"
+import {readFileString} from "@anio-software/pkg.node-fs"
 import {getInternalData} from "./getInternalData.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import {getToolchain} from "#~src/getToolchain.ts"

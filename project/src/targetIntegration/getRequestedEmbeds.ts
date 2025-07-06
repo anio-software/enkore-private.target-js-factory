@@ -5,7 +5,7 @@ import type {RequestedEmbedsFromCodeReasonWhyUnknown} from "@anio-software/enkor
 import {getInternalData} from "./getInternalData.ts"
 import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
-import {readFileString} from "@aniojs/node-fs"
+import {readFileString} from "@anio-software/pkg.node-fs"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import path from "node:path"

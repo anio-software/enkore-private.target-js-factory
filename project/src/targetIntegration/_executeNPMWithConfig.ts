@@ -1,4 +1,4 @@
-import {tmpfileSync, writeAtomicFileSync, removeSync} from "@aniojs/node-fs"
+import {tmpfileSync, writeAtomicFileSync, removeSync} from "@anio-software/pkg.node-fs"
 import {spawnSync} from "node:child_process"
 
 type Options = {

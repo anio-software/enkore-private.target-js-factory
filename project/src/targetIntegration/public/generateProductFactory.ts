@@ -3,7 +3,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {_productNameToNPMPackage} from "../_productNameToNPMPackage.ts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.ts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.ts"
-import {scandirCallback, copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@aniojs/node-fs"
+import {scandirCallback, copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@anio-software/pkg.node-fs"
 import path from "node:path"
 import fs from "node:fs/promises"
 
@@ -16,25 +16,23 @@ async function _copyNPMPackageProduct(
 ) {
 	const base = path.join(projectRoot, "products", srcProductName)
 
-	await copy(path.join(base, "dist"), "./dist")
+	await copy({
+		source: path.join(base, "dist"),
+		destination: "./dist"
+	})
 
 	if (isDirectorySync(path.join(base, "_source"))) {
-		await copy(path.join(base, "_source"), "./_source")
+		await copy({
+			source: path.join(base, "_source"),
+			destination: "./_source"
+		})
 	}
 
 	if (isDirectorySync(path.join(base, "bin"))) {
-		await copy(path.join(base, "bin"), "./bin")
-
-		// fix permissions, can be removed when copy from @anio-software/pkg.node-fs is used
-		await scandirCallback(
-			"./bin", {
-				async callback(entry) {
-					if (entry.type !== "regularFile") return
-
-					await fs.chmod(entry.absolute_path, 0o755)
-				}
-			}
-		)
+		await copy({
+			source: path.join(base, "bin"),
+			destination: "./bin"
+		})
 	}
 
 	const packageJSON: any = await readFileJSON(

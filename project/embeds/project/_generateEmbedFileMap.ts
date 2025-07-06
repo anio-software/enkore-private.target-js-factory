@@ -1,7 +1,7 @@
 import type {ProjectEmbedFile} from "./ProjectAPIContext.ts"
 import path from "node:path"
 import fs from "node:fs/promises"
-import {scandir} from "@aniojs/node-fs"
+import {scandir} from "@anio-software/pkg.node-fs"
 
 async function readFileBase64(path: string): Promise<string> {
 	const contents = await fs.readFile(path)
@@ -14,9 +14,9 @@ export async function _generateEmbedFileMap(
 ): Promise<Map<string, ProjectEmbedFile>> {
 	const map: Map<string, ProjectEmbedFile> = new Map()
 	const entries = await scandir(path.join(projectRoot, "objects", "embeds"), {
-		allow_missing_dir: true,
+		allowMissingDir: true,
 		filter(entry) {
-			return entry.type === "regularFile"
+			return entry.type === "file:regular"
 		}
 	})
 
@@ -27,11 +27,11 @@ export async function _generateEmbedFileMap(
 
 		return {
 			origin: path.join(
-				path.dirname(e.absolute_path),
+				path.dirname(e.absolutePath),
 				newBaseName
 			),
 			filePath: path.join(
-				path.dirname(e.relative_path),
+				path.dirname(e.relativePath),
 				newBaseName
 			)
 		}
