@@ -6,7 +6,6 @@ import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target
 import {_getImplementation} from "./_getImplementation.ts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
-import {getRuntimeImportSpecifier} from "#~src/autogenerate/getRuntimeImportSpecifier.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 
 function convertPath(path: string) {
