@@ -35,9 +35,9 @@ import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContex
 import {defineContextOptions as enkoreDefineContextOptions} from "${getRuntimeImportSpecifier(apiContext)}"
 import {${exportName}Factory as factory} from "./${exportName}Factory.ts"
 
-export const ${exportName} = factory(
-	enkoreDefineContextOptions({
-		project: enkoreGetProject()${castToAny}
+export const ${exportName} = /*@__PURE__*/ factory(
+	/*@__PURE__*/ enkoreDefineContextOptions({
+		project: /*@__PURE__*/ enkoreGetProject()${castToAny}
 	})
 )
 `.slice(1)
