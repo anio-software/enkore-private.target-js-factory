@@ -3,9 +3,8 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {_productNameToNPMPackage} from "../_productNameToNPMPackage.ts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.ts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.ts"
-import {scandirCallback, copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@anio-software/pkg.node-fs"
+import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@anio-software/pkg.node-fs"
 import path from "node:path"
-import fs from "node:fs/promises"
 
 async function _copyNPMPackageProduct(
 	projectRoot: string,
