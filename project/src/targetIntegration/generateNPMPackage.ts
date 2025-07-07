@@ -84,6 +84,7 @@ async function createDistFiles(
 		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCode + separator + jsBundle)
 		await writeDistFile(`${entryPointPath}/index.min.mjs`, runtimeInitCode + separator + minifiedJsBundle)
 		await writeDistFile(`${entryPointPath}/index.d.mts`, declarationBundle)
+		await writeDistFile(`${entryPointPath}/index.min.d.mts`, declarationBundle)
 
 		if (entryPoint.hasCSSImports) {
 			const cssEntryCode = generateEntryPointCode(entryPoint, "css")

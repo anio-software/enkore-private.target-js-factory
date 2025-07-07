@@ -35,6 +35,10 @@ export async function generateNPMTypesPackage(
 		await writeAtomicFile(
 			`./dist/${entryPointPath}/index.d.mts`, declarationBundle, {createParents: true}
 		)
+
+		await writeAtomicFile(
+			`./dist/${entryPointPath}/index.min.d.mts`, declarationBundle, {createParents: true}
+		)
 	}
 
 	const packageJSON = getProductPackageJSON(
