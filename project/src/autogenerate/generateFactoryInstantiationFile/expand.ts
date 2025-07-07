@@ -26,10 +26,12 @@ export function expand(
 
 	return [
 		...generator.call(apiContext, {
+			...options,
 			source: expandedSource[0],
 			destination: expandedDestination[0]
 		}, "asyncVariant"),
 		...generator.call(apiContext, {
+			...options,
 			source: expandedSource[1],
 			destination: expandedDestination[1]
 		}, "syncVariant")
