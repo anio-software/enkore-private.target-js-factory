@@ -26,6 +26,14 @@ async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
+	const isProductionBuild: boolean = (() => {
+		if (session.enkore.getOptions().buildMode === "development") {
+			return false
+		}
+
+		return true
+	})()
+
 	const toolchain = getToolchain(session)
 
 	const {entryPoints} = getInternalData(session)
@@ -58,7 +66,11 @@ async function createDistFiles(
 			}
 		))
 
-		const minifiedJsBundle = await toolchain.jsMinify(jsBundle)
+		if (isProductionBuild) {
+			session.enkore.emitMessage(`info`, `minifying javascript bundle`)
+		}
+
+		const minifiedJsBundle = isProductionBuild ? await toolchain.jsMinify(jsBundle) : jsBundle
 
 		const declarationBundle = await toolchain.tsDeclarationBundler(
 			session.project.root, declarationsEntryCode, {
