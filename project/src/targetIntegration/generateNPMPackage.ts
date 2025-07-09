@@ -109,7 +109,15 @@ async function createDistFiles(
 				}
 			}
 
-			return await mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
+			const ret = await mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
+
+			for (const [{embedIdentifier, data}] of ret.extractedLegacyEmbeds.entries()) {
+				await writeAtomicFile(
+					`./_embeds/${embedIdentifier}`, data, {createParents: true}
+				)
+			}
+
+			return ret
 		}
 
 		async function writeDistFile(path: string, code: string) {
