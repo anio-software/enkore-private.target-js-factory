@@ -1,11 +1,15 @@
-import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
+import {
+	type EnkoreSessionAPI,
+	type RawType,
+	type EnkoreJSBuildManifestFile
+} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {getExternals} from "./getExternals.ts"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.ts"
 import {generateEntryPointCode} from "./generateEntryPointCode.ts"
-import {writeAtomicFile, readFileString} from "@anio-software/pkg.node-fs"
+import {writeAtomicFile, writeAtomicFileJSON, readFileString} from "@anio-software/pkg.node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.ts"
 import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.ts"
 import {rollupPluginFactory} from "./rollupPluginFactory.ts"
@@ -26,6 +30,10 @@ async function createDistFiles(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ) {
+	const manifest: RawType<EnkoreJSBuildManifestFile> = {
+		exports: {}
+	}
+
 	const isProductionBuild: boolean = (() => {
 		if (session.enkore.getOptions().buildMode === "development") {
 			return false
@@ -39,6 +47,8 @@ async function createDistFiles(
 	const {entryPoints} = getInternalData(session)
 
 	for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
+		manifest.exports[entryPointPath] = {embeds: []}
+
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
 		const externalTypePackages: string[] = getExternals(apiContext, entryPointPath, session, "typePackages")
 		const onRollupLogFunction = getOnRollupLogFunction(session)
@@ -111,10 +121,16 @@ async function createDistFiles(
 
 			const ret = await mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
 
-			for (const [{embedIdentifier, data}] of ret.extractedLegacyEmbeds.entries()) {
+			for (const [{embedIdentifier, data, createResource}] of ret.extractedLegacyEmbeds.entries()) {
 				await writeAtomicFile(
 					`./_embeds/${embedIdentifier}`, data, {createParents: true}
 				)
+
+				manifest.exports[entryPointPath].embeds.push({
+					identifier: embedIdentifier,
+					createResourceAtRuntimeInit: createResource,
+					integrity: ""
+				})
 			}
 
 			return ret
@@ -133,6 +149,8 @@ async function createDistFiles(
 			}
 		}
 	}
+
+	await writeAtomicFileJSON("./enkore-manifest.json", manifest, {pretty: true})
 }
 
 export async function generateNPMPackage(
