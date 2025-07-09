@@ -1,3 +1,4 @@
+import {_parseEmbedURL} from "./_parseEmbedURL.ts"
 import type {EmbedContentType} from "./EmbedContentType.ts"
 import type {EmbedProtocol} from "./EmbedProtocol.ts"
 import type {CreateTemporaryResourceOptions} from "@anio-software/pkg.temporary-resource-factory"
@@ -12,19 +13,8 @@ const embedContentTypeByProtocol: Record<EmbedProtocol, EmbedContentType> = {
 export function _getCreationOptionsForEmbed(
 	embedURL: string
 ): CreateTemporaryResourceOptions {
-	const parts = embedURL.split("://")
-
-	if (2 > parts.length) {
-		throw new Error(`Invalid embed URL '${embedURL}'.`)
-	}
-
-	const protocol = parts[0]
-
-	if (!(protocol in embedContentTypeByProtocol)) {
-		throw new Error(`Invalid embed protocol '${protocol}'.`)
-	}
-
-	const {fileExtension, mimeType} = embedContentTypeByProtocol[protocol as EmbedProtocol]
+	const {protocol} = _parseEmbedURL(embedURL)
+	const {fileExtension, mimeType} = embedContentTypeByProtocol[protocol]
 
 	return {
 		node: {fileExtension},
