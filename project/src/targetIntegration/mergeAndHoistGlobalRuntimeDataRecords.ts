@@ -41,7 +41,9 @@ export async function mergeAndHoistGlobalRuntimeDataRecords(
 		)
 
 		for (const id in record.immutable.embeds) {
-			newEmbeds[id] = record.immutable.embeds[id]
+			const embed = record.immutable.embeds[id]
+
+			newEmbeds[id] = embed
 
 			log(
 				`Adding embed '${newEmbeds[id].originalEmbedPath}' from project '${newEmbeds[id]._projectIdentifier}'.`
