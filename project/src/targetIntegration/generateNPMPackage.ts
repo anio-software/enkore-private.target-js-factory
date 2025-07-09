@@ -104,7 +104,8 @@ async function createDistFiles(
 			if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
 				return {
 					runtimeInitCode: "",
-					codeWithArtifactsRemoved: code
+					codeWithArtifactsRemoved: code,
+					extractedLegacyEmbeds: new Set()
 				}
 			}
 

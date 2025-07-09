@@ -9,6 +9,14 @@ import {log} from "@anio-software/enkore-private.debug"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
+import {_parseEnkoreEmbedProjectIdentifier} from "#~src/_parseEnkoreEmbedProjectIdentifier.ts"
+import {_parseEmbedURL} from "#~embeds/project/_parseEmbedURL.ts"
+
+type ExtractedLegacyEmbeds = Set<{
+	createResource: boolean
+	embedIdentifier: string
+	data: string
+}>
 
 export async function mergeAndHoistGlobalRuntimeDataRecords(
 	session: EnkoreSessionAPI,
@@ -17,7 +25,10 @@ export async function mergeAndHoistGlobalRuntimeDataRecords(
 ): Promise<{
 	runtimeInitCode: string
 	codeWithArtifactsRemoved: string
+	extractedLegacyEmbeds: ExtractedLegacyEmbeds
 }> {
+	const extractedLegacyEmbeds: ExtractedLegacyEmbeds = new Set()
+
 	const toolchain = getToolchain(session)
 	let newEmbeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
 
@@ -48,6 +59,31 @@ export async function mergeAndHoistGlobalRuntimeDataRecords(
 			log(
 				`Adding embed '${newEmbeds[id].originalEmbedPath}' from project '${newEmbeds[id]._projectIdentifier}'.`
 			)
+
+			const parsedProjectIdentifier = _parseEnkoreEmbedProjectIdentifier(
+				embed._projectIdentifier
+			)
+
+			const parsedEmbedURL = _parseEmbedURL(embed.originalEmbedPath)
+
+			const newEmbedURL: string = (() => {
+				const {protocol, relativePath} = parsedEmbedURL
+				const {scope, packageName, packageVersion} = parsedProjectIdentifier
+
+				if (scope !== undefined) {
+					return `${scope}/${packageName}/v${packageVersion}/${protocol}/${relativePath}`
+				}
+
+				return `${packageName}/v${packageVersion}/${protocol}/${relativePath}`
+			})()
+
+			extractedLegacyEmbeds.add({
+				createResource: embed._createResourceAtRuntimeInit,
+				embedIdentifier: newEmbedURL,
+				data: (new TextDecoder).decode(
+					Buffer.from(embed.data, "base64")
+				)
+			})
 		}
 	}
 
@@ -130,6 +166,7 @@ for (const embedId in runtimeData.immutable.embeds) {
 
 	return {
 		runtimeInitCode: ret,
-		codeWithArtifactsRemoved
+		codeWithArtifactsRemoved,
+		extractedLegacyEmbeds
 	}
 }
