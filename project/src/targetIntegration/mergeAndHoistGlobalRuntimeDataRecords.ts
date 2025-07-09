@@ -109,7 +109,7 @@ for (const embedId in runtimeData.immutable.embeds) {
 						if (id === `@anio-software/pkg.temporary-resource-factory`) {
 							return temporaryResourceFactory
 						} else if (id === "enkore-internal-api") {
-							return getEmbedAsString("js://project/_getCreationOptionsForEmbed.ts")
+							return getEmbedAsString("js-bundle://project/_getCreationOptionsForEmbed.ts")
 						}
 
 						return null
