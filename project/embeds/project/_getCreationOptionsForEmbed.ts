@@ -1,7 +1,8 @@
 import type {EmbedContentType} from "./EmbedContentType.ts"
+import type {EmbedProtocol} from "./EmbedProtocol.ts"
 import type {CreateTemporaryResourceOptions} from "@anio-software/pkg.temporary-resource-factory"
 
-const embedContentTypeByProtocol: Record<string, EmbedContentType> = {
+const embedContentTypeByProtocol: Record<EmbedProtocol, EmbedContentType> = {
 	"text"     : {mimeType: "text/plain"     , fileExtension: ".txt"},
 	"js-bundle": {mimeType: "text/javascript", fileExtension: ".mjs"},
 	"js"       : {mimeType: "text/javascript", fileExtension: ".mjs"},
@@ -23,7 +24,7 @@ export function _getCreationOptionsForEmbed(
 		throw new Error(`Invalid embed protocol '${protocol}'.`)
 	}
 
-	const {fileExtension, mimeType} = embedContentTypeByProtocol[protocol]
+	const {fileExtension, mimeType} = embedContentTypeByProtocol[protocol as EmbedProtocol]
 
 	return {
 		node: {fileExtension},
