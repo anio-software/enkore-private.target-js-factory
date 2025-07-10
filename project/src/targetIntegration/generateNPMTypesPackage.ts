@@ -4,10 +4,11 @@ import {getInternalData} from "./getInternalData.ts"
 import {getExternals} from "./getExternals.ts"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.ts"
 import {generateTypesPackageEntryCode} from "./generateTypesPackageEntryCode.ts"
-import {writeAtomicFile} from "@anio-software/pkg.node-fs"
+import {writeAtomicFile, writeAtomicFileJSON} from "@anio-software/pkg.node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.ts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
+import {getEnkoreBuildInfoData} from "./getEnkoreBuildInfoData.ts"
 
 export async function generateNPMTypesPackage(
 	apiContext: APIContext,
@@ -54,5 +55,11 @@ export async function generateNPMTypesPackage(
 
 	await writeAtomicFile(
 		`./package.json`, _prettyPrintPackageJSONExports(packageJSON)
+	)
+
+	await writeAtomicFileJSON(
+		"./enkore-build.json",
+		await getEnkoreBuildInfoData(apiContext, session),
+		{pretty: true}
 	)
 }
