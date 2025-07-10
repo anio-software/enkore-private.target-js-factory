@@ -96,9 +96,9 @@ export function getProductPackageJSON(
 	}
 
 	if (!options.typeOnly) {
+		newPackageJSON.files!.push("./enkore-manifest.json")
 		newPackageJSON.files!.push("./_source")
 		newPackageJSON.files!.push("./bin")
-		newPackageJSON.files!.push("./enkore-manifest.json")
 	}
 
 	if (isNodeTarget(apiContext.target)) {
