@@ -27,6 +27,13 @@ async function _copyNPMPackageProduct(
 		})
 	}
 
+	if (isDirectorySync(path.join(base, "_embeds"))) {
+		await copy({
+			source: path.join(base, "_embeds"),
+			destination: "./_embeds"
+		})
+	}
+
 	if (isDirectorySync(path.join(base, "bin"))) {
 		await copy({
 			source: path.join(base, "bin"),
