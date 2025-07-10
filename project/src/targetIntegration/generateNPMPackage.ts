@@ -18,6 +18,11 @@ import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.t
 import {getToolchain} from "#~src/getToolchain.ts"
 import {getEnkoreBuildInfoData} from "./getEnkoreBuildInfoData.ts"
 import path from "node:path"
+import crypto from "node:crypto"
+
+function sha256Sync(str: string): string {
+	return crypto.createHash("sha256").update(str).digest("hex")
+}
 
 function src(code: string) {
 	return `export default ${JSON.stringify(code)};\n`
@@ -130,7 +135,7 @@ async function createDistFiles(
 				manifest.exports[entryPointPath].embeds.push({
 					identifier: embedIdentifier,
 					createResourceAtRuntimeInit: createResource,
-					integrity: ""
+					integrity: `sha256:${sha256Sync(data)}`
 				})
 			}
 
