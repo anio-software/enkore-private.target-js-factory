@@ -71,7 +71,7 @@ export async function mergeAndHoistGlobalRuntimeDataRecords(
 				const {scope, packageName, packageVersion} = parsedProjectIdentifier
 
 				if (scope !== undefined) {
-					return `${scope}/${packageName}/v${packageVersion}/${protocol}/${relativePath}`
+					return `@${scope}/${packageName}/v${packageVersion}/${protocol}/${relativePath}`
 				}
 
 				return `${packageName}/v${packageVersion}/${protocol}/${relativePath}`
