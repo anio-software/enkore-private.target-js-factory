@@ -3,7 +3,7 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {_productNameToNPMPackage} from "../_productNameToNPMPackage.ts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.ts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.ts"
-import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@anio-software/pkg.node-fs"
+import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync, isFileSync} from "@anio-software/pkg.node-fs"
 import path from "node:path"
 
 async function _copyNPMPackageProduct(
@@ -24,6 +24,13 @@ async function _copyNPMPackageProduct(
 		source: path.join(base, "enkore-build.json"),
 		destination: "./enkore-build.json"
 	})
+
+	if (isFileSync(path.join(base, "enkore-manifest.json"))) {
+		await copy({
+			source: path.join(base, "enkore-manifest.json"),
+			destination: "./enkore-manifest.json"
+		})
+	}
 
 	if (isDirectorySync(path.join(base, "_source"))) {
 		await copy({
