@@ -1,7 +1,8 @@
 import {
 	type EnkoreSessionAPI,
 	type RawType,
-	type EnkoreJSBuildManifestFile
+	type EnkoreJSBuildManifestFile,
+	createEntity
 } from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.ts"
 import {getInternalData} from "./getInternalData.ts"
@@ -160,7 +161,12 @@ async function createDistFiles(
 		}
 	}
 
-	await writeAtomicFileJSON("./enkore-manifest.json", manifest, {pretty: true})
+	await writeAtomicFileJSON(
+		"./enkore-manifest.json",
+		createEntity("EnkoreJSBuildManifestFile", 0, 0, manifest),
+		{pretty: true}
+	)
+
 	await writeAtomicFileJSON(
 		"./enkore-build.json",
 		await getEnkoreBuildInfoData(apiContext, session),
