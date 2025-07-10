@@ -97,6 +97,7 @@ export function getProductPackageJSON(
 
 	if (!options.typeOnly) {
 		newPackageJSON.files!.push("./enkore-manifest.json")
+		newPackageJSON.files!.push("./_embeds")
 		newPackageJSON.files!.push("./_source")
 		newPackageJSON.files!.push("./bin")
 	}
