@@ -15,6 +15,7 @@ import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {getInternalData} from "./getInternalData.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
+import {_rollupDependencyLoader} from "./_rollupDependencyLoader.ts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 
@@ -118,7 +119,7 @@ export async function rollupPluginFactory(
 			return null
 		},
 
-		load(id) {
+		async load(id) {
 			if (id === `\x00enkore:projectAPI`) {
 				let apiCode = ``
 
@@ -143,7 +144,15 @@ export async function rollupPluginFactory(
 				) as string
 			}
 
-			return null
+			const ret = await _rollupDependencyLoader(id)
+
+			if (ret === null) {
+				return null
+			}
+
+			entryPoint.embeds = ret.embeds
+
+			return ret.codeWithRuntimeCodeStripped
 		}
 	}
 

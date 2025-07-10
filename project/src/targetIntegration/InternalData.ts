@@ -30,6 +30,9 @@ export type NPMPackage = {
 export type EntryPoint = {
 	hasCSSImports: boolean
 	exports: Map<string, Export>
+	embeds: Map<string, {
+		createResourceAtRuntimeInit: boolean
+	}>
 }
 
 export type InternalData = {
