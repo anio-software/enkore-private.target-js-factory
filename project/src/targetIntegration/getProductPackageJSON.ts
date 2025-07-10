@@ -92,12 +92,13 @@ export function getProductPackageJSON(
 		peerDependencies: session.project.packageJSON.peerDependencies,
 		dependencies: session.project.packageJSON.dependencies,
 
-		files: ["./dist"]
+		files: ["./dist", "./enkore-build.json"]
 	}
 
 	if (!options.typeOnly) {
 		newPackageJSON.files!.push("./_source")
 		newPackageJSON.files!.push("./bin")
+		newPackageJSON.files!.push("./enkore-manifest.json")
 	}
 
 	if (isNodeTarget(apiContext.target)) {
