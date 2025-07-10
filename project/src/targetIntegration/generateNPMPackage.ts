@@ -17,6 +17,7 @@ import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntim
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {getEnkoreBuildInfoData} from "./getEnkoreBuildInfoData.ts"
+import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import path from "node:path"
 import crypto from "node:crypto"
 
@@ -95,10 +96,13 @@ async function createDistFiles(
 			}
 		)
 
-		const separator = `\n/** end of runtime init code **/\n`
+		let runtimeInitHeader = `/*${enkoreJSRuntimeInitCodeHeaderMarkerUUID}:`
+		runtimeInitHeader += `${runtimeInitCode.length + 2}*/`
 
-		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCode + separator + jsBundle)
-		await writeDistFile(`${entryPointPath}/index.min.mjs`, runtimeInitCode + separator + minifiedJsBundle)
+		const separator = `;\n`
+
+		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitHeader + runtimeInitCode + separator + jsBundle)
+		await writeDistFile(`${entryPointPath}/index.min.mjs`, runtimeInitHeader + runtimeInitCode + separator + minifiedJsBundle)
 		await writeDistFile(`${entryPointPath}/index.d.mts`, declarationBundle)
 		await writeDistFile(`${entryPointPath}/index.min.d.mts`, declarationBundle)
 
