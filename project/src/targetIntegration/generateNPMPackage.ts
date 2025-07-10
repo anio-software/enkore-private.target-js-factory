@@ -16,6 +16,7 @@ import {rollupPluginFactory} from "./rollupPluginFactory.ts"
 import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.ts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
+import {getEnkoreBuildInfoData} from "./getEnkoreBuildInfoData.ts"
 import path from "node:path"
 
 function src(code: string) {
@@ -151,6 +152,11 @@ async function createDistFiles(
 	}
 
 	await writeAtomicFileJSON("./enkore-manifest.json", manifest, {pretty: true})
+	await writeAtomicFileJSON(
+		"./enkore-build.json",
+		await getEnkoreBuildInfoData(apiContext, session),
+		{pretty: true}
+	)
 }
 
 export async function generateNPMPackage(
