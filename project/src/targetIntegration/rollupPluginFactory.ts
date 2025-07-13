@@ -62,6 +62,7 @@ export async function rollupPluginFactory(
 					"js-bundle://project/generateProjectAPIFromContextRollup.ts"
 				) as string
 			} else if (isFileSync(id)) {
+				const code = await readFileString(id)
 				const marker = enkoreJSRuntimeInitCodeHeaderMarkerUUID
 
 				const reader = await readFileInChunks(id, 512)
@@ -71,10 +72,18 @@ export async function rollupPluginFactory(
 				if (!header) {
 					return null
 				} else if (!header.toString().startsWith(`/*${marker}:`)) {
-					return null
+					const {
+						code: codeWithArtifactsRemoved,
+						globalDataRecords
+					} = toolchain.removeEnkoreJSRuntimeArtifactsFromCode(code)
+
+					if (globalDataRecords.length) {
+						session.enkore.emitMessage("warning", `found global data records, they will be discarded!`)
+					}
+
+					return codeWithArtifactsRemoved
 				}
 
-				const code = await readFileString(id)
 				const result = parseJSRuntimeInitHeader(code)
 
 				if (result === false) {
