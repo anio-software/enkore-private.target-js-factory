@@ -9,7 +9,6 @@ import {writeAtomicFile, readFileString} from "@anio-software/pkg.node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.ts"
 import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.ts"
 import {rollupPluginFactory} from "./rollupPluginFactory.ts"
-import {mergeAndHoistGlobalRuntimeDataRecords} from "./mergeAndHoistGlobalRuntimeDataRecords.ts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import path from "node:path"
@@ -17,10 +16,6 @@ import path from "node:path"
 function src(code: string) {
 	return `export default ${JSON.stringify(code)};\n`
 }
-
-type MergeAndHoistReturnType = Awaited<
-	ReturnType<typeof mergeAndHoistGlobalRuntimeDataRecords>
->
 
 async function createDistFiles(
 	apiContext: APIContext,
@@ -56,15 +51,12 @@ async function createDistFiles(
 		const jsEntryCode = generateEntryPointCode(entryPoint, "js")
 		const declarationsEntryCode = generateEntryPointCode(entryPoint, "dts")
 
-		const {
-			runtimeInitCode,
-			codeWithArtifactsRemoved: jsBundle
-		} = await mergeAndHoist(await toolchain.jsBundler(
+		const jsBundle = await toolchain.jsBundler(
 			session.project.root, jsEntryCode, {
 				...jsBundlerOptions,
 				minify: false
 			}
-		))
+		)
 
 		if (isProductionBuild) {
 			session.enkore.emitMessage(`info`, `minifying javascript bundle`)
@@ -79,6 +71,7 @@ async function createDistFiles(
 			}
 		)
 
+		const runtimeInitCode = ""
 		const separator = `\n/** end of runtime init code **/\n`
 
 		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCode + separator + jsBundle)
@@ -98,17 +91,6 @@ async function createDistFiles(
 			)
 
 			await writeDistFile(`${entryPointPath}/style.css`, cssBundle)
-		}
-
-		async function mergeAndHoist(code: string): Promise<MergeAndHoistReturnType> {
-			if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
-				return {
-					runtimeInitCode: "",
-					codeWithArtifactsRemoved: code
-				}
-			}
-
-			return await mergeAndHoistGlobalRuntimeDataRecords(session, entryPointPath, code)
 		}
 
 		async function writeDistFile(path: string, code: string) {
