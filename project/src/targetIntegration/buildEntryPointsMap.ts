@@ -1,3 +1,4 @@
+import type {APIContext} from "./APIContext.ts"
 import type {
 	EnkoreSessionAPI
 } from "@anio-software/enkore-private.spec"
@@ -24,6 +25,7 @@ function startsWithUpperCaseLetter(str: string) {
 type EntryPoints = InternalData["entryPoints"]
 
 export async function buildEntryPointsMap(
+	apiContext: APIContext,
 	session: EnkoreSessionAPI
 ): Promise<EntryPoints> {
 	// don't create map if we are building embeds only

@@ -64,7 +64,7 @@ const impl: API["initialize"] = async function(
 	}
 
 	getInternalData(session).myTSProgram = program
-	getInternalData(session).entryPoints = await buildEntryPointsMap(session)
+	getInternalData(session).entryPoints = await buildEntryPointsMap(this, session)
 	getInternalData(session).requestedEmbedsFileCache = new Map()
 	getInternalData(session).binScripts = collectBinScripts(session)
 
