@@ -5,6 +5,7 @@ import type {EntryPoint} from "./InternalData.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import {createEntity} from "@anio-software/enkore-private.spec"
+import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 
 async function bundle(
 	session: EnkoreSessionAPI,
@@ -14,7 +15,29 @@ async function bundle(
 
 	return await toolchain.jsBundler(
 		session.project.root, code, {
-			outputFormat: "iife"
+			outputFormat: "iife",
+
+			additionalPlugins: [{
+				when: "pre",
+				plugin: {
+					name: "resolver",
+					resolveId(id) {
+						if (id === "api/_getInitialGlobalState") {
+							return `\x00enkore:_getInitialGlobalState`
+						}
+
+						return null
+					},
+
+					load(id) {
+						if (id === `\x00enkore:_getInitialGlobalState`) {
+							return getEmbedAsString("js-bundle://project/_getInitialGlobalState.ts")
+						}
+
+						return null
+					}
+				}
+			}]
 		}
 	)
 }
@@ -35,13 +58,21 @@ export async function generateRuntimeInitCode(
 
 	let code = ``
 
+	code += `import {_getInitialGlobalState} from "api/_getInitialGlobalState"\n`
+
 	code += `const embedsSymbol = Symbol.for("@anio-software/enkore/global/embeds");\n`
+	code += `const globalStateSymbol = Symbol.for("@anio-software/enkore/global/embeds");\n`
+
+	code += `if (!(globalStateSymbol in globalThis)) {\n`
+	code += `\tglobalThis[globalStateSymbol] = _getInitialGlobalState();\n`
+	code += `}\n`
 
 	code += `if (!(embedSymbol in globalThis)) {\n`
 	code += `\tglobalThis[embedSymbol] = new Map();\n`
 	code += `}\n`
 
 	code += `const embedsMap = globalThis[embedSymbol];\n`
+	code += `const globalState = globalThis[globalStateSymbol];\n`
 
 	for (const [embedURL, {createResourceAtRuntime}] of entryPoint.embeds.entries()) {
 		const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
