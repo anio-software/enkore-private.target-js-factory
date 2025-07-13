@@ -87,6 +87,8 @@ export async function rollupPluginFactory(
 				const result = parseJSRuntimeInitHeader(code)
 
 				if (result === false) {
+					session.enkore.emitMessage("error", `failed to parse js runtime init header`)
+
 					return null
 				}
 
