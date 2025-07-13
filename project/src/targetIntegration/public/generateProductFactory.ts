@@ -20,6 +20,11 @@ async function _copyNPMPackageProduct(
 		destination: "./dist"
 	})
 
+	await copy({
+		source: path.join(base, "enkore-build.json"),
+		destination: "./enkore-build.json"
+	})
+
 	if (isFileSync(path.join(base, "enkore-manifest.json"))) {
 		await copy({
 			source: path.join(base, "enkore-manifest.json"),

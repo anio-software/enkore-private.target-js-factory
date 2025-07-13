@@ -16,6 +16,7 @@ import {getToolchain} from "#~src/getToolchain.ts"
 import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
 import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
+import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
 import {getEnkoreManifestData} from "./getEnkoreManifestData.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import path from "node:path"
@@ -178,6 +179,12 @@ export async function generateNPMPackage(
 
 	await writeAtomicFile(
 		`./package.json`, _prettyPrintPackageJSONExports(packageJSON)
+	)
+
+	await writeAtomicFileJSON(
+		"./enkore-build.json",
+		await getEnkoreBuildFileData(apiContext, session),
+		{pretty: true}
 	)
 
 	await writeAtomicFileJSON(
