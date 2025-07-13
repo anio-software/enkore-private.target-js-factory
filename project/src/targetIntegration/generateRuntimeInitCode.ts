@@ -9,12 +9,12 @@ function iife(code: string) {
 `
 }
 
-export function generateRuntimeInitCode(
+export async function generateRuntimeInitCode(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
 	projectContext: ProjectAPIContext,
 	entryPoint: EntryPoint
-): string {
+): Promise<string> {
 	if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
 		return ""
 	} else if (entryPoint.embeds === "none") {

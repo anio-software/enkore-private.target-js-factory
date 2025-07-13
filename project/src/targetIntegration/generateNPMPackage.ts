@@ -79,7 +79,7 @@ async function createDistFiles(
 			}
 		)
 
-		const runtimeInitCode = generateRuntimeInitCode(
+		const runtimeInitCode = await generateRuntimeInitCode(
 			apiContext, session, projectContext, entryPoint
 		) + `;\n`
 		const runtimeInitCodeHeader = `/*${enkoreJSRuntimeInitCodeHeaderMarkerUUID}:${runtimeInitCode.length}*/`
