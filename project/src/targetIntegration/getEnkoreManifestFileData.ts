@@ -6,7 +6,7 @@ import {
 } from "@anio-software/enkore-private.spec"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 
-export function getEnkoreManifestData(
+export function getEnkoreManifestFileData(
 	session: EnkoreSessionAPI,
 	entryPoints: InternalData["entryPoints"]
 ) {

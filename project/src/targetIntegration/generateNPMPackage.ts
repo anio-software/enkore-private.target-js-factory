@@ -17,7 +17,7 @@ import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
 import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
-import {getEnkoreManifestData} from "./getEnkoreManifestData.ts"
+import {getEnkoreManifestFileData} from "./getEnkoreManifestFileData.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import path from "node:path"
 
@@ -189,7 +189,7 @@ export async function generateNPMPackage(
 
 	await writeAtomicFileJSON(
 		"./enkore-manifest.json",
-		getEnkoreManifestData(session, entryPoints),
+		getEnkoreManifestFileData(session, entryPoints),
 		{pretty: true}
 	)
 
