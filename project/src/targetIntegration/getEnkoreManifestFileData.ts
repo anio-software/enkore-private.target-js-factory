@@ -14,13 +14,13 @@ export function getEnkoreManifestFileData(
 	const exp: EnkoreJSBuildManifestFile["exports"] = {}
 
 	for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
-		if (entryPoint.embeds === "none") continue
+		if (entryPoint.localEmbeds === "none") continue
 
 		exp[entryPointPath] = {
 			embeds: {}
 		}
 
-		for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.embeds.entries()) {
+		for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.localEmbeds.entries()) {
 			const {protocol, path} = parseEmbedURL(embedURL)
 
 			const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${path}`

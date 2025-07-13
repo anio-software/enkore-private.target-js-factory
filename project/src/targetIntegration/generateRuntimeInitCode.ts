@@ -60,7 +60,7 @@ export async function generateRuntimeInitCode(
 ): Promise<string> {
 	if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
 		return ""
-	} else if (entryPoint.embeds === "none") {
+	} else if (entryPoint.localEmbeds === "none") {
 		return ""
 	}
 
@@ -85,7 +85,7 @@ export async function generateRuntimeInitCode(
 	code += `const globalState = globalThis[globalStateSymbol];\n`
 	code += `const embedsMap = globalState.immutable.embeds;\n`
 
-	for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.embeds.entries()) {
+	for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.localEmbeds.entries()) {
 		const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
 		const {protocol, path: sourceFilePath} = parseEmbedURL(embedURL)
 		const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${sourceFilePath}`

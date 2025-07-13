@@ -57,7 +57,7 @@ export async function buildEntryPointsMap(
 			map.set(exportPath, {
 				hasCSSImports: false,
 				exports: new Map(),
-				embeds: "none"
+				localEmbeds: "none"
 			})
 		}
 

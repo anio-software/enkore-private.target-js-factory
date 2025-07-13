@@ -193,10 +193,10 @@ export async function generateNPMPackage(
 		{pretty: true}
 	)
 
-	for (const [, {embeds}] of entryPoints.entries()) {
-		if (embeds === "none") continue
+	for (const [, {localEmbeds}] of entryPoints.entries()) {
+		if (localEmbeds === "none") continue
 
-		for (const [embedURL] of embeds.entries()) {
+		for (const [embedURL] of localEmbeds.entries()) {
 			const {protocol, path: relativeSourcePath} = parseEmbedURL(embedURL)
 			const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
 

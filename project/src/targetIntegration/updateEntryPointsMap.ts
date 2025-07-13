@@ -29,7 +29,7 @@ export async function updateEntryPointsMap(
 		const result = combineRequestedEmbedsFromCodeResults(aggregatedResult)
 
 		if (result[0] === "none") {
-			entryPoint.embeds = "none"
+			entryPoint.localEmbeds = "none"
 
 			continue
 		}
@@ -74,6 +74,6 @@ export async function updateEntryPointsMap(
 			session.enkore.emitMessage("info", message.slice(0, -1))
 		}
 
-		entryPoint.embeds = embedsMap
+		entryPoint.localEmbeds = embedsMap
 	}
 }

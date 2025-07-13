@@ -34,7 +34,7 @@ export type EmbedsMap = Map<string, {
 export type EntryPoint = {
 	hasCSSImports: boolean
 	exports: Map<string, Export>
-	embeds: EmbedsMap | "none"
+	localEmbeds: EmbedsMap | "none"
 }
 
 export type InternalData = {
