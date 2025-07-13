@@ -1,5 +1,6 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.ts"
+import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {getExternals} from "./getExternals.ts"
 import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
@@ -24,6 +25,7 @@ function src(code: string) {
 
 async function createDistFiles(
 	apiContext: APIContext,
+	projectContext: ProjectAPIContext,
 	session: EnkoreSessionAPI
 ) {
 	const isProductionBuild: boolean = (() => {
@@ -40,7 +42,6 @@ async function createDistFiles(
 	const toolchain = getToolchain(session)
 
 	const {entryPoints} = getInternalData(session)
-	const projectContext = await generateProjectAPIContext(session.project.root, false)
 
 	for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
@@ -126,9 +127,10 @@ export async function generateNPMPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
+	const projectContext = await generateProjectAPIContext(session.project.root, false)
 	const {entryPoints, binScripts} = getInternalData(session)
 
-	await createDistFiles(apiContext, session)
+	await createDistFiles(apiContext, projectContext, session)
 
 	const packageJSON = getProductPackageJSON(
 		apiContext,
