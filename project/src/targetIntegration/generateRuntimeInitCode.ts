@@ -5,9 +5,7 @@ import type {EntryPoint} from "./InternalData.ts"
 
 function iife(code: string) {
 	return `
-;(function() {
-	${code}
-})();
+;(function() {${code}})();
 `
 }
 
