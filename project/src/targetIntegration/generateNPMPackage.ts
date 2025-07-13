@@ -78,11 +78,10 @@ async function createDistFiles(
 			}
 		)
 
-		const runtimeInitCode = generateRuntimeInitCode(entryPoint)
-		const separator = `\n/** end of runtime init code **/\n`
+		const runtimeInitCode = generateRuntimeInitCode(entryPoint) + `;\n`
 
-		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCode + separator + jsBundle)
-		await writeDistFile(`${entryPointPath}/index.min.mjs`, runtimeInitCode + separator + minifiedJsBundle)
+		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCode + jsBundle)
+		await writeDistFile(`${entryPointPath}/index.min.mjs`, runtimeInitCode + minifiedJsBundle)
 		await writeDistFile(`${entryPointPath}/index.d.mts`, declarationBundle)
 		await writeDistFile(`${entryPointPath}/index.min.d.mts`, declarationBundle)
 
