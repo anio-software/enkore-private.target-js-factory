@@ -36,9 +36,6 @@ async function createDistFiles(
 		return true
 	})()
 
-	// todo: run this in postCompile hook
-	await updateEntryPointsMap(apiContext, session)
-
 	const toolchain = getToolchain(session)
 
 	const {entryPoints} = getInternalData(session)
@@ -127,6 +124,9 @@ export async function generateNPMPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
+	// todo: run this in postCompile hook
+	await updateEntryPointsMap(apiContext, session)
+
 	const projectContext = await generateProjectAPIContext(session.project.root, false)
 	const {entryPoints, binScripts} = getInternalData(session)
 
