@@ -61,7 +61,16 @@ async function getNeededEmbedsForExternalImport(
 
 		const {embeds} = enkoreManifest.exports[packageImportPath]
 
-		return embeds
+		const ret: Record<string, RemoteEmbed> = {}
+
+		for (const globalIdentifier in embeds) {
+			ret[globalIdentifier] = {
+				...embeds[globalIdentifier],
+				absoluteSourceFilePath: path.join(packageRoot, "_embeds", globalIdentifier)
+			}
+		}
+
+		return ret
 	} catch {}
 
 	return false

@@ -34,7 +34,9 @@ export type EmbedsMap = Map<string, {
 	createResourceAtRuntimeInit: boolean
 }>
 
-export type RemoteEmbed = EnkoreJSBuildManifestFile["exports"][string]["embeds"][string]
+export type RemoteEmbed = EnkoreJSBuildManifestFile["exports"][string]["embeds"][string] & {
+	absoluteSourceFilePath: string
+}
 
 export type EntryPoint = {
 	hasCSSImports: boolean

@@ -5,6 +5,7 @@ import type {EntryPoint} from "./InternalData.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import {createEntity} from "@anio-software/enkore-private.spec"
+import {readFileString} from "@anio-software/pkg.node-fs"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {globalStateSymbolForIdentifier} from "#~embeds/project/globalStateSymbolForIdentifier.ts"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
@@ -118,6 +119,23 @@ export async function generateRuntimeInitCode(
 		})
 
 		code += defineEmbed(globalIdentifier, data)
+	}
+
+	code += `\n/** external embeds **/\n`
+
+	for (const [globalIdentifier, embed] of entryPoint.remoteEmbeds.entries()) {
+		const {
+			createResourceAtRuntimeInit,
+			sourceFilePath,
+			url
+		} = embed
+
+		code += defineEmbed(globalIdentifier, createEntity("EnkoreJSRuntimeEmbeddedFile", 0, 0, {
+			sourceFilePath,
+			url,
+			createResourceAtRuntimeInit,
+			data: await readFileString(embed.absoluteSourceFilePath)
+		}))
 	}
 
 	const nodeRequire = `
