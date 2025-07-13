@@ -9,20 +9,15 @@ import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {globalStateSymbolForIdentifier} from "#~embeds/project/globalStateSymbolForIdentifier.ts"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 
-function defineEmbed(
-	globalIdentifier: string,
-	data: EnkoreJSRuntimeEmbeddedFile,
-	embedURL: string,
-	createResourceAtRuntimeInit: boolean
-): string {
+function defineEmbed(globalIdentifier: string, data: EnkoreJSRuntimeEmbeddedFile): string {
 	let code = ``
 
 	code += `if (!embedsMap.has("${globalIdentifier}")) {\n`
 	code += `\tconst embed = ${JSON.stringify(data)};\n`
 	code += `\tembedsMap.set("${globalIdentifier}", embed)\n`
 
-	if (createResourceAtRuntimeInit) {
-		code += `\tconst creationOptions = _getCreationOptionsForEmbed("${embedURL}");\n`
+	if (data.createResourceAtRuntimeInit) {
+		code += `\tconst creationOptions = _getCreationOptionsForEmbed("${data.url}");\n`
 		code += `\tconst {resourceURL} = createTemporaryResourceFromStringSync(embed.data, creationOptions);\n`
 		code += `\tglobalState.mutable.embedResourceURLs.set(`
 		code += `"${globalIdentifier}", resourceURL`
@@ -122,7 +117,7 @@ export async function generateRuntimeInitCode(
 			data: embed.data
 		})
 
-		code += defineEmbed(globalIdentifier, data, embedURL, createResourceAtRuntimeInit)
+		code += defineEmbed(globalIdentifier, data)
 	}
 
 	const nodeRequire = `
