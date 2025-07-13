@@ -19,7 +19,7 @@ type Ret = {
 async function getNeededEmbedsForExternalImport(
 	session: EnkoreSessionAPI,
 	moduleSpecifier: string
-) {
+): Promise<false | Ret["remote"]> {
 	const parsed = parseModuleSpecifier(moduleSpecifier)
 	const packageName: string = (() => {
 		if (isString(parsed.scope)) {
@@ -44,7 +44,7 @@ async function getNeededEmbedsForExternalImport(
 		)
 
 		if (!packageJSONFilePath) {
-			return
+			return false
 		}
 
 		const packageRoot = path.dirname(packageJSONFilePath)
@@ -56,7 +56,7 @@ async function getNeededEmbedsForExternalImport(
 				"error", `unable to find '${packageImportPath}' in enkore-manifest.json file.`
 			)
 
-			return
+			return false
 		}
 
 		const {embeds} = enkoreManifest.exports[packageImportPath]
