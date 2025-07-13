@@ -4,7 +4,9 @@ import type {
 } from "@anio-software/enkore-private.target-js-toolchain_types"
 
 type Ret = [
-	"specific", Map<string, string>
+	"specific", Map<string, {
+		requestedByMethods: Set<string>
+	}>
 ] | [
 	"all", RequestedEmbedsFromCodeReasonWhyUnknown[]
 ] | [
@@ -15,7 +17,9 @@ export function combineRequestedEmbedsFromCodeResults(
 	results: RequestedEmbedsFromCodeResult[]
 ): Ret {
 	// keep track of requested embeds
-	const requestedEmbeds: Map<string, string> = new Map()
+	const requestedEmbeds: Map<string, {
+		requestedByMethods: Set<string>
+	}> = new Map()
 	const reasonsWhyUnknown: Map<RequestedEmbedsFromCodeReasonWhyUnknown, true> = new Map()
 
 	for (const result of results) {
@@ -27,7 +31,15 @@ export function combineRequestedEmbedsFromCodeResults(
 		}
 
 		for (const embed of result.requestedEmbeds) {
-			requestedEmbeds.set(embed.embedPath, embed.requestedByMethod)
+			if (!requestedEmbeds.has(embed.embedPath)) {
+				requestedEmbeds.set(embed.embedPath, {
+					requestedByMethods: new Set()
+				})
+			}
+
+			requestedEmbeds.get(embed.embedPath)!.requestedByMethods.add(
+				embed.requestedByMethod
+			)
 		}
 	}
 
