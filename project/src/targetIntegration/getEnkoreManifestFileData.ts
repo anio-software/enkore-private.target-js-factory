@@ -26,6 +26,8 @@ export function getEnkoreManifestFileData(
 			const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${path}`
 
 			exp[entryPointPath].embeds[globalIdentifier] = {
+				sourceFilePath: path,
+				url: embedURL,
 				createResourceAtRuntimeInit,
 				integrity: ""
 			}
