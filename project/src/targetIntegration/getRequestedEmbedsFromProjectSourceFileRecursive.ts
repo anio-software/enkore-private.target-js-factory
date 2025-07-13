@@ -6,6 +6,8 @@ import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {readEntityJSONFile} from "@anio-software/enkore-private.spec"
 import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
+import {parseModuleSpecifier} from "@anio-software/pkg.js-utils"
+import {isString, isUndefined} from "@anio-software/pkg.is"
 import path from "node:path"
 
 type Ret = {
@@ -19,30 +21,22 @@ async function getNeededEmbedsForExternalImport(
 	session: EnkoreSessionAPI,
 	moduleSpecifier: string
 ) {
-	const tmp = moduleSpecifier.split("/")
-	let packageName = "", packageImportPath = ""
-
-	if (moduleSpecifier.startsWith("@")) {
-		if (2 > tmp.length) {
-			throw new Error(`Invalid module specifier '${moduleSpecifier}'.`)
+	const parsed = parseModuleSpecifier(moduleSpecifier)
+	const packageName: string = (() => {
+		if (isString(parsed.scope)) {
+			return `@${parsed.scope}/${parsed.packageName}`
 		}
 
-		packageName = tmp.slice(0, 2).join("/")
-		packageImportPath = tmp.slice(2).join("/")
-	} else {
-		if (1 > tmp.length) {
-			throw new Error(`Invalid module specifier '${moduleSpecifier}'.`)
+		return parsed.packageName
+	})()
+
+	const packageImportPath: string = (() => {
+		if (isUndefined(parsed.packageImportPath)) {
+			return "default"
 		}
 
-		packageName = tmp[0]
-		packageImportPath = tmp.slice(1).join("/")
-	}
-
-	if (!packageImportPath.trim().length) {
-		packageImportPath = "default"
-	}
-
-	packageImportPath = path.normalize(packageImportPath)
+		return parsed.packageImportPath
+	})()
 
 	try {
 		// todo: resolve enkore-manifest.json instead of package.json
