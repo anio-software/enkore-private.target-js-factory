@@ -1,6 +1,9 @@
 import type {MyTSProgram, MyTSExport} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
-import type {CommonTargetJSOptions} from "@anio-software/enkore-private.spec"
+import type {
+	CommonTargetJSOptions,
+	EnkoreJSBuildManifestFile
+} from "@anio-software/enkore-private.spec"
 
 type ArrayType<T> = T extends any[] ? T : never
 
@@ -31,13 +34,13 @@ export type EmbedsMap = Map<string, {
 	createResourceAtRuntimeInit: boolean
 }>
 
+export type RemoteEmbed = EnkoreJSBuildManifestFile["exports"][string]["embeds"][string]
+
 export type EntryPoint = {
 	hasCSSImports: boolean
 	exports: Map<string, Export>
 	localEmbeds: EmbedsMap | "none"
-	remoteEmbeds: Map<string, {
-		createResourceAtRuntimeInit: boolean
-	}>
+	remoteEmbeds: Map<string, RemoteEmbed>
 }
 
 export type InternalData = {

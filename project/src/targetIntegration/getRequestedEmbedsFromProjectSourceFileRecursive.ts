@@ -1,6 +1,7 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec";
 import type {APIContext} from "./APIContext.ts";
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
+import type {RemoteEmbed} from "./InternalData.ts"
 import {getRequestedEmbedsFromProjectSourceFile} from "./getRequestedEmbedsFromProjectSourceFile.ts"
 import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {getInternalData} from "./getInternalData.ts"
@@ -12,9 +13,7 @@ import path from "node:path"
 
 type Ret = {
 	local: RequestedEmbedsFromCodeResult[]
-	remote: Record<string, {
-		createResourceAtRuntimeInit: boolean
-	}>
+	remote: Record<string, RemoteEmbed>
 }
 
 async function getNeededEmbedsForExternalImport(
