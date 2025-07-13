@@ -82,6 +82,8 @@ export async function generateRuntimeInitCode(
 	if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
 		return ""
 	} else if (entryPoint.localEmbeds === "none" && !entryPoint.remoteEmbeds.size) {
+		session.enkore.emitMessage("info", "skipping runtime js code, no embeds are used.")
+
 		return ""
 	}
 
