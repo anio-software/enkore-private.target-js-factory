@@ -1,18 +1,19 @@
 import type {APIContext} from "./APIContext.ts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
+import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getRequestedEmbedsFromProjectSourceFileRecursive} from "./getRequestedEmbedsFromProjectSourceFileRecursive.ts"
 import {combineRequestedEmbedsFromCodeResults} from "./combineRequestedEmbedsFromCodeResults.ts"
 import {getInternalData} from "./getInternalData.ts"
-import {_generateEmbedFileMap} from "#~embeds/project/_generateEmbedFileMap.ts"
 import type {EmbedsMap} from "./InternalData.ts"
 
 export async function updateEntryPointsMap(
 	apiContext: APIContext,
+	projectContext: ProjectAPIContext,
 	session: EnkoreSessionAPI
 ) {
 	const entryPoints = getInternalData(session).entryPoints
-	const projectEmbedMap = await _generateEmbedFileMap(session.project.root)
+	const projectEmbedMap = projectContext._projectEmbedFileMapRemoveMeInBundle!
 
 	for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
 		const aggregatedResult: RequestedEmbedsFromCodeResult[] = []

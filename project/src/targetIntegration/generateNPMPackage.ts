@@ -124,10 +124,11 @@ export async function generateNPMPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
-	// todo: run this in postCompile hook
-	await updateEntryPointsMap(apiContext, session)
-
 	const projectContext = await generateProjectAPIContext(session.project.root, false)
+
+	// todo: run this in postCompile hook
+	await updateEntryPointsMap(apiContext, projectContext, session)
+
 	const {entryPoints, binScripts} = getInternalData(session)
 
 	await createDistFiles(apiContext, projectContext, session)
