@@ -1,5 +1,6 @@
 import type {APIContext} from "./APIContext.ts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
+import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
 import type {EntryPoint} from "./InternalData.ts"
 
 function iife(code: string) {
@@ -13,6 +14,7 @@ function iife(code: string) {
 export function generateRuntimeInitCode(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
+	projectContext: ProjectAPIContext,
 	entryPoint: EntryPoint
 ): string {
 	if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
