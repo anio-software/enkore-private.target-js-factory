@@ -1,13 +1,8 @@
-import {
-	type EnkoreSessionAPI,
-	type EnkoreJSRuntimeEmbeddedFile,
-	createEntity
-} from "@anio-software/enkore-private.spec"
+import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.ts"
 import type {EntryPoint} from "./InternalData.ts"
-import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
-import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
+import {generateProjectAPIContextForEntryPoint} from "./generateProjectAPIContextForEntryPoint.ts"
 import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
 import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
@@ -24,22 +19,11 @@ export async function rollupPluginFactory(
 ): Promise<Factory> {
 	const toolchain = getToolchain(session)
 
-	const projectContext = (
-		await generateProjectAPIContext(session.project.root, false)
-	) as Required<ProjectAPIContext>
+	const projectContext = await generateProjectAPIContextForEntryPoint(
+		session, entryPoint, entryPointPath
+	)
 
-	//
-	// optimization: check which embeds can be trimmed/ommited
-	// from the project context in order to save space
-	//
-	// todo: implement
-
-	// projectContext is now trimmed
-	const bundlerProjectContext = {...projectContext} as ProjectAPIContext
-
-	delete bundlerProjectContext._projectEmbedFileMapRemoveMeInBundle;
-
-	const bundlerProjectContextString = JSON.stringify(JSON.stringify(bundlerProjectContext))
+	const projectContextString = JSON.stringify(JSON.stringify(projectContext))
 
 	const plugin: Factory["plugin"] = {
 		name: "enkore-target-js-project-plugin",
@@ -60,7 +44,7 @@ export async function rollupPluginFactory(
 
 				apiCode += `import {generateProjectAPIFromContextRollup} from "enkore:generateProjectAPIFromContextRollup"\n`
 
-				apiCode += `const __api = await generateProjectAPIFromContextRollup(JSON.parse(${bundlerProjectContextString}));\n`
+				apiCode += `const __api = await generateProjectAPIFromContextRollup(JSON.parse(${projectContextString}));\n`
 
 				apiCode += generateAPIExportGlueCode(
 					"TypeDoesntMatterWillBeStrippedAnyway",
