@@ -72,16 +72,7 @@ export async function rollupPluginFactory(
 				if (!header) {
 					return null
 				} else if (!header.toString().startsWith(`/*${marker}:`)) {
-					const {
-						code: codeWithArtifactsRemoved,
-						globalDataRecords
-					} = toolchain.removeEnkoreJSRuntimeArtifactsFromCode(code)
-
-					if (globalDataRecords.length) {
-						session.enkore.emitMessage("warning", `found global data records, they will be discarded!`)
-					}
-
-					return codeWithArtifactsRemoved
+					return null
 				}
 
 				const result = parseJSRuntimeInitHeader(code)
