@@ -1,4 +1,6 @@
 import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
+import {translateEmbedURLToGlobalIdentifier} from "./translateEmbedURLToGlobalIdentifier.ts"
+import {getGlobalState} from "./getGlobalState.ts"
 
 export function getEmbedData(
 	context: ProjectAPIContext,
@@ -22,7 +24,16 @@ export function getEmbedData(
 	}
 	// bundle branch
 	else {
-		embedData = "" //getEmbedFromGlobalDataRecords(context, url).data
+		const globalIdentifier = translateEmbedURLToGlobalIdentifier(context, url)
+		const globalState = getGlobalState()
+
+		if (!globalState.immutable.embeds.has(globalIdentifier)) {
+			throw new Error(
+				`Unable to locate data for embed '${globalIdentifier}'.`
+			)
+		}
+
+		embedData = globalState.immutable.embeds.get(globalIdentifier)!.data
 	}
 
 	// from https://web.dev/articles/base64-encoding

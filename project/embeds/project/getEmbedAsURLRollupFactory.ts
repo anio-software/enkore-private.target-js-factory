@@ -1,5 +1,7 @@
 import type {ProjectAPI} from "./ProjectAPI.ts"
 import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
+import {translateEmbedURLToGlobalIdentifier} from "./translateEmbedURLToGlobalIdentifier.ts"
+import {getGlobalState} from "./getGlobalState.ts"
 
 const impl: ProjectAPI["getEmbedAsURL"] = function(
 	this: ProjectAPIContext, embedPath: string
@@ -9,15 +11,16 @@ const impl: ProjectAPI["getEmbedAsURL"] = function(
 		throw new Error(`We should never get here. This is a bug.`)
 	}
 
-	const resourceURL = "" // getEmbedResourceURLFromGlobalDataRecords(this, embedPath)
+	const globalIdentifier = translateEmbedURLToGlobalIdentifier(this, embedPath)
+	const globalState = getGlobalState()
 
-	if (!resourceURL.length) {
+	if (!globalState.mutable.embedResourceURLs.has(globalIdentifier)) {
 		throw new Error(
-			`Embed '${embedPath}' doesn't have a resource associated with it. This is a bug.`
+			`Unable to locate resource URL for embed '${globalIdentifier}'.`
 		)
 	}
 
-	return resourceURL
+	return globalState.mutable.embedResourceURLs.get(globalIdentifier)!
 }
 
 export function getEmbedAsURLRollupFactory(context: ProjectAPIContext) {
