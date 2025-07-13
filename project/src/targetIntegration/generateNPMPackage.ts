@@ -212,4 +212,18 @@ export async function generateNPMPackage(
 			)
 		}
 	}
+
+	for (const [_, {remoteEmbeds}] of entryPoints.entries()) {
+		for (const [globalIdentifier, {absoluteSourceFilePath}] of remoteEmbeds.entries()) {
+			const destinationPath = `./_embeds/${globalIdentifier}`
+
+			if (isFileSync(destinationPath)) continue
+
+			await writeAtomicFile(
+				destinationPath,
+				await readFileString(absoluteSourceFilePath),
+				{createParents: true}
+			)
+		}
+	}
 }
