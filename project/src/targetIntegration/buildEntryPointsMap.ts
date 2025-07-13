@@ -54,7 +54,8 @@ export function buildEntryPointsMap(
 		if (!map.has(exportPath)) {
 			map.set(exportPath, {
 				hasCSSImports: false,
-				exports: new Map()
+				exports: new Map(),
+				embeds: "none"
 			})
 		}
 

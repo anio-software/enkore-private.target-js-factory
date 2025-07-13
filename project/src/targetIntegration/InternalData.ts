@@ -27,9 +27,14 @@ export type NPMPackage = {
 	publishConfig: Omit<PublishConfig, "packageName" | "packageContents">
 }
 
+export type EmbedsMap = Map<string, {
+	requestedByMethods: Set<string>
+}>
+
 export type EntryPoint = {
 	hasCSSImports: boolean
 	exports: Map<string, Export>
+	embeds: EmbedsMap | "none"
 }
 
 export type InternalData = {
