@@ -1,5 +1,5 @@
 import type {APIContext} from "./APIContext.ts"
-import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
+import type {EnkoreSessionAPI, EnkoreJSRuntimeEmbeddedFile} from "@anio-software/enkore-private.spec"
 import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
 import type {EntryPoint} from "./InternalData.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
@@ -8,6 +8,31 @@ import {createEntity} from "@anio-software/enkore-private.spec"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {globalStateSymbolForIdentifier} from "#~embeds/project/globalStateSymbolForIdentifier.ts"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
+
+function defineEmbed(
+	globalIdentifier: string,
+	data: EnkoreJSRuntimeEmbeddedFile,
+	embedURL: string,
+	createResourceAtRuntimeInit: boolean
+): string {
+	let code = ``
+
+	code += `if (!embedsMap.has("${globalIdentifier}")) {\n`
+	code += `\tconst embed = ${JSON.stringify(data)};\n`
+	code += `\tembedsMap.set("${globalIdentifier}", embed)\n`
+
+	if (createResourceAtRuntimeInit) {
+		code += `\tconst creationOptions = _getCreationOptionsForEmbed("${embedURL}");\n`
+		code += `\tconst {resourceURL} = createTemporaryResourceFromStringSync(embed.data, creationOptions);\n`
+		code += `\tglobalState.mutable.embedResourceURLs.set(`
+		code += `"${globalIdentifier}", resourceURL`
+		code += `);\n`
+	}
+
+	code += `}\n`
+
+	return code
+}
 
 async function bundle(
 	session: EnkoreSessionAPI,
@@ -97,19 +122,7 @@ export async function generateRuntimeInitCode(
 			data: embed.data
 		})
 
-		code += `if (!embedsMap.has("${globalIdentifier}")) {\n`
-		code += `\tconst embed = ${JSON.stringify(data)};\n`
-		code += `\tembedsMap.set("${globalIdentifier}", embed)\n`
-
-		if (createResourceAtRuntimeInit) {
-			code += `\tconst creationOptions = _getCreationOptionsForEmbed("${embedURL}");\n`
-			code += `\tconst {resourceURL} = createTemporaryResourceFromStringSync(embed.data, creationOptions);\n`
-			code += `\tglobalState.mutable.embedResourceURLs.set(`
-			code += `"${globalIdentifier}", resourceURL`
-			code += `);\n`
-		}
-
-		code += `}\n`
+		code += defineEmbed(globalIdentifier, data, embedURL, createResourceAtRuntimeInit)
 	}
 
 	const nodeRequire = `
