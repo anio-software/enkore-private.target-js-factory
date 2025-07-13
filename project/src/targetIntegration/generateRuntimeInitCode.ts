@@ -105,6 +105,7 @@ export async function generateRuntimeInitCode(
 
 	code += `const globalState = globalThis[globalStateSymbol];\n`
 	code += `const embedsMap = globalState.immutable.embeds;\n`
+	code += `\n/** local embeds **/\n`
 
 	if (entryPoint.localEmbeds !== "none") {
 		for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.localEmbeds.entries()) {
