@@ -23,9 +23,9 @@ function startsWithUpperCaseLetter(str: string) {
 
 type EntryPoints = InternalData["entryPoints"]
 
-export function buildEntryPointsMap(
+export async function buildEntryPointsMap(
 	session: EnkoreSessionAPI
-): EntryPoints {
+): Promise<EntryPoints> {
 	// don't create map if we are building embeds only
 	if (session.enkore.getOptions()._partialBuild === true) {
 		session.enkore.emitMessage(
