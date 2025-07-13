@@ -118,12 +118,6 @@ async function createDistFiles(
 			}
 		}
 	}
-
-	await writeAtomicFileJSON(
-		"./enkore-manifest.json",
-		getEnkoreManifestData(session, entryPoints),
-		{pretty: true}
-	)
 }
 
 export async function generateNPMPackage(
@@ -180,5 +174,11 @@ export async function generateNPMPackage(
 
 	await writeAtomicFile(
 		`./package.json`, _prettyPrintPackageJSONExports(packageJSON)
+	)
+
+	await writeAtomicFileJSON(
+		"./enkore-manifest.json",
+		getEnkoreManifestData(session, entryPoints),
+		{pretty: true}
 	)
 }
