@@ -81,7 +81,7 @@ export async function generateRuntimeInitCode(
 ): Promise<string> {
 	if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
 		return ""
-	} else if (entryPoint.localEmbeds === "none") {
+	} else if (entryPoint.localEmbeds === "none" && !entryPoint.remoteEmbeds.size) {
 		return ""
 	}
 
