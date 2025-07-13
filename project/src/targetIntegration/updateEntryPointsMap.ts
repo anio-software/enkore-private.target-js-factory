@@ -23,7 +23,7 @@ export async function updateEntryPointsMap(
 				apiContext, session, relativePath
 			)
 
-			result.forEach(r => aggregatedResult.push(r))
+			result.local.forEach(r => aggregatedResult.push(r))
 		}
 
 		const result = combineRequestedEmbedsFromCodeResults(aggregatedResult)

@@ -5,14 +5,18 @@ import {getRequestedEmbedsFromProjectSourceFile} from "./getRequestedEmbedsFromP
 import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {getInternalData} from "./getInternalData.ts"
 
-type Ret = RequestedEmbedsFromCodeResult[]
+type Ret = {
+	local: RequestedEmbedsFromCodeResult[]
+}
 
 export async function getRequestedEmbedsFromProjectSourceFileRecursive(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
 	sourceFilePath: string
 ): Promise<Ret> {
-	const ret: Ret = []
+	const ret: Ret = {
+		local: []
+	}
 
 	const mod = getModuleGuarded(
 		getInternalData(session).myTSProgram,
@@ -30,7 +34,7 @@ export async function getRequestedEmbedsFromProjectSourceFileRecursive(
 	filesToAnalyze.add(mod.filePath.slice("build/".length))
 
 	for (const [filePath] of filesToAnalyze.entries()) {
-		ret.push(
+		ret.local.push(
 			await getRequestedEmbedsFromProjectSourceFile(
 				apiContext, session, filePath
 			)
