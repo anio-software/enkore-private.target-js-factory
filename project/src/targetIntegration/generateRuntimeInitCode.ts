@@ -106,19 +106,21 @@ export async function generateRuntimeInitCode(
 	code += `const globalState = globalThis[globalStateSymbol];\n`
 	code += `const embedsMap = globalState.immutable.embeds;\n`
 
-	for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.localEmbeds.entries()) {
-		const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
-		const {protocol, path: sourceFilePath} = parseEmbedURL(embedURL)
-		const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${sourceFilePath}`
+	if (entryPoint.localEmbeds !== "none") {
+		for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.localEmbeds.entries()) {
+			const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
+			const {protocol, path: sourceFilePath} = parseEmbedURL(embedURL)
+			const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${sourceFilePath}`
 
-		const data = createEntity("EnkoreJSRuntimeEmbeddedFile", 0, 0, {
-			createResourceAtRuntimeInit,
-			sourceFilePath,
-			url: embedURL,
-			data: embed.data
-		})
+			const data = createEntity("EnkoreJSRuntimeEmbeddedFile", 0, 0, {
+				createResourceAtRuntimeInit,
+				sourceFilePath,
+				url: embedURL,
+				data: embed.data
+			})
 
-		code += defineEmbed(globalIdentifier, data)
+			code += defineEmbed(globalIdentifier, data)
+		}
 	}
 
 	code += `\n/** external embeds **/\n`
