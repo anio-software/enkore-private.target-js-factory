@@ -24,6 +24,21 @@ export async function updateEntryPointsMap(
 			)
 
 			result.local.forEach(r => aggregatedResult.push(r))
+
+			for (const globalIdentifier in result.remote) {
+				const {createResourceAtRuntimeInit} = result.remote[globalIdentifier]
+
+				// NB: prevent 'createResourceAtRuntimeInit' from being overwritten to 'false'
+				if (entryPoint.remoteEmbeds.has(globalIdentifier)) {
+					const tmp = entryPoint.remoteEmbeds.get(globalIdentifier)!
+
+					if (tmp.createResourceAtRuntimeInit) continue
+				}
+
+				entryPoint.remoteEmbeds.set(globalIdentifier, {
+					createResourceAtRuntimeInit
+				})
+			}
 		}
 
 		const result = combineRequestedEmbedsFromCodeResults(aggregatedResult)

@@ -35,6 +35,9 @@ export type EntryPoint = {
 	hasCSSImports: boolean
 	exports: Map<string, Export>
 	localEmbeds: EmbedsMap | "none"
+	remoteEmbeds: Map<string, {
+		createResourceAtRuntimeInit: boolean
+	}>
 }
 
 export type InternalData = {
