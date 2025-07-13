@@ -6,7 +6,7 @@ import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-pri
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.ts"
 import {generateEntryPointCode} from "./generateEntryPointCode.ts"
-import {writeAtomicFile, readFileString} from "@anio-software/pkg.node-fs"
+import {writeAtomicFile, readFileString, writeAtomicFileJSON} from "@anio-software/pkg.node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.ts"
 import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.ts"
 import {rollupPluginFactory} from "./rollupPluginFactory.ts"
@@ -15,6 +15,7 @@ import {getToolchain} from "#~src/getToolchain.ts"
 import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
 import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
+import {getEnkoreManifestData} from "./getEnkoreManifestData.ts"
 import path from "node:path"
 
 function src(code: string) {
@@ -117,6 +118,12 @@ async function createDistFiles(
 			}
 		}
 	}
+
+	await writeAtomicFileJSON(
+		"./enkore-manifest.json",
+		getEnkoreManifestData(session, entryPoints),
+		{pretty: true}
+	)
 }
 
 export async function generateNPMPackage(
