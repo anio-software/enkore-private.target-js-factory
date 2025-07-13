@@ -1,8 +1,7 @@
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.ts"
-import type {EntryPoint} from "./InternalData.ts"
-import {generateProjectAPIContextForEntryPoint} from "./generateProjectAPIContextForEntryPoint.ts"
+import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
 import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
 import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
@@ -14,16 +13,14 @@ type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 export async function rollupPluginFactory(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
-	entryPointPath: string,
-	entryPoint: EntryPoint
+	projectContext: ProjectAPIContext
 ): Promise<Factory> {
 	const toolchain = getToolchain(session)
 
-	const projectContext = await generateProjectAPIContextForEntryPoint(
-		session, entryPoint, entryPointPath
-	)
+	const projectContextCopy = {...projectContext}
+	delete projectContextCopy._projectEmbedFileMapRemoveMeInBundle
 
-	const projectContextString = JSON.stringify(JSON.stringify(projectContext))
+	const projectContextString = JSON.stringify(JSON.stringify(projectContextCopy))
 
 	const plugin: Factory["plugin"] = {
 		name: "enkore-target-js-project-plugin",

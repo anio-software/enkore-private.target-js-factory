@@ -12,6 +12,7 @@ import {rollupPluginFactory} from "./rollupPluginFactory.ts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
+import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
 import path from "node:path"
 
 function src(code: string) {
@@ -36,6 +37,7 @@ async function createDistFiles(
 	const toolchain = getToolchain(session)
 
 	const {entryPoints} = getInternalData(session)
+	const projectContext = await generateProjectAPIContext(session.project.root, false)
 
 	for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
 		const externalPackages: string[] = getExternals(apiContext, entryPointPath, session, "packages")
@@ -48,7 +50,7 @@ async function createDistFiles(
 			onRollupLogFunction,
 			additionalPlugins: [
 				rollupCSSStubPluginFactory(session),
-				await rollupPluginFactory(session, apiContext, entryPointPath, entryPoint)
+				await rollupPluginFactory(session, apiContext, projectContext)
 			]
 		}
 
