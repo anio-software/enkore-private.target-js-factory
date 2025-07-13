@@ -2,6 +2,14 @@ import type {APIContext} from "./APIContext.ts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {EntryPoint} from "./InternalData.ts"
 
+function iife(code: string) {
+	return `
+;(function() {
+	${code}
+})();
+`
+}
+
 export function generateRuntimeInitCode(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
@@ -13,5 +21,7 @@ export function generateRuntimeInitCode(
 		return ""
 	}
 
-	return ""
+	let code = ``
+
+	return iife(code)
 }
