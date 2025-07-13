@@ -6,6 +6,7 @@ import {getToolchain} from "#~src/getToolchain.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import {createEntity} from "@anio-software/enkore-private.spec"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
+import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 
 async function bundle(
 	session: EnkoreSessionAPI,
@@ -24,6 +25,10 @@ async function bundle(
 					resolveId(id) {
 						if (id === "api/_getInitialGlobalState") {
 							return `\x00enkore:_getInitialGlobalState`
+						} else if (id === "api/temporaryResourceFactory") {
+							return `\x00enkore:temporaryResourceFactory`
+						} else if (id === "api/_getCreationOptionsForEmbed") {
+							return `\x00enkore:_getCreationOptionsForEmbed`
 						}
 
 						return null
@@ -32,6 +37,10 @@ async function bundle(
 					load(id) {
 						if (id === `\x00enkore:_getInitialGlobalState`) {
 							return getEmbedAsString("js-bundle://project/_getInitialGlobalState.ts")
+						} else if (id === `\x00enkore:temporaryResourceFactory`) {
+							return temporaryResourceFactory
+						} else if (id === `\x00enkore:_getCreationOptionsForEmbed`) {
+							return getEmbedAsString("js-bundle://project/_getCreationOptionsForEmbed.ts")
 						}
 
 						return null
@@ -59,8 +68,14 @@ export async function generateRuntimeInitCode(
 	let code = ``
 
 	code += `import {_getInitialGlobalState} from "api/_getInitialGlobalState"\n`
+	code += `import {createTemporaryResourceFromStringSyncFactory} from "api/temporaryResourceFactory"\n`
+	code += `import {_getCreationOptionsForEmbed} from "api/_getCreationOptionsForEmbed"\n`
 
 	code += `const globalStateSymbol = Symbol.for("@anio-software/enkore/global/embeds");\n`
+	code += `const nodeRequireSymbol = Symbol.for("@anio-software/enkore/global/nodeRequire");\n`
+
+	code += `const createTemporaryResourceFromStringSync = `
+	code += `createTemporaryResourceFromStringSyncFactory(globalThis[nodeRequireSymbol]);\n`
 
 	code += `if (!(globalStateSymbol in globalThis)) {\n`
 	code += `\tglobalThis[globalStateSymbol] = _getInitialGlobalState();\n`
@@ -82,9 +97,29 @@ export async function generateRuntimeInitCode(
 		})
 
 		code += `if (!embedsMap.has("${globalIdentifier}")) {\n`
-		code += `\tembedsMap.set("${globalIdentifier}", ${JSON.stringify(data)})\n`
+		code += `\tconst embed = ${JSON.stringify(data)};\n`
+		code += `\tembedsMap.set("${globalIdentifier}", embed)\n`
+
+		if (createResourceAtRuntime) {
+			code += `\tconst creationOptions = _getCreationOptionsForEmbed("${embedURL}");\n`
+			code += `\tconst {resourceURL} = createTemporaryResourceFromStringSync(embed.data, creationOptions);\n`
+			code += `\tglobalState.mutable.embedResourceURLs.set(`
+			code += `"${globalIdentifier}", resourceURL`
+			code += `);\n`
+		}
+
 		code += `}\n`
 	}
 
-	return await bundle(session, code)
+	const nodeRequire = `
+await (async function() {
+	const nodeRequireSymbol = Symbol.for("@anio-software/enkore/global/nodeRequire");
+
+	const {createRequire} = await import("node:module")
+
+	globalThis[nodeRequireSymbol] = createRequire("/")
+})();
+`
+
+	return nodeRequire + await bundle(session, code)
 }
