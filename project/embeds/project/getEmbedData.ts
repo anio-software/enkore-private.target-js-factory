@@ -1,5 +1,4 @@
 import type {ProjectAPIContext} from "./ProjectAPIContext.ts"
-import {getEmbedFromGlobalDataRecords} from "./getEmbedFromGlobalDataRecords.ts"
 
 export function getEmbedData(
 	context: ProjectAPIContext,
@@ -23,7 +22,7 @@ export function getEmbedData(
 	}
 	// bundle branch
 	else {
-		embedData = getEmbedFromGlobalDataRecords(context, url).data
+		embedData = "" //getEmbedFromGlobalDataRecords(context, url).data
 	}
 
 	// from https://web.dev/articles/base64-encoding
