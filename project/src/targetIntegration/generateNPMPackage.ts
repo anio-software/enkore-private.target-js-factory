@@ -79,7 +79,7 @@ async function createDistFiles(
 			}
 		)
 
-		const runtimeInitCode = generateRuntimeInitCode(entryPoint) + `;\n`
+		const runtimeInitCode = generateRuntimeInitCode(apiContext, session, entryPoint) + `;\n`
 		const runtimeInitCodeHeader = `/*${enkoreJSRuntimeInitCodeHeaderMarkerUUID}:${runtimeInitCode.length}*/`
 
 		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCodeHeader + runtimeInitCode + jsBundle)
