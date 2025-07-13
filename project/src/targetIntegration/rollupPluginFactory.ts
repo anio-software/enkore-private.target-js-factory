@@ -7,6 +7,9 @@ import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
+import {isFileSync, readFileInChunks, readFileString} from "@anio-software/pkg.node-fs"
+import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
+import {parseJSRuntimeInitHeader} from "./parseJSRuntimeInitHeader.ts"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 
@@ -35,7 +38,7 @@ export async function rollupPluginFactory(
 			return null
 		},
 
-		load(id) {
+		async load(id) {
 			if (id === `\x00enkore:projectAPI`) {
 				let apiCode = ``
 
@@ -58,6 +61,29 @@ export async function rollupPluginFactory(
 				return getEmbedAsString(
 					"js-bundle://project/generateProjectAPIFromContextRollup.ts"
 				) as string
+			} else if (isFileSync(id)) {
+				const marker = enkoreJSRuntimeInitCodeHeaderMarkerUUID
+
+				const reader = await readFileInChunks(id, 512)
+				const header = await reader.readNextChunk()
+				await reader.close()
+
+				if (!header) {
+					return null
+				} else if (!header.toString().startsWith(`/*${marker}:`)) {
+					return null
+				}
+
+				const code = await readFileString(id)
+				const result = parseJSRuntimeInitHeader(code)
+
+				if (result === false) {
+					return null
+				}
+
+				session.enkore.emitMessage("info", `detected js runtime init header offset=${result.offset}`)
+
+				return code.slice(result.offset)
 			}
 
 			return null
