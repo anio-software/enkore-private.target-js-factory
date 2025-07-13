@@ -6,6 +6,7 @@ import {getToolchain} from "#~src/getToolchain.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import {createEntity} from "@anio-software/enkore-private.spec"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
+import {globalStateSymbolForIdentifier} from "#~embeds/project/globalStateSymbolForIdentifier.ts"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 
 async function bundle(
@@ -71,7 +72,7 @@ export async function generateRuntimeInitCode(
 	code += `import {createTemporaryResourceFromStringSyncFactory} from "api/temporaryResourceFactory"\n`
 	code += `import {_getCreationOptionsForEmbed} from "api/_getCreationOptionsForEmbed"\n`
 
-	code += `const globalStateSymbol = Symbol.for("@anio-software/enkore/global/embeds");\n`
+	code += `const globalStateSymbol = Symbol.for("${globalStateSymbolForIdentifier}");\n`
 	code += `const nodeRequireSymbol = Symbol.for("@anio-software/enkore/global/nodeRequire");\n`
 
 	code += `const createTemporaryResourceFromStringSync = `
