@@ -7,7 +7,7 @@ import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-pri
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.ts"
 import {generateEntryPointCode} from "./generateEntryPointCode.ts"
-import {writeAtomicFile, readFileString, writeAtomicFileJSON} from "@anio-software/pkg.node-fs"
+import {writeAtomicFile, readFileString, writeAtomicFileJSON, isFileSync} from "@anio-software/pkg.node-fs"
 import {getProductPackageJSON} from "./getProductPackageJSON.ts"
 import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.ts"
 import {rollupPluginFactory} from "./rollupPluginFactory.ts"
@@ -17,6 +17,7 @@ import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
 import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import {getEnkoreManifestData} from "./getEnkoreManifestData.ts"
+import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import path from "node:path"
 
 function src(code: string) {
@@ -184,4 +185,24 @@ export async function generateNPMPackage(
 		getEnkoreManifestData(session, entryPoints),
 		{pretty: true}
 	)
+
+	for (const [, {embeds}] of entryPoints.entries()) {
+		if (embeds === "none") continue
+
+		for (const [embedURL] of embeds.entries()) {
+			const {protocol, path: relativeSourcePath} = parseEmbedURL(embedURL)
+			const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
+
+			const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${relativeSourcePath}`
+			const destinationPath = `./_embeds/${globalIdentifier}`
+
+			if (isFileSync(destinationPath)) continue
+
+			await writeAtomicFile(
+				destinationPath,
+				embed.data,
+				{createParents: true}
+			)
+		}
+	}
 }
