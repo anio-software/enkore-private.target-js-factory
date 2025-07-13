@@ -13,6 +13,7 @@ import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.t
 import {getToolchain} from "#~src/getToolchain.ts"
 import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
+import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import path from "node:path"
 
 function src(code: string) {
@@ -77,7 +78,7 @@ async function createDistFiles(
 			}
 		)
 
-		const runtimeInitCode = ""
+		const runtimeInitCode = generateRuntimeInitCode(entryPoint)
 		const separator = `\n/** end of runtime init code **/\n`
 
 		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCode + separator + jsBundle)
