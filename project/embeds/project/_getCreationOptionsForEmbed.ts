@@ -1,4 +1,4 @@
-import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
+import {_parseEmbedURLRemoveMeAfterUpdate} from "./_parseEmbedURLRemoveMeAfterUpdate.ts"
 import {_getEmbedContentTypeForProtocol} from "./_getEmbedContentTypeForProtocol.ts"
 import type {CreateTemporaryResourceOptions} from "@anio-software/pkg.temporary-resource-factory"
 
@@ -6,7 +6,7 @@ export function _getCreationOptionsForEmbed(
 	embedURL: string
 ): CreateTemporaryResourceOptions {
 	const {fileExtension, mimeType} = _getEmbedContentTypeForProtocol(
-		parseEmbedURL(embedURL).protocol
+		_parseEmbedURLRemoveMeAfterUpdate(embedURL).protocol
 	)
 
 	return {
