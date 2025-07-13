@@ -28,7 +28,7 @@ export type NPMPackage = {
 }
 
 export type EmbedsMap = Map<string, {
-	createResourceAtRuntime: boolean
+	createResourceAtRuntimeInit: boolean
 }>
 
 export type EntryPoint = {

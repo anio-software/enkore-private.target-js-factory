@@ -85,13 +85,13 @@ export async function generateRuntimeInitCode(
 	code += `const globalState = globalThis[globalStateSymbol];\n`
 	code += `const embedsMap = globalState.immutable.embeds;\n`
 
-	for (const [embedURL, {createResourceAtRuntime}] of entryPoint.embeds.entries()) {
+	for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.embeds.entries()) {
 		const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
 		const {protocol, path: sourceFilePath} = parseEmbedURL(embedURL)
 		const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${sourceFilePath}`
 
 		const data = createEntity("EnkoreJSRuntimeEmbeddedFile", 0, 0, {
-			createResourceAtRuntimeInit: createResourceAtRuntime,
+			createResourceAtRuntimeInit,
 			sourceFilePath,
 			url: embedURL,
 			data: embed.data
@@ -101,7 +101,7 @@ export async function generateRuntimeInitCode(
 		code += `\tconst embed = ${JSON.stringify(data)};\n`
 		code += `\tembedsMap.set("${globalIdentifier}", embed)\n`
 
-		if (createResourceAtRuntime) {
+		if (createResourceAtRuntimeInit) {
 			code += `\tconst creationOptions = _getCreationOptionsForEmbed("${embedURL}");\n`
 			code += `\tconst {resourceURL} = createTemporaryResourceFromStringSync(embed.data, creationOptions);\n`
 			code += `\tglobalState.mutable.embedResourceURLs.set(`

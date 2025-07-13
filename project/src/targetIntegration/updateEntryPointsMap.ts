@@ -38,7 +38,7 @@ export async function updateEntryPointsMap(
 		if (result[0] === "all") {
 			for (const [embedURL] of projectEmbedMap.entries()) {
 				embedsMap.set(embedURL, {
-					createResourceAtRuntime: true
+					createResourceAtRuntimeInit: true
 				})
 			}
 
@@ -52,7 +52,7 @@ export async function updateEntryPointsMap(
 				const {requestedByMethods} = usedEmbeds.get(embedURL)!
 
 				embedsMap.set(embedURL, {
-					createResourceAtRuntime: requestedByMethods.has("getEmbedAsURL")
+					createResourceAtRuntimeInit: requestedByMethods.has("getEmbedAsURL")
 				})
 			}
 		}
@@ -60,10 +60,10 @@ export async function updateEntryPointsMap(
 		if (embedsMap.size) {
 			let message = `entry point '${entryPointPath}' will contain the following embeds:\n`
 
-			for (const [embedPath, {createResourceAtRuntime}] of embedsMap.entries()) {
+			for (const [embedPath, {createResourceAtRuntimeInit}] of embedsMap.entries()) {
 				message += ` - ${embedPath}`
 
-				if (createResourceAtRuntime) {
+				if (createResourceAtRuntimeInit) {
 					message += ` (create resource at runtime init)`
 				}
 
