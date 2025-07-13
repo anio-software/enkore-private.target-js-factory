@@ -11,6 +11,7 @@ import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.ts"
 import {rollupPluginFactory} from "./rollupPluginFactory.ts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
+import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import path from "node:path"
 
 function src(code: string) {
@@ -28,6 +29,9 @@ async function createDistFiles(
 
 		return true
 	})()
+
+	// todo: run this in postCompile hook
+	await updateEntryPointsMap(apiContext, session)
 
 	const toolchain = getToolchain(session)
 
