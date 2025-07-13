@@ -60,19 +60,14 @@ export async function generateRuntimeInitCode(
 
 	code += `import {_getInitialGlobalState} from "api/_getInitialGlobalState"\n`
 
-	code += `const embedsSymbol = Symbol.for("@anio-software/enkore/global/embeds");\n`
 	code += `const globalStateSymbol = Symbol.for("@anio-software/enkore/global/embeds");\n`
 
 	code += `if (!(globalStateSymbol in globalThis)) {\n`
 	code += `\tglobalThis[globalStateSymbol] = _getInitialGlobalState();\n`
 	code += `}\n`
 
-	code += `if (!(embedSymbol in globalThis)) {\n`
-	code += `\tglobalThis[embedSymbol] = new Map();\n`
-	code += `}\n`
-
-	code += `const embedsMap = globalThis[embedSymbol];\n`
 	code += `const globalState = globalThis[globalStateSymbol];\n`
+	code += `const embedsMap = globalState.immutable.embeds;\n`
 
 	for (const [embedURL, {createResourceAtRuntime}] of entryPoint.embeds.entries()) {
 		const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
