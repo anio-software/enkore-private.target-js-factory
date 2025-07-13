@@ -7,5 +7,11 @@ export function generateRuntimeInitCode(
 	session: EnkoreSessionAPI,
 	entryPoint: EntryPoint
 ): string {
+	if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
+		return ""
+	} else if (entryPoint.embeds === "none") {
+		return ""
+	}
+
 	return ""
 }
