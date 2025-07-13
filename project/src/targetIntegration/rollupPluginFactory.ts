@@ -62,7 +62,6 @@ export async function rollupPluginFactory(
 					"js-bundle://project/generateProjectAPIFromContextRollup.ts"
 				) as string
 			} else if (isFileSync(id)) {
-				const code = await readFileString(id)
 				const marker = enkoreJSRuntimeInitCodeHeaderMarkerUUID
 
 				const reader = await readFileInChunks(id, 512)
@@ -75,6 +74,7 @@ export async function rollupPluginFactory(
 					return null
 				}
 
+				const code = await readFileString(id)
 				const result = parseJSRuntimeInitHeader(code)
 
 				if (result === false) {
