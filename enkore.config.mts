@@ -120,7 +120,10 @@ export const config: unknown = defineConfig({
 
 				code += `const __projectAPIContext = await generateProjectAPIContext(["inferFromCLIArgs"]);\n`
 
-				code += template.split(`"%%CONTEXT_DATA%%"`).join(`__projectAPIContext`)
+				code += template.split(`"%%CONTEXT_DATA%%"`)
+				                .join(`__projectAPIContext`)
+				                .split(`"%%IS_NODE%%"`)
+				                .join(`"yes"`)
 
 				return code
 			}

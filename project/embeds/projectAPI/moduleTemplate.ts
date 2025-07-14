@@ -22,6 +22,7 @@ function __getContext(): any {
 	return "%%CONTEXT_DATA%%"
 }
 
+const isNode: boolean = ("%%IS_NODE%%" as string) === "yes"
 const context: EnkoreJSRuntimeProjectAPIContext = __getContext()
 
 export const apiID: API["apiID"] = "EnkoreTargetJSProjectAPI"
