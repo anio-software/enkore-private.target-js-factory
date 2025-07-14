@@ -13,7 +13,7 @@
   "devDependencies": {
     "@anio-software/enkore": "^0.0.175-canary-2198286c-99c78c59",
     "@anio-software/enkore-private.debug": "^0.0.7",
-    "@anio-software/enkore-private.js-runtime-helpers": "^0.0.2",
+    "@anio-software/enkore-private.js-runtime-helpers": "^0.0.3",
     "@anio-software/enkore-private.spec": "^0.393.0",
     "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.77",
     "@anio-software/enkore-private.target-js-utils": "^0.0.13",
