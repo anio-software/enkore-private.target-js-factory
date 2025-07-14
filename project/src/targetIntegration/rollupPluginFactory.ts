@@ -1,4 +1,7 @@
-import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
+import type {
+	EnkoreSessionAPI,
+	EnkoreJSRuntimeProjectAPIContext
+} from "@anio-software/enkore-private.spec"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.ts"
 import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
@@ -15,7 +18,7 @@ type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 export async function rollupPluginFactory(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
-	projectAPIContext: ProjectAPIContext
+	projectAPIContext: EnkoreJSRuntimeProjectAPIContext
 ): Promise<Factory> {
 	const toolchain = getToolchain(session)
 

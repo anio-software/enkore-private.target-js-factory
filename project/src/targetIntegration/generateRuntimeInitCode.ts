@@ -1,5 +1,9 @@
 import type {APIContext} from "./APIContext.ts"
-import type {EnkoreSessionAPI, EnkoreJSRuntimeEmbeddedFile} from "@anio-software/enkore-private.spec"
+import type {
+	EnkoreSessionAPI,
+	EnkoreJSRuntimeEmbeddedFile,
+	EnkoreJSRuntimeProjectAPIContext
+} from "@anio-software/enkore-private.spec"
 import type {EntryPoint} from "./InternalData.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
@@ -74,7 +78,7 @@ async function bundle(
 export async function generateRuntimeInitCode(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
-	projectAPIContext: ProjectAPIContext,
+	projectAPIContext: EnkoreJSRuntimeProjectAPIContext,
 	entryPoint: EntryPoint
 ): Promise<string> {
 	const nodeRequire = `

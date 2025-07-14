@@ -1,4 +1,7 @@
-import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
+import type {
+	EnkoreSessionAPI,
+	EnkoreJSRuntimeProjectAPIContext
+} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {getExternals} from "./getExternals.ts"
@@ -25,7 +28,7 @@ function src(code: string) {
 
 async function createDistFiles(
 	apiContext: APIContext,
-	projectAPIContext: ProjectAPIContext,
+	projectAPIContext: EnkoreJSRuntimeProjectAPIContext,
 	session: EnkoreSessionAPI
 ) {
 	const isProductionBuild: boolean = (() => {
