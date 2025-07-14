@@ -8,11 +8,11 @@ import type {EmbedsMap} from "./InternalData.ts"
 
 export async function updateEntryPointsMap(
 	apiContext: APIContext,
-	projectContext: ProjectAPIContext,
+	projectAPIContext: ProjectAPIContext,
 	session: EnkoreSessionAPI
 ) {
 	const entryPoints = getInternalData(session).entryPoints
-	const projectEmbedMap = projectContext._projectEmbedFileMapRemoveMeInBundle!
+	const projectEmbedMap = projectAPIContext._projectEmbedFileMapRemoveMeInBundle!
 
 	for (const [entryPointPath, entryPoint] of entryPoints.entries()) {
 		const aggregatedResult: RequestedEmbedsFromCodeResult[] = []

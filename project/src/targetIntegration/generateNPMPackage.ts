@@ -25,7 +25,7 @@ function src(code: string) {
 
 async function createDistFiles(
 	apiContext: APIContext,
-	projectContext: ProjectAPIContext,
+	projectAPIContext: ProjectAPIContext,
 	session: EnkoreSessionAPI
 ) {
 	const isProductionBuild: boolean = (() => {
@@ -51,7 +51,7 @@ async function createDistFiles(
 			onRollupLogFunction,
 			additionalPlugins: [
 				rollupCSSStubPluginFactory(session),
-				await rollupPluginFactory(session, apiContext, projectContext)
+				await rollupPluginFactory(session, apiContext, projectAPIContext)
 			]
 		}
 
@@ -79,7 +79,7 @@ async function createDistFiles(
 		)
 
 		const runtimeInitCode = await generateRuntimeInitCode(
-			apiContext, session, projectContext, entryPoint
+			apiContext, session, projectAPIContext, entryPoint
 		) + `;\n/* end of runtime init code */;\n`
 
 		const runtimeInitCodeHeader = `/*${enkoreJSRuntimeInitCodeHeaderMarkerUUID}:${runtimeInitCode.length}*/`
@@ -124,14 +124,14 @@ export async function generateNPMPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
-	const projectContext = await generateProjectAPIContext(session.project.root, false)
+	const projectAPIContext = await generateProjectAPIContext(session.project.root, false)
 
 	// todo: run this in postCompile hook
-	await updateEntryPointsMap(apiContext, projectContext, session)
+	await updateEntryPointsMap(apiContext, projectAPIContext, session)
 
 	const {entryPoints, binScripts} = getInternalData(session)
 
-	await createDistFiles(apiContext, projectContext, session)
+	await createDistFiles(apiContext, projectAPIContext, session)
 
 	const packageJSON = getProductPackageJSON(
 		apiContext,

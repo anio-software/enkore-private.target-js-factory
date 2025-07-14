@@ -15,14 +15,14 @@ type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 export async function rollupPluginFactory(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
-	projectContext: ProjectAPIContext
+	projectAPIContext: ProjectAPIContext
 ): Promise<Factory> {
 	const toolchain = getToolchain(session)
 
-	const projectContextCopy = {...projectContext}
-	delete projectContextCopy._projectEmbedFileMapRemoveMeInBundle
+	const projectAPIContextCopy = {...projectAPIContext}
+	delete projectAPIContextCopy._projectEmbedFileMapRemoveMeInBundle
 
-	const projectContextString = JSON.stringify(JSON.stringify(projectContextCopy))
+	const projectAPIContextString = JSON.stringify(JSON.stringify(projectAPIContextCopy))
 
 	const plugin: Factory["plugin"] = {
 		name: "enkore-target-js-project-plugin",
@@ -43,7 +43,7 @@ export async function rollupPluginFactory(
 
 				apiCode += `import {generateProjectAPIFromContextRollup} from "enkore:generateProjectAPIFromContextRollup"\n`
 
-				apiCode += `const __api = generateProjectAPIFromContextRollup(JSON.parse(${projectContextString}));\n`
+				apiCode += `const __api = generateProjectAPIFromContextRollup(JSON.parse(${projectAPIContextString}));\n`
 
 				apiCode += generateAPIExportGlueCode(
 					"TypeDoesntMatterWillBeStrippedAnyway",

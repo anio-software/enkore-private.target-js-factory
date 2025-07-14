@@ -74,7 +74,7 @@ async function bundle(
 export async function generateRuntimeInitCode(
 	apiContext: APIContext,
 	session: EnkoreSessionAPI,
-	projectContext: ProjectAPIContext,
+	projectAPIContext: ProjectAPIContext,
 	entryPoint: EntryPoint
 ): Promise<string> {
 	const nodeRequire = `
@@ -121,7 +121,7 @@ await (async function() {
 
 	if (entryPoint.localEmbeds !== "none") {
 		for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.localEmbeds.entries()) {
-			const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
+			const embed = projectAPIContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
 			const {protocol, path: sourceFilePath} = parseEmbedURL(embedURL)
 			const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${sourceFilePath}`
 
