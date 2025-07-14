@@ -199,7 +199,7 @@ export async function generateNPMPackage(
 
 		for (const [embedURL] of localEmbeds.entries()) {
 			const {protocol, path: relativeSourcePath} = parseEmbedURL(embedURL)
-			const embed = projectContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
+			const embed = projectAPIContext._projectEmbedFileMapRemoveMeInBundle!.get(embedURL)!
 
 			const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${relativeSourcePath}`
 			const destinationPath = `./_embeds/${globalIdentifier}`
