@@ -47,15 +47,52 @@ export const getProjectPackageJSON: API["getProjectPackageJSON"] = function() {
 
 // --- //
 
+function base64ToUint8Array(str: string): Uint8Array {
+	// from https://web.dev/articles/base64-encoding
+	const binString = globalThis.atob(str)
+
+	return Uint8Array.from(binString, (m) => m.codePointAt(0)!)
+}
+
 export const getEmbedAsString: API["getEmbedAsString"] = function(embedURL) {
+	if (isNode) {
+		const map = context._projectEmbedFileMapRemoveMeInBundle!
+
+		if (!map.has(embedURL)) {
+			throw new Error(`Unable to find embed '${embedURL}' in embed map.`)
+		}
+
+		return (new TextDecoder).decode(base64ToUint8Array(map.get(embedURL)!.data))
+	}
+
 	return (new TextDecoder).decode(getEmbedData(context, embedURL))
 }
 
 export const getEmbedAsUint8Array: API["getEmbedAsUint8Array"] = function(embedURL) {
+	if (isNode) {
+		const map = context._projectEmbedFileMapRemoveMeInBundle!
+
+		if (!map.has(embedURL)) {
+			throw new Error(`Unable to find embed '${embedURL}' in embed map.`)
+		}
+
+		return base64ToUint8Array(map.get(embedURL)!.data)
+	}
+
 	return getEmbedData(context, embedURL)
 }
 
 export const getEmbedAsURL: API["getEmbedAsURL"] = function(embedURL) {
+	if (isNode) {
+		const map = context._projectEmbedFileMapRemoveMeInBundle!
+
+		if (!map.has(embedURL)) {
+			throw new Error(`Unable to find embed '${embedURL}' in embed map.`)
+		}
+
+		return map.get(embedURL)!._resourceURL
+	}
+
 	const globalIdentifier = translateEmbedURLToGlobalIdentifier(context, embedURL)
 	const globalState = getGlobalState()
 
