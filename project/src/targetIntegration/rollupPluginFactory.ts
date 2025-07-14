@@ -9,6 +9,7 @@ import {isFileSync, readFileInChunks, readFileString} from "@anio-software/pkg.n
 import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import {parseJSRuntimeInitHeader} from "./parseJSRuntimeInitHeader.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
+import path from "node:path"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 
@@ -55,7 +56,22 @@ export async function rollupPluginFactory(
 					return null
 				}
 
-				const code = await readFileString(id)
+				const dependencyToLoad: string = (() => {
+					const fileName = path.basename(id)
+
+					if (!fileName.endsWith(".min.mjs")) {
+						return id
+					}
+
+					const newID = path.join(
+						path.dirname(id),
+						fileName.slice(0, -(".min.mjs".length)) + ".mjs"
+					)
+
+					return isFileSync(newID) ? newID : id
+				})()
+
+				const code = await readFileString(dependencyToLoad)
 				const result = parseJSRuntimeInitHeader(code)
 
 				if (result === false) {
