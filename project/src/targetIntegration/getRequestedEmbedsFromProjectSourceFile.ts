@@ -3,7 +3,6 @@ import type {APIContext} from "./APIContext.ts";
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {readFileString} from "@anio-software/pkg.node-fs"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
-import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {getInternalData} from "./getInternalData.ts"
 import path from "node:path"
@@ -39,9 +38,11 @@ export async function getRequestedEmbedsFromProjectSourceFile(
 
 	const result = await getToolchain(session).getRequestedEmbedsFromCode(
 		[`${getBaseModuleSpecifier(apiContext.target)}/project`],
-		getProjectAPIMethodNames().filter(x => {
-			return x.toLowerCase().includes("embed")
-		}),
+		[
+			"getEmbedAsString",
+			"getEmbedAsUint8Array",
+			"getEmbedAsURL"
+		],
 		sourceCode
 	)
 
