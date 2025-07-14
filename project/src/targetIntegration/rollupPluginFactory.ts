@@ -4,10 +4,7 @@ import type {
 } from "@anio-software/enkore-private.spec"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.ts"
-import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
-import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
-import {getToolchain} from "#~src/getToolchain.ts"
 import {isFileSync, readFileInChunks, readFileString} from "@anio-software/pkg.node-fs"
 import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import {parseJSRuntimeInitHeader} from "./parseJSRuntimeInitHeader.ts"
@@ -19,8 +16,6 @@ export async function rollupPluginFactory(
 	apiContext: APIContext,
 	projectAPIContext: EnkoreJSRuntimeProjectAPIContext
 ): Promise<Factory> {
-	const toolchain = getToolchain(session)
-
 	const projectAPIContextCopy = {...projectAPIContext}
 	delete projectAPIContextCopy._projectEmbedFileMapRemoveMeInBundle
 
@@ -32,8 +27,6 @@ export async function rollupPluginFactory(
 		resolveId(id) {
 			if (id === `${getBaseModuleSpecifier(apiContext.target)}/project`) {
 				return `\x00enkore:projectAPI`
-			} else if (id === `enkore:generateProjectAPIFromContextRollup`) {
-				return `\x00enkore:generateProjectAPIFromContextRollup`
 			}
 
 			return null
@@ -43,25 +36,7 @@ export async function rollupPluginFactory(
 			if (id === `\x00enkore:projectAPI`) {
 				let apiCode = ``
 
-				apiCode += `import {generateProjectAPIFromContextRollup} from "enkore:generateProjectAPIFromContextRollup"\n`
-
-				apiCode += `const __api = generateProjectAPIFromContextRollup(JSON.parse(${projectAPIContextString}));\n`
-
-				apiCode += generateAPIExportGlueCode(
-					"TypeDoesntMatterWillBeStrippedAnyway",
-					"__api",
-					getProjectAPIMethodNames()
-				)
-
-				return toolchain.stripTypeScriptTypes(
-					apiCode, {
-						rewriteImportExtensions: false
-					}
-				)
-			} else if (id === `\x00enkore:generateProjectAPIFromContextRollup`) {
-				return getEmbedAsString(
-					"js-bundle://project/generateProjectAPIFromContextRollup.ts"
-				) as string
+				return apiCode
 			} else if (isFileSync(id)) {
 				const marker = enkoreJSRuntimeInitCodeHeaderMarkerUUID
 
