@@ -13,6 +13,7 @@ import path from "node:path"
 import fs from "node:fs/promises"
 
 type EmbedMap = NonNullable<EnkoreJSRuntimeProjectAPIContext["_projectEmbedFileMapRemoveMeInBundle"]>
+type Embed = EmbedMap extends Map<unknown, infer V> ? V : never
 
 async function readFileBase64(path: string): Promise<string> {
 	const contents = await fs.readFile(path)
@@ -69,15 +70,15 @@ async function generateEmbedFileMap(
 			))
 		}
 
-		async function defineEmbed(protocol: string, sourceFile: string) {
+		async function defineEmbed(protocol: string, sourceFile: string): Promise<Embed> {
 			const data = await readFileBase64(sourceFile)
 
-			return createEntity("EnkoreJSRuntimeEmbeddedFile", 0, 0, {
+			return {
 				data,
 				sourceFilePath: embed.filePath,
 				url: `${protocol}://${embed.filePath}`,
-				createResourceAtRuntimeInit: true
-			})
+				_resourceURL: ""
+			}
 		}
 	}
 
