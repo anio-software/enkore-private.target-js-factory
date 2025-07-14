@@ -21,17 +21,15 @@ import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
 import {getEnkoreManifestFileData} from "./getEnkoreManifestFileData.ts"
 import {generateProjectAPIContext} from "./generateProjectAPIContext.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
+import runtimeHelpers from "@anio-software/enkore-private.js-runtime-helpers/_source/v0"
 import path from "node:path"
 
 function src(code: string) {
 	return `export default ${JSON.stringify(code)};\n`
 }
 
-async function createDistFiles(
-	apiContext: APIContext,
-	projectAPIContext: EnkoreJSRuntimeProjectAPIContext,
-	session: EnkoreSessionAPI
-) {
+async function minifyJSBundle(session: EnkoreSessionAPI, bundle: string): Promise<string> {
+	const toolchain = getToolchain(session)
 	const isProductionBuild: boolean = (() => {
 		if (session.enkore.getOptions().buildMode === "development") {
 			return false
@@ -40,6 +38,47 @@ async function createDistFiles(
 		return true
 	})()
 
+	if (isProductionBuild) {
+		session.enkore.emitMessage(`info`, `minifying javascript bundle`)
+	}
+
+	// bundle js-runtime-helpers
+	const newBundle = await toolchain.jsBundler(
+		session.project.root, bundle, {
+			additionalPlugins: [{
+				when: "pre",
+				plugin: {
+					name: "enkore-runtime-helper-resolver",
+
+					resolveId(id) {
+						if (id.startsWith("@anio-software/enkore-private.js-runtime-helpers")) {
+							return "\x00enkore:js-runtime-helpers"
+						}
+
+						return null
+					},
+
+					load(id) {
+						if (id === `\x00enkore:js-runtime-helpers`) {
+							return runtimeHelpers
+						}
+
+						return null
+					}
+				}
+			}],
+			treeshake: true
+		}
+	)
+
+	return isProductionBuild ? toolchain.jsMinify(newBundle) : newBundle
+}
+
+async function createDistFiles(
+	apiContext: APIContext,
+	projectAPIContext: EnkoreJSRuntimeProjectAPIContext,
+	session: EnkoreSessionAPI
+) {
 	const toolchain = getToolchain(session)
 
 	const {entryPoints} = getInternalData(session)
@@ -69,11 +108,7 @@ async function createDistFiles(
 			}
 		)
 
-		if (isProductionBuild) {
-			session.enkore.emitMessage(`info`, `minifying javascript bundle`)
-		}
-
-		const minifiedJsBundle = isProductionBuild ? await toolchain.jsMinify(jsBundle) : jsBundle
+		const minifiedJsBundle = await minifyJSBundle(session, jsBundle)
 
 		const declarationBundle = await toolchain.tsDeclarationBundler(
 			session.project.root, declarationsEntryCode, {
