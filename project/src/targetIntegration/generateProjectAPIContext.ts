@@ -11,6 +11,16 @@ import {
 import {readFileJSON} from "@anio-software/pkg.node-fs"
 import path from "node:path"
 
+type EmbedMap = NonNullable<EnkoreJSRuntimeProjectAPIContext["_projectEmbedFileMapRemoveMeInBundle"]>
+
+async function generateEmbedFileMap(
+	projectRoot: string
+): Promise<EmbedMap> {
+	const embedMap: EmbedMap = new Map()
+
+	return embedMap
+}
+
 export async function generateProjectAPIContext(
 	userProjectRoot: string | ["inferFromCLIArgs"]
 ): Promise<EnkoreJSRuntimeProjectAPIContext> {
@@ -30,6 +40,6 @@ export async function generateProjectAPIContext(
 			projectId: ""
 		}),
 
-		_projectEmbedFileMapRemoveMeInBundle: new Map()
+		_projectEmbedFileMapRemoveMeInBundle: await generateEmbedFileMap(projectRoot)
 	})
 }
