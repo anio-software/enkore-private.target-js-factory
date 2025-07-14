@@ -80,11 +80,13 @@ export async function generateRuntimeInitCode(
 ): Promise<string> {
 	const nodeRequire = `
 await (async function() {
-	const nodeRequireSymbol = Symbol.for("@anio-software/enkore/global/nodeRequire");
+	try {
+		const nodeRequireSymbol = Symbol.for("@anio-software/enkore/global/nodeRequire");
 
-	const {createRequire} = await import("node:module")
+		const {createRequire} = await import("node:module")
 
-	globalThis[nodeRequireSymbol] = createRequire("/")
+		globalThis[nodeRequireSymbol] = createRequire("/")
+	} catch (error) {}
 })();
 `
 
