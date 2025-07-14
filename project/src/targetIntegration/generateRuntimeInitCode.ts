@@ -78,12 +78,22 @@ export async function generateRuntimeInitCode(
 	projectContext: ProjectAPIContext,
 	entryPoint: EntryPoint
 ): Promise<string> {
+	const nodeRequire = `
+await (async function() {
+	const nodeRequireSymbol = Symbol.for("@anio-software/enkore/global/nodeRequire");
+
+	const {createRequire} = await import("node:module")
+
+	globalThis[nodeRequireSymbol] = createRequire("/")
+})();
+`
+
 	if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
 		return ""
 	} else if (entryPoint.localEmbeds === "none" && !entryPoint.remoteEmbeds.size) {
 		session.enkore.emitMessage("info", "skipping runtime js code, no embeds are used.")
 
-		return ""
+		return nodeRequire
 	}
 
 	const {packageJSON} = session.project
@@ -141,16 +151,6 @@ export async function generateRuntimeInitCode(
 			data: await readFileString(embed.absoluteSourceFilePath)
 		}))
 	}
-
-	const nodeRequire = `
-await (async function() {
-	const nodeRequireSymbol = Symbol.for("@anio-software/enkore/global/nodeRequire");
-
-	const {createRequire} = await import("node:module")
-
-	globalThis[nodeRequireSymbol] = createRequire("/")
-})();
-`
 
 	return nodeRequire + await bundle(session, code)
 }
