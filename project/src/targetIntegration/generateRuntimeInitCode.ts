@@ -61,11 +61,11 @@ async function bundle(
 
 					load(id) {
 						if (id === `\x00enkore:_getInitialGlobalState`) {
-							return getEmbedAsString("js-bundle://project/_getInitialGlobalState.ts")
+							return getEmbedAsString("js-bundle://projectAPI/_getInitialGlobalState.ts")
 						} else if (id === `\x00enkore:temporaryResourceFactory`) {
 							return temporaryResourceFactory
 						} else if (id === `\x00enkore:_getCreationOptionsForEmbed`) {
-							return getEmbedAsString("js-bundle://project/_getCreationOptionsForEmbed.ts")
+							return getEmbedAsString("js-bundle://projectAPI/_getCreationOptionsForEmbed.ts")
 						}
 
 						return null
