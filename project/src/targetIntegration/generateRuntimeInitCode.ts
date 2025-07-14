@@ -1,13 +1,11 @@
 import type {APIContext} from "./APIContext.ts"
 import type {EnkoreSessionAPI, EnkoreJSRuntimeEmbeddedFile} from "@anio-software/enkore-private.spec"
-import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
 import type {EntryPoint} from "./InternalData.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import {createEntity} from "@anio-software/enkore-private.spec"
 import {readFileString} from "@anio-software/pkg.node-fs"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
-import {globalStateSymbolForIdentifier} from "#~embeds/project/globalStateSymbolForIdentifier.ts"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 
 function defineEmbed(globalIdentifier: string, data: EnkoreJSRuntimeEmbeddedFile): string {

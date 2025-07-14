@@ -1,6 +1,5 @@
 import type {APIContext} from "./APIContext.ts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
-import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getRequestedEmbedsFromProjectSourceFileRecursive} from "./getRequestedEmbedsFromProjectSourceFileRecursive.ts"
 import {combineRequestedEmbedsFromCodeResults} from "./combineRequestedEmbedsFromCodeResults.ts"

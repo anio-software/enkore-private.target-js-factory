@@ -7,9 +7,6 @@
         "project/export/targetIntegration/getTargetIntegrationAPIMethodNames.ts": {
             "hash": "8cc0c7cb81062f4af1bf1794dd32412952f3d0ba2204485b712de63fd83fa1f0"
         },
-        "project/export/project/getProjectAPIMethodNames.ts": {
-            "hash": "fb4e35f8e05a9b877202ff6e4b84c55aa05884719e818feaa0f93fa7557eab08"
-        },
         "project/export/autogenerate/getAutogenerateAPIMethodNames.ts": {
             "hash": "b3a868ace1292fd07b7a23579b4eea5ca27221f2a986125876ae5f7739375b4d"
         },

@@ -1,7 +1,6 @@
 # This file is automatically managed by enkore
 # DO NOT ADD ENTRIES HERE, THEY WILL BE REMOVED
 /export/targetIntegration/getTargetIntegrationAPIMethodNames.ts
-/export/project/getProjectAPIMethodNames.ts
 /export/autogenerate/getAutogenerateAPIMethodNames.ts
 /export/getUsedEnkoreSpecPackageVersion.ts
 /src/__getToolchainVersionToInstall.ts
