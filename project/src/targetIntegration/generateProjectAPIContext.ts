@@ -7,10 +7,12 @@ import {
 	getProjectRootFromArgumentAndValidate,
 	readEnkoreConfigFile
 } from "@anio-software/enkore-private.spec/utils"
-
+import {_getCreationOptionsForEmbed} from "#~embeds/projectAPI/_getCreationOptionsForEmbed.ts"
+import {createTemporaryResourceFromStringSyncFactory} from "@anio-software/pkg.temporary-resource-factory"
 import {readFileJSON, scandir} from "@anio-software/pkg.node-fs"
 import path from "node:path"
 import fs from "node:fs/promises"
+import {createRequire} from "node:module"
 
 type EmbedMap = NonNullable<EnkoreJSRuntimeProjectAPIContext["_projectEmbedFileMapRemoveMeInBundle"]>
 type Embed = EmbedMap extends Map<unknown, infer V> ? V : never
@@ -20,6 +22,10 @@ async function readFileBase64(path: string): Promise<string> {
 
 	return contents.toString("base64")
 }
+
+const createTemporaryResourceFromStringSync = createTemporaryResourceFromStringSyncFactory(
+	createRequire("/")
+)
 
 async function generateEmbedFileMap(
 	projectRoot: string
@@ -72,12 +78,15 @@ async function generateEmbedFileMap(
 
 		async function defineEmbed(protocol: string, sourceFile: string): Promise<Embed> {
 			const data = await readFileBase64(sourceFile)
+			const url = `${protocol}://${embed.filePath}`
 
 			return {
 				data,
 				sourceFilePath: embed.filePath,
-				url: `${protocol}://${embed.filePath}`,
-				_resourceURL: ""
+				url,
+				_resourceURL: createTemporaryResourceFromStringSync(
+					data, _getCreationOptionsForEmbed(url)
+				).resourceURL
 			}
 		}
 	}
