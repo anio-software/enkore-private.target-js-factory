@@ -25,6 +25,12 @@ function __getContext(): any {
 const isNode: boolean = ("%%IS_NODE%%" as string) === "yes"
 const context: EnkoreJSRuntimeProjectAPIContext = __getContext()
 
+if (isNode && !context._projectEmbedFileMapRemoveMeInBundle) {
+	throw new Error(`_projectEmbedFileMapRemoveMeInBundle must be set in node context.`)
+} else if (!isNode && context._projectEmbedFileMapRemoveMeInBundle) {
+	throw new Error(`_projectEmbedFileMapRemoveMeInBundle must be undefined in bundle context.`)
+}
+
 export const apiID: API["apiID"] = "EnkoreTargetJSProjectAPI"
 export const apiMajorVersion: API["apiMajorVersion"] = 0
 export const apiRevision: API["apiRevision"] = 0
