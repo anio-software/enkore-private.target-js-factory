@@ -3,11 +3,11 @@ import type {ProjectAPI} from "./ProjectAPI.ts"
 import {_generateProjectAPIFromContextPartial} from "./_generateProjectAPIFromContextPartial.ts"
 import {getEmbedAsURLRollupFactory} from "./getEmbedAsURLRollupFactory.ts"
 
-export async function generateProjectAPIFromContextRollup(
+export function generateProjectAPIFromContextRollup(
 	context: ProjectAPIContext
-): Promise<ProjectAPI> {
+): ProjectAPI {
 	return {
-		...await _generateProjectAPIFromContextPartial(context),
+		..._generateProjectAPIFromContextPartial(context),
 		getEmbedAsURL: getEmbedAsURLRollupFactory(context)
 	}
 }

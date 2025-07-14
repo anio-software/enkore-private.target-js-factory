@@ -7,9 +7,9 @@ import {getProjectIdFactory} from "./public/getProjectIdFactory.ts"
 import {getProjectFactory} from "./public/getProjectFactory.ts"
 import {getProjectPackageJSONFactory} from "./public/getProjectPackageJSONFactory.ts"
 
-export async function _generateProjectAPIFromContextPartial(
+export function _generateProjectAPIFromContextPartial(
 	context: ProjectAPIContext
-): Promise<Omit<ProjectAPI, "getEmbedAsURL">> {
+): Omit<ProjectAPI, "getEmbedAsURL"> {
 	return {
 		apiID: "EnkoreTargetJSProjectAPI",
 		apiMajorVersion: 0,

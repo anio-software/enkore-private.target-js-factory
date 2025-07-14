@@ -44,7 +44,7 @@ export async function rollupPluginFactory(
 
 				apiCode += `import {generateProjectAPIFromContextRollup} from "enkore:generateProjectAPIFromContextRollup"\n`
 
-				apiCode += `const __api = await generateProjectAPIFromContextRollup(JSON.parse(${projectContextString}));\n`
+				apiCode += `const __api = generateProjectAPIFromContextRollup(JSON.parse(${projectContextString}));\n`
 
 				apiCode += generateAPIExportGlueCode(
 					"TypeDoesntMatterWillBeStrippedAnyway",
