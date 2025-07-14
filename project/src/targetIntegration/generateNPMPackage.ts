@@ -18,7 +18,7 @@ import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPICont
 import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
 import {getEnkoreManifestFileData} from "./getEnkoreManifestFileData.ts"
-import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
+import {parseEmbedURL} from "@anio-software/enkore-private.spec"
 import path from "node:path"
 
 function src(code: string) {

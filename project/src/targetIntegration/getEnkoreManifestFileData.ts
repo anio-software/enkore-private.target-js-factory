@@ -4,7 +4,7 @@ import {
 	type EnkoreSessionAPI,
 	createEntity
 } from "@anio-software/enkore-private.spec"
-import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
+import {parseEmbedURL} from "@anio-software/enkore-private.spec"
 
 export function getEnkoreManifestFileData(
 	session: EnkoreSessionAPI,
