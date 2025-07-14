@@ -8,6 +8,7 @@ import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import {isFileSync, readFileInChunks, readFileString} from "@anio-software/pkg.node-fs"
 import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import {parseJSRuntimeInitHeader} from "./parseJSRuntimeInitHeader.ts"
+import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 
@@ -34,9 +35,11 @@ export async function rollupPluginFactory(
 
 		async load(id) {
 			if (id === `\x00enkore:projectAPI`) {
-				let apiCode = ``
+				let moduleTemplate = getEmbedAsString("js://projectAPI/moduleTemplate.ts")
 
-				return apiCode
+				moduleTemplate = moduleTemplate.split(`"%%CONTEXT_DATA%%"`).join(`JSON.parse(${projectAPIContextString})`)
+
+				return moduleTemplate
 			} else if (isFileSync(id)) {
 				const marker = enkoreJSRuntimeInitCodeHeaderMarkerUUID
 
