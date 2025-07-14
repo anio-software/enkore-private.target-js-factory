@@ -10,6 +10,7 @@ import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import {createEntity} from "@anio-software/enkore-private.spec"
 import {readFileString} from "@anio-software/pkg.node-fs"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
+import {globalStateSymbolForIdentifier} from "@anio-software/enkore-private.js-runtime-helpers/v0"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 
 function defineEmbed(globalIdentifier: string, data: EnkoreJSRuntimeEmbeddedFile): string {
