@@ -19,6 +19,7 @@ import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
 import {getEnkoreManifestFileData} from "./getEnkoreManifestFileData.ts"
+import {generateProjectAPIContext} from "./generateProjectAPIContext.ts"
 import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import path from "node:path"
 
@@ -127,7 +128,7 @@ export async function generateNPMPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
-	const projectAPIContext = await generateProjectAPIContext(session.project.root, false)
+	const projectAPIContext = await generateProjectAPIContext(session)
 
 	// todo: run this in postCompile hook
 	await updateEntryPointsMap(apiContext, projectAPIContext, session)
