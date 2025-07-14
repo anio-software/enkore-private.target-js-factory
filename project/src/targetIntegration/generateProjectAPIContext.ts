@@ -1,16 +1,32 @@
 import {
-	type EnkoreSessionAPI,
 	type EnkoreJSRuntimeProjectAPIContext,
 	createEntity
 } from "@anio-software/enkore-private.spec"
+import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
+import {
+	getProjectRootFromArgumentAndValidate,
+	readEnkoreConfigFile
+} from "@anio-software/enkore-private.spec/utils"
+
+import {readFileJSON} from "@anio-software/pkg.node-fs"
+import path from "node:path"
 
 export async function generateProjectAPIContext(
-	session: EnkoreSessionAPI
+	userProjectRoot: string | ["inferFromCLIArgs"]
 ): Promise<EnkoreJSRuntimeProjectAPIContext> {
+	const projectRoot = await getProjectRootFromArgumentAndValidate(
+		userProjectRoot
+	)
+
+	const projectConfig = await readEnkoreConfigFile(projectRoot)
+	const projectPackageJSON = await readFileJSON(
+		path.join(projectRoot, "package.json")
+	) as NodePackageJSON
+
 	return createEntity("EnkoreJSRuntimeProjectAPIContext", 0, 0, {
 		project: createEntity("EnkoreJSRuntimeProject", 0, 0, {
-			enkoreConfiguration: JSON.parse(JSON.stringify(session.project.config)),
-			packageJSON: JSON.parse(JSON.stringify(session.project.packageJSON)),
+			enkoreConfiguration: JSON.parse(JSON.stringify(projectConfig)),
+			packageJSON: JSON.parse(JSON.stringify(projectPackageJSON)),
 			projectId: ""
 		}),
 
