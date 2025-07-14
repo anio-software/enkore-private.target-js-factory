@@ -20,10 +20,10 @@ export function getPackageJSONExportsObject(
 			return `/${entryPointPath}`
 		})()
 
-		ret[`.${exportPath}`] = mjsFileExport(`./dist/${entryPointPath}/index.min.mjs`)
+		ret[`.${exportPath}`] = mjsFileExport(`./dist/${entryPointPath}/index.mjs`)
 
 		if (!typeOnly) {
-			ret[`./_source${exportPath}`] = mjsFileExport(`./_source/${entryPointPath}/index.min.mjs`)
+			ret[`./_source${exportPath}`] = mjsFileExport(`./_source/${entryPointPath}/index.mjs`)
 		}
 
 		if (entryPoint.hasCSSImports && !typeOnly) {
