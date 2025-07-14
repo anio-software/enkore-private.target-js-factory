@@ -26,7 +26,9 @@ export async function rollupPluginFactory(
 		name: "enkore-target-js-project-plugin",
 
 		resolveId(id) {
-			if (id === `${getBaseModuleSpecifier(apiContext.target)}/project`) {
+			if (id.startsWith(`@anio-software/enkore-private.js-runtime-helpers`)) {
+				return {id, external: true} as any
+			} else if (id === `${getBaseModuleSpecifier(apiContext.target)}/project`) {
 				return `\x00enkore:projectAPI`
 			}
 
