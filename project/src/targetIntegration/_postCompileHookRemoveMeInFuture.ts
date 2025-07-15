@@ -14,9 +14,13 @@ export async function _postCompileHookRemoveMeInFuture(
 		throw new Error(`Invalid internal state, projectAPIContext must be null.`)
 	}
 
+	session.enkore.emitMessage("info", "generating project api context")
+
 	internalData.projectAPIContext = await generateProjectAPIContext(
 		session.project.root, false
 	)
+
+	session.enkore.emitMessage("info", "updating entry points map")
 
 	await updateEntryPointsMap(apiContext, internalData.projectAPIContext, session)
 }
