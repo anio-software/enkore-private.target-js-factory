@@ -7,6 +7,7 @@ import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.
 import {getRequestedEmbedsFromProjectSourceFileRecursive} from "./getRequestedEmbedsFromProjectSourceFileRecursive.ts"
 import {combineRequestedEmbedsFromCodeResults} from "./combineRequestedEmbedsFromCodeResults.ts"
 import {getInternalData} from "./getInternalData.ts"
+import {convertBytesToUnitInfo, convertUnitInfoToString} from "@anio-software/pkg.js-utils"
 import type {EmbedsMap, EntryPoint} from "./InternalData.ts"
 
 type Embed = {
@@ -17,17 +18,7 @@ type Embed = {
 }
 
 function formatSize(size: number) {
-	if (isNaN(size)) {
-		return "N/A"
-	}
-
-	if (1024 > size) {
-		return `${size} Bytes`
-	} else if (1024 * 1024 > size) {
-		return `${(size / 1024).toFixed(2)} KiB`
-	}
-
-	return `${(size / 1024 / 1024).toFixed(2)} MiB`
+	return convertUnitInfoToString(convertBytesToUnitInfo(size))
 }
 
 function formatEmbedLogMessage(embed: Embed): string {
