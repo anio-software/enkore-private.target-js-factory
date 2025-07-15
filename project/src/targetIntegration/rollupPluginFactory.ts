@@ -43,7 +43,11 @@ export async function rollupPluginFactory(
 			if (id === `\x00enkore:projectAPI`) {
 				let moduleTemplate = getEmbedAsString("js://projectAPI/moduleTemplate.ts")
 
-				moduleTemplate = moduleTemplate.split(`"%%CONTEXT_DATA%%"`).join(`JSON.parse(${projectAPIContextString})`)
+				moduleTemplate = moduleTemplate
+				                 .split(`"%%CONTEXT_DATA%%"`)
+				                 .join(`JSON.parse(${projectAPIContextString})`)
+				                 .split(`} from "js-runtime-helpers`)
+				                 .join(`} from "@anio-software/enkore-private.js-runtime-helpers`)
 
 				return moduleTemplate
 			} else if (isFileSync(id)) {
