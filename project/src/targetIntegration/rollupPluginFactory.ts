@@ -52,12 +52,7 @@ export async function rollupPluginFactory(
 				const header = await reader.readNextChunk()
 				await reader.close()
 
-				if (!header) {
-					return null
-				} else if (!header.toString().startsWith(`/*${marker}:`)) {
-					return null
-				}
-
+				// todo: restrict this behaviour to packages created by enkore
 				const dependencyToLoad: string = (() => {
 					const fileName = path.basename(id)
 
@@ -74,6 +69,13 @@ export async function rollupPluginFactory(
 				})()
 
 				const code = await readFileString(dependencyToLoad)
+
+				if (!header) {
+					return code
+				} else if (!header.toString().startsWith(`/*${marker}:`)) {
+					return code
+				}
+
 				const result = parseJSRuntimeInitHeader(code)
 
 				if (result === false) {
