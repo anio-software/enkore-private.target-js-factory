@@ -5,7 +5,7 @@ import type {
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
-import {isFileSync, readFileInChunks, readFileString} from "@anio-software/pkg.node-fs"
+import {isFileSync, readFileInChunks, readFileString, findNearestFile} from "@anio-software/pkg.node-fs"
 import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import {parseJSRuntimeInitHeader} from "./parseJSRuntimeInitHeader.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
@@ -52,23 +52,26 @@ export async function rollupPluginFactory(
 				const header = await reader.readNextChunk()
 				await reader.close()
 
-				// todo: restrict this behaviour to packages created by enkore
-				const dependencyToLoad: string = (() => {
-					const fileName = path.basename(id)
+				const dependencyToLoad: string = await (async () => {
+					if (!id.endsWith(".min.mjs")) {
+						return id
+					}
 
-					if (!fileName.endsWith(".min.mjs")) {
+					const nearestEnkoreBuildFile = await findNearestFile(
+						"enkore-build.json", path.dirname(id)
+					)
+
+					if (nearestEnkoreBuildFile === false) {
 						return id
 					}
 
 					const newID = path.join(
 						path.dirname(id),
-						fileName.slice(0, -(".min.mjs".length)) + ".mjs"
+						path.basename(id).slice(0, -(".min.mjs".length)) + ".mjs"
 					)
 
 					if (isFileSync(newID)) {
-						session.enkore.emitMessage(
-							`info`, `using index.mjs over index.min.mjs.`
-						)
+						session.enkore.emitMessage(`info`, `using index.mjs over index.min.mjs.`)
 
 						return newID
 					}
