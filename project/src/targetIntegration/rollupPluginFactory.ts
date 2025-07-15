@@ -10,6 +10,7 @@ import {isFileSync, readFileInChunks, readFileString, findNearestFile, readFileJ
 import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import {parseJSRuntimeInitHeader} from "./parseJSRuntimeInitHeader.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
+import {searchAndReplace} from "@anio-software/pkg.js-utils"
 import path from "node:path"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
@@ -41,15 +42,12 @@ export async function rollupPluginFactory(
 
 		async load(id) {
 			if (id === `\x00enkore:projectAPI`) {
-				let moduleTemplate = getEmbedAsString("js://projectAPI/moduleTemplate.ts")
-
-				moduleTemplate = moduleTemplate
-				                 .split(`"%%CONTEXT_DATA%%"`)
-				                 .join(`JSON.parse(${projectAPIContextString})`)
-				                 .split(`} from "js-runtime-helpers`)
-				                 .join(`} from "@anio-software/enkore-private.js-runtime-helpers`)
-
-				return moduleTemplate
+				return searchAndReplace(
+					getEmbedAsString("js://projectAPI/moduleTemplate.ts"), {
+						[`"%%CONTEXT_DATA%%"`]: `JSON.parse(${projectAPIContextString})`,
+						[`} from "js-runtime-helpers`]: `} from "@anio-software/enkore-private.js-runtime-helpers`
+					}
+				)
 			} else if (isFileSync(id)) {
 				const marker = enkoreJSRuntimeInitCodeHeaderMarkerUUID
 
