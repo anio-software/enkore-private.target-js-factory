@@ -85,7 +85,7 @@ function logAllEmbeds(
 			return formatEmbedLogMessage(embed)
 		}).join("\n")
 
-		message += `\n\nThe combined size of all embeds is ${formatSize(combinedSize)}`
+		message += `\n\nThe combined size of all embeds is ${formatSize(combinedSize)}.`
 
 		session.enkore.emitMessage("info", message)
 	}
