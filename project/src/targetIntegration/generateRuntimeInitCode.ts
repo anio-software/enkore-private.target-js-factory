@@ -1,13 +1,13 @@
 import type {APIContext} from "./APIContext.ts"
-import type {
-	EnkoreSessionAPI,
-	EnkoreJSRuntimeEmbeddedFile,
-	EnkoreJSRuntimeProjectAPIContext
+import {
+	type EnkoreSessionAPI,
+	type EnkoreJSRuntimeEmbeddedFile,
+	type EnkoreJSRuntimeProjectAPIContext,
+	createEntity,
+	parseEmbedURL
 } from "@anio-software/enkore-private.spec"
 import type {EntryPoint} from "./InternalData.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
-import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
-import {createEntity} from "@anio-software/enkore-private.spec"
 import {readFileString} from "@anio-software/pkg.node-fs"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {globalStateSymbolForIdentifier} from "@anio-software/enkore-private.js-runtime-helpers/v0"

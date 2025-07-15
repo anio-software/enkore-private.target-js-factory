@@ -2,9 +2,9 @@ import {
 	type EnkoreSessionAPI,
 	type EnkoreBuildInfoFile,
 	type EnkoreLockFile,
-	createEntity,
-	readEntityJSONFile
+	createEntity
 } from "@anio-software/enkore-private.spec"
+import {readEntityJSONFile} from "@anio-software/enkore-private.spec/utils"
 import type {APIContext} from "./APIContext.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"

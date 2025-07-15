@@ -1,6 +1,7 @@
-import type {
-	EnkoreSessionAPI,
-	EnkoreJSRuntimeProjectAPIContext
+import {
+	type EnkoreSessionAPI,
+	type EnkoreJSRuntimeProjectAPIContext,
+	parseEmbedURL
 } from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.ts"
 import {getInternalData} from "./getInternalData.ts"
@@ -20,7 +21,6 @@ import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
 import {getEnkoreManifestFileData} from "./getEnkoreManifestFileData.ts"
 import {generateProjectAPIContext} from "./generateProjectAPIContext.ts"
-import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 import runtimeHelpers from "@anio-software/enkore-private.js-runtime-helpers/_source/v0"
 import path from "node:path"
 

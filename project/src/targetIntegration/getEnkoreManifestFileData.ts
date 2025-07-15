@@ -2,9 +2,9 @@ import type {InternalData} from "./InternalData.ts"
 import {
 	type EnkoreJSBuildManifestFile,
 	type EnkoreSessionAPI,
-	createEntity
+	createEntity,
+	parseEmbedURL
 } from "@anio-software/enkore-private.spec"
-import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
 
 export function getEnkoreManifestFileData(
 	session: EnkoreSessionAPI,
