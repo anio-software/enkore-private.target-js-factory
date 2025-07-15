@@ -7,7 +7,63 @@ import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.
 import {getRequestedEmbedsFromProjectSourceFileRecursive} from "./getRequestedEmbedsFromProjectSourceFileRecursive.ts"
 import {combineRequestedEmbedsFromCodeResults} from "./combineRequestedEmbedsFromCodeResults.ts"
 import {getInternalData} from "./getInternalData.ts"
-import type {EmbedsMap} from "./InternalData.ts"
+import type {EmbedsMap, EntryPoint} from "./InternalData.ts"
+
+type Embed = {
+	isLocal: boolean
+	url: string
+	createResourceAtRuntimeInit: boolean
+}
+
+function formatEmbedLogMessage(embed: Embed): string {
+	const flags: string[] = []
+
+	if (!embed.isLocal) {
+		flags.push("remote")
+	}
+
+	if (embed.createResourceAtRuntimeInit) {
+		flags.push("resource")
+	}
+
+	return ` - ${embed.url}${flags.length ? ` (${flags.join(", ")})` : ""}`
+}
+
+function logAllEmbeds(
+	session: EnkoreSessionAPI,
+	entryPointPath: string,
+	entryPoint: EntryPoint
+) {
+	const allEmbeds: Set<Embed> = new Set()
+
+	if (entryPoint.localEmbeds !== "none") {
+		for (const [embedURL, embedData] of entryPoint.localEmbeds.entries()) {
+			allEmbeds.add({
+				isLocal: true,
+				url: embedURL,
+				createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit
+			})
+		}
+	}
+
+	for (const [embedURL, embedData] of entryPoint.remoteEmbeds.entries()) {
+		allEmbeds.add({
+			isLocal: false,
+			url: embedURL,
+			createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit
+		})
+	}
+
+	if (allEmbeds.size) {
+		let message = `entry point '${entryPointPath}' will contain the following embeds:\n`
+
+		message += [...allEmbeds].map(embed => {
+			return formatEmbedLogMessage(embed)
+		}).join("\n")
+
+		session.enkore.emitMessage("info", message)
+	}
+}
 
 export async function updateEntryPointsMap(
 	apiContext: APIContext,
@@ -73,23 +129,8 @@ export async function updateEntryPointsMap(
 			}
 		}
 
-		// todo: log remote embeds too
-		if (embedsMap.size) {
-			let message = `entry point '${entryPointPath}' will contain the following embeds:\n`
-
-			for (const [embedPath, {createResourceAtRuntimeInit}] of embedsMap.entries()) {
-				message += ` - ${embedPath}`
-
-				if (createResourceAtRuntimeInit) {
-					message += ` (create resource at runtime init)`
-				}
-
-				message += `\n`
-			}
-
-			session.enkore.emitMessage("info", message.slice(0, -1))
-		}
-
 		entryPoint.localEmbeds = embedsMap
+
+		logAllEmbeds(session, entryPointPath, entryPoint)
 	}
 }
