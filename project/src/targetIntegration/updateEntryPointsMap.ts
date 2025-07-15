@@ -73,7 +73,7 @@ function logAllEmbeds(
 			isLocal: false,
 			url: embedURL,
 			createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit,
-			size: NaN
+			size: embedData.size
 		})
 	}
 
