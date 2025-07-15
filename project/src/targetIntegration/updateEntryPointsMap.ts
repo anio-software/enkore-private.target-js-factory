@@ -16,6 +16,18 @@ type Embed = {
 	size: number
 }
 
+function formatSize(size: number) {
+	if (isNaN(size)) {
+		return "N/A"
+	}
+
+	if (1024 > size) {
+		return `${size} Bytes`
+	}
+
+	return `${(size / 1024).toFixed(2)} KiB`
+}
+
 function formatEmbedLogMessage(embed: Embed): string {
 	const flags: string[] = []
 
@@ -27,7 +39,7 @@ function formatEmbedLogMessage(embed: Embed): string {
 		flags.push("resource")
 	}
 
-	return ` - ${embed.url}${flags.length ? ` (${flags.join(", ")})` : ""}`
+	return ` - ${embed.url}${flags.length ? ` (${flags.join(", ")})` : ""} ${formatSize(embed.size)}`
 }
 
 function logAllEmbeds(
@@ -36,6 +48,7 @@ function logAllEmbeds(
 	entryPoint: EntryPoint
 ) {
 	const allEmbeds: Set<Embed> = new Set()
+	let combinedSize = 0
 
 	if (entryPoint.localEmbeds !== "none") {
 		for (const [embedURL, embedData] of entryPoint.localEmbeds.entries()) {
@@ -45,6 +58,8 @@ function logAllEmbeds(
 				createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit,
 				size: embedData.size
 			})
+
+			combinedSize += embedData.size
 		}
 	}
 
@@ -58,11 +73,13 @@ function logAllEmbeds(
 	}
 
 	if (allEmbeds.size) {
-		let message = `entry point '${entryPointPath}' will contain the following embeds:\n`
+		let message = `entry point '${entryPointPath}' will contain the following embeds:\n\n`
 
 		message += [...allEmbeds].map(embed => {
 			return formatEmbedLogMessage(embed)
 		}).join("\n")
+
+		message += `\n\nThe combined size of all embeds is ${formatSize(combinedSize)}`
 
 		session.enkore.emitMessage("info", message)
 	}
