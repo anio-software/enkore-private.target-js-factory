@@ -32,13 +32,11 @@ The latter approach is more safe in the sense, if a system is out of file storag
 
 In order to facilitate hoisting of embeds, embed URLs first must be translated form a local URL to a global embed identifier.
 
-The global embed identifier is a SHA256 hash hex string from the input: `${projectId}/${embedPath}`.
+This is done using the following scheme:
 
-Where the `projectId` is also a SHA256 hash hex string of the package name + version.
+`<package-identifier>/v<package-version>/<protocol>/<embed-path>`
 
-The translation from local path to global embed identifier is also embedded inside the final product.
-
-This allows the running environment to not have a SHA256 hashing algorithm (e.g. `window.crypto.sublte` is only available in secure contexts.)
+Where `<package-identifier>` is the _full_ package name, e.g. `@anio-software/package`
 
 The hoisting of embeds has two runtime side-effects:
 
