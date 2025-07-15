@@ -31,6 +31,7 @@ export type NPMPackage = {
 }
 
 export type EmbedsMap = Map<string, {
+	size: number
 	createResourceAtRuntimeInit: boolean
 }>
 

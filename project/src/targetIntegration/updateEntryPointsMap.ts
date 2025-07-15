@@ -13,6 +13,7 @@ type Embed = {
 	isLocal: boolean
 	url: string
 	createResourceAtRuntimeInit: boolean
+	size: number
 }
 
 function formatEmbedLogMessage(embed: Embed): string {
@@ -41,7 +42,8 @@ function logAllEmbeds(
 			allEmbeds.add({
 				isLocal: true,
 				url: embedURL,
-				createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit
+				createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit,
+				size: embedData.size
 			})
 		}
 	}
@@ -50,7 +52,8 @@ function logAllEmbeds(
 		allEmbeds.add({
 			isLocal: false,
 			url: embedURL,
-			createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit
+			createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit,
+			size: NaN
 		})
 	}
 
@@ -108,21 +111,23 @@ export async function updateEntryPointsMap(
 		const embedsMap: EmbedsMap = new Map()
 
 		if (result[0] === "all") {
-			for (const [embedURL] of projectEmbedMap.entries()) {
+			for (const [embedURL, {data}] of projectEmbedMap.entries()) {
 				embedsMap.set(embedURL, {
-					createResourceAtRuntimeInit: true
+					createResourceAtRuntimeInit: true,
+					size: data.length
 				})
 			}
 		} else {
 			const usedEmbeds = result[1]
 
-			for (const [embedURL] of projectEmbedMap.entries()) {
+			for (const [embedURL, {data}] of projectEmbedMap.entries()) {
 				if (!usedEmbeds.has(embedURL)) continue
 
 				const {requestedByMethods} = usedEmbeds.get(embedURL)!
 
 				embedsMap.set(embedURL, {
-					createResourceAtRuntimeInit: requestedByMethods.has("getEmbedAsURL")
+					createResourceAtRuntimeInit: requestedByMethods.has("getEmbedAsURL"),
+					size: data.length
 				})
 			}
 		}
