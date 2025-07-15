@@ -75,11 +75,13 @@ function logAllEmbeds(
 		})
 	}
 
-	if (allEmbeds.size) {
+	const allEmbedsAsArray = [...allEmbeds]
+
+	if (allEmbedsAsArray.length) {
 		let message = `entry point '${entryPointPath}' will contain the following embeds:\n\n`
 
-		const localEmbeds = [...allEmbeds].filter(v => v.isLocal)
-		const remoteEmbeds = [...allEmbeds].filter(v => !v.isLocal)
+		const localEmbeds = allEmbedsAsArray.filter(v => v.isLocal)
+		const remoteEmbeds = allEmbedsAsArray.filter(v => !v.isLocal)
 
 		if (localEmbeds.length) {
 			message += `  Local Embeds (${nEmbedsString(localEmbeds.length)}, total size ${calcEmbedsSize(localEmbeds)})\n\n`
@@ -98,7 +100,7 @@ function logAllEmbeds(
 			return formatEmbedLogMessage(embed)
 		}).join("\n")
 
-		message += `\n\nThe combined size of all embeds is ${calcEmbedsSize([...allEmbeds])}.`
+		message += `\n\nThe combined size of all embeds is ${calcEmbedsSize(allEmbedsAsArray)}.`
 
 		session.enkore.emitMessage("info", message)
 	}
