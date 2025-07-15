@@ -73,6 +73,7 @@ export async function updateEntryPointsMap(
 			}
 		}
 
+		// todo: log remote embeds too
 		if (embedsMap.size) {
 			let message = `entry point '${entryPointPath}' will contain the following embeds:\n`
 
