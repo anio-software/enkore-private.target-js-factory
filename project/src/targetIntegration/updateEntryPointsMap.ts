@@ -29,17 +29,7 @@ function formatSize(size: number) {
 }
 
 function formatEmbedLogMessage(embed: Embed): string {
-	const flags: string[] = []
-
-	if (!embed.isLocal) {
-		flags.push("remote")
-	}
-
-	if (embed.createResourceAtRuntimeInit) {
-		flags.push("resource")
-	}
-
-	return `    - ${embed.url}${flags.length ? ` (${flags.join(", ")})` : ""} ${formatSize(embed.size)}`
+	return `    - ${embed.url}${embed.createResourceAtRuntimeInit ? " (+resource)" : ""} ${formatSize(embed.size)}`
 }
 
 function logAllEmbeds(
