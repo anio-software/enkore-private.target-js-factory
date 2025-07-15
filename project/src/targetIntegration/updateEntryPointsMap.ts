@@ -50,7 +50,6 @@ function logAllEmbeds(
 	entryPoint: EntryPoint
 ) {
 	const allEmbeds: Set<Embed> = new Set()
-	let combinedSize = 0
 
 	if (entryPoint.localEmbeds !== "none") {
 		for (const [embedURL, embedData] of entryPoint.localEmbeds.entries()) {
@@ -60,8 +59,6 @@ function logAllEmbeds(
 				createResourceAtRuntimeInit: embedData.createResourceAtRuntimeInit,
 				size: embedData.size
 			})
-
-			combinedSize += embedData.size
 		}
 	}
 
@@ -97,7 +94,7 @@ function logAllEmbeds(
 			return formatEmbedLogMessage(embed)
 		}).join("\n")
 
-		message += `\n\nThe combined size of all embeds is ${formatSize(combinedSize)}.`
+		message += `\n\nThe combined size of all embeds is ${calcEmbedsSize([...allEmbeds])}.`
 
 		session.enkore.emitMessage("info", message)
 	}
