@@ -32,6 +32,18 @@ function formatEmbedLogMessage(embed: Embed): string {
 	return `    - ${embed.url}${embed.createResourceAtRuntimeInit ? " (+resource)" : ""} ${formatSize(embed.size)}`
 }
 
+function calcEmbedsSize(embeds: Embed[]) {
+	let total = 0
+
+	for (const {size} of embeds) {
+		if (isNaN(size)) continue
+
+		total += size
+	}
+
+	return formatSize(total)
+}
+
 function logAllEmbeds(
 	session: EnkoreSessionAPI,
 	entryPointPath: string,
@@ -69,7 +81,7 @@ function logAllEmbeds(
 		const remoteEmbeds = [...allEmbeds].filter(v => !v.isLocal)
 
 		if (localEmbeds.length) {
-			message += `  Local Embeds (${localEmbeds.length})\n\n`
+			message += `  Local Embeds (${localEmbeds.length} embed(s), total size ${calcEmbedsSize(localEmbeds)})\n\n`
 		}
 
 		message += localEmbeds.map(embed => {
@@ -78,7 +90,7 @@ function logAllEmbeds(
 
 		if (localEmbeds.length && remoteEmbeds.length) {
 			message += `\n\n`
-			message += `  Remote Embeds (${remoteEmbeds.length})\n\n`
+			message += `  Remote Embeds (${remoteEmbeds.length} embed(s), total size ${calcEmbedsSize(remoteEmbeds)})\n\n`
 		}
 
 		message += remoteEmbeds.map(embed => {
