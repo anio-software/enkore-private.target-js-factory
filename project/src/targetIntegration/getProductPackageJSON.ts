@@ -2,13 +2,13 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {InternalData} from "./InternalData.ts"
+import type {PeerDependency} from "#~export/PeerDependency.ts"
 import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.ts"
 import {isNodeTarget} from "@anio-software/enkore-private.target-js-utils"
 import {isObject} from "@anio-software/pkg.is"
 import {
 	getRequiredPeerDependencyPackages
 } from "#~export/getRequiredPeerDependencyPackages.ts"
-import type {PeerDependency} from "#~export/PeerDependency.ts"
 
 type EntryPoints = InternalData["entryPoints"]
 
@@ -92,10 +92,12 @@ export function getProductPackageJSON(
 		peerDependencies: session.project.packageJSON.peerDependencies,
 		dependencies: session.project.packageJSON.dependencies,
 
-		files: ["./dist"]
+		files: ["./dist", "./enkore-build.json"]
 	}
 
 	if (!options.typeOnly) {
+		newPackageJSON.files!.push("./enkore-manifest.json")
+		newPackageJSON.files!.push("./_embeds")
 		newPackageJSON.files!.push("./_source")
 		newPackageJSON.files!.push("./bin")
 	}

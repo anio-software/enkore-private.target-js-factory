@@ -1,4 +1,4 @@
-import {parseEmbedURL} from "@anio-software/enkore-private.spec/utils"
+import {parseEmbedURL} from "@anio-software/enkore-private.spec"
 import {_getEmbedContentTypeForProtocol} from "./_getEmbedContentTypeForProtocol.ts"
 import type {CreateTemporaryResourceOptions} from "@anio-software/pkg.temporary-resource-factory"
 

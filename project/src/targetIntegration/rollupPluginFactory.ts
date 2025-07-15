@@ -1,146 +1,113 @@
-import {
-	type EnkoreSessionAPI,
-	type EnkoreJSRuntimeEmbeddedFile,
-	createEntity
+import type {
+	EnkoreSessionAPI,
+	EnkoreJSRuntimeProjectAPIContext
 } from "@anio-software/enkore-private.spec"
+import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.ts"
-import type {EntryPoint} from "./InternalData.ts"
-import type {ProjectAPIContext} from "#~embeds/project/ProjectAPIContext.ts"
-import {getRequestedEmbeds} from "./getRequestedEmbeds.ts"
-import {generateProjectAPIContext} from "#~embeds/project/generateProjectAPIContext.ts"
-import {getProjectAPIMethodNames} from "#~export/project/getProjectAPIMethodNames.ts"
-import {generateAPIExportGlueCode} from "#~export/generateAPIExportGlueCode.ts"
-import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
-import {getInternalData} from "./getInternalData.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
-import {getToolchain} from "#~src/getToolchain.ts"
+import {isFileSync, readFileInChunks, readFileString, findNearestFile, readFileJSON} from "@anio-software/pkg.node-fs"
+import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
+import {parseJSRuntimeInitHeader} from "./parseJSRuntimeInitHeader.ts"
+import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
+import {searchAndReplace} from "@anio-software/pkg.js-utils"
+import path from "node:path"
 
 type Factory = NonNullable<JsBundlerOptions["additionalPlugins"]>[number]
 
 export async function rollupPluginFactory(
 	session: EnkoreSessionAPI,
 	apiContext: APIContext,
-	entryPointPath: string,
-	entryPoint: EntryPoint
+	projectAPIContext: EnkoreJSRuntimeProjectAPIContext
 ): Promise<Factory> {
-	const toolchain = getToolchain(session)
+	const projectAPIContextCopy = {...projectAPIContext}
+	delete projectAPIContextCopy._projectEmbedFileMapRemoveMeInBundle
 
-	const projectContext = (
-		await generateProjectAPIContext(session.project.root, false)
-	) as Required<ProjectAPIContext>
-
-	//
-	// optimization: check which embeds can be trimmed/ommited
-	// from the project context in order to save space
-	//
-	const requestedEmbeds = await getRequestedEmbeds(session, apiContext, entryPoint)
-
-	if (requestedEmbeds.result === "specific") {
-		for (const [embedPath] of projectContext._projectEmbedFileMapRemoveMeInBundle.entries()) {
-			if (!requestedEmbeds.usedEmbeds.has(embedPath)) {
-				// should be safe as per https://stackoverflow.com/a/35943995 "ES6: Is it dangerous to delete elements from Set/Map during Set/Map iteration?"
-				projectContext._projectEmbedFileMapRemoveMeInBundle.delete(embedPath)
-				delete projectContext.projectEmbedFileTranslationMap[embedPath]
-			}
-		}
-	}
-
-	// projectContext is now trimmed
-	const bundlerProjectContext = {...projectContext} as ProjectAPIContext
-
-	delete bundlerProjectContext._projectEmbedFileMapRemoveMeInBundle;
-
-	const bundlerProjectContextString = JSON.stringify(JSON.stringify(bundlerProjectContext))
+	const projectAPIContextString = JSON.stringify(JSON.stringify(projectAPIContextCopy))
 
 	const plugin: Factory["plugin"] = {
 		name: "enkore-target-js-project-plugin",
 
-		intro() {
-			if (session.target.getOptions(apiContext.target)._disableRuntimeCodeInjection === true) {
-				return ""
-			}
-
-			const embeds: Record<string, EnkoreJSRuntimeEmbeddedFile> = {}
-
-			for (const [embedPath, value] of projectContext._projectEmbedFileMapRemoveMeInBundle.entries()) {
-				const hashPath = projectContext.projectEmbedFileTranslationMap[embedPath]
-				const _createResourceAtRuntimeInit = (() => {
-					if (requestedEmbeds.result === "all") {
-						return true
-					}
-
-					if (!requestedEmbeds.usedEmbeds.has(embedPath)) {
-						return false
-					}
-
-					const {
-						requestedByMethods
-					} = requestedEmbeds.usedEmbeds.get(embedPath)!
-
-					return requestedByMethods.includes("getEmbedAsURL")
-				})()
-
-				embeds[hashPath] = createEntity("EnkoreJSRuntimeEmbeddedFile", 0, 0, {
-					_createResourceAtRuntimeInit,
-					projectId: projectContext.projectId,
-					sourceFilePath: value.sourceFilePath,
-					originalEmbedPath: embedPath,
-					data: value.data,
-					_projectIdentifier: `${session.project.packageJSON.name}@${session.project.packageJSON.version}`
-				})
-			}
-
-			const record = createEntity("EnkoreJSRuntimeGlobalDataRecord", 0, 0, {
-				immutable: {
-					globalDataRecordId: `${getInternalData(session).projectId}/${entryPointPath}`,
-					embeds
-				},
-				// will be populated / used at runtime
-				mutable: {
-					embedResourceURLs: {}
-				}
-			})
-
-			//
-			// this will later be merged with other global embed maps
-			//
-			return toolchain.defineEnkoreJSRuntimeGlobalDataRecord(record)
-		},
-
 		resolveId(id) {
-			if (id === `${getBaseModuleSpecifier(apiContext.target)}/project`) {
+			if (id.startsWith(`@anio-software/enkore-private.js-runtime-helpers`)) {
+				return {id, external: true}
+			} else if (id.startsWith("@anio-software/enkore.js-runtime")) {
+				return {id, external: true}
+			} else if (id === `${getBaseModuleSpecifier(apiContext.target)}/project`) {
 				return `\x00enkore:projectAPI`
-			} else if (id === `enkore:generateProjectAPIFromContextRollup`) {
-				return `\x00enkore:generateProjectAPIFromContextRollup`
 			}
 
 			return null
 		},
 
-		load(id) {
+		async load(id) {
 			if (id === `\x00enkore:projectAPI`) {
-				let apiCode = ``
-
-				apiCode += `import {generateProjectAPIFromContextRollup} from "enkore:generateProjectAPIFromContextRollup"\n`
-
-				apiCode += `const __api = await generateProjectAPIFromContextRollup(JSON.parse(${bundlerProjectContextString}));\n`
-
-				apiCode += generateAPIExportGlueCode(
-					"TypeDoesntMatterWillBeStrippedAnyway",
-					"__api",
-					getProjectAPIMethodNames()
-				)
-
-				return toolchain.stripTypeScriptTypes(
-					apiCode, {
-						rewriteImportExtensions: false
+				return searchAndReplace(
+					getEmbedAsString("js://projectAPI/moduleTemplate.ts"), {
+						[`"%%CONTEXT_DATA%%"`]: `JSON.parse(${projectAPIContextString})`,
+						[`} from "js-runtime-helpers`]: `} from "@anio-software/enkore-private.js-runtime-helpers`
 					}
 				)
-			} else if (id === `\x00enkore:generateProjectAPIFromContextRollup`) {
-				return getEmbedAsString(
-					"js-bundle://project/generateProjectAPIFromContextRollup.ts"
-				) as string
+			} else if (isFileSync(id)) {
+				const marker = enkoreJSRuntimeInitCodeHeaderMarkerUUID
+
+				const reader = await readFileInChunks(id, 512)
+				const header = await reader.readNextChunk()
+				await reader.close()
+
+				const dependencyToLoad: string = await (async () => {
+					if (!id.endsWith(".min.mjs")) {
+						return id
+					}
+
+					const nearestEnkoreBuildFile = await findNearestFile("enkore-build.json", path.dirname(id))
+					const nearestPackageJSONFile = await findNearestFile("package.json", path.dirname(id))
+
+					if (nearestEnkoreBuildFile === false || nearestPackageJSONFile === false) {
+						return id
+					}
+
+					if (path.dirname(nearestEnkoreBuildFile) !== path.dirname(nearestPackageJSONFile)) {
+						session.enkore.emitMessage(`warning`, "enkore-build.json was found on a different level than package.json")
+
+						return id
+					}
+
+					const packageJSON = await readFileJSON(nearestPackageJSONFile) as NodePackageJSON
+
+					const newID = path.join(
+						path.dirname(id),
+						path.basename(id).slice(0, -(".min.mjs".length)) + ".mjs"
+					)
+
+					if (isFileSync(newID)) {
+						session.enkore.emitMessage(`info`, `${packageJSON.name}: using index.mjs over index.min.mjs.`)
+
+						return newID
+					}
+
+					return id
+				})()
+
+				const code = await readFileString(dependencyToLoad)
+
+				if (!header) {
+					return code
+				} else if (!header.toString().startsWith(`/*${marker}:`)) {
+					return code
+				}
+
+				const result = parseJSRuntimeInitHeader(code)
+
+				if (result === false) {
+					session.enkore.emitMessage("error", `failed to parse js runtime init header`)
+
+					return null
+				}
+
+				session.enkore.emitMessage("info", `detected js runtime init header offset=${result.offset}`)
+
+				return code.slice(result.offset)
 			}
 
 			return null

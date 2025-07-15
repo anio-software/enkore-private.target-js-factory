@@ -3,7 +3,9 @@ import type {APIContext} from "#~src/targetIntegration/APIContext.ts"
 import {_productNameToNPMPackage} from "../_productNameToNPMPackage.ts"
 import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.ts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.ts"
-import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync} from "@anio-software/pkg.node-fs"
+import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync, isFileSync} from "@anio-software/pkg.node-fs"
+import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
+import {_postCompileHookRemoveMeInFuture} from "#~src/targetIntegration/_postCompileHookRemoveMeInFuture.ts"
 import path from "node:path"
 
 async function _copyNPMPackageProduct(
@@ -19,6 +21,25 @@ async function _copyNPMPackageProduct(
 		source: path.join(base, "dist"),
 		destination: "./dist"
 	})
+
+	await copy({
+		source: path.join(base, "enkore-build.json"),
+		destination: "./enkore-build.json"
+	})
+
+	if (isFileSync(path.join(base, "enkore-manifest.json"))) {
+		await copy({
+			source: path.join(base, "enkore-manifest.json"),
+			destination: "./enkore-manifest.json"
+		})
+	}
+
+	if (isDirectorySync(path.join(base, "_embeds"))) {
+		await copy({
+			source: path.join(base, "_embeds"),
+			destination: "./_embeds"
+		})
+	}
 
 	if (isDirectorySync(path.join(base, "_source"))) {
 		await copy({
@@ -54,6 +75,22 @@ async function _copyNPMPackageProduct(
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
+	// ------------------------------------------------
+	// todo: remove me in the future
+	const {_backwardsCompatPostCompileHook} = getInternalData(session)
+
+	if (_backwardsCompatPostCompileHook.needsManualInvocation) {
+		// make sure it's only executed once
+		if (!_backwardsCompatPostCompileHook.hasBeenManuallyInvoked) {
+			session.enkore.emitMessage("warning", `providing backwards compat for postCompile hook`)
+
+			await _postCompileHookRemoveMeInFuture(this, session)
+
+			_backwardsCompatPostCompileHook.hasBeenManuallyInvoked = true
+		}
+	}
+	// ------------------------------------------------
+
 	session.enkore.emitMessage("info", `building '${productName}'`)
 
 	//

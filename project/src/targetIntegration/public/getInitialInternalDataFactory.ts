@@ -18,7 +18,14 @@ const impl: API["getInitialInternalData"] = async function(
 	return {
 		entryPoints: new Map(),
 		projectId,
-		binScripts: []
+		binScripts: [],
+		projectAPIContext: null,
+
+		// remove me in the future
+		_backwardsCompatPostCompileHook: {
+			needsManualInvocation: true,
+			hasBeenManuallyInvoked: false
+		}
 	}
 }
 
