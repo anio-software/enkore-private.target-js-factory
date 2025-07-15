@@ -11,6 +11,7 @@ import {getToolchain} from "#~src/getToolchain.ts"
 import {readFileString} from "@anio-software/pkg.node-fs"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
 import {globalStateSymbolForIdentifier} from "js-runtime-helpers/v0"
+import {isSideEffectFreeImport} from "./isSideEffectFreeImport.ts"
 import temporaryResourceFactory from "@anio-software/pkg.temporary-resource-factory/_source"
 
 function defineEmbed(globalIdentifier: string, data: EnkoreJSRuntimeEmbeddedFile): string {
@@ -42,7 +43,11 @@ async function bundle(
 	return await toolchain.jsBundler(
 		session.project.root, code, {
 			outputFormat: "iife",
-
+			treeshake: {
+				moduleSideEffects(id) {
+					return !isSideEffectFreeImport(id)
+				}
+			},
 			additionalPlugins: [{
 				when: "pre",
 				plugin: {
