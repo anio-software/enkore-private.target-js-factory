@@ -18,6 +18,7 @@ import {publishProductFactory} from "#~src/targetIntegration/public/publishProdu
 import {preInitializeFactory} from "#~src/targetIntegration/public/hook/preInitializeFactory.ts"
 import {preLintFactory} from "#~src/targetIntegration/public/hook/preLintFactory.ts"
 import {preCompileFactory} from "#~src/targetIntegration/public/hook/preCompileFactory.ts"
+import {postCompileFactory} from "#~src/targetIntegration/public/hook/postCompileFactory.ts"
 
 export async function generateTargetIntegrationAPI(target: TargetJSIdentifier): Promise<API> {
 	const apiContext: APIContext = {
@@ -46,6 +47,7 @@ export async function generateTargetIntegrationAPI(target: TargetJSIdentifier): 
 			preInitialize: preInitializeFactory(apiContext),
 			preLint: preLintFactory(apiContext),
 			preCompile: preCompileFactory(apiContext),
+			postCompile: postCompileFactory(apiContext)
 		}
 	}
 }
