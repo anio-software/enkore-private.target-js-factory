@@ -2,10 +2,11 @@ import type {
 	EnkoreSessionAPI,
 	EnkoreJSRuntimeProjectAPIContext
 } from "@anio-software/enkore-private.spec"
+import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
 import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {APIContext} from "./APIContext.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
-import {isFileSync, readFileInChunks, readFileString, findNearestFile} from "@anio-software/pkg.node-fs"
+import {isFileSync, readFileInChunks, readFileString, findNearestFile, readFileJSON} from "@anio-software/pkg.node-fs"
 import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
 import {parseJSRuntimeInitHeader} from "./parseJSRuntimeInitHeader.ts"
 import {getEmbedAsString} from "@anio-software/enkore.target-js-node/project"
@@ -57,13 +58,20 @@ export async function rollupPluginFactory(
 						return id
 					}
 
-					const nearestEnkoreBuildFile = await findNearestFile(
-						"enkore-build.json", path.dirname(id)
-					)
+					const nearestEnkoreBuildFile = await findNearestFile("enkore-build.json", path.dirname(id))
+					const nearestPackageJSONFile = await findNearestFile("package.json", path.dirname(id))
 
-					if (nearestEnkoreBuildFile === false) {
+					if (nearestEnkoreBuildFile === false || nearestPackageJSONFile === false) {
 						return id
 					}
+
+					if (path.dirname(nearestEnkoreBuildFile) !== path.dirname(nearestPackageJSONFile)) {
+						session.enkore.emitMessage(`warning`, "enkore-build.json was found on a different level than package.json")
+
+						return id
+					}
+
+					const packageJSON = await readFileJSON(nearestPackageJSONFile) as NodePackageJSON
 
 					const newID = path.join(
 						path.dirname(id),
@@ -71,7 +79,7 @@ export async function rollupPluginFactory(
 					)
 
 					if (isFileSync(newID)) {
-						session.enkore.emitMessage(`info`, `using index.mjs over index.min.mjs.`)
+						session.enkore.emitMessage(`info`, `${packageJSON.name}: using index.mjs over index.min.mjs.`)
 
 						return newID
 					}
