@@ -28,6 +28,18 @@ function src(code: string) {
 	return `export default ${JSON.stringify(code)};\n`
 }
 
+function isSideEffectFreeImport(id: string): boolean {
+	if (id.startsWith("node:")) {
+		return true
+	} else if (id.startsWith(`@anio-software/enkore-private.js-runtime-helpers`)) {
+		return true
+	} else if (id.startsWith("@anio-software/enkore.js-runtime")) {
+		return true
+	}
+
+	return false
+}
+
 async function minifyJSBundle(session: EnkoreSessionAPI, bundle: string): Promise<string> {
 	const toolchain = getToolchain(session)
 	const isProductionBuild: boolean = (() => {
@@ -67,7 +79,11 @@ async function minifyJSBundle(session: EnkoreSessionAPI, bundle: string): Promis
 					}
 				}
 			}],
-			treeshake: true
+			treeshake: {
+				moduleSideEffects(id) {
+					return !isSideEffectFreeImport(id)
+				}
+			}
 		}
 	)
 
@@ -89,7 +105,11 @@ async function createDistFiles(
 		const onRollupLogFunction = getOnRollupLogFunction(session)
 
 		const jsBundlerOptions: JsBundlerOptions = {
-			treeshake: true,
+			treeshake: {
+				moduleSideEffects(id) {
+					return !isSideEffectFreeImport(id)
+				}
+			},
 			externals: externalPackages,
 			onRollupLogFunction,
 			additionalPlugins: [
