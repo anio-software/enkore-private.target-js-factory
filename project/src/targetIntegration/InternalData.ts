@@ -57,4 +57,10 @@ export type InternalData = {
 
 	registryMap: Map<string, Registry>
 	npmPackages: NPMPackage[]
+
+	// remove me in the future
+	_backwardsCompatPostCompileHook: {
+		needsManualInvocation: boolean
+		hasBeenManuallyInvoked: boolean
+	}
 }
