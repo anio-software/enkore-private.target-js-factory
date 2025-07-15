@@ -50,6 +50,11 @@ async function getNeededEmbedsForExternalImport(
 		const enkoreManifestFilePath = path.join(packageRoot, "enkore-manifest.json")
 		const enkoreManifest = await readEntityJSONFile(enkoreManifestFilePath, "EnkoreJSBuildManifestFile")
 
+		// _source/ imports should never contain embeds
+		if (packageImportPath === "_source" || packageImportPath.startsWith("_source/")) {
+			return false
+		}
+
 		if (!(packageImportPath in enkoreManifest.exports)) {
 			session.enkore.emitMessage(
 				"error", `unable to find '${packageImportPath}' in enkore-manifest.json file.`
