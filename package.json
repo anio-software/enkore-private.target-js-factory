@@ -17,7 +17,7 @@
     "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.90",
     "@anio-software/enkore-private.target-js-utils": "^0.0.13",
     "@anio-software/enkore.core": "^0.13.1",
-    "@anio-software/enkore.target-js-node": "^0.0.321-canary-d014c223-06d4ade7",
+    "@anio-software/enkore.target-js-node": "^0.0.413",
     "@anio-software/pkg.is": "^0.0.3",
     "@anio-software/pkg.js-utils": "^0.0.21",
     "@anio-software/pkg.node-fs": "^0.0.21",
