@@ -75,6 +75,7 @@ async function _copyNPMPackageProduct(
 const impl: API["generateProduct"] = async function(
 	this: APIContext, session, productName
 ) {
+	// ------------------------------------------------
 	// todo: remove me in the future
 	const {_backwardsCompatPostCompileHook} = getInternalData(session)
 
@@ -88,6 +89,7 @@ const impl: API["generateProduct"] = async function(
 			_backwardsCompatPostCompileHook.hasBeenManuallyInvoked = true
 		}
 	}
+	// ------------------------------------------------
 
 	session.enkore.emitMessage("info", `building '${productName}'`)
 
