@@ -5,6 +5,7 @@ import {generateNPMPackage} from "#~src/targetIntegration/generateNPMPackage.ts"
 import {generateNPMTypesPackage} from "#~src/targetIntegration/generateNPMTypesPackage.ts"
 import {copy, readFileJSON, writeAtomicFileJSON, isDirectorySync, isFileSync} from "@anio-software/pkg.node-fs"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
+import {_postCompileHookRemoveMeInFuture} from "#~src/targetIntegration/_postCompileHookRemoveMeInFuture.ts"
 import path from "node:path"
 
 async function _copyNPMPackageProduct(
@@ -81,6 +82,8 @@ const impl: API["generateProduct"] = async function(
 		// make sure it's only executed once
 		if (!_backwardsCompatPostCompileHook.hasBeenManuallyInvoked) {
 			session.enkore.emitMessage("warning", `providing backwards compat for postCompile hook`)
+
+			await _postCompileHookRemoveMeInFuture(this, session)
 
 			_backwardsCompatPostCompileHook.hasBeenManuallyInvoked = true
 		}
