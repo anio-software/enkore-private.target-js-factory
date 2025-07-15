@@ -139,12 +139,20 @@ async function createDistFiles(
 
 		const runtimeInitCode = await generateRuntimeInitCode(
 			apiContext, session, projectAPIContext, entryPoint
-		) + `;\n/* end of runtime init code */;\n`
+		)
 
-		const runtimeInitCodeHeader = `/*${enkoreJSRuntimeInitCodeHeaderMarkerUUID}:${runtimeInitCode.length}*/`
+		let runtime = ""
 
-		await writeDistFile(`${entryPointPath}/index.mjs`, runtimeInitCodeHeader + runtimeInitCode + jsBundle)
-		await writeDistFile(`${entryPointPath}/index.min.mjs`, runtimeInitCodeHeader + runtimeInitCode + minifiedJsBundle)
+		if (runtimeInitCode.trim().length) {
+			const runtimeInitCodeSeparator = `;\n/* end of runtime init code */;\n`
+			const runtimeCodeSize = runtimeInitCode.length + runtimeInitCodeSeparator.length
+			const runtimeInitCodeHeader = `/*${enkoreJSRuntimeInitCodeHeaderMarkerUUID}:${runtimeCodeSize}*/`
+
+			runtime = runtimeInitCodeHeader + runtimeInitCode + runtimeInitCodeSeparator
+		}
+
+		await writeDistFile(`${entryPointPath}/index.mjs`, runtime + jsBundle)
+		await writeDistFile(`${entryPointPath}/index.min.mjs`, runtime + minifiedJsBundle)
 		await writeDistFile(`${entryPointPath}/index.d.mts`, declarationBundle)
 		await writeDistFile(`${entryPointPath}/index.min.d.mts`, declarationBundle)
 
