@@ -20,7 +20,7 @@ export function getEnkoreManifestFileData(
 
 		if (entryPoint.localEmbeds === "none") continue
 
-		for (const [embedURL, {createResourceAtRuntimeInit}] of entryPoint.localEmbeds.entries()) {
+		for (const [embedURL, {size, createResourceAtRuntimeInit}] of entryPoint.localEmbeds.entries()) {
 			const {protocol, path} = parseEmbedURL(embedURL)
 
 			const globalIdentifier = `${packageJSON.name}/v${packageJSON.version}/${protocol}/${path}`
@@ -29,7 +29,8 @@ export function getEnkoreManifestFileData(
 				sourceFilePath: path,
 				url: embedURL,
 				createResourceAtRuntimeInit,
-				integrity: ""
+				integrity: "",
+				size
 			}
 		}
 	}
