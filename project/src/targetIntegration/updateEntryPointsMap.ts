@@ -23,9 +23,11 @@ function formatSize(size: number) {
 
 	if (1024 > size) {
 		return `${size} Bytes`
+	} else if (1024 * 1024 > size) {
+		return `${(size / 1024).toFixed(2)} KiB`
 	}
 
-	return `${(size / 1024).toFixed(2)} KiB`
+	return `${(size / 1024 / 1024).toFixed(2)} MiB`
 }
 
 function formatEmbedLogMessage(embed: Embed): string {
