@@ -1,11 +1,14 @@
 import {
 	type EnkoreJSRuntimeProjectAPIContext,
-	createEntity
+	createEntity,
+	importAPI
 } from "@anio-software/enkore-private.spec"
 import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitives"
+import {createNodeAPIOptions} from "@anio-software/enkore-private.spec/factory"
 import {
 	getProjectRootFromArgumentAndValidate,
-	readEnkoreConfigFile
+	readEnkoreConfigFile,
+	resolveImportSpecifierFromProjectRoot
 } from "@anio-software/enkore-private.spec/utils"
 import {_getCreationOptionsForEmbed} from "#~embeds/projectAPI/_getCreationOptionsForEmbed.ts"
 import {createTemporaryResourceFromStringSyncFactory} from "@anio-software/pkg.temporary-resource-factory"
@@ -107,7 +110,38 @@ export async function generateProjectAPIContext(
 		path.join(projectRoot, "package.json")
 	) as NodePackageJSON
 
-	// todo: invoke enkore
+	//
+	// if this API was called from node at runtime we need to make sure
+	// objects/embeds is up-to-date. We achieve this by running a partial build
+	//
+	if (refreshObjectFiles) {
+		const enkorePath = resolveImportSpecifierFromProjectRoot(
+			projectRoot, "@anio-software/enkore"
+		)
+
+		if (!enkorePath) {
+			throw new Error(`Unable to resolve "@anio-software/enkore" from the project root.`)
+		}
+
+		const {enkore} = await importAPI(enkorePath, "EnkoreNodeAPI", 0)
+
+		const {project} = await enkore(projectRoot, createNodeAPIOptions({
+			force: false,
+			isCIEnvironment: false,
+			npmBinaryPath: undefined,
+			onlyInitializeProject: false,
+			stdIOLogs: false,
+			_forceBuild: false,
+			_partialBuild: true,
+		}))
+
+		const {messages} = await project.build()
+
+		console.log(messages)
+	}
+
+	// we know objects/embeds is up-to-date at this point here
+	const embedMap = await generateEmbedFileMap(projectRoot)
 
 	return createEntity("EnkoreJSRuntimeProjectAPIContext", 0, 0, {
 		project: createEntity("EnkoreJSRuntimeProject", 0, 0, {
@@ -116,6 +150,6 @@ export async function generateProjectAPIContext(
 			projectId: ""
 		}),
 
-		_projectEmbedFileMapRemoveMeInBundle: await generateEmbedFileMap(projectRoot)
+		_projectEmbedFileMapRemoveMeInBundle: embedMap
 	})
 }
