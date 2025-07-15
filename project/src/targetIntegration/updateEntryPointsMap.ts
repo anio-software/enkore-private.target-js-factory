@@ -39,7 +39,7 @@ function formatEmbedLogMessage(embed: Embed): string {
 		flags.push("resource")
 	}
 
-	return ` - ${embed.url}${flags.length ? ` (${flags.join(", ")})` : ""} ${formatSize(embed.size)}`
+	return `    - ${embed.url}${flags.length ? ` (${flags.join(", ")})` : ""} ${formatSize(embed.size)}`
 }
 
 function logAllEmbeds(
@@ -75,7 +75,23 @@ function logAllEmbeds(
 	if (allEmbeds.size) {
 		let message = `entry point '${entryPointPath}' will contain the following embeds:\n\n`
 
-		message += [...allEmbeds].map(embed => {
+		const localEmbeds = [...allEmbeds].filter(v => v.isLocal)
+		const remoteEmbeds = [...allEmbeds].filter(v => !v.isLocal)
+
+		if (localEmbeds.length) {
+			message += `  Local Embeds (${localEmbeds.length})\n\n`
+		}
+
+		message += localEmbeds.map(embed => {
+			return formatEmbedLogMessage(embed)
+		}).join("\n")
+
+		if (localEmbeds.length && remoteEmbeds.length) {
+			message += `\n\n`
+			message += `  Remote Embeds (${remoteEmbeds.length})\n\n`
+		}
+
+		message += remoteEmbeds.map(embed => {
 			return formatEmbedLogMessage(embed)
 		}).join("\n")
 
