@@ -1,12 +1,7 @@
-import type {EnkoreJSRuntimeGlobalState} from "@anio-software/enkore-private.spec"
+import {createEntity} from "@anio-software/enkore-private.spec"
 
-export function _getInitialGlobalState(): EnkoreJSRuntimeGlobalState {
-	return {
-		entityKind: "EnkoreJSRuntimeGlobalState",
-		entityMajorVersion: 0,
-		entityRevision: 0,
-		entityCreatedBy: null,
-
+export function _getInitialGlobalState() {
+	return createEntity("EnkoreJSRuntimeGlobalState", 0, 0, {
 		immutable: {
 			embeds: new Map()
 		},
@@ -14,5 +9,5 @@ export function _getInitialGlobalState(): EnkoreJSRuntimeGlobalState {
 		mutable: {
 			embedResourceURLs: new Map()
 		}
-	}
+	})
 }
