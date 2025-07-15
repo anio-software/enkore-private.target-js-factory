@@ -65,7 +65,15 @@ export async function rollupPluginFactory(
 						fileName.slice(0, -(".min.mjs".length)) + ".mjs"
 					)
 
-					return isFileSync(newID) ? newID : id
+					if (isFileSync(newID)) {
+						session.enkore.emitMessage(
+							`info`, `using index.mjs over index.min.mjs.`
+						)
+
+						return newID
+					}
+
+					return id
 				})()
 
 				const code = await readFileString(dependencyToLoad)
