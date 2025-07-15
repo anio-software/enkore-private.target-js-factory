@@ -4,11 +4,11 @@ import type {
 	EnkoreJSRuntimeProjectAPIContext
 } from "@anio-software/enkore-private.spec"
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
+import type {EmbedsMap, EntryPoint} from "./InternalData.ts"
 import {getRequestedEmbedsFromProjectSourceFileRecursive} from "./getRequestedEmbedsFromProjectSourceFileRecursive.ts"
 import {combineRequestedEmbedsFromCodeResults} from "./combineRequestedEmbedsFromCodeResults.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {convertBytesToUnitInfo, convertUnitInfoToString} from "@anio-software/pkg.js-utils"
-import type {EmbedsMap, EntryPoint} from "./InternalData.ts"
 
 type Embed = {
 	isLocal: boolean

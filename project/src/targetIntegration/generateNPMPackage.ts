@@ -4,10 +4,10 @@ import {
 	parseEmbedURL
 } from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.ts"
+import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getInternalData} from "./getInternalData.ts"
 import {getExternals} from "./getExternals.ts"
 import {enkoreJSRuntimeInitCodeHeaderMarkerUUID} from "@anio-software/enkore-private.spec/uuid"
-import type {JsBundlerOptions} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {getOnRollupLogFunction} from "./getOnRollupLogFunction.ts"
 import {generateEntryPointCode} from "./generateEntryPointCode.ts"
 import {writeAtomicFile, readFileString, writeAtomicFileJSON, isFileSync} from "@anio-software/pkg.node-fs"

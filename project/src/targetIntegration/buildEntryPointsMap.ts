@@ -2,11 +2,11 @@ import type {APIContext} from "./APIContext.ts"
 import type {
 	EnkoreSessionAPI
 } from "@anio-software/enkore-private.spec"
-import path from "node:path"
 import type {InternalData} from "./InternalData.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
+import path from "node:path"
 
 function stripLeadingUnderscores(str: string) {
 	for (let i = 0; i < str.length; ++i) {
