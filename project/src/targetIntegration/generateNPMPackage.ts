@@ -16,7 +16,6 @@ import {rollupCSSStubPluginFactory} from "./rollupCSSStubPluginFactory.ts"
 import {rollupPluginFactory} from "./rollupPluginFactory.ts"
 import {_prettyPrintPackageJSONExports} from "./_prettyPrintPackageJSONExports.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
-import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
 import {getEnkoreManifestFileData} from "./getEnkoreManifestFileData.ts"
@@ -180,10 +179,6 @@ export async function generateNPMPackage(
 	packageName: string
 ) {
 	const projectAPIContext = getInternalData(session).projectAPIContext!
-
-	// todo: run this in postCompile hook
-	await updateEntryPointsMap(apiContext, projectAPIContext, session)
-
 	const {entryPoints, binScripts} = getInternalData(session)
 
 	await createDistFiles(apiContext, projectAPIContext, session)

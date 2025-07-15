@@ -2,6 +2,7 @@ import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {APIContext} from "./APIContext.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {generateProjectAPIContext} from "./generateProjectAPIContext.ts"
+import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 
 export async function _postCompileHookRemoveMeInFuture(
 	apiContext: APIContext,
@@ -16,4 +17,6 @@ export async function _postCompileHookRemoveMeInFuture(
 	internalData.projectAPIContext = await generateProjectAPIContext(
 		session.project.root, false
 	)
+
+	await updateEntryPointsMap(apiContext, internalData.projectAPIContext, session)
 }
