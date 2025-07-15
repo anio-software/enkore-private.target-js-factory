@@ -20,7 +20,6 @@ import {updateEntryPointsMap} from "./updateEntryPointsMap.ts"
 import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
 import {getEnkoreManifestFileData} from "./getEnkoreManifestFileData.ts"
-import {generateProjectAPIContext} from "./generateProjectAPIContext.ts"
 import {isSideEffectFreeImport} from "./isSideEffectFreeImport.ts"
 import runtimeHelpers from "js-runtime-helpers/_source/v0"
 import path from "node:path"
@@ -180,7 +179,7 @@ export async function generateNPMPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
-	const projectAPIContext = await generateProjectAPIContext(session.project.root, false)
+	const projectAPIContext = getInternalData(session).projectAPIContext!
 
 	// todo: run this in postCompile hook
 	await updateEntryPointsMap(apiContext, projectAPIContext, session)

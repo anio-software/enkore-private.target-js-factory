@@ -2,7 +2,8 @@ import type {MyTSProgram, MyTSExport} from "@anio-software/enkore-private.target
 import type {RequestedEmbedsFromCodeResult} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {
 	CommonTargetJSOptions,
-	EnkoreJSBuildManifestFile
+	EnkoreJSBuildManifestFile,
+	EnkoreJSRuntimeProjectAPIContext
 } from "@anio-software/enkore-private.spec"
 
 type ArrayType<T> = T extends any[] ? T : never
@@ -57,6 +58,8 @@ export type InternalData = {
 
 	registryMap: Map<string, Registry>
 	npmPackages: NPMPackage[]
+
+	projectAPIContext: EnkoreJSRuntimeProjectAPIContext|null
 
 	// remove me in the future
 	_backwardsCompatPostCompileHook: {
