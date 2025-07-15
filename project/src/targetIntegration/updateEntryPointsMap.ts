@@ -29,7 +29,7 @@ function formatSize(size: number) {
 }
 
 function formatEmbedLogMessage(embed: Embed): string {
-	return `    - ${embed.url}${embed.createResourceAtRuntimeInit ? " (+resource)" : ""} ${formatSize(embed.size)}`
+	return `    - ${embed.url}${embed.createResourceAtRuntimeInit ? " (+resourceURL)" : ""} ${formatSize(embed.size)}`
 }
 
 function calcEmbedsSize(embeds: Embed[]) {
