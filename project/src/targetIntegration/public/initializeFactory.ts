@@ -5,7 +5,6 @@ import path from "node:path"
 import {getInternalData} from "#~src/targetIntegration/getInternalData.ts"
 import {buildEntryPointsMap} from "#~src/targetIntegration/buildEntryPointsMap.ts"
 import {_getRegistryMap} from "../_getRegistryMap.ts"
-import {_getCurrentGitCommitHash} from "../_getCurrentGitCommitHash.ts"
 import {collectBinScripts} from "#~src/targetIntegration/collectBinScripts.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
 
@@ -84,7 +83,7 @@ const impl: API["initialize"] = async function(
 			targetOptions.publish
 		) ? targetOptions.publish : [targetOptions.publish]
 
-		const projectCommitHash = _getCurrentGitCommitHash(session.project.root)
+		const projectCommitHash = session.git?.commitHash
 
 		if (!projectCommitHash) {
 			const isCIEnvironment = session.enkore.getOptions().isCIEnvironment !== false
