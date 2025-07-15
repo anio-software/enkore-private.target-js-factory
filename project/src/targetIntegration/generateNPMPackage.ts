@@ -191,7 +191,7 @@ export async function generateNPMPackage(
 	gitRepositoryDirectory: string,
 	packageName: string
 ) {
-	const projectAPIContext = await generateProjectAPIContext(session.project.root)
+	const projectAPIContext = await generateProjectAPIContext(session.project.root, false)
 
 	// todo: run this in postCompile hook
 	await updateEntryPointsMap(apiContext, projectAPIContext, session)

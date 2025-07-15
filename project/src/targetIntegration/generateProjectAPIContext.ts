@@ -95,7 +95,8 @@ async function generateEmbedFileMap(
 }
 
 export async function generateProjectAPIContext(
-	userProjectRoot: string | ["inferFromCLIArgs"]
+	userProjectRoot: string | ["inferFromCLIArgs"],
+	refreshObjectFiles: boolean
 ): Promise<EnkoreJSRuntimeProjectAPIContext> {
 	const projectRoot = await getProjectRootFromArgumentAndValidate(
 		userProjectRoot
@@ -105,6 +106,8 @@ export async function generateProjectAPIContext(
 	const projectPackageJSON = await readFileJSON(
 		path.join(projectRoot, "package.json")
 	) as NodePackageJSON
+
+	// todo: invoke enkore
 
 	return createEntity("EnkoreJSRuntimeProjectAPIContext", 0, 0, {
 		project: createEntity("EnkoreJSRuntimeProject", 0, 0, {

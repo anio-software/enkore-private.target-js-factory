@@ -118,7 +118,7 @@ export const config: unknown = defineConfig({
 
 				let code = `import {generateProjectAPIContext} from "#~src/targetIntegration/generateProjectAPIContext.ts"\n`
 
-				code += `const __projectAPIContext = await generateProjectAPIContext(["inferFromCLIArgs"]);\n`
+				code += `const __projectAPIContext = await generateProjectAPIContext(["inferFromCLIArgs"], true);\n`
 
 				code += template.split(`"%%CONTEXT_DATA%%"`)
 				                .join(`__projectAPIContext`)
