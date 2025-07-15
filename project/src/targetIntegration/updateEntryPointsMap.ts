@@ -130,7 +130,7 @@ export async function updateEntryPointsMap(
 		entryPoint.localEmbeds = embedsMap
 
 		if (result[0] === "all") {
-			session.enkore.emitMessage("warning", `entry point '${entryPointPath}' will contain ALL embeds!`)
+			session.enkore.emitMessage("warning", `entry point '${entryPointPath}' will contain ALL local embeds!`)
 		}
 
 		logAllEmbeds(session, entryPointPath, entryPoint)
