@@ -16,7 +16,8 @@ import {
 	getEmbedData,
 	getGlobalState,
 	translateEmbedURLToGlobalIdentifier
-} from "js-runtime-helpers/v0" // <-- module specifier will be fixed for rollup version
+} from "js-runtime-helpers/v0"
+// ^^^^^^^^^^^^^^^^^^^^^^^ module specifier will be fixed for rollup version
 
 function __getContext(): any {
 	return "%%CONTEXT_DATA%%"
