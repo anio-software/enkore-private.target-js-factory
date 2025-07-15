@@ -16,7 +16,7 @@ import {
 	getEmbedData,
 	getGlobalState,
 	translateEmbedURLToGlobalIdentifier
-} from "@anio-software/enkore-private.js-runtime-helpers/v0"
+} from "js-runtime-helpers/v0"
 
 function __getContext(): any {
 	return "%%CONTEXT_DATA%%"

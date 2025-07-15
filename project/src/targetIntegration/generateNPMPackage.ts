@@ -21,7 +21,7 @@ import {generateRuntimeInitCode} from "./generateRuntimeInitCode.ts"
 import {getEnkoreBuildFileData} from "./getEnkoreBuildFileData.ts"
 import {getEnkoreManifestFileData} from "./getEnkoreManifestFileData.ts"
 import {generateProjectAPIContext} from "./generateProjectAPIContext.ts"
-import runtimeHelpers from "@anio-software/enkore-private.js-runtime-helpers/_source/v0"
+import runtimeHelpers from "js-runtime-helpers/_source/v0"
 import path from "node:path"
 
 function src(code: string) {
