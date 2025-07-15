@@ -30,9 +30,9 @@ Because embeds can be requested as URLs, this leaves us with essentially two way
 
 The latter approach is more safe in the sense, if a system is out of file storage (or something else is wrong with the temporary file storage system) this will be caught before the application has a chance to initialize.
 
-In order to facilitate hoisting of embeds, embed URLs first must be translated form a local URL to a global embed identifier.
+In order to facilitate hoisting of embeds, embed URLs first must be translated from a local URL to a global embed identifier.
 
-This is done using the following scheme:
+Embeds are identified globally like this:
 
 `<package-identifier>/v<package-version>/<protocol>/<embed-path>`
 
