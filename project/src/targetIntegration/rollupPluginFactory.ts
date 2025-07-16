@@ -28,6 +28,8 @@ export async function rollupPluginFactory(
 	const plugin: Factory["plugin"] = {
 		name: "enkore-target-js-project-plugin",
 
+		// todo: emit error when runtime modules are referenced
+		// when _disableRuntimeCodeInjection is set
 		resolveId(id) {
 			if (id.startsWith(`@anio-software/enkore-private.js-runtime-helpers`)) {
 				return {id, external: true}
