@@ -131,8 +131,13 @@ export function _generateFactoryCode(
 	code += `\t\t\t\treturn enkoreJSRuntimeCreateContext(newOptions, majorVersion)\n`
 	code += `\t\t\t}\n`
 	code += `\t\t}\n\n`
-	code += `\t\t// @ts-ignore:next-line\n`
-	code += `\t\treturn ${asyncStr("await ")}${implementation.name}.call(thisObject, localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
+	code += `\t\ttry {\n`
+	code += `\t\t\t// @ts-ignore:next-line\n`
+	code += `\t\t\treturn ${asyncStr("await ")}${implementation.name}.call(thisObject, localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
+	code += `\t\t} catch (e: unknown) {\n`
+	code += `\t\t\t// todo log error\n`
+	code += `\t\t\tthrow e;\n`
+	code += `\t\t}\n`
 	code += `\t}\n`
 
 	code += `\n`
