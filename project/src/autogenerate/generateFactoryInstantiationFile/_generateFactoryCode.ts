@@ -170,10 +170,10 @@ export function _generateFactoryCode(
 	}
 
 	function asyncStr(str: string): string {
-		if (variant !== "asyncVariant") {
-			return ""
+		if (implementation.modifiers.includes("async")) {
+			return str
 		}
 
-		return str
+		return ""
 	}
 }
