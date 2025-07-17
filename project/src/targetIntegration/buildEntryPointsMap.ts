@@ -40,7 +40,7 @@ function checkExportAgainstDefaultNamingPolicy(
 	})()
 
 	if (fileNameIndicatesTypeExport) {
-		return descriptor.kind === "type"
+		return descriptor.kind === "type" || descriptor.kind === "class"
 	}
 
 	return descriptor.kind !== "type"
