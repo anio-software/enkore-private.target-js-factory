@@ -110,28 +110,13 @@ export async function buildEntryPointsMap(
 		}
 
 		function addExport(exportName: string) {
-			const exportIndicatesTypeExport: boolean = (() => {
-				//
-				// .tsx files are always value based and never a type
-				//
-				if (isTSXFile) {
-					return false
-				}
-
-				return startsWithUpperCaseLetter(stripLeadingUnderscores(exportName))
-			})()
-
-			const exportDescriptor = mod.getModuleExportByName(
-				exportName, exportIndicatesTypeExport
-			)
+			const exportDescriptor = mod.getModuleExportByName(exportName)
 
 			if (!exportDescriptor) {
-				const typeStr = exportIndicatesTypeExport ? "type " : ""
-
 				session.enkore.emitMessage(
 					"error",
 					"missingExport",
-					`${file.relativePath}: ${typeStr}symbol '${exportName}' was not exported`
+					`${file.relativePath}: symbol/type '${exportName}' was not exported`
 				)
 
 				return
