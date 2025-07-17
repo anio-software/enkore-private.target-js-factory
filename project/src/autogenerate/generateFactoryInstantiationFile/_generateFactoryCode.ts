@@ -41,7 +41,9 @@ export function _generateFactoryCode(
 
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
-	code += `import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
+	code += `import {_createContext as __enkoreJSRuntimeCreateContext} from "@anio-software/enkore.js-runtime"\n`
+	code += `import type {EnkoreJSRuntimeContext as __EnkoreContext} from "@anio-software/enkore.js-runtime"\n`
+	code += `import {getProject as __enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
 	code += generateNeededTypeDeclarations(apiContext, session, implementation)
@@ -96,25 +98,53 @@ export function _generateFactoryCode(
 
 	code += `\n`
 	code += `\tconst localContextOptions: EnkoreJSRuntimeContextOptions = {...contextOptions}\n`
-	code += `\n`
+
+	code += `\tconst currentPackageJSON = __enkoreGetProject().packageJSON;\n`
+	code += `\tconst originatingPackage = {\n`
+	code += `\t\tname: currentPackageJSON.name,\n`
+	code += `\t\tversion: currentPackageJSON.version,\n`
+	code += `\t\tauthor: currentPackageJSON.author,\n`
+	code += `\t\tlicense: currentPackageJSON.license\n`
+	code += `\t}\n\n`
 
 	code += `\tif (localContextOptions.entityMajorVersion === 0) {\n`
 	//code += `\tif (localContext.entityMajorVersion === 0\n`
 	//code += `\t    localContext.entityMajorVersion === 1) {\n`
-	code += `\t\tconst currentPackageJSON = enkoreGetProject().packageJSON;\n`
-	code += `\t\tconst originatingPackage = {\n`
-	code += `\t\t\tname: currentPackageJSON.name,\n`
-	code += `\t\t\tversion: currentPackageJSON.version,\n`
-	code += `\t\t\tauthor: currentPackageJSON.author,\n`
-	code += `\t\t\tlicense: currentPackageJSON.license\n`
-	code += `\t\t}\n`
-	code += `\t\tlocalContextOptions.__internalDoNotUse = {originatingPackage};\n`
+	code += `\t\tlocalContextOptions.__internalDoNotUse = {\n`
+	code += `\t\t\toriginatingPackage,\n`
+	code += `\t\t\toriginatingFunction: undefined\n`
+	code += `\t\t};\n`
 	code += `\t}\n`
 	code += `\n`
 
 	code += `\tconst fn: any = ${asyncStr("async ")}function ${exportName}(...args: any[]) {\n`
-	code += `\t\t// @ts-ignore:next-line\n`
-	code += `\t\treturn ${asyncStr("await ")}${implementation.name}(localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
+	code += `\t\tlet firstCreatedContext: __EnkoreContext|null = null\n\n`
+	code += `\t\tconst thisObject: EnkoreJSRuntimeFunctionThis = {\n`
+	code += `\t\t\tentityKind: "EnkoreJSRuntimeFunctionThis",\n`
+	code += `\t\t\tentityMajorVersion: 0,\n`
+	code += `\t\t\tentityRevision: 0,\n`
+	code += `\t\t\tentityCreatedBy: null,\n`
+	code += `\t\t\tcreateContext(options, majorVersion, functionName?) {\n`
+	code += `\t\t\t\tconst newOptions = {...options}\n\n`
+	code += `\t\t\t\tnewOptions.__internalDoNotUse = {\n`
+	code += `\t\t\t\t\toriginatingPackage,\n`
+	code += `\t\t\t\t\toriginatingFunction: functionName !== undefined ? {name: functionName} : undefined\n`
+	code += `\t\t\t\t}\n\n`
+	code += `\t\t\t\tconst ctx = __enkoreJSRuntimeCreateContext(newOptions, majorVersion)\n\n`
+	code += `\t\t\t\tif (!firstCreatedContext) firstCreatedContext = ctx\n\n`
+	code += `\t\t\t\treturn ctx\n`
+	code += `\t\t\t}\n`
+	code += `\t\t}\n\n`
+	code += `\t\ttry {\n`
+	code += `\t\t\t// @ts-ignore:next-line\n`
+	code += `\t\t\treturn ${asyncStr("await ")}${implementation.name}.call(thisObject, localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
+	code += `\t\t} catch (e: unknown) {\n`
+	code += `\t\t\t// log error on last created context object\n`
+	code += `\t\t\tif (firstCreatedContext) {\n`
+	code += `\t\t\t\t(firstCreatedContext as __EnkoreContext).logException(e);\n`
+	code += `\t\t\t}\n\n`
+	code += `\t\t\tthrow e;\n`
+	code += `\t\t}\n`
 	code += `\t}\n`
 
 	code += `\n`
@@ -131,7 +161,7 @@ export function _generateFactoryCode(
 		tmp += (decl.jsDoc.length ? "\n" : "")
 		tmp += toolchain.tsConvertTSFunctionDeclarationToString({
 			...decl,
-			parameters: decl.parameters.slice(hasDependencies ? 2 : 1)
+			parameters: decl.parameters.slice(hasDependencies ? 3 : 2)
 		}, {
 			overwriteFunctionName: "__enkoreUserFunction"
 		}) + "\n"
@@ -140,10 +170,10 @@ export function _generateFactoryCode(
 	}
 
 	function asyncStr(str: string): string {
-		if (variant !== "asyncVariant") {
-			return ""
+		if (implementation.modifiers.includes("async")) {
+			return str
 		}
 
-		return str
+		return ""
 	}
 }

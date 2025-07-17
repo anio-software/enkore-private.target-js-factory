@@ -117,10 +117,14 @@ export function _getImplementation(
 	const implementation = declarations[declarations.length - 1]
 
 	if (!implementation.parameters.length) {
-		throw new Error(`implementation must take at least one parameter.`)
+		throw new Error(`implementation must take at least two parameters.`)
 	}
 
-	if (implementation.parameters[0].type !== "EnkoreJSRuntimeContextOptions") {
+	if (implementation.parameters[0].type !== "EnkoreJSRuntimeFunctionThis") {
+		throw new Error(`first parameter must be of literal type 'EnkoreJSRuntimeFunctionThis'.`)
+	} else if (implementation.parameters[0].name !== "this") {
+		throw new Error(`first parameter must be named 'this'.`)
+	} else if (implementation.parameters[1].type !== "EnkoreJSRuntimeContextOptions") {
 		throw new Error(`first parameter must be of literal type 'EnkoreJSRuntimeContextOptions'.`)
 	}
 
