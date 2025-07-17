@@ -41,6 +41,7 @@ export function _generateFactoryCode(
 
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
+	code += `import {createContext as enkoreJSRuntimeCreateContext} from "@anio-software/enkore.js-runtime"\n`
 	code += `import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
@@ -116,8 +117,22 @@ export function _generateFactoryCode(
 	code += `\n`
 
 	code += `\tconst fn: any = ${asyncStr("async ")}function ${exportName}(...args: any[]) {\n`
+	code += `\t\tconst thisObject: EnkoreJSRuntimeFunctionThis = {\n`
+	code += `\t\t\tentityKind: "EnkoreJSRuntimeFunctionThis",\n`
+	code += `\t\t\tentityMajorVersion: 0,\n`
+	code += `\t\t\tentityRevision: 0,\n`
+	code += `\t\t\tentityCreatedBy: null,\n`
+	code += `\t\t\tcreateContext(options, majorVersion, functionName?) {\n`
+	code += `\t\t\t\tconst newOptions = {...options}\n\n`
+	code += `\t\t\t\tnewOptions.__internalDoNotUse = {\n`
+	code += `\t\t\t\t\toriginatingPackage,\n`
+	code += `\t\t\t\t\toriginatingFunction: functionName !== undefined ? {name: functionName} : undefined\n`
+	code += `\t\t\t\t}\n\n`
+	code += `\t\t\t\treturn enkoreJSRuntimeCreateContext(newOptions, majorVersion)\n`
+	code += `\t\t\t}\n`
+	code += `\t\t}\n\n`
 	code += `\t\t// @ts-ignore:next-line\n`
-	code += `\t\treturn ${asyncStr("await ")}${implementation.name}(localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
+	code += `\t\treturn ${asyncStr("await ")}${implementation.name}.call(thisObject, localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
 	code += `\t}\n`
 
 	code += `\n`
