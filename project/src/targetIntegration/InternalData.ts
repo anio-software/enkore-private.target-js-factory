@@ -45,6 +45,7 @@ export type EntryPoint = {
 	exports: Map<string, Export>
 	localEmbeds: EmbedsMap | "none"
 	remoteEmbeds: Map<string, RemoteEmbed>
+	exportsNamingPolicyExemptions: Set<string>
 }
 
 export type InternalData = {

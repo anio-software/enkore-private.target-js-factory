@@ -5,6 +5,7 @@ import type {
 import type {InternalData} from "./InternalData.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {getModuleGuarded} from "./getModuleGuarded.ts"
+import {getExportsNamingPolicyExemptions} from "./getExportsNamingPolicyExemptions.ts"
 import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
 import path from "node:path"
 
@@ -58,7 +59,10 @@ export async function buildEntryPointsMap(
 				hasCSSImports: false,
 				exports: new Map(),
 				localEmbeds: "none",
-				remoteEmbeds: new Map()
+				remoteEmbeds: new Map(),
+				exportsNamingPolicyExemptions: getExportsNamingPolicyExemptions(
+					apiContext, session, exportPath
+				)
 			})
 		}
 
