@@ -6,6 +6,7 @@ import type {InternalData} from "./InternalData.ts"
 import {getInternalData} from "./getInternalData.ts"
 import {getModuleGuarded} from "./getModuleGuarded.ts"
 import {getExportsNamingPolicyExemptions} from "./getExportsNamingPolicyExemptions.ts"
+import type {MyTSExport} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {resolveImportSpecifierFromProjectRoot} from "@anio-software/enkore-private.spec/utils"
 import path from "node:path"
 
@@ -21,6 +22,28 @@ function stripLeadingUnderscores(str: string) {
 
 function startsWithUpperCaseLetter(str: string) {
 	return str.toUpperCase().slice(0, 1) === str.slice(0, 1)
+}
+
+function checkExportAgainstDefaultNamingPolicy(
+	exportName: string,
+	relativeFilePath: string,
+	descriptor: MyTSExport
+): boolean {
+	const fileNameIndicatesTypeExport: boolean = (() => {
+		// .tsx files are always value based and never a type
+		if (relativeFilePath.endsWith(".tsx")) {
+			return false
+		}
+
+		// uppercase letter indicates a type export
+		return startsWithUpperCaseLetter(stripLeadingUnderscores(exportName))
+	})()
+
+	if (fileNameIndicatesTypeExport) {
+		return descriptor.kind === "type"
+	}
+
+	return descriptor.kind !== "type"
 }
 
 type EntryPoints = InternalData["entryPoints"]
@@ -124,6 +147,27 @@ export async function buildEntryPointsMap(
 				)
 
 				return
+			}
+
+			const matchesNamingPolicy = checkExportAgainstDefaultNamingPolicy
+			const isExemptFromNamingPolicy = entryPoint.exportsNamingPolicyExemptions.has(
+				file.fileName
+			)
+
+			if (
+			    !matchesNamingPolicy(exportName, file.relativePath, exportDescriptor) &&
+			    !isExemptFromNamingPolicy) {
+				session.enkore.emitMessage(
+					"error",
+					`${file.relativePath}: export '${exportName}' violates default naming policy.`
+				)
+
+				return
+			} else if (isExemptFromNamingPolicy) {
+				session.enkore.emitMessage(
+					"info",
+					`${file.relativePath}: file is exempt from default naming policy.`
+				)
 			}
 
 			const extensionlessSource = file.relativePath.slice(0, extensionOffset)
