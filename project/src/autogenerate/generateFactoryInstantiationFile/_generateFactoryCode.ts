@@ -41,9 +41,9 @@ export function _generateFactoryCode(
 
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
-	code += `import {_createContext as enkoreJSRuntimeCreateContext} from "@anio-software/enkore.js-runtime"\n`
-	code += `import type {EnkoreJSRuntimeContext} from "@anio-software/enkore.js-runtime"\n`
-	code += `import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
+	code += `import {_createContext as __enkoreJSRuntimeCreateContext} from "@anio-software/enkore.js-runtime"\n`
+	code += `import type {EnkoreJSRuntimeContext as __EnkoreContext} from "@anio-software/enkore.js-runtime"\n`
+	code += `import {getProject as __enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
 	code += generateNeededTypeDeclarations(apiContext, session, implementation)
@@ -99,7 +99,7 @@ export function _generateFactoryCode(
 	code += `\n`
 	code += `\tconst localContextOptions: EnkoreJSRuntimeContextOptions = {...contextOptions}\n`
 
-	code += `\tconst currentPackageJSON = enkoreGetProject().packageJSON;\n`
+	code += `\tconst currentPackageJSON = __enkoreGetProject().packageJSON;\n`
 	code += `\tconst originatingPackage = {\n`
 	code += `\t\tname: currentPackageJSON.name,\n`
 	code += `\t\tversion: currentPackageJSON.version,\n`
@@ -118,7 +118,7 @@ export function _generateFactoryCode(
 	code += `\n`
 
 	code += `\tconst fn: any = ${asyncStr("async ")}function ${exportName}(...args: any[]) {\n`
-	code += `\t\tlet lastCreatedContext: EnkoreJSRuntimeContext|null = null\n\n`
+	code += `\t\tlet lastCreatedContext: __EnkoreContext|null = null\n\n`
 	code += `\t\tconst thisObject: EnkoreJSRuntimeFunctionThis = {\n`
 	code += `\t\t\tentityKind: "EnkoreJSRuntimeFunctionThis",\n`
 	code += `\t\t\tentityMajorVersion: 0,\n`
@@ -130,7 +130,7 @@ export function _generateFactoryCode(
 	code += `\t\t\t\t\toriginatingPackage,\n`
 	code += `\t\t\t\t\toriginatingFunction: functionName !== undefined ? {name: functionName} : undefined\n`
 	code += `\t\t\t\t}\n\n`
-	code += `\t\t\t\tconst ctx = enkoreJSRuntimeCreateContext(newOptions, majorVersion)\n\n`
+	code += `\t\t\t\tconst ctx = __enkoreJSRuntimeCreateContext(newOptions, majorVersion)\n\n`
 	code += `\t\t\t\tlastCreatedContext = ctx\n\n`
 	code += `\t\t\t\treturn ctx\n`
 	code += `\t\t\t}\n`
@@ -141,7 +141,7 @@ export function _generateFactoryCode(
 	code += `\t\t} catch (e: unknown) {\n`
 	code += `\t\t\t// log error on last created context object\n`
 	code += `\t\t\tif (lastCreatedContext) {\n`
-	code += `\t\t\t\t(lastCreatedContext as EnkoreJSRuntimeContext).logException(e);\n`
+	code += `\t\t\t\t(lastCreatedContext as __EnkoreContext).logException(e);\n`
 	code += `\t\t\t}\n\n`
 	code += `\t\t\tthrow e;\n`
 	code += `\t\t}\n`
