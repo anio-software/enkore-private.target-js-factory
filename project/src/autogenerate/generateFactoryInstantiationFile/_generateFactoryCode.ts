@@ -131,7 +131,7 @@ export function _generateFactoryCode(
 		tmp += (decl.jsDoc.length ? "\n" : "")
 		tmp += toolchain.tsConvertTSFunctionDeclarationToString({
 			...decl,
-			parameters: decl.parameters.slice(hasDependencies ? 2 : 1)
+			parameters: decl.parameters.slice(hasDependencies ? 3 : 2)
 		}, {
 			overwriteFunctionName: "__enkoreUserFunction"
 		}) + "\n"
