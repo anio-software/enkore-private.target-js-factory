@@ -41,7 +41,7 @@ export function _generateFactoryCode(
 
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
-	code += `import {createContext as enkoreJSRuntimeCreateContext} from "@anio-software/enkore.js-runtime"\n`
+	code += `import {_createContext as enkoreJSRuntimeCreateContext} from "@anio-software/enkore.js-runtime"\n`
 	code += `import type {EnkoreJSRuntimeContext} from "@anio-software/enkore.js-runtime"\n`
 	code += `import {getProject as enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
 	code += `\n`
