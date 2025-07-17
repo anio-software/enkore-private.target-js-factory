@@ -96,18 +96,18 @@ export function _generateFactoryCode(
 
 	code += `\n`
 	code += `\tconst localContextOptions: EnkoreJSRuntimeContextOptions = {...contextOptions}\n`
-	code += `\n`
+
+	code += `\tconst currentPackageJSON = enkoreGetProject().packageJSON;\n`
+	code += `\tconst originatingPackage = {\n`
+	code += `\t\tname: currentPackageJSON.name,\n`
+	code += `\t\tversion: currentPackageJSON.version,\n`
+	code += `\t\tauthor: currentPackageJSON.author,\n`
+	code += `\t\tlicense: currentPackageJSON.license\n`
+	code += `\t}\n\n`
 
 	code += `\tif (localContextOptions.entityMajorVersion === 0) {\n`
 	//code += `\tif (localContext.entityMajorVersion === 0\n`
 	//code += `\t    localContext.entityMajorVersion === 1) {\n`
-	code += `\t\tconst currentPackageJSON = enkoreGetProject().packageJSON;\n`
-	code += `\t\tconst originatingPackage = {\n`
-	code += `\t\t\tname: currentPackageJSON.name,\n`
-	code += `\t\t\tversion: currentPackageJSON.version,\n`
-	code += `\t\t\tauthor: currentPackageJSON.author,\n`
-	code += `\t\t\tlicense: currentPackageJSON.license\n`
-	code += `\t\t}\n`
 	code += `\t\tlocalContextOptions.__internalDoNotUse = {\n`
 	code += `\t\t\toriginatingPackage,\n`
 	code += `\t\t\toriginatingFunction: undefined\n`
