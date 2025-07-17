@@ -108,7 +108,10 @@ export function _generateFactoryCode(
 	code += `\t\t\tauthor: currentPackageJSON.author,\n`
 	code += `\t\t\tlicense: currentPackageJSON.license\n`
 	code += `\t\t}\n`
-	code += `\t\tlocalContextOptions.__internalDoNotUse = {originatingPackage};\n`
+	code += `\t\tlocalContextOptions.__internalDoNotUse = {\n`
+	code += `\t\t\toriginatingPackage,\n`
+	code += `\t\t\toriginatingFunction: undefined\n`
+	code += `\t\t};\n`
 	code += `\t}\n`
 	code += `\n`
 
