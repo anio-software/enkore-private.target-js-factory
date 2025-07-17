@@ -118,7 +118,7 @@ export function _generateFactoryCode(
 	code += `\n`
 
 	code += `\tconst fn: any = ${asyncStr("async ")}function ${exportName}(...args: any[]) {\n`
-	code += `\t\tlet lastCreatedContext: __EnkoreContext|null = null\n\n`
+	code += `\t\tlet firstCreatedContext: __EnkoreContext|null = null\n\n`
 	code += `\t\tconst thisObject: EnkoreJSRuntimeFunctionThis = {\n`
 	code += `\t\t\tentityKind: "EnkoreJSRuntimeFunctionThis",\n`
 	code += `\t\t\tentityMajorVersion: 0,\n`
@@ -131,7 +131,7 @@ export function _generateFactoryCode(
 	code += `\t\t\t\t\toriginatingFunction: functionName !== undefined ? {name: functionName} : undefined\n`
 	code += `\t\t\t\t}\n\n`
 	code += `\t\t\t\tconst ctx = __enkoreJSRuntimeCreateContext(newOptions, majorVersion)\n\n`
-	code += `\t\t\t\tlastCreatedContext = ctx\n\n`
+	code += `\t\t\t\tif (!firstCreatedContext) firstCreatedContext = ctx\n\n`
 	code += `\t\t\t\treturn ctx\n`
 	code += `\t\t\t}\n`
 	code += `\t\t}\n\n`
@@ -140,8 +140,8 @@ export function _generateFactoryCode(
 	code += `\t\t\treturn ${asyncStr("await ")}${implementation.name}.call(thisObject, localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
 	code += `\t\t} catch (e: unknown) {\n`
 	code += `\t\t\t// log error on last created context object\n`
-	code += `\t\t\tif (lastCreatedContext) {\n`
-	code += `\t\t\t\t(lastCreatedContext as __EnkoreContext).logException(e);\n`
+	code += `\t\t\tif (firstCreatedContext) {\n`
+	code += `\t\t\t\t(firstCreatedContext as __EnkoreContext).logException(e);\n`
 	code += `\t\t\t}\n\n`
 	code += `\t\t\tthrow e;\n`
 	code += `\t\t}\n`
