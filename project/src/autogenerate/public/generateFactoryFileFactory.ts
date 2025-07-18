@@ -5,6 +5,7 @@ import {isAsyncSyncExpandableFilePath} from "@anio-software/enkore-private.targe
 import {checkOptions} from "#~src/autogenerate/generateFactoryInstantiationFile/checkOptions.ts"
 import {expand} from "#~src/autogenerate/generateFactoryInstantiationFile/expand.ts"
 import {_generateFactoryFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateFactoryFile.ts"
+import {_generateTryFactoryFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateTryFactoryFile.ts"
 
 const impl: AutogenerateAPI["generateFactoryFile"] = function(
 	this: AutogenerateAPIContext,
@@ -19,12 +20,11 @@ const impl: AutogenerateAPI["generateFactoryFile"] = function(
 		return expand(this, options, impl)
 	}
 
+	const variant = __internalIsAsyncSyncVariant ?? "noVariant"
+
 	return [
-		_generateFactoryFile(
-			this,
-			options,
-			__internalIsAsyncSyncVariant ?? "noVariant"
-		)
+		_generateFactoryFile(this, options, variant),
+		_generateTryFactoryFile(this, options, variant)
 	]
 }
 

@@ -2,11 +2,10 @@ import {type EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.ts"
 import type {Options} from "./Options.ts"
 import type {Variant} from "./Variant.ts"
-import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {_getImplementation} from "./_getImplementation.ts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
-import {getToolchain} from "#~src/getToolchain.ts"
+import {_functionDeclarationToString} from "./_functionDeclarationToString.ts"
 
 function convertPath(path: string) {
 	if (path.startsWith("project/src")) {
@@ -25,14 +24,12 @@ export function _generateFactoryCode(
 	exportName: string,
 	variant: Variant
 ) {
-	const toolchain = getToolchain(session)
-
 	const implementationFunctionName = (
 		variant === "syncVariant"
 	) ? "__implementationSync" : "__implementation"
 
 	const {implementation, overloads, dependencies} = _getImplementation(
-		session, options, implementationFunctionName
+		session, options.source, implementationFunctionName
 	)
 
 	const hasDependencies = implementation.parameters[1]?.type === "__EnkoreFunctionDependencies"
@@ -41,6 +38,7 @@ export function _generateFactoryCode(
 
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
+	code += `import {AnioError as __AnioError} from "@anio-software/enkore.js-runtime"\n`
 	code += `import {_createContext as __enkoreJSRuntimeCreateContext} from "@anio-software/enkore.js-runtime"\n`
 	code += `import type {EnkoreJSRuntimeContext as __EnkoreContext} from "@anio-software/enkore.js-runtime"\n`
 	code += `import {getProject as __enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
@@ -62,10 +60,10 @@ export function _generateFactoryCode(
 	}
 
 	if (!overloads.length) {
-		code += functionDeclarationToString(implementation)
+		code += _functionDeclarationToString(session, implementation, hasDependencies)
 	} else {
 		for (const overload of overloads) {
-			code += functionDeclarationToString(overload)
+			code += _functionDeclarationToString(session, overload, hasDependencies)
 		}
 	}
 
@@ -143,7 +141,11 @@ export function _generateFactoryCode(
 	code += `\t\t\tif (firstCreatedContext) {\n`
 	code += `\t\t\t\t(firstCreatedContext as __EnkoreContext).logException(e);\n`
 	code += `\t\t\t}\n\n`
-	code += `\t\t\tthrow e;\n`
+	code += `\t\t\tif (localContextOptions.noThrow === true) {\n`
+	code += `\t\t\t\treturn new __AnioError(e);\n`
+	code += `\t\t\t} else {\n`
+	code += `\t\t\t\tthrow e;\n`
+	code += `\t\t\t}\n`
 	code += `\t\t}\n`
 	code += `\t}\n`
 
@@ -153,21 +155,6 @@ export function _generateFactoryCode(
 	code += `}\n`
 
 	return code
-
-	function functionDeclarationToString(decl: MyTSFunctionDeclaration) {
-		let tmp = ``
-
-		tmp += decl.jsDoc
-		tmp += (decl.jsDoc.length ? "\n" : "")
-		tmp += toolchain.tsConvertTSFunctionDeclarationToString({
-			...decl,
-			parameters: decl.parameters.slice(hasDependencies ? 3 : 2)
-		}, {
-			overwriteFunctionName: "__enkoreUserFunction"
-		}) + "\n"
-
-		return tmp
-	}
 
 	function asyncStr(str: string): string {
 		if (implementation.modifiers.includes("async")) {
