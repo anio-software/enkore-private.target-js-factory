@@ -9,7 +9,7 @@ import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.t
 import {destinationPathToFunctionName} from "./destinationPathToFunctionName.ts"
 
 export function _generateTryFactoryCode(
-	context: AutogenerateAPIContext,
+	apiContext: AutogenerateAPIContext,
 	session: EnkoreSessionAPI,
 	options: Options,
 	variant: Variant
@@ -34,7 +34,7 @@ export function _generateTryFactoryCode(
 	code += `import {${exportName}Factory as factory} from "./${exportName}Factory.ts"\n`
 	code += `\n`
 	code += `// vvv--- types needed for implementation\n`
-	code += generateNeededTypeDeclarations(context, session, implementation)
+	code += generateNeededTypeDeclarations(apiContext, session, implementation)
 	code += `// ^^^--- types needed for implementation\n`
 	code += `\n`
 
