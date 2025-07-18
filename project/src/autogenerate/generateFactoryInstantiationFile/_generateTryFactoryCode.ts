@@ -46,7 +46,10 @@ export function _generateTryFactoryCode(
 	code += `export function ${exportName}TryFactory(\n`
 	code += `\tcontextOptions: EnkoreJSRuntimeContextOptions\n`
 	code += `): typeof __enkoreUserFunction {\n`
-	code += `\treturn factory(contextOptions)\n`
+	code += `\treturn factory({\n`
+	code += `\t\t...contextOptions,\n`
+	code += `\t\tnoThrow: true\n`
+	code += `\t})\n`
 	code += `}\n`
 
 	return code
