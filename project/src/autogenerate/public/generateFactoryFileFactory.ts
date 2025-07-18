@@ -20,16 +20,18 @@ const impl: AutogenerateAPI["generateFactoryFile"] = function(
 		return expand(this, options, impl)
 	}
 
+	const variant = __internalIsAsyncSyncVariant ?? "noVariant"
+
 	return [
 		_generateFactoryFile(
 			this,
 			options,
-			__internalIsAsyncSyncVariant ?? "noVariant"
+			variant
 		),
 		_generateTryFactoryFile(
 			this,
 			options,
-			__internalIsAsyncSyncVariant ?? "noVariant"
+			variant
 		)
 	]
 }
