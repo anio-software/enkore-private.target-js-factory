@@ -2,6 +2,7 @@ import type {EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target-js-toolchain_types"
 import type {Options} from "./Options.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
+import {assertStripPrefix} from "@anio-software/pkg.js-utils"
 
 type Dependency = {
 	key: string
@@ -47,7 +48,7 @@ export function _getImplementation(
 	// this is because tsCreateProgram() isn't configured to resolve
 	// the import aliases #~src, #~export etc.
 	// this is also why "generateAfterPreprocessing" is set to 'true'
-	const buildPath = `build/${options.source.slice("project/".length)}`
+	const buildPath = `build/${assertStripPrefix(options.source, "project/")}`
 	const mod = getMyTSModuleFromFilePath(session, buildPath)!
 
 	if (!mod.moduleExports.has(implementationFunctionName)) {
