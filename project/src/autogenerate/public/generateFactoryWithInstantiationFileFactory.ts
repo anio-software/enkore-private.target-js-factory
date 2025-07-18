@@ -6,6 +6,7 @@ import {checkOptions} from "#~src/autogenerate/generateFactoryInstantiationFile/
 import {expand} from "#~src/autogenerate/generateFactoryInstantiationFile/expand.ts"
 import {_generateFactoryFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateFactoryFile.ts"
 import {_generateInstantiationFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateInstantiationFile.ts"
+import {_generateTryFactoryFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateTryFactoryFile.ts"
 
 const impl: AutogenerateAPI["generateFactoryWithInstantiationFile"] = function(
 	this: AutogenerateAPIContext,
@@ -26,7 +27,12 @@ const impl: AutogenerateAPI["generateFactoryWithInstantiationFile"] = function(
 			options,
 			__internalIsAsyncSyncVariant ?? "noVariant"
 		),
-		_generateInstantiationFile(this, options)
+		_generateInstantiationFile(this, options),
+		_generateTryFactoryFile(
+			this,
+			options,
+			__internalIsAsyncSyncVariant ?? "noVariant"
+		)
 	]
 }
 
