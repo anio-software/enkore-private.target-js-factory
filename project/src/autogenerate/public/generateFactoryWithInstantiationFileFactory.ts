@@ -24,17 +24,9 @@ const impl: AutogenerateAPI["generateFactoryWithInstantiationFile"] = function(
 	const variant = __internalIsAsyncSyncVariant ?? "noVariant"
 
 	return [
-		_generateFactoryFile(
-			this,
-			options,
-			variant
-		),
+		_generateFactoryFile(this, options, variant),
 		_generateInstantiationFile(this, options),
-		_generateTryFactoryFile(
-			this,
-			options,
-			variant
-		)
+		_generateTryFactoryFile(this, options, variant)
 	]
 }
 
