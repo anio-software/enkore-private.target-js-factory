@@ -6,21 +6,17 @@ import type {Variant} from "./Variant.ts"
 import {_getImplementation} from "./_getImplementation.ts"
 import {_functionDeclarationToString} from "./_functionDeclarationToString.ts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.ts"
-import {destinationPathToFunctionName} from "./destinationPathToFunctionName.ts"
 
 export function _generateTryFactoryCode(
 	apiContext: AutogenerateAPIContext,
 	session: EnkoreSessionAPI,
 	options: Options,
+	exportName: string,
 	variant: Variant
 ) {
 	const implementationFunctionName = (
 		variant === "syncVariant"
 	) ? "__implementationSync" : "__implementation"
-
-	const exportName = destinationPathToFunctionName(
-		options.destination
-	).slice(0, -("Factory".length))
 
 	const {implementation, overloads} = _getImplementation(
 		session, options.source, implementationFunctionName
