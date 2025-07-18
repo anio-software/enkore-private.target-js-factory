@@ -35,25 +35,25 @@ function getMyTSModuleFromFilePath(
 
 export function _getImplementation(
 	session: EnkoreSessionAPI,
-	options: Options,
+	filePath: string,
 	implementationFunctionName: string
 ): Ret {
 	const toolchain = getToolchain(session)
 	const dependencies: Dependency[] = []
 
-	// we've established that options.source **must** start with project/
+	// we've established that filePath (options.source) **must** start with project/
 	// see checkOptions.ts
 
 	// we need to use the pre-processed version of the input source file
 	// this is because tsCreateProgram() isn't configured to resolve
 	// the import aliases #~src, #~export etc.
 	// this is also why "generateAfterPreprocessing" is set to 'true'
-	const buildPath = `build/${assertStripPrefix(options.source, "project/")}`
+	const buildPath = `build/${assertStripPrefix(filePath, "project/")}`
 	const mod = getMyTSModuleFromFilePath(session, buildPath)!
 
 	if (!mod.moduleExports.has(implementationFunctionName)) {
 		throw new Error(
-			`expected '${options.source}' to export a symbol named '${implementationFunctionName}'.`
+			`expected '${filePath}' to export a symbol named '${implementationFunctionName}'.`
 		)
 	}
 

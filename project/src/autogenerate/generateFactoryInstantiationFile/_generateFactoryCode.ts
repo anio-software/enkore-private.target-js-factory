@@ -32,7 +32,7 @@ export function _generateFactoryCode(
 	) ? "__implementationSync" : "__implementation"
 
 	const {implementation, overloads, dependencies} = _getImplementation(
-		session, options, implementationFunctionName
+		session, options.source, implementationFunctionName
 	)
 
 	const hasDependencies = implementation.parameters[1]?.type === "__EnkoreFunctionDependencies"
