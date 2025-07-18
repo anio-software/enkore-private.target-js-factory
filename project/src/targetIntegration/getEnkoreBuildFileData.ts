@@ -26,6 +26,7 @@ function getGitInformation(session: EnkoreSessionAPI): GitInformation {
 		return null
 	}
 
+	// @ts-ignore:next-line
 	session.enkore.emitMessage("warning", `providing backwards compat for session.git property.`)
 
 	return null
