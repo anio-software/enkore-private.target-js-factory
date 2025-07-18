@@ -2,11 +2,9 @@ import {type EnkoreSessionAPI} from "@anio-software/enkore-private.spec"
 import type {AutogenerateAPIContext} from "#~src/autogenerate/AutogenerateAPIContext.ts"
 import type {Options} from "./Options.ts"
 import type {Variant} from "./Variant.ts"
-import type {MyTSFunctionDeclaration} from "@anio-software/enkore-private.target-js-toolchain_types"
 import {_getImplementation} from "./_getImplementation.ts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
-import {getToolchain} from "#~src/getToolchain.ts"
 import {_functionDeclarationToString} from "./_functionDeclarationToString.ts"
 
 function convertPath(path: string) {
@@ -26,8 +24,6 @@ export function _generateFactoryCode(
 	exportName: string,
 	variant: Variant
 ) {
-	const toolchain = getToolchain(session)
-
 	const implementationFunctionName = (
 		variant === "syncVariant"
 	) ? "__implementationSync" : "__implementation"
