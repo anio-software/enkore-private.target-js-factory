@@ -21,7 +21,13 @@ export function _generateTryFactoryFile(
 		generateAfterPreprocessing: true,
 		destinationPath: "project/src/AAAAA.ts",
 		generator(session) {
-			return _generateTryFactoryCode(context, session, options, exportName, variant)
+			return _generateTryFactoryCode(
+				context,
+				session,
+				options,
+				exportName,
+				variant
+			)
 		}
 	})
 }
