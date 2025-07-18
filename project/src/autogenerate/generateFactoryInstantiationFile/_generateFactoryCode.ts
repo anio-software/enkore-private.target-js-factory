@@ -41,6 +41,7 @@ export function _generateFactoryCode(
 
 	code += `import {${implementation.name}} from "${convertPath(options.source)}"\n`
 	// make sure global symbols are namespaced to not collide with user symbols
+	code += `import {AnioError as __AnioError} from "@anio-software/enkore.js-runtime"\n`
 	code += `import {_createContext as __enkoreJSRuntimeCreateContext} from "@anio-software/enkore.js-runtime"\n`
 	code += `import type {EnkoreJSRuntimeContext as __EnkoreContext} from "@anio-software/enkore.js-runtime"\n`
 	code += `import {getProject as __enkoreGetProject} from "${getBaseModuleSpecifier(apiContext.target)}/project"\n`
@@ -143,7 +144,11 @@ export function _generateFactoryCode(
 	code += `\t\t\tif (firstCreatedContext) {\n`
 	code += `\t\t\t\t(firstCreatedContext as __EnkoreContext).logException(e);\n`
 	code += `\t\t\t}\n\n`
-	code += `\t\t\tthrow e;\n`
+	code += `\t\t\tif (localContextOptions.noThrow === true) {\n`
+	code += `\t\t\t\treturn new __AnioError(e);\n`
+	code += `\t\t\t} else {\n`
+	code += `\t\t\t\tthrow e;\n`
+	code += `\t\t\t}\n`
 	code += `\t\t}\n`
 	code += `\t}\n`
 
