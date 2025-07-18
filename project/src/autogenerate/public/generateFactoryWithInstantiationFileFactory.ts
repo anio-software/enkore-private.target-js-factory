@@ -7,6 +7,7 @@ import {expand} from "#~src/autogenerate/generateFactoryInstantiationFile/expand
 import {_generateFactoryFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateFactoryFile.ts"
 import {_generateInstantiationFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateInstantiationFile.ts"
 import {_generateTryFactoryFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateTryFactoryFile.ts"
+import {_generateTryInstantiationFile} from "#~src/autogenerate/generateFactoryInstantiationFile/_generateTryInstantiationFile.ts"
 
 const impl: AutogenerateAPI["generateFactoryWithInstantiationFile"] = function(
 	this: AutogenerateAPIContext,
@@ -26,7 +27,8 @@ const impl: AutogenerateAPI["generateFactoryWithInstantiationFile"] = function(
 	return [
 		_generateFactoryFile(this, options, variant),
 		_generateInstantiationFile(this, options),
-		_generateTryFactoryFile(this, options, variant)
+		_generateTryFactoryFile(this, options, variant),
+		_generateTryInstantiationFile(this, options)
 	]
 }
 
