@@ -7,6 +7,7 @@ import {_getImplementation} from "./_getImplementation.ts"
 import {generateNeededTypeDeclarations} from "./generateNeededTypeDeclarations.ts"
 import {getBaseModuleSpecifier} from "#~src/getBaseModuleSpecifier.ts"
 import {getToolchain} from "#~src/getToolchain.ts"
+import {_functionDeclarationToString} from "./_functionDeclarationToString.ts"
 
 function convertPath(path: string) {
 	if (path.startsWith("project/src")) {
@@ -63,10 +64,10 @@ export function _generateFactoryCode(
 	}
 
 	if (!overloads.length) {
-		code += functionDeclarationToString(implementation)
+		code += _functionDeclarationToString(session, implementation, hasDependencies)
 	} else {
 		for (const overload of overloads) {
-			code += functionDeclarationToString(overload)
+			code += _functionDeclarationToString(session, overload, hasDependencies)
 		}
 	}
 
@@ -158,21 +159,6 @@ export function _generateFactoryCode(
 	code += `}\n`
 
 	return code
-
-	function functionDeclarationToString(decl: MyTSFunctionDeclaration) {
-		let tmp = ``
-
-		tmp += decl.jsDoc
-		tmp += (decl.jsDoc.length ? "\n" : "")
-		tmp += toolchain.tsConvertTSFunctionDeclarationToString({
-			...decl,
-			parameters: decl.parameters.slice(hasDependencies ? 3 : 2)
-		}, {
-			overwriteFunctionName: "__enkoreUserFunction"
-		}) + "\n"
-
-		return tmp
-	}
 
 	function asyncStr(str: string): string {
 		if (implementation.modifiers.includes("async")) {
