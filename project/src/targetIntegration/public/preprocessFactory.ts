@@ -48,7 +48,9 @@ const impl: API["preprocess"] = async function(
 		return sourceCode
 	}
 
-	const src = toolchain.tsCreateSourceFile(file.absolutePath)
+	const src = toolchain.tsCreateSourceFileFromCode(
+		sourceCode, {filePath: file.absolutePath}
+	)
 
 	//
 	// NB: don't attempt to transform code that has syntax errors.
