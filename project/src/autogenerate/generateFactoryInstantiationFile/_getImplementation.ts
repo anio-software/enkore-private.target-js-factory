@@ -57,6 +57,36 @@ export function _getImplementation(
 		)
 	}
 
+	const implementationExport = mod.moduleExports.get(implementationFunctionName)!
+
+	if (implementationExport.kind !== "function") {
+		throw new Error(
+			`exported symbol '${implementationFunctionName}' must be a function.`
+		)
+	}
+
+	if (!implementationExport.declarations.length) {
+		throw new Error(`Unknown error: declarations is empty.`)
+	}
+
+	const {declarations} = implementationExport
+	// last declaration is always the implementation
+	const implementation = declarations[declarations.length - 1]
+
+	if (!implementation.parameters.length) {
+		throw new Error(`implementation must take at least two parameters.`)
+	}
+
+	if (implementation.parameters[0].type !== "EnkoreJSRuntimeFunctionThis") {
+		throw new Error(`first parameter must be of literal type 'EnkoreJSRuntimeFunctionThis'.`)
+	} else if (implementation.parameters[0].name !== "this") {
+		throw new Error(`first parameter must be named 'this'.`)
+	} else if (implementation.parameters[1].type !== "EnkoreJSRuntimeContextOptions") {
+		throw new Error(`first parameter must be of literal type 'EnkoreJSRuntimeContextOptions'.`)
+	}
+
+	// todo: cross check overloads?
+
 	const deps = mod.getModuleExportByName("__EnkoreFunctionDependencies", true)
 
 	if (deps && deps.kind === "type") {
@@ -100,36 +130,6 @@ export function _getImplementation(
 			})
 		}
 	}
-
-	const implementationExport = mod.moduleExports.get(implementationFunctionName)!
-
-	if (implementationExport.kind !== "function") {
-		throw new Error(
-			`exported symbol '${implementationFunctionName}' must be a function.`
-		)
-	}
-
-	if (!implementationExport.declarations.length) {
-		throw new Error(`Unknown error: declarations is empty.`)
-	}
-
-	const {declarations} = implementationExport
-	// last declaration is always the implementation
-	const implementation = declarations[declarations.length - 1]
-
-	if (!implementation.parameters.length) {
-		throw new Error(`implementation must take at least two parameters.`)
-	}
-
-	if (implementation.parameters[0].type !== "EnkoreJSRuntimeFunctionThis") {
-		throw new Error(`first parameter must be of literal type 'EnkoreJSRuntimeFunctionThis'.`)
-	} else if (implementation.parameters[0].name !== "this") {
-		throw new Error(`first parameter must be named 'this'.`)
-	} else if (implementation.parameters[1].type !== "EnkoreJSRuntimeContextOptions") {
-		throw new Error(`first parameter must be of literal type 'EnkoreJSRuntimeContextOptions'.`)
-	}
-
-	// todo: cross check overloads?
 
 	return {
 		implementation,
