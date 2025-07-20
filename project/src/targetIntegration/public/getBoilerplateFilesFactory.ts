@@ -37,13 +37,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 	const tsconfigBase = JSON.parse(getEmbedAsString("text://tsconfig/base.json") as string)
 	const targetOptions = session.target.getOptions(this.target)
 
-	if (targetsNode(this.target)) {
-		tsconfigBase.compilerOptions.types.push("@types/node")
-	}
-
 	if (targetsWeb(this.target)) {
-		tsconfigBase.compilerOptions.types.push("@types/web")
-
 		// js-hybrid-lite doesn't contain CSS support
 		if (this.target !== "js-hybrid-lite") {
 			tsconfigBase.compilerOptions.plugins = [{
@@ -53,8 +47,6 @@ const impl: API["getBoilerplateFiles"] = async function(
 	}
 
 	if (targetsReact(this.target)) {
-		tsconfigBase.compilerOptions.types.push("@types/react")
-		tsconfigBase.compilerOptions.types.push("@types/react-dom")
 		tsconfigBase.compilerOptions.jsx = "react-jsx"
 	}
 
