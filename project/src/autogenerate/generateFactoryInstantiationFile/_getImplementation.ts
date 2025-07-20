@@ -92,6 +92,10 @@ export function _getImplementation(
 
 	const deps = mod.getModuleExportByName("__EnkoreFunctionDependencies", true)
 
+	if (!deps && usesDependencies) {
+		throw new Error(`__EnkoreFunctionDependencies must be exported.`)
+	}
+
 	if (deps && deps.kind === "type") {
 		const members = toolchain._tsGetTypeAliasTypeQueryMembers(
 			deps.declaration
