@@ -39,7 +39,7 @@ const impl: API["hook"]["preLint"] = async function(
 			testCode += `const exportObject: __InterfaceToTestAgainst = {\n`
 
 			for (const [exportName, meta] of entryPoint.exports) {
-				if (meta.descriptor.kind === "type") continue
+				if (meta.descriptor.isTypeOrTypeLike) continue
 
 				testCodeImports += `import {${exportName}} from "../${meta.relativePath}"\n`
 

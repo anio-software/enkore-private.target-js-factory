@@ -8,13 +8,13 @@ export function generateEntryPointCode(
 
 	if (kind === "js") {
 		for (const [exportName, meta] of entryPoint.exports.entries()) {
-			if (meta.descriptor.kind === "type") continue
+			if (meta.descriptor.isTypeOrTypeLike) continue
 
 			code += `export {${exportName}} from "./${meta.pathToJsFile}"\n`
 		}
 	} else if (kind === "dts") {
 		for (const [exportName, meta] of entryPoint.exports.entries()) {
-			if (meta.descriptor.kind === "type") {
+			if (meta.descriptor.isTypeOrTypeLike) {
 				code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
 			} else {
 				code += `export {${exportName}} from "./${meta.pathToJsFile}"\n`

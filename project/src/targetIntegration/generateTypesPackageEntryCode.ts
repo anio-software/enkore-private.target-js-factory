@@ -12,7 +12,7 @@ export function generateTypesPackageEntryCode(
 
 		importCode += `import {${exportName}} from "./${meta.pathToJsFile}"\n`
 
-		if (meta.descriptor.kind !== "type") {
+		if (!meta.descriptor.isTypeOrTypeLike) {
 			code += `    ${exportName}: typeof ${exportName},\n`
 		}
 	}
@@ -21,7 +21,7 @@ export function generateTypesPackageEntryCode(
 
 	for (const [exportName, meta] of entryPoint.exports.entries()) {
 		if (meta.isTSXComponent) continue
-		if (meta.descriptor.kind !== "type") continue
+		if (!meta.descriptor.isTypeOrTypeLike) continue
 
 		code += `export type {${exportName}} from "./${meta.pathToDtsFile}"\n`
 	}
