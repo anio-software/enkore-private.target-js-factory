@@ -40,10 +40,10 @@ function checkExportAgainstDefaultNamingPolicy(
 	})()
 
 	if (fileNameIndicatesTypeExport) {
-		return descriptor.kind === "type" || descriptor.kind === "class"
+		return ["type", "class"].includes(descriptor.kind)
 	}
 
-	return descriptor.kind !== "type"
+	return ["value", "function", "module"].includes(descriptor.kind)
 }
 
 type EntryPoints = InternalData["entryPoints"]
