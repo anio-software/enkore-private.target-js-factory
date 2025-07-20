@@ -13,6 +13,7 @@ type Dependency = {
 type Ret = {
 	implementation: MyTSFunctionDeclaration
 	overloads: MyTSFunctionDeclaration[]
+	usesDependencies: boolean
 	dependencies: Dependency[]
 }
 
@@ -87,6 +88,8 @@ export function _getImplementation(
 
 	// todo: cross check overloads?
 
+	const usesDependencies = implementation.parameters[2]?.type === "__EnkoreFunctionDependencies"
+
 	const deps = mod.getModuleExportByName("__EnkoreFunctionDependencies", true)
 
 	if (deps && deps.kind === "type") {
@@ -137,6 +140,7 @@ export function _getImplementation(
 			0,
 			declarations.length -1
 		),
+		usesDependencies,
 		// sort for stable code output
 		dependencies: dependencies.toSorted((a, b) => {
 			let aStr = `${a.key},${a.modulePropertyName},${a.moduleSpecifier}`
