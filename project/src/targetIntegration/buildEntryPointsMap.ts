@@ -39,11 +39,7 @@ function checkExportAgainstDefaultNamingPolicy(
 		return startsWithUpperCaseLetter(stripLeadingUnderscores(exportName))
 	})()
 
-	if (fileNameIndicatesTypeExport) {
-		return ["type", "class", "interface"].includes(descriptor.kind)
-	}
-
-	return ["value", "function", "module"].includes(descriptor.kind)
+	return fileNameIndicatesTypeExport ? descriptor.isTypeOrTypeLike : !descriptor.isTypeOrTypeLike
 }
 
 type EntryPoints = InternalData["entryPoints"]
