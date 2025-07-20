@@ -40,7 +40,7 @@ function checkExportAgainstDefaultNamingPolicy(
 	})()
 
 	if (fileNameIndicatesTypeExport) {
-		return ["type", "class"].includes(descriptor.kind)
+		return ["type", "class", "interface"].includes(descriptor.kind)
 	}
 
 	return ["value", "function", "module"].includes(descriptor.kind)
