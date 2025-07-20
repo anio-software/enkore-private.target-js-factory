@@ -43,13 +43,11 @@ const impl: API["getBoilerplateFiles"] = async function(
 	tsconfigBase.compilerOptions.types = cfg.types
 	tsconfigBase.compilerOptions.lib = cfg.lib
 
-	if (targetsWeb(this.target)) {
-		// js-hybrid-lite doesn't contain CSS support
-		if (this.target !== "js-hybrid-lite") {
-			tsconfigBase.compilerOptions.plugins = [{
-				name: "css-modules-ts-plugin"
-			}]
-		}
+	// js-hybrid-lite doesn't contain CSS support
+	if (targetsWeb(this.target) && this.target !== "js-hybrid-lite") {
+		tsconfigBase.compilerOptions.plugins = [{
+			name: "css-modules-ts-plugin"
+		}]
 	}
 
 	if (targetsReact(this.target)) {
