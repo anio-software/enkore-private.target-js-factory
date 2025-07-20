@@ -8,7 +8,7 @@
         "strict": true,
         "skipLibCheck": false,
         "types": [],
-        "lib": ["esnext"],
+        "lib": [],
         "target": "esnext",
         "module": "nodenext",
         "moduleResolution": "nodenext",
