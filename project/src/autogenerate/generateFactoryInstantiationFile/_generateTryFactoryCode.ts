@@ -22,7 +22,7 @@ export function _generateTryFactoryCode(
 		session, options.source, implementationFunctionName
 	)
 
-	const hasDependencies = implementation.parameters[1]?.type === "__EnkoreFunctionDependencies"
+	const hasDependencies = implementation.parameters[2]?.type === "__EnkoreFunctionDependencies"
 
 	let code = ``
 
