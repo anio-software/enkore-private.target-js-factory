@@ -18,11 +18,9 @@ export function _generateTryFactoryCode(
 		variant === "syncVariant"
 	) ? "__implementationSync" : "__implementation"
 
-	const {implementation, overloads} = _getImplementation(
+	const {implementation, overloads, usesDependencies} = _getImplementation(
 		session, options.source, implementationFunctionName
 	)
-
-	const hasDependencies = implementation.parameters[2]?.type === "__EnkoreFunctionDependencies"
 
 	let code = ``
 
@@ -35,10 +33,10 @@ export function _generateTryFactoryCode(
 	code += `\n`
 
 	if (!overloads.length) {
-		code += _functionDeclarationToString(session, updateReturnType(implementation), hasDependencies)
+		code += _functionDeclarationToString(session, updateReturnType(implementation), usesDependencies)
 	} else {
 		for (const overload of overloads) {
-			code += _functionDeclarationToString(session, updateReturnType(overload), hasDependencies)
+			code += _functionDeclarationToString(session, updateReturnType(overload), usesDependencies)
 		}
 	}
 

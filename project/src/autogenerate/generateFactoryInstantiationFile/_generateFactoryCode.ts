@@ -28,11 +28,9 @@ export function _generateFactoryCode(
 		variant === "syncVariant"
 	) ? "__implementationSync" : "__implementation"
 
-	const {implementation, overloads, dependencies} = _getImplementation(
+	const {implementation, overloads, usesDependencies, dependencies} = _getImplementation(
 		session, options.source, implementationFunctionName
 	)
-
-	const hasDependencies = implementation.parameters[2]?.type === "__EnkoreFunctionDependencies"
 
 	let code = ``
 
@@ -48,7 +46,7 @@ export function _generateFactoryCode(
 	code += `// ^^^--- types needed for implementation\n`
 	code += `\n`
 
-	if (hasDependencies) {
+	if (usesDependencies) {
 		code += `// vvv--- factories needed for implementation\n`
 
 		for (const [i, dependency] of dependencies.entries()) {
@@ -60,10 +58,10 @@ export function _generateFactoryCode(
 	}
 
 	if (!overloads.length) {
-		code += _functionDeclarationToString(session, implementation, hasDependencies)
+		code += _functionDeclarationToString(session, implementation, usesDependencies)
 	} else {
 		for (const overload of overloads) {
-			code += _functionDeclarationToString(session, overload, hasDependencies)
+			code += _functionDeclarationToString(session, overload, usesDependencies)
 		}
 	}
 
@@ -72,7 +70,7 @@ export function _generateFactoryCode(
 	code += `\tcontextOptions: EnkoreJSRuntimeContextOptions\n`
 	code += `): typeof __enkoreUserFunction {\n`
 
-	if (hasDependencies) {
+	if (usesDependencies) {
 		code += `\tconst dependencies: __EnkoreFunctionDependencies = `
 
 		code += (() => {
@@ -135,7 +133,7 @@ export function _generateFactoryCode(
 	code += `\t\t}\n\n`
 	code += `\t\ttry {\n`
 	code += `\t\t\t// @ts-ignore:next-line\n`
-	code += `\t\t\treturn ${asyncStr("await ")}${implementation.name}.call(thisObject, localContextOptions, ${hasDependencies ? "dependencies, " : ""}...args);\n`
+	code += `\t\t\treturn ${asyncStr("await ")}${implementation.name}.call(thisObject, localContextOptions, ${usesDependencies ? "dependencies, " : ""}...args);\n`
 	code += `\t\t} catch (e: unknown) {\n`
 	code += `\t\t\t// log error on last created context object\n`
 	code += `\t\t\tif (firstCreatedContext) {\n`
