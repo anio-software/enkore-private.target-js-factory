@@ -2,6 +2,7 @@ import type {TargetIdentifier} from "@anio-software/enkore-private.spec/primitiv
 import type {PeerDependency} from "./PeerDependency.ts"
 import {
 	targetsWeb,
+	targetsWebDirectly,
 	targetsReact,
 	targetsNode
 } from "@anio-software/enkore-private.target-js-utils"
@@ -30,9 +31,11 @@ export function getRequiredPeerDependencyPackages(
 	//
 	addDependency("@types/node", true)
 
-	if (targetsWeb(targetIdentifier)) {
+	if (targetsWebDirectly(targetIdentifier)) {
 		addDependency("@types/web", true)
+	}
 
+	if (targetsWeb(targetIdentifier)) {
 		// js-hybrid-lite doesn't contain CSS support
 		if (targetIdentifier !== "js-hybrid-lite") {
 			addDependency("css-modules-ts-plugin", true)
