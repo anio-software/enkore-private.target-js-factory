@@ -3,8 +3,7 @@ import type {PeerDependency} from "./PeerDependency.ts"
 import {
 	targetsWeb,
 	targetsWebDirectly,
-	targetsReact,
-	targetsNode
+	targetsReact
 } from "@anio-software/enkore-private.target-js-utils"
 
 const packageVersionRanges: Record<string, string> = {
