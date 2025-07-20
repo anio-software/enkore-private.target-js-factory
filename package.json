@@ -15,7 +15,7 @@
     "@anio-software/enkore-private.debug": "^0.0.7",
     "@anio-software/enkore-private.spec": "^0.411.1",
     "@anio-software/enkore-private.target-js-toolchain_types": "^0.0.93",
-    "@anio-software/enkore-private.target-js-utils": "^0.0.14",
+    "@anio-software/enkore-private.target-js-utils": "^0.0.15",
     "@anio-software/enkore.core": "^0.13.1",
     "@anio-software/enkore.target-js-node": "^0.0.460",
     "@anio-software/pkg.is": "^0.0.4",
