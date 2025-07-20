@@ -4,7 +4,7 @@ import type {NodePackageJSON} from "@anio-software/enkore-private.spec/primitive
 import type {InternalData} from "./InternalData.ts"
 import type {PeerDependency} from "#~export/PeerDependency.ts"
 import {getPackageJSONExportsObject} from "./getPackageJSONExportsObject.ts"
-import {isNodeTarget} from "@anio-software/enkore-private.target-js-utils"
+import {targetsNode} from "@anio-software/enkore-private.target-js-utils"
 import {isObject} from "@anio-software/pkg.is"
 import {
 	getRequiredPeerDependencyPackages
@@ -102,7 +102,7 @@ export function getProductPackageJSON(
 		newPackageJSON.files!.push("./bin")
 	}
 
-	if (isNodeTarget(apiContext.target)) {
+	if (targetsNode(apiContext.target)) {
 		newPackageJSON["engines"] = {
 			"node": ">=23.6.x"
 		}

@@ -7,9 +7,9 @@ import {_getRegistryMap} from "../_getRegistryMap.ts"
 import {_npmRegistryToConfigString} from "../_npmRegistryToConfigString.ts"
 import type {Registry} from "../InternalData.ts"
 import {
-	isNodeTarget,
-	isReactTarget,
-	isWebTarget
+	targetsNode,
+	targetsReact,
+	targetsWeb
 } from "@anio-software/enkore-private.target-js-utils"
 
 const impl: API["getBoilerplateFiles"] = async function(
@@ -37,11 +37,11 @@ const impl: API["getBoilerplateFiles"] = async function(
 	const tsconfigBase = JSON.parse(getEmbedAsString("text://tsconfig/base.json") as string)
 	const targetOptions = session.target.getOptions(this.target)
 
-	if (isNodeTarget(this.target)) {
+	if (targetsNode(this.target)) {
 		tsconfigBase.compilerOptions.types.push("@types/node")
 	}
 
-	if (isWebTarget(this.target)) {
+	if (targetsWeb(this.target)) {
 		tsconfigBase.compilerOptions.types.push("@types/web")
 
 		// js-hybrid-lite doesn't contain CSS support
@@ -52,7 +52,7 @@ const impl: API["getBoilerplateFiles"] = async function(
 		}
 	}
 
-	if (isReactTarget(this.target)) {
+	if (targetsReact(this.target)) {
 		tsconfigBase.compilerOptions.types.push("@types/react")
 		tsconfigBase.compilerOptions.types.push("@types/react-dom")
 		tsconfigBase.compilerOptions.jsx = "react-jsx"
