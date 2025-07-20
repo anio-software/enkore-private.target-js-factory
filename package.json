@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "name": "@anio-software/enkore-private.target-js-factory",
-  "version": "0.0.480",
+  "version": "0.0.481",
   "description": "Target 'js' API factory. Formerly known as @fourtune/realm-js.",
   "author": "Anio Software <info@anio.software>",
   "repository": {
