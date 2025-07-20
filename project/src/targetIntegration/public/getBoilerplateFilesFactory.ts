@@ -11,6 +11,7 @@ import {
 	targetsReact,
 	targetsWeb
 } from "@anio-software/enkore-private.target-js-utils"
+import {getTSConfigTypesAndLib} from "../getTSConfigTypesAndLib.ts"
 
 const impl: API["getBoilerplateFiles"] = async function(
 	this: APIContext, session
@@ -36,6 +37,11 @@ const impl: API["getBoilerplateFiles"] = async function(
 
 	const tsconfigBase = JSON.parse(getEmbedAsString("text://tsconfig/base.json") as string)
 	const targetOptions = session.target.getOptions(this.target)
+
+	const cfg = getTSConfigTypesAndLib(this.target)
+
+	tsconfigBase.compilerOptions.types = cfg.types
+	tsconfigBase.compilerOptions.lib = cfg.lib
 
 	if (targetsWeb(this.target)) {
 		// js-hybrid-lite doesn't contain CSS support
