@@ -17,7 +17,7 @@ const packageVersionRanges: Record<string, string> = {
 
 	"css-modules-ts-plugin": ">=0.0.8",
 
-	"@anio-software/enkore.js-runtime": ">=0.0.37"
+	"@anio-software/enkore.js-runtime": ">=0.0.40"
 }
 
 export function getRequiredPeerDependencyPackages(
