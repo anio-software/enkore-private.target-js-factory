@@ -1,6 +1,10 @@
 import type {TargetIdentifier} from "@anio-software/enkore-private.spec/primitives"
 import type {PeerDependency} from "./PeerDependency.ts"
-import {targetsWeb, targetsReact, targetsNode} from "@anio-software/enkore-private.target-js-utils"
+import {
+	targetsWeb,
+	targetsReact,
+	targetsNode
+} from "@anio-software/enkore-private.target-js-utils"
 
 const packageVersionRanges: Record<string, string> = {
 	"@types/web": ">=0.0.235",
